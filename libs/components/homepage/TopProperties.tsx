@@ -27,40 +27,37 @@ const TopProperties = (props: TopPropertiesProps) => {
 	/** APOLLO REQUESTS **/
 	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
 
-	const {
-		loading: getPropertiesLoading,
-		data: getPropertiesData,
-		error: getPropertiesError,
-		refetch: getPropertiesRefetch,
-	} = useQuery(GET_PROPERTIES, {
-		fetchPolicy: 'cache-and-network',
-		variables: { input: initialInput },
-		notifyOnNetworkStatusChange: true,
-		onCompleted: (data: T) => {
-			setTopProperties(data?.getProperties?.list);
-		},
-	});
+		const {
+			loading: getPropertiesLoading,
+			data: getPropertiesData,
+			error: getPropertiesError,
+			refetch: getPropertiesRefetch,
+		} = useQuery(GET_PROPERTIES, {
+			fetchPolicy: "cache-and-network",
+			variables: {input: initialInput},
+			notifyOnNetworkStatusChange: true,
+			onCompleted: (data: T) => {
+				setTopProperties(data?.getProperties?.list)
+			}
+		});
 	/** HANDLERS **/
-	const likePropertyHandler = async (user: T, id: string) => {
-		try {
-			console.log('executed');
-			if (!id) return;
-			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
-
-			// execute likeTargetProperty Mutation
-			await likeTargetProperty({
-				variables: { input: id },
-			});
-
-			// execute getPropertiesRefetch
-			await getPropertiesRefetch({ input: initialInput });
-
-			sweetTopSmallSuccessAlert('success', 800);
-		} catch (err: any) {
-			console.log('ERROR, likePropertyHandler:', err.message);
-			sweetMixinErrorAlert(err.message).then();
-		}
-	};
+	
+		const likePropertyHandler = async (user: T, id: string) => {
+			try {
+				if (!id) return;
+				if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
+				//execute likePropertyHandler Mutation
+				await likeTargetProperty({ variables: { input: id } });
+	
+				//execute getPropertiesRefetch
+				await getPropertiesRefetch({input: initialInput})
+	
+				await sweetTopSmallSuccessAlert('success', 800);
+			} catch (err: any) {
+				console.log('ERROR, likePropertyHandler', err.message);
+				sweetMixinErrorAlert(err.message).then();
+			}
+		};
 
 	if (device === 'mobile') {
 		return (
@@ -80,7 +77,7 @@ const TopProperties = (props: TopPropertiesProps) => {
 							{topProperties.map((property: Property) => {
 								return (
 									<SwiperSlide className={'top-property-slide'} key={property?._id}>
-										<TopPropertyCard property={property} likePropertyHandler={likePropertyHandler} />
+										<TopPropertyCard property={property} likePropertyHandler={likePropertyHandler}/>
 									</SwiperSlide>
 								);
 							})}
@@ -123,7 +120,7 @@ const TopProperties = (props: TopPropertiesProps) => {
 							{topProperties.map((property: Property) => {
 								return (
 									<SwiperSlide className={'top-property-slide'} key={property?._id}>
-										<TopPropertyCard property={property} likePropertyHandler={likePropertyHandler} />
+										<TopPropertyCard property={property} likePropertyHandler={likePropertyHandler}/>
 									</SwiperSlide>
 								);
 							})}
