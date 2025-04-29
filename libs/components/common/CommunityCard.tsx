@@ -70,7 +70,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 						<Typography className="title">{boardArticle?.articleTitle}</Typography>
 					</Stack>
 					<Stack className={'buttons'}>
-						<IconButton color={'default'} >
+						<IconButton color={'default'}>
 							<RemoveRedEyeIcon />
 						</IconButton>
 						<Typography className="view-cnt">{boardArticle?.articleViews}</Typography>

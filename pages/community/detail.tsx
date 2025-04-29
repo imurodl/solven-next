@@ -483,7 +483,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 																					variant="outlined"
 																					color="inherit"
 																					onClick={() => cancelButtonHandler()}
-																				>
+																				>	
 																					Cancel
 																				</Button>
 																				<Button

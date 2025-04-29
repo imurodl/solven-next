@@ -37,7 +37,7 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: any) => {
 			setMemberBoArticles(data?.getBoardArticles?.list);
-			setTotal(data?.getBoardArticles?.metaCounter?.[0]?.total || 0);
+			setTotal(data?.getBoardArticles?.metaCounter[0]?.total || 0);
 		},
 	});
 
@@ -50,23 +50,23 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
 	const paginationHandler = (e: T, value: number) => {
 		setSearchFilter({ ...searchFilter, page: value });
 	};
-	
+
 	const likeArticleHandler = async (e: any, user: any, id: string) => {
 		try {
 			e.stopPropagation();
 			if (!id) return;
 			if (!user._id) throw new Error(Messages.error2);
-	
+
 			await likeTargetBoardArticle({
 				variables: {
 					input: id,
 				},
 			});
-			
+
 			await boardArticlesFetch({
-				input: searchFilter 
+				input: searchFilter,
 			});
-			
+
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
 			console.log('ERROR, likePropertyHandler:', err.message);
@@ -92,11 +92,14 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
 						</div>
 					)}
 					{memberBoArticles?.map((boardArticle: BoardArticle) => {
-						return <CommunityCard 
-						boardArticle={boardArticle} 
-						likeArticleHandler={likeArticleHandler}
-						key={boardArticle?._id} 
-						size={'small'} />;
+						return (
+							<CommunityCard
+								boardArticle={boardArticle}
+								likeArticleHandler={likeArticleHandler}
+								key={boardArticle?._id}
+								size={'small'}
+							/>
+						);
 					})}
 				</Stack>
 				{memberBoArticles?.length !== 0 && (
