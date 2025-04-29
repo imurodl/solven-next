@@ -3,16 +3,16 @@ import { NextPage } from 'next';
 import { Pagination, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { PropertyCard } from './PropertyCard';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { Property } from '../../types/property/property';
 import { AgentPropertiesInquiry } from '../../types/property/property.input';
 import { T } from '../../types/common';
 import { PropertyStatus } from '../../enums/property.enum';
 import { userVar } from '../../../apollo/store';
 import { useRouter } from 'next/router';
-import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { UPDATE_PROPERTY } from '../../../apollo/user/mutation';
 import { GET_AGENT_PROPERTIES } from '../../../apollo/user/query';
-import { sweetConfirmAlert, sweetErrorAlert, sweetErrorHandling } from '../../sweetAlert';
+import { sweetConfirmAlert, sweetErrorHandling } from '../../sweetAlert';
 
 const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
@@ -34,7 +34,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 		fetchPolicy: 'network-only',
 		variables: { input: searchFilter },
 		notifyOnNetworkStatusChange: true,
-		onCompleted: (data: T) => {
+		onCompleted: (data) => {
 			setAgentProperties(data?.getAgentProperties?.list);
 			setTotal(data?.getAgentProperties?.metaCounter[0]?.total ?? 0);
 		},
@@ -51,26 +51,25 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 
 	const deletePropertyHandler = async (id: string) => {
 		try {
-			if (await sweetConfirmAlert('are you sure to delete this property?')) {
+			if (await sweetConfirmAlert("Are you sure to delete this property?")) {
 				await updateProperty({
 					variables: {
 						input: {
 							_id: id,
-							propertyStatus: PropertyStatus.DELETE,
+							propertyStatus: 'DELETE',
 						},
 					},
 				});
-
-				await getAgentPropertiesRefetch({ input: searchFilter });
 			}
-		} catch (err) {
+			await getAgentPropertiesRefetch({ input: searchFilter });
+		} catch (err: any) {
 			await sweetErrorHandling(err);
 		}
 	};
 
 	const updatePropertyHandler = async (status: string, id: string) => {
 		try {
-			if (await sweetConfirmAlert(`are you sure to change to ${status} status?`)) {
+			if (await sweetConfirmAlert(`Are you sure to change to ${status} status?`)) { 
 				await updateProperty({
 					variables: {
 						input: {
@@ -79,9 +78,9 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 						},
 					},
 				});
-				await getAgentPropertiesRefetch({ input: searchFilter });
 			}
-		} catch (err) {
+			await getAgentPropertiesRefetch({ input: searchFilter }); 
+		} catch (err: any) {
 			await sweetErrorHandling(err);
 		}
 	};
@@ -122,9 +121,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 							<Typography className="title-text">Date Published</Typography>
 							<Typography className="title-text">Status</Typography>
 							<Typography className="title-text">View</Typography>
-							{searchFilter.search.propertyStatus === PropertyStatus.ACTIVE && (
-								<Typography className="title-text">Action</Typography>
-							)}
+							{searchFilter.search.propertyStatus === 'ACTIVE' && <Typography className="title-text">Action</Typography> }
 						</Stack>
 
 						{agentProperties?.length === 0 ? (

@@ -24,8 +24,8 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 	const user = useReactiveVar(userVar);
 
 	/** APOLLO REQUESTS **/
-	const [createProperty] = useMutation(CREATE_PROPERTY);
-	const [updateProperty] = useMutation(UPDATE_PROPERTY);
+	const [createProperty] = useMutation(CREATE_PROPERTY); 
+	const [updateProperty] = useMutation(UPDATE_PROPERTY); 
 
 	const {
 		loading: getPropertyLoading,
@@ -35,9 +35,11 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 	} = useQuery(GET_PROPERTY, {
 		fetchPolicy: 'network-only',
 		variables: {
-			input: router.query.params,
+			input: {
+				propertyId: router.query.propertyId 
+			},
 		},
-	});
+	}); 
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -137,10 +139,9 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 					input: insertPropertyData,
 				},
 			});
-
-			await sweetMixinSuccessAlert('This property has been created successfully!');
+			await sweetMixinSuccessAlert('This property has been created successfully.');
 			await router.push({
-				pathname: '/myPage',
+				pathname: '/mypage',
 				query: {
 					category: 'myProperties',
 				},
@@ -149,7 +150,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 			sweetErrorHandling(err).then();
 		}
 	}, [insertPropertyData]);
-
+	
 	const updatePropertyHandler = useCallback(async () => {
 		try {
 			// @ts-ignore
@@ -159,18 +160,17 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 					input: insertPropertyData,
 				},
 			});
-
-			await sweetMixinSuccessAlert('This property has been updated successfully!');
+			await sweetMixinSuccessAlert('This property has been updated successfully.');
 			await router.push({
 				pathname: '/mypage',
 				query: {
-					category: 'mmyProperties',
+					category: 'myProperties',
 				},
 			});
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
 		}
-	}, [insertPropertyData]);
+	}, [insertPropertyData, getPropertyData?.getProperty?._id]);
 
 	if (user?.memberType !== 'AGENT') {
 		router.back();
