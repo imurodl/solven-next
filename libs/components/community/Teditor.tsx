@@ -14,7 +14,7 @@ import { Message } from '../../enums/common.enum';
 import { sweetErrorHandling, sweetTopSuccessAlert } from '../../sweetAlert';
 
 const TuiEditor = () => {
-	const editorRef = useRef<Editor>(null),
+	const editorRef = useRef<Editor>(null), //////////////
 		token = getJwtToken(),
 		router = useRouter();
 	const [articleCategory, setArticleCategory] = useState<BoardArticleCategory>(BoardArticleCategory.FREE);
