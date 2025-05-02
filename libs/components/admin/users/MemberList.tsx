@@ -165,16 +165,25 @@ export const MemberPanelList = (props: MemberPanelListType) => {
 										<TableCell align="left">{member._id}</TableCell>
 
 										<TableCell align="left" className={'name'}>
-											<Stack direction={'row'}>
-												<Link href={`/member?memberId=${member._id}`}>
+											{member?.memberStatus !== MemberStatus.DELETE ? (
+												<Stack direction={'row'}>
+													<Link href={`/member?memberId=${member._id}`}>
+														<div>
+															<Avatar alt="Remy Sharp" src={member_image} sx={{ ml: '2px', mr: '10px' }} />
+														</div>
+													</Link>
+													<Link href={`/member?memberId=${member._id}`}>
+														<div>{member.memberNick}</div>
+													</Link>
+												</Stack>
+											) : (
+												<Stack direction={'row'}>
 													<div>
 														<Avatar alt="Remy Sharp" src={member_image} sx={{ ml: '2px', mr: '10px' }} />
 													</div>
-												</Link>
-												<Link href={`/member?memberId=${member._id}`}>
-													<div>{member.memberNick}</div>
-												</Link>
-											</Stack>
+													<div style={{ marginTop: '10px' }}>{member.memberNick}</div>
+												</Stack>
+											)}
 										</TableCell>
 
 										<TableCell align="center">{member.memberFullName ?? '-'}</TableCell>
