@@ -7,6 +7,7 @@ import { onError } from '@apollo/client/link/error';
 import { getJwtToken } from '../libs/auth';
 import { TokenRefreshLink } from 'apollo-link-token-refresh';
 import { sweetErrorAlert } from '../libs/sweetAlert';
+import { socketVar } from './store';
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 function getHeaders() {
@@ -28,12 +29,13 @@ const tokenRefreshLink = new TokenRefreshLink({
 	},
 });
 
-// Custom WebSocket Client:
+// Custom WebSocket client
 class LoggingWebSocket {
 	private socket: WebSocket;
 
 	constructor(url: string) {
-		this.socket = new WebSocket(url);
+		this.socket = new WebSocket(`${url}?token=${getJwtToken()}`);
+		socketVar(this.socket)
 
 		this.socket.onopen = () => {
 			console.log('WebSocket connection!');
@@ -43,12 +45,12 @@ class LoggingWebSocket {
 			console.log('WebSocket message:', msg.data);
 		};
 
-		this.socket.onerror = (err) => {
-			console.log('WebSocket Error:', err);
+		this.socket.onerror = (error) => {
+			console.error('WebSocket error:', error);
 		};
 	}
 
-	send(data: string | ArrayBuffer | SharedArrayBuffer | Blob | ArrayBufferView) {
+	public send(data: string | ArrayBuffer | SharedArrayBuffer | Blob | ArrayBufferView) {
 		this.socket.send(data);
 	}
 
@@ -85,7 +87,7 @@ function createIsomorphicLink() {
 					return { headers: getHeaders() };
 				},
 			},
-			webSocketImpl: LoggingWebSocket,
+			webSocketImpl: LoggingWebSocket
 		});
 
 		const errorLink = onError(({ graphQLErrors, networkError, response }) => {
