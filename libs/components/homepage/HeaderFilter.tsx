@@ -8,7 +8,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { propertySquare, propertyYears } from '../../config';
 import { CarLocation, PropertyType } from '../../enums/car.enum';
-import { PropertiesInquiry } from '../../types/property/property.input';
+import { PropertiesInquiry } from '../../types/car/car.input';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 

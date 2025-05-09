@@ -3,7 +3,7 @@ import { Stack, Typography, Box } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { Property } from '../../types/property/property';
+import { Property } from '../../types/car/car';
 import Link from 'next/link';
 import { formatterStr } from '../../utils';
 import { REACT_APP_API_URL, topPropertyRank } from '../../config';

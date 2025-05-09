@@ -3,7 +3,7 @@ import { Stack, Box, Divider, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Property } from '../../types/property/property';
+import { Property } from '../../types/car/car';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { REACT_APP_API_URL } from '../../config';
 import { useRouter } from 'next/router';
@@ -24,7 +24,7 @@ const TrendPropertyCard = (props: TrendPropertyCardProps) => {
 	/** HANDLERS **/
 	const pushDetailHandler = async (propertyId: string) => {
 		console.log('ID', propertyId);
-		await router.push({pathname: "/property/detail", query: {id: propertyId}})
+		await router.push({ pathname: '/property/detail', query: { id: propertyId } });
 	};
 
 	if (device === 'mobile') {

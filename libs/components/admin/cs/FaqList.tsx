@@ -179,12 +179,12 @@ export const FaqArticlesPanelList = (props: FaqArticlesPanelListType) => {
 											TransitionComponent={Fade}
 											sx={{ p: 1 }}
 										>
-											<MenuItem onClick={(e) => generateMentorTypeHandle('member._id', 'mentor', 'originate')}>
+											<MenuItem onClick={(e: any) => generateMentorTypeHandle('member._id', 'mentor', 'originate')}>
 												<Typography variant={'subtitle1'} component={'span'}>
 													MENTOR
 												</Typography>
 											</MenuItem>
-											<MenuItem onClick={(e) => generateMentorTypeHandle('member._id', 'user', 'remove')}>
+											<MenuItem onClick={(e: any) => generateMentorTypeHandle('member._id', 'user', 'remove')}>
 												<Typography variant={'subtitle1'} component={'span'}>
 													USER
 												</Typography>
