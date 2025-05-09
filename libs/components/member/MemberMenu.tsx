@@ -39,7 +39,6 @@ const MemberMenu = (props: MemberMenuProps) => {
 		},
 	});
 
-
 	if (device === 'mobile') {
 		return <div>MEMBER MENU MOBILE</div>;
 	} else {
@@ -109,7 +108,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 												Properties
 											</Typography>
 											<Typography className="count-title" variant="subtitle1">
-												{member?.memberProperties}
+												{member?.memberCars}
 											</Typography>
 										</div>
 									</Link>

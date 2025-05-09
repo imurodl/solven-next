@@ -44,7 +44,7 @@ const AgentCard = (props: AgentCardProps) => {
 							backgroundRepeat: 'no-repeat',
 						}}
 					>
-						<div>{agent?.memberProperties} properties</div>
+						<div>{agent?.memberCars} properties</div>
 					</Box>
 				</Link>
 
