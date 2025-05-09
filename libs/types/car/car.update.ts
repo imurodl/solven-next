@@ -8,7 +8,7 @@ import {
 	CarType,
 } from '../../enums/car.enum';
 
-export interface PropertyUpdate {
+export interface CarUpdate {
 	_id: string;
 	carType?: CarType;
 	carStatus?: CarStatus;

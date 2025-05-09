@@ -9,7 +9,7 @@ import {
 } from '../../enums/car.enum';
 import { Direction } from '../../enums/common.enum';
 
-export interface PropertyInput {
+export interface CarInput {
 	carType: CarType;
 	carLocation: CarLocation;
 	carAddress: string;
