@@ -20,4 +20,4 @@ export const Messages = {
 	error5: 'Only images with jpeg, jpg, png format allowed!',
 };
 
-export const topPropertyRank: number = 2;
+export const topCarRank: number = 2;

@@ -23,19 +23,19 @@ const TopAgents = (props: TopAgentsProps) => {
 	const [topAgents, setTopAgents] = useState<Member[]>([]);
 
 	/** APOLLO REQUESTS **/
-		const {
-			loading: getPropertiesLoading,
-			data: getAgentsData,
-			error: getAgentsError,
-			refetch: getAgemtsRefetch,
-		} = useQuery(GET_AGENTS, {
-			fetchPolicy: "cache-and-network",
-			variables: {input: initialInput},
-			notifyOnNetworkStatusChange: true,
-			onCompleted: (data: T) => {
-				setTopAgents(data?.getAgents?.list)
-			}
-		});
+	const {
+		loading: getAgentsLoading,
+		data: getAgentsData,
+		error: getAgentsError,
+		refetch: getAgentsRefetch,
+	} = useQuery(GET_AGENTS, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: initialInput },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setTopAgents(data?.getAgents?.list);
+		},
+	});
 	/** HANDLERS **/
 
 	if (device === 'mobile') {

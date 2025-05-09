@@ -3,91 +3,91 @@ import { Stack, Box, Divider, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Property } from '../../types/car/car';
-import { REACT_APP_API_URL, topPropertyRank } from '../../config';
+import { Car } from '../../types/car/car';
+import { REACT_APP_API_URL, topCarRank } from '../../config';
 import { formatterStr } from '../../utils';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { useRouter } from 'next/router';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
-interface PropertyBigCardProps {
-	property: Property;
-	likePropertyHandler?: any;
+interface CarBigCardProps {
+	car: Car;
+	likeCarHandler?: any;
 }
 
-const PropertyBigCard = (props: PropertyBigCardProps) => {
-	const { property, likePropertyHandler } = props;
+const CarBigCard = (props: CarBigCardProps) => {
+	const { car, likeCarHandler } = props;
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
 	const router = useRouter();
 
 	/** HANDLERS **/
-	const goPropertyDetatilPage = (propertyId: string) => {
-		router.push(`/property/detail?id=${propertyId}`);
+	const goCarDetatilPage = (carId: string) => {
+		router.push(`/car/detail?id=${carId}`);
 	};
 
 	if (device === 'mobile') {
-		return <div>APARTMENT BIG CARD</div>;
+		return <div>CAR BIG CARD</div>;
 	} else {
 		return (
-			<Stack className="property-big-card-box" onClick={() => goPropertyDetatilPage(property?._id)}>
+			<Stack className="property-big-card-box" onClick={() => goCarDetatilPage(car?._id)}>
 				<Box
 					component={'div'}
 					className={'card-img'}
-					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${property?.propertyImages?.[0]})` }}
+					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${car?.carImages?.[0]})` }}
 				>
-					{property && property?.propertyRank >= topPropertyRank && (
+					{car && car?.carRank >= topCarRank && (
 						<div className={'status'}>
 							<img src="/img/icons/electricity.svg" alt="" />
 							<span>top</span>
 						</div>
 					)}
 
-					<div className={'price'}>${formatterStr(property?.propertyPrice)}</div>
+					<div className={'price'}>${formatterStr(car?.carPrice)}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>
-					<strong className={'title'}>{property?.propertyTitle}</strong>
-					<p className={'desc'}>{property?.propertyAddress}</p>
+					<strong className={'title'}>{car?.carTitle}</strong>
+					<p className={'desc'}>{car?.carAddress}</p>
 					<div className={'options'}>
 						<div>
 							<img src="/img/icons/bed.svg" alt="" />
-							<span>{property?.propertyBeds} bed</span>
+							<span>{car?.carMileage} mileage</span>
 						</div>
 						<div>
 							<img src="/img/icons/room.svg" alt="" />
-							<span>{property?.propertyRooms} rooms</span>
+							<span>{car?.carSeats} seats</span>
 						</div>
 						<div>
 							<img src="/img/icons/expand.svg" alt="" />
-							<span>{property?.propertySquare} m2</span>
+							<span>{car?.carTransmission} m2</span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bott'}>
 						<div>
-							{property?.propertyRent ? <p>Rent</p> : <span>Rent</span>}
-							{property?.propertyBarter ? <p>Barter</p> : <span>Barter</span>}
+							{car?.carRent ? <p>Rent</p> : <span>Rent</span>}
+							{car?.carBarter ? <p>Barter</p> : <span>Barter</span>}
 						</div>
 						<div className="buttons-box">
 							<IconButton color={'default'}>
 								<RemoveRedEyeIcon />
 							</IconButton>
-							<Typography className="view-cnt">{property?.propertyViews}</Typography>
+							<Typography className="view-cnt">{car?.carViews}</Typography>
 							<IconButton
 								color={'default'}
 								onClick={(e: any) => {
 									e.stopPropagation();
-									likePropertyHandler(user, property?._id);
+									likeCarHandler(user, car?._id);
 								}}
 							>
-								{property?.meLiked && property?.meLiked[0]?.myFavorite ? (
+								{car?.meLiked && car?.meLiked[0]?.myFavorite ? (
 									<FavoriteIcon style={{ color: 'red' }} />
 								) : (
 									<FavoriteIcon />
 								)}
 							</IconButton>
-							<Typography className="view-cnt">{property?.propertyLikes}</Typography>
+							<Typography className="view-cnt">{car?.carLikes}</Typography>
 						</div>
 					</div>
 				</Box>
@@ -96,4 +96,4 @@ const PropertyBigCard = (props: PropertyBigCardProps) => {
 	}
 };
 
-export default PropertyBigCard;
+export default CarBigCard;
