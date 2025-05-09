@@ -35,7 +35,7 @@ class LoggingWebSocket {
 
 	constructor(url: string) {
 		this.socket = new WebSocket(`${url}?token=${getJwtToken()}`);
-		socketVar(this.socket)
+		socketVar(this.socket);
 
 		this.socket.onopen = () => {
 			console.log('WebSocket connection!');
@@ -79,7 +79,7 @@ function createIsomorphicLink() {
 
 		/* WEBSOCKET SUBSCRIPTION LINK */
 		const wsLink = new WebSocketLink({
-			uri: process.env.REACT_APP_API_WS ?? 'ws://127.0.0.1:3007',
+			uri: process.env.REACT_APP_API_WS ?? 'ws://127.0.0.1:4007',
 			options: {
 				reconnect: false,
 				timeout: 30000,
@@ -87,7 +87,7 @@ function createIsomorphicLink() {
 					return { headers: getHeaders() };
 				},
 			},
-			webSocketImpl: LoggingWebSocket
+			webSocketImpl: LoggingWebSocket,
 		});
 
 		const errorLink = onError(({ graphQLErrors, networkError, response }) => {

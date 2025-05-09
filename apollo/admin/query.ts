@@ -39,33 +39,40 @@ export const GET_ALL_MEMBERS_BY_ADMIN = gql`
 `;
 
 /**************************
- *        PROPERTY        *
+ *          CAR           *
  *************************/
 
-export const GET_ALL_PROPERTIES_BY_ADMIN = gql`
-	query GetAllPropertiesByAdmin($input: AllPropertiesInquiry!) {
-		getAllPropertiesByAdmin(input: $input) {
+export const GET_ALL_CARS_BY_ADMIN = gql`
+	query GetAllCarsByAdmin($input: AllCarsInquiry!) {
+		getAllCarsByAdmin(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				carType
+				carStatus
+				carLocation
+				carAddress
+				carBrand
+				carModel
+				carTitle
+				carPrice
+				carFuelType
+				carTransmission
+				carOptions
+				carColor
+				carMileage
+				carSeats
+				carViews
+				carLikes
+				carComments
+				carRank
+				carImages
+				carDesc
+				carBarter
+				carRent
 				memberId
 				soldAt
 				deletedAt
-				constructedAt
+				manufacturedAt
 				createdAt
 				updatedAt
 				memberData {
@@ -79,17 +86,26 @@ export const GET_ALL_PROPERTIES_BY_ADMIN = gql`
 					memberImage
 					memberAddress
 					memberDesc
-					memberWarnings
-					memberBlocks
 					memberCars
-					memberRank
+					memberArticles
+					memberFollowers
+					memberFollowings
 					memberPoints
 					memberLikes
+					memberComments
+					memberRank
+					memberWarnings
 					memberViews
+					memberBlocks
 					deletedAt
 					createdAt
 					updatedAt
 					accessToken
+				}
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
 				}
 			}
 			metaCounter {

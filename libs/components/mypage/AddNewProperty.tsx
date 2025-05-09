@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { PropertyLocation, PropertyType } from '../../enums/property.enum';
+import { CarLocation, PropertyType } from '../../enums/car.enum';
 import { REACT_APP_API_URL, propertySquare } from '../../config';
 import { PropertyInput } from '../../types/property/property.input';
 import axios from 'axios';
@@ -10,8 +10,8 @@ import { getJwtToken } from '../../auth';
 import { sweetErrorHandling, sweetMixinErrorAlert, sweetMixinSuccessAlert } from '../../sweetAlert';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
-import { CREATE_PROPERTY, UPDATE_PROPERTY } from '../../../apollo/user/mutation';
-import { GET_PROPERTY } from '../../../apollo/user/query';
+import { CREATE_CAR, UPDATE_CAR } from '../../../apollo/user/mutation';
+import { GET_CAR } from '../../../apollo/user/query';
 
 const AddProperty = ({ initialValues, ...props }: any) => {
 	const device = useDeviceDetect();
@@ -19,27 +19,27 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 	const inputRef = useRef<any>(null);
 	const [insertPropertyData, setInsertPropertyData] = useState<PropertyInput>(initialValues);
 	const [propertyType, setPropertyType] = useState<PropertyType[]>(Object.values(PropertyType));
-	const [propertyLocation, setPropertyLocation] = useState<PropertyLocation[]>(Object.values(PropertyLocation));
+	const [propertyLocation, setCarLocation] = useState<CarLocation[]>(Object.values(CarLocation));
 	const token = getJwtToken();
 	const user = useReactiveVar(userVar);
 
 	/** APOLLO REQUESTS **/
-	const [createProperty] = useMutation(CREATE_PROPERTY); 
-	const [updateProperty] = useMutation(UPDATE_PROPERTY); 
+	const [createProperty] = useMutation(CREATE_CAR);
+	const [updateProperty] = useMutation(UPDATE_CAR);
 
 	const {
 		loading: getPropertyLoading,
 		data: getPropertyData,
 		error: getPropertyError,
 		refetch: getPropertyRefetch,
-	} = useQuery(GET_PROPERTY, {
+	} = useQuery(GET_CAR, {
 		fetchPolicy: 'network-only',
 		variables: {
 			input: {
-				propertyId: router.query.propertyId 
+				propertyId: router.query.propertyId,
 			},
 		},
-	}); 
+	});
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -150,7 +150,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 			sweetErrorHandling(err).then();
 		}
 	}, [insertPropertyData]);
-	
+
 	const updatePropertyHandler = useCallback(async () => {
 		try {
 			// @ts-ignore

@@ -1,9 +1,9 @@
-import { PropertyLocation, PropertyStatus, PropertyType } from '../../enums/property.enum';
+import { CarLocation, CarStatus, PropertyType } from '../../enums/car.enum';
 import { Direction } from '../../enums/common.enum';
 
 export interface PropertyInput {
 	propertyType: PropertyType;
-	propertyLocation: PropertyLocation;
+	propertyLocation: CarLocation;
 	propertyAddress: string;
 	propertyTitle: string;
 	propertyPrice: number;
@@ -20,7 +20,7 @@ export interface PropertyInput {
 
 interface PISearch {
 	memberId?: string;
-	locationList?: PropertyLocation[];
+	locationList?: CarLocation[];
 	typeList?: PropertyType[];
 	roomsList?: Number[];
 	options?: string[];
@@ -40,7 +40,7 @@ export interface PropertiesInquiry {
 }
 
 interface APISearch {
-	propertyStatus?: PropertyStatus;
+	propertyStatus?: CarStatus;
 }
 
 export interface AgentPropertiesInquiry {
@@ -52,8 +52,8 @@ export interface AgentPropertiesInquiry {
 }
 
 interface ALPISearch {
-	propertyStatus?: PropertyStatus;
-	propertyLocationList?: PropertyLocation[];
+	propertyStatus?: CarStatus;
+	propertyLocationList?: CarLocation[];
 }
 
 export interface AllPropertiesInquiry {

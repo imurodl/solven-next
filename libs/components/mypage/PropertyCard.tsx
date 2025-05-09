@@ -8,7 +8,7 @@ import { Property } from '../../types/property/property';
 import { formatterStr } from '../../utils';
 import Moment from 'react-moment';
 import { useRouter } from 'next/router';
-import { PropertyStatus } from '../../enums/property.enum';
+import { CarStatus } from '../../enums/car.enum';
 
 interface PropertyCardProps {
 	property: Property;
@@ -104,7 +104,7 @@ export const PropertyCard = (props: PropertyCardProps) => {
 									disableRipple
 									onClick={() => {
 										handleClose();
-										updatePropertyHandler(PropertyStatus.SOLD, property?._id);
+										updatePropertyHandler(CarStatus.SOLD, property?._id);
 									}}
 								>
 									Sold
@@ -117,7 +117,7 @@ export const PropertyCard = (props: PropertyCardProps) => {
 				<Stack className="views-box">
 					<Typography className="views">{property.propertyViews.toLocaleString()}</Typography>
 				</Stack>
-				{!memberPage && property.propertyStatus == PropertyStatus.ACTIVE && (
+				{!memberPage && property.propertyStatus == CarStatus.ACTIVE && (
 					<Stack className="action-box">
 						<IconButton className="icon-button" onClick={() => pushEditProperty(property._id)}>
 							<ModeIcon className="buttons" />

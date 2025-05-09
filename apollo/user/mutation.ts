@@ -119,92 +119,145 @@ export const LIKE_TARGET_MEMBER = gql`
 `;
 
 /**************************
- *        PROPERTY        *
+ *          CAR           *
  *************************/
 
-export const CREATE_PROPERTY = gql`
-	mutation CreateProperty($input: PropertyInput!) {
-		createProperty(input: $input) {
+export const CREATE_CAR = gql`
+	mutation CreateCar($input: CarInput!) {
+		createCar(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			carType
+			carStatus
+			carLocation
+			carAddress
+			carBrand
+			carModel
+			carTitle
+			carPrice
+			carFuelType
+			carTransmission
+			carOptions
+			carColor
+			carMileage
+			carSeats
+			carViews
+			carLikes
+			carComments
+			carRank
+			carImages
+			carDesc
+			carBarter
+			carRent
 			memberId
 			soldAt
 			deletedAt
-			constructedAt
+			manufacturedAt
 			createdAt
 			updatedAt
 		}
 	}
 `;
 
-export const UPDATE_PROPERTY = gql`
-	mutation UpdateProperty($input: PropertyUpdate!) {
-		updateProperty(input: $input) {
+export const UPDATE_CAR = gql`
+	mutation UpdateCar($input: CarUpdate!) {
+		updateCar(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			carType
+			carStatus
+			carLocation
+			carAddress
+			carBrand
+			carModel
+			carTitle
+			carPrice
+			carFuelType
+			carTransmission
+			carOptions
+			carColor
+			carMileage
+			carSeats
+			carViews
+			carLikes
+			carComments
+			carRank
+			carImages
+			carDesc
+			carBarter
+			carRent
 			memberId
 			soldAt
 			deletedAt
-			constructedAt
+			manufacturedAt
 			createdAt
 			updatedAt
 		}
 	}
 `;
 
-export const LIKE_TARGET_PROPERTY = gql`
-	mutation LikeTargetProperty($input: String!) {
-		likeTargetProperty(propertyId: $input) {
+export const LIKE_TARGET_CAR = gql`
+	mutation LikeTargetCar($input: String!) {
+		likeTargetCar(carId: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			carType
+			carStatus
+			carLocation
+			carAddress
+			carBrand
+			carModel
+			carTitle
+			carPrice
+			carFuelType
+			carTransmission
+			carOptions
+			carColor
+			carMileage
+			carSeats
+			carViews
+			carLikes
+			carComments
+			carRank
+			carImages
+			carDesc
+			carBarter
+			carRent
 			memberId
 			soldAt
 			deletedAt
-			constructedAt
+			manufacturedAt
 			createdAt
 			updatedAt
+			memberData {
+				_id
+				memberType
+				memberStatus
+				memberAuthType
+				memberPhone
+				memberNick
+				memberFullName
+				memberImage
+				memberAddress
+				memberDesc
+				memberCars
+				memberArticles
+				memberFollowers
+				memberFollowings
+				memberPoints
+				memberLikes
+				memberComments
+				memberRank
+				memberWarnings
+				memberViews
+				memberBlocks
+				deletedAt
+				createdAt
+				updatedAt
+				accessToken
+			}
+			meLiked {
+				memberId
+				likeRefId
+				myFavorite
+			}
 		}
 	}
 `;

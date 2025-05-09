@@ -34,61 +34,75 @@ export const UPDATE_MEMBER_BY_ADMIN = gql`
 `;
 
 /**************************
- *        PROPERTY        *
+ *           CAR          *
  *************************/
 
-export const UPDATE_PROPERTY_BY_ADMIN = gql`
-	mutation UpdatePropertyByAdmin($input: PropertyUpdate!) {
-		updatePropertyByAdmin(input: $input) {
+export const UPDATE_CAR_BY_ADMIN = gql`
+	mutation UpdateCarByAdmin($input: CarUpdate!) {
+		updateCarByAdmin(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			carType
+			carStatus
+			carLocation
+			carAddress
+			carBrand
+			carModel
+			carTitle
+			carPrice
+			carFuelType
+			carTransmission
+			carOptions
+			carColor
+			carMileage
+			carSeats
+			carViews
+			carLikes
+			carComments
+			carRank
+			carImages
+			carDesc
+			carBarter
+			carRent
 			memberId
 			soldAt
 			deletedAt
-			constructedAt
+			manufacturedAt
 			createdAt
 			updatedAt
 		}
 	}
 `;
 
-export const REMOVE_PROPERTY_BY_ADMIN = gql`
-	mutation RemovePropertyByAdmin($input: String!) {
-		removePropertyByAdmin(propertyId: $input) {
+export const REMOVE_CAR_BY_ADMIN = gql`
+	mutation RemoveCarByAdmin($input: String!) {
+		removeCarByAdmin(carId: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			carType
+			carStatus
+			carLocation
+			carAddress
+			carBrand
+			carModel
+			carTitle
+			carPrice
+			carFuelType
+			carTransmission
+			carOptions
+			carColor
+			carMileage
+			carSeats
+			carViews
+			carLikes
+			carComments
+			carRank
+			carImages
+			carDesc
+			carBarter
+			carRent
 			memberId
 			soldAt
 			deletedAt
-			constructedAt
+			manufacturedAt
 			createdAt
 			updatedAt
 		}

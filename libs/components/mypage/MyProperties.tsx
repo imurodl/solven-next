@@ -7,11 +7,11 @@ import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { Property } from '../../types/property/property';
 import { AgentPropertiesInquiry } from '../../types/property/property.input';
 import { T } from '../../types/common';
-import { PropertyStatus } from '../../enums/property.enum';
+import { CarStatus } from '../../enums/car.enum';
 import { userVar } from '../../../apollo/store';
 import { useRouter } from 'next/router';
-import { UPDATE_PROPERTY } from '../../../apollo/user/mutation';
-import { GET_AGENT_PROPERTIES } from '../../../apollo/user/query';
+import { UPDATE_CAR } from '../../../apollo/user/mutation';
+import { GET_AGENT_CARS } from '../../../apollo/user/query';
 import { sweetConfirmAlert, sweetErrorHandling } from '../../sweetAlert';
 
 const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
@@ -23,14 +23,14 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 	const router = useRouter();
 
 	/** APOLLO REQUESTS **/
-	const [updateProperty] = useMutation(UPDATE_PROPERTY);
+	const [updateProperty] = useMutation(UPDATE_CAR);
 
 	const {
 		loading: getAgentPropertiesLoading,
 		data: getAgentPropertiesData,
 		error: getAgentPropertiesError,
 		refetch: getAgentPropertiesRefetch,
-	} = useQuery(GET_AGENT_PROPERTIES, {
+	} = useQuery(GET_AGENT_CARS, {
 		fetchPolicy: 'network-only',
 		variables: { input: searchFilter },
 		notifyOnNetworkStatusChange: true,
@@ -45,13 +45,13 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 		setSearchFilter({ ...searchFilter, page: value });
 	};
 
-	const changeStatusHandler = (value: PropertyStatus) => {
+	const changeStatusHandler = (value: CarStatus) => {
 		setSearchFilter({ ...searchFilter, search: { propertyStatus: value } });
 	};
 
 	const deletePropertyHandler = async (id: string) => {
 		try {
-			if (await sweetConfirmAlert("Are you sure to delete this property?")) {
+			if (await sweetConfirmAlert('Are you sure to delete this property?')) {
 				await updateProperty({
 					variables: {
 						input: {
@@ -69,7 +69,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 
 	const updatePropertyHandler = async (status: string, id: string) => {
 		try {
-			if (await sweetConfirmAlert(`Are you sure to change to ${status} status?`)) { 
+			if (await sweetConfirmAlert(`Are you sure to change to ${status} status?`)) {
 				await updateProperty({
 					variables: {
 						input: {
@@ -79,7 +79,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 					},
 				});
 			}
-			await getAgentPropertiesRefetch({ input: searchFilter }); 
+			await getAgentPropertiesRefetch({ input: searchFilter });
 		} catch (err: any) {
 			await sweetErrorHandling(err);
 		}
@@ -103,13 +103,13 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 				<Stack className="property-list-box">
 					<Stack className="tab-name-box">
 						<Typography
-							onClick={() => changeStatusHandler(PropertyStatus.ACTIVE)}
+							onClick={() => changeStatusHandler(CarStatus.ACTIVE)}
 							className={searchFilter.search.propertyStatus === 'ACTIVE' ? 'active-tab-name' : 'tab-name'}
 						>
 							On Sale
 						</Typography>
 						<Typography
-							onClick={() => changeStatusHandler(PropertyStatus.SOLD)}
+							onClick={() => changeStatusHandler(CarStatus.SOLD)}
 							className={searchFilter.search.propertyStatus === 'SOLD' ? 'active-tab-name' : 'tab-name'}
 						>
 							On Sold
@@ -121,7 +121,9 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 							<Typography className="title-text">Date Published</Typography>
 							<Typography className="title-text">Status</Typography>
 							<Typography className="title-text">View</Typography>
-							{searchFilter.search.propertyStatus === 'ACTIVE' && <Typography className="title-text">Action</Typography> }
+							{searchFilter.search.propertyStatus === 'ACTIVE' && (
+								<Typography className="title-text">Action</Typography>
+							)}
 						</Stack>
 
 						{agentProperties?.length === 0 ? (

@@ -79,32 +79,39 @@ query GetMember($input: String!) {
 `);
 
 /**************************
- *        PROPERTY        *
+ *           CAR          *
  *************************/
 
-export const GET_PROPERTY = gql`
-	query GetProperty($input: String!) {
-		getProperty(propertyId: $input) {
+export const GET_CAR = gql`
+	query GetCar($input: String!) {
+		getCar(carId: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			carType
+			carStatus
+			carLocation
+			carAddress
+			carBrand
+			carModel
+			carTitle
+			carPrice
+			carFuelType
+			carTransmission
+			carOptions
+			carColor
+			carMileage
+			carSeats
+			carViews
+			carLikes
+			carComments
+			carRank
+			carImages
+			carDesc
+			carBarter
+			carRent
 			memberId
 			soldAt
 			deletedAt
-			constructedAt
+			manufacturedAt
 			createdAt
 			updatedAt
 			memberData {
@@ -118,11 +125,17 @@ export const GET_PROPERTY = gql`
 				memberImage
 				memberAddress
 				memberDesc
-				memberWarnings
-				memberBlocks
+				memberCars
+				memberArticles
+				memberFollowers
+				memberFollowings
 				memberPoints
 				memberLikes
+				memberComments
+				memberRank
+				memberWarnings
 				memberViews
+				memberBlocks
 				deletedAt
 				createdAt
 				updatedAt
@@ -137,31 +150,37 @@ export const GET_PROPERTY = gql`
 	}
 `;
 
-export const GET_PROPERTIES = gql`
-	query GetProperties($input: PropertiesInquiry!) {
-		getProperties(input: $input) {
+export const GET_CARS = gql`
+	query GetCars($input: CarsInquiry!) {
+		getCars(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyRank
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				carType
+				carStatus
+				carLocation
+				carAddress
+				carBrand
+				carModel
+				carTitle
+				carPrice
+				carFuelType
+				carTransmission
+				carOptions
+				carColor
+				carMileage
+				carSeats
+				carViews
+				carLikes
+				carComments
+				carRank
+				carImages
+				carDesc
+				carBarter
+				carRent
 				memberId
 				soldAt
 				deletedAt
-				constructedAt
+				manufacturedAt
 				createdAt
 				updatedAt
 				memberData {
@@ -175,16 +194,21 @@ export const GET_PROPERTIES = gql`
 					memberImage
 					memberAddress
 					memberDesc
-					memberWarnings
-					memberBlocks
 					memberCars
-					memberRank
+					memberArticles
+					memberFollowers
+					memberFollowings
 					memberPoints
 					memberLikes
+					memberComments
+					memberRank
+					memberWarnings
 					memberViews
+					memberBlocks
 					deletedAt
 					createdAt
 					updatedAt
+					accessToken
 				}
 				meLiked {
 					memberId
@@ -199,66 +223,37 @@ export const GET_PROPERTIES = gql`
 	}
 `;
 
-export const GET_AGENT_PROPERTIES = gql`
-	query GetAgentProperties($input: AgentPropertiesInquiry!) {
-		getAgentProperties(input: $input) {
+export const GET_AGENT_CARS = gql`
+	query GetAgentCars($input: AgentCarsInquiry!) {
+		getAgentCars(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				carType
+				carStatus
+				carLocation
+				carAddress
+				carBrand
+				carModel
+				carTitle
+				carPrice
+				carFuelType
+				carTransmission
+				carOptions
+				carColor
+				carMileage
+				carSeats
+				carViews
+				carLikes
+				carComments
+				carRank
+				carImages
+				carDesc
+				carBarter
+				carRent
 				memberId
 				soldAt
 				deletedAt
-				constructedAt
-				createdAt
-				updatedAt
-			}
-			metaCounter {
-				total
-			}
-		}
-	}
-`;
-
-export const GET_FAVORITES = gql`
-	query GetFavorites($input: OrdinaryInquiry!) {
-		getFavorites(input: $input) {
-			list {
-				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyComments
-				propertyRank
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
-				memberId
-				soldAt
-				deletedAt
-				constructedAt
+				manufacturedAt
 				createdAt
 				updatedAt
 				memberData {
@@ -274,19 +269,97 @@ export const GET_FAVORITES = gql`
 					memberDesc
 					memberCars
 					memberArticles
+					memberFollowers
+					memberFollowings
 					memberPoints
 					memberLikes
-					memberViews
 					memberComments
-					memberFollowings
-					memberFollowers
 					memberRank
 					memberWarnings
+					memberViews
 					memberBlocks
 					deletedAt
 					createdAt
 					updatedAt
 					accessToken
+				}
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
+				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+export const GET_FAVORITES = gql`
+	query GetFavorites($input: OrdinaryInquiry!) {
+		getFavorites(input: $input) {
+			list {
+				_id
+				carType
+				carStatus
+				carLocation
+				carAddress
+				carBrand
+				carModel
+				carTitle
+				carPrice
+				carFuelType
+				carTransmission
+				carOptions
+				carColor
+				carMileage
+				carSeats
+				carViews
+				carLikes
+				carComments
+				carRank
+				carImages
+				carDesc
+				carBarter
+				carRent
+				memberId
+				soldAt
+				deletedAt
+				manufacturedAt
+				createdAt
+				updatedAt
+				memberData {
+					_id
+					memberType
+					memberStatus
+					memberAuthType
+					memberPhone
+					memberNick
+					memberFullName
+					memberImage
+					memberAddress
+					memberDesc
+					memberCars
+					memberArticles
+					memberFollowers
+					memberFollowings
+					memberPoints
+					memberLikes
+					memberComments
+					memberRank
+					memberWarnings
+					memberViews
+					memberBlocks
+					deletedAt
+					createdAt
+					updatedAt
+					accessToken
+				}
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
 				}
 			}
 			metaCounter {
@@ -301,27 +374,32 @@ export const GET_VISITED = gql`
 		getVisited(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyComments
-				propertyRank
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				carType
+				carStatus
+				carLocation
+				carAddress
+				carBrand
+				carModel
+				carTitle
+				carPrice
+				carFuelType
+				carTransmission
+				carOptions
+				carColor
+				carMileage
+				carSeats
+				carViews
+				carLikes
+				carComments
+				carRank
+				carImages
+				carDesc
+				carBarter
+				carRent
 				memberId
 				soldAt
 				deletedAt
-				constructedAt
+				manufacturedAt
 				createdAt
 				updatedAt
 				memberData {
@@ -337,19 +415,24 @@ export const GET_VISITED = gql`
 					memberDesc
 					memberCars
 					memberArticles
+					memberFollowers
+					memberFollowings
 					memberPoints
 					memberLikes
-					memberViews
 					memberComments
-					memberFollowings
-					memberFollowers
 					memberRank
 					memberWarnings
+					memberViews
 					memberBlocks
 					deletedAt
 					createdAt
 					updatedAt
 					accessToken
+				}
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
 				}
 			}
 			metaCounter {
