@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { NextPage } from 'next';
 import { Pagination, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { PropertyCard } from './PropertyCard';
+import { CarCard } from './CarCard';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
-import { Property } from '../../types/car/car';
-import { AgentPropertiesInquiry } from '../../types/car/car.input';
+import { Car } from '../../types/car/car';
+import { AgentCarsInquiry } from '../../types/car/car.input';
 import { T } from '../../types/common';
 import { CarStatus } from '../../enums/car.enum';
 import { userVar } from '../../../apollo/store';
@@ -14,29 +14,29 @@ import { UPDATE_CAR } from '../../../apollo/user/mutation';
 import { GET_AGENT_CARS } from '../../../apollo/user/query';
 import { sweetConfirmAlert, sweetErrorHandling } from '../../sweetAlert';
 
-const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
+const MyCars: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
-	const [searchFilter, setSearchFilter] = useState<AgentPropertiesInquiry>(initialInput);
-	const [agentProperties, setAgentProperties] = useState<Property[]>([]);
+	const [searchFilter, setSearchFilter] = useState<AgentCarsInquiry>(initialInput);
+	const [agentCars, setAgentCars] = useState<Car[]>([]);
 	const [total, setTotal] = useState<number>(0);
 	const user = useReactiveVar(userVar);
 	const router = useRouter();
 
 	/** APOLLO REQUESTS **/
-	const [updateProperty] = useMutation(UPDATE_CAR);
+	const [updateCar] = useMutation(UPDATE_CAR);
 
 	const {
-		loading: getAgentPropertiesLoading,
-		data: getAgentPropertiesData,
-		error: getAgentPropertiesError,
-		refetch: getAgentPropertiesRefetch,
+		loading: getAgentCarsLoading,
+		data: getAgentCarsData,
+		error: getAgentCarsError,
+		refetch: getAgentCarsRefetch,
 	} = useQuery(GET_AGENT_CARS, {
 		fetchPolicy: 'network-only',
 		variables: { input: searchFilter },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data) => {
-			setAgentProperties(data?.getAgentProperties?.list);
-			setTotal(data?.getAgentProperties?.metaCounter[0]?.total ?? 0);
+			setAgentCars(data?.getAgentCars?.list);
+			setTotal(data?.getAgentCars?.metaCounter[0]?.total ?? 0);
 		},
 	});
 
@@ -46,40 +46,40 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 	};
 
 	const changeStatusHandler = (value: CarStatus) => {
-		setSearchFilter({ ...searchFilter, search: { propertyStatus: value } });
+		setSearchFilter({ ...searchFilter, search: { carStatus: value } });
 	};
 
-	const deletePropertyHandler = async (id: string) => {
+	const deleteCarHandler = async (id: string) => {
 		try {
-			if (await sweetConfirmAlert('Are you sure to delete this property?')) {
-				await updateProperty({
+			if (await sweetConfirmAlert('Are you sure to delete this listing?')) {
+				await updateCar({
 					variables: {
 						input: {
 							_id: id,
-							propertyStatus: 'DELETE',
+							carStatus: 'DELETE',
 						},
 					},
 				});
 			}
-			await getAgentPropertiesRefetch({ input: searchFilter });
+			await getAgentCarsRefetch({ input: searchFilter });
 		} catch (err: any) {
 			await sweetErrorHandling(err);
 		}
 	};
 
-	const updatePropertyHandler = async (status: string, id: string) => {
+	const updateCarHandler = async (status: string, id: string) => {
 		try {
 			if (await sweetConfirmAlert(`Are you sure to change to ${status} status?`)) {
-				await updateProperty({
+				await updateCar({
 					variables: {
 						input: {
 							_id: id,
-							propertyStatus: status,
+							carStatus: status,
 						},
 					},
 				});
 			}
-			await getAgentPropertiesRefetch({ input: searchFilter });
+			await getAgentCarsRefetch({ input: searchFilter });
 		} catch (err: any) {
 			await sweetErrorHandling(err);
 		}
@@ -90,13 +90,13 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 	}
 
 	if (device === 'mobile') {
-		return <div>NESTAR PROPERTIES MOBILE</div>;
+		return <div>NESTAR CAR LISTINGS MOBILE</div>;
 	} else {
 		return (
 			<div id="my-property-page">
 				<Stack className="main-title-box">
 					<Stack className="right-box">
-						<Typography className="main-title">My Properties</Typography>
+						<Typography className="main-title">My Cars</Typography>
 						<Typography className="sub-title">We are glad to see you again!</Typography>
 					</Stack>
 				</Stack>
@@ -104,13 +104,13 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 					<Stack className="tab-name-box">
 						<Typography
 							onClick={() => changeStatusHandler(CarStatus.ACTIVE)}
-							className={searchFilter.search.propertyStatus === 'ACTIVE' ? 'active-tab-name' : 'tab-name'}
+							className={searchFilter.search.carStatus === 'ACTIVE' ? 'active-tab-name' : 'tab-name'}
 						>
 							On Sale
 						</Typography>
 						<Typography
 							onClick={() => changeStatusHandler(CarStatus.SOLD)}
-							className={searchFilter.search.propertyStatus === 'SOLD' ? 'active-tab-name' : 'tab-name'}
+							className={searchFilter.search.carStatus === 'SOLD' ? 'active-tab-name' : 'tab-name'}
 						>
 							On Sold
 						</Typography>
@@ -121,29 +121,21 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 							<Typography className="title-text">Date Published</Typography>
 							<Typography className="title-text">Status</Typography>
 							<Typography className="title-text">View</Typography>
-							{searchFilter.search.propertyStatus === 'ACTIVE' && (
-								<Typography className="title-text">Action</Typography>
-							)}
+							{searchFilter.search.carStatus === 'ACTIVE' && <Typography className="title-text">Action</Typography>}
 						</Stack>
 
-						{agentProperties?.length === 0 ? (
+						{agentCars?.length === 0 ? (
 							<div className={'no-data'}>
 								<img src="/img/icons/icoAlert.svg" alt="" />
-								<p>No Property found!</p>
+								<p>No Car found!</p>
 							</div>
 						) : (
-							agentProperties.map((property: Property) => {
-								return (
-									<PropertyCard
-										property={property}
-										deletePropertyHandler={deletePropertyHandler}
-										updatePropertyHandler={updatePropertyHandler}
-									/>
-								);
+							agentCars.map((car: Car) => {
+								return <CarCard car={car} deleteCarHandler={deleteCarHandler} updateCarHandler={updateCarHandler} />;
 							})
 						)}
 
-						{agentProperties.length !== 0 && (
+						{agentCars.length !== 0 && (
 							<Stack className="pagination-config">
 								<Stack className="pagination-box">
 									<Pagination
@@ -155,7 +147,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 									/>
 								</Stack>
 								<Stack className="total-result">
-									<Typography>{total} property available</Typography>
+									<Typography>{total} cars available</Typography>
 								</Stack>
 							</Stack>
 						)}
@@ -166,15 +158,15 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 	}
 };
 
-MyProperties.defaultProps = {
+MyCars.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 5,
 		sort: 'createdAt',
 		search: {
-			propertyStatus: 'ACTIVE',
+			carStatus: 'ACTIVE',
 		},
 	},
 };
 
-export default MyProperties;
+export default MyCars;

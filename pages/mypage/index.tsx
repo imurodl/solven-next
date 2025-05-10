@@ -4,7 +4,7 @@ import { NextPage } from 'next';
 import { Stack } from '@mui/material';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import MyProperties from '../../libs/components/mypage/MyProperties';
+import MyCars from '../../libs/components/mypage/MyCars';
 import MyFavorites from '../../libs/components/mypage/MyFavorites';
 import RecentlyVisited from '../../libs/components/mypage/RecentlyVisited';
 import AddProperty from '../../libs/components/mypage/AddNewProperty';
@@ -56,7 +56,7 @@ const MyPage: NextPage = () => {
 				},
 			});
 			await sweetTopSmallSuccessAlert('Subscribe', 800);
-			await refetch({ input: query })
+			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
 		}
@@ -73,7 +73,7 @@ const MyPage: NextPage = () => {
 				},
 			});
 			await sweetTopSmallSuccessAlert('Unsubscribe', 800);
-			await refetch({ input: query })
+			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
 		}
@@ -82,17 +82,17 @@ const MyPage: NextPage = () => {
 		try {
 			if (!id) return;
 			if (!user._id) throw new Error(Messages.error2);
-			
+
 			await likeTargetMember({
 				variables: {
 					input: id,
 				},
 			});
-			await sweetTopSmallSuccessAlert("Success!", 808);
-			await refetch({ input: query })
+			await sweetTopSmallSuccessAlert('Success!', 808);
+			await refetch({ input: query });
 		} catch (err: any) {
 			console.log('ERROR, likeMemberHandler:', err.message);
-			sweetMixinErrorAlert(err.message).then()
+			sweetMixinErrorAlert(err.message).then();
 		}
 	};
 
@@ -119,7 +119,7 @@ const MyPage: NextPage = () => {
 							<Stack className="main-config" mb={'76px'}>
 								<Stack className={'list-config'}>
 									{category === 'addProperty' && <AddProperty />}
-									{category === 'myProperties' && <MyProperties />}
+									{category === 'myProperties' && <MyCars />}
 									{category === 'myFavorites' && <MyFavorites />}
 									{category === 'recentlyVisited' && <RecentlyVisited />}
 									{category === 'myArticles' && <MyArticles />}

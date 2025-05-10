@@ -4,39 +4,39 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 import IconButton from '@mui/material/IconButton';
 import ModeIcon from '@mui/icons-material/Mode';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Property } from '../../types/car/car';
+import { Car } from '../../types/car/car';
 import { formatterStr } from '../../utils';
 import Moment from 'react-moment';
 import { useRouter } from 'next/router';
 import { CarStatus } from '../../enums/car.enum';
 
-interface PropertyCardProps {
-	property: Property;
-	deletePropertyHandler?: any;
+interface CarCardProps {
+	car: Car;
+	deleteCarHandler?: any;
 	memberPage?: boolean;
-	updatePropertyHandler?: any;
+	updateCarHandler?: any;
 }
 
-export const PropertyCard = (props: PropertyCardProps) => {
-	const { property, deletePropertyHandler, memberPage, updatePropertyHandler } = props;
+export const CarCard = (props: CarCardProps) => {
+	const { car, deleteCarHandler, memberPage, updateCarHandler } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 
 	/** HANDLERS **/
-	const pushEditProperty = async (id: string) => {
-		console.log('+pushEditProperty: ', id);
+	const pushEditCar = async (id: string) => {
+		console.log('+pushEditCar: ', id);
 		await router.push({
 			pathname: '/mypage',
 			query: { category: 'addProperty', propertyId: id },
 		});
 	};
 
-	const pushPropertyDetail = async (id: string) => {
+	const pushCarDetail = async (id: string) => {
 		if (memberPage)
 			await router.push({
-				pathname: '/property/detail',
+				pathname: '/car/detail',
 				query: { id: id },
 			});
 		else return;
@@ -51,33 +51,33 @@ export const PropertyCard = (props: PropertyCardProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>MOBILE PROPERTY CARD</div>;
+		return <div>MOBILE CAR LISTING CARD</div>;
 	} else
 		return (
 			<Stack className="property-card-box">
-				<Stack className="image-box" onClick={() => pushPropertyDetail(property?._id)}>
-					<img src={`${process.env.REACT_APP_API_URL}/${property.propertyImages[0]}`} alt="" />
+				<Stack className="image-box" onClick={() => pushCarDetail(car?._id)}>
+					<img src={`${process.env.REACT_APP_API_URL}/${car.carImages[0]}`} alt="" />
 				</Stack>
-				<Stack className="information-box" onClick={() => pushPropertyDetail(property?._id)}>
-					<Typography className="name">{property.propertyTitle}</Typography>
-					<Typography className="address">{property.propertyAddress}</Typography>
+				<Stack className="information-box" onClick={() => pushCarDetail(car?._id)}>
+					<Typography className="name">{car.carTitle}</Typography>
+					<Typography className="address">{car.carAddress}</Typography>
 					<Typography className="price">
-						<strong>${formatterStr(property?.propertyPrice)}</strong>
+						<strong>${formatterStr(car?.carPrice)}</strong>
 					</Typography>
 				</Stack>
 				<Stack className="date-box">
 					<Typography className="date">
-						<Moment format="DD MMMM, YYYY">{property.createdAt}</Moment>
+						<Moment format="DD MMMM, YYYY">{car.createdAt}</Moment>
 					</Typography>
 				</Stack>
 				<Stack className="status-box">
 					<Stack className="coloured-box" sx={{ background: '#E5F0FD' }} onClick={handleClick}>
 						<Typography className="status" sx={{ color: '#3554d1' }}>
-							{property.propertyStatus}
+							{car.carStatus}
 						</Typography>
 					</Stack>
 				</Stack>
-				{!memberPage && property.propertyStatus !== 'SOLD' && (
+				{!memberPage && car.carStatus !== 'SOLD' && (
 					<Menu
 						anchorEl={anchorEl}
 						open={open}
@@ -98,13 +98,13 @@ export const PropertyCard = (props: PropertyCardProps) => {
 							},
 						}}
 					>
-						{property.propertyStatus === 'ACTIVE' && (
+						{car.carStatus === 'ACTIVE' && (
 							<>
 								<MenuItem
 									disableRipple
 									onClick={() => {
 										handleClose();
-										updatePropertyHandler(CarStatus.SOLD, property?._id);
+										updateCarHandler(CarStatus.SOLD, car?._id);
 									}}
 								>
 									Sold
@@ -115,14 +115,14 @@ export const PropertyCard = (props: PropertyCardProps) => {
 				)}
 
 				<Stack className="views-box">
-					<Typography className="views">{property.propertyViews.toLocaleString()}</Typography>
+					<Typography className="views">{car.carViews.toLocaleString()}</Typography>
 				</Stack>
-				{!memberPage && property.propertyStatus == CarStatus.ACTIVE && (
+				{!memberPage && car.carStatus == CarStatus.ACTIVE && (
 					<Stack className="action-box">
-						<IconButton className="icon-button" onClick={() => pushEditProperty(property._id)}>
+						<IconButton className="icon-button" onClick={() => pushEditCar(car._id)}>
 							<ModeIcon className="buttons" />
 						</IconButton>
-						<IconButton className="icon-button" onClick={() => deletePropertyHandler(property._id)}>
+						<IconButton className="icon-button" onClick={() => deleteCarHandler(car._id)}>
 							<DeleteIcon className="buttons" />
 						</IconButton>
 					</Stack>

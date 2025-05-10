@@ -1,7 +1,7 @@
 import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { Box, Button, Menu, MenuItem, Pagination, Stack, Typography } from '@mui/material';
-import PropertyCard from '../../libs/components/car/PropertyCard';
+import CarCard from '../../libs/components/car/CarCard';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import Filter from '../../libs/components/car/Filter';
@@ -182,7 +182,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 								) : (
 									properties.map((property: Property) => {
 										return (
-											<PropertyCard property={property} likePropertyHandler={likePropertyHandler} key={property?._id} />
+											<CarCard property={property} likePropertyHandler={likePropertyHandler} key={property?._id} />
 										);
 									})
 								)}
