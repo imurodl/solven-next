@@ -211,3 +211,33 @@ export const GET_COMMENTS = gql`
 		}
 	}
 `;
+
+/**************************
+ *        CAR BRAND       *
+ *************************/
+
+export const GET_CAR_BRAND = gql`
+	query GetCarBrand($input: String!) {
+		getCarBrand(input: $input) {
+			_id
+			carBrandName
+			carBrandModels
+			carBrandStatus
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const GET_CAR_BRANDS = gql`
+	query GetCarBrands {
+		getCarBrands {
+			_id
+			carBrandName
+			carBrandModels
+			carBrandStatus
+			createdAt
+			updatedAt
+		}
+	}
+`;

@@ -167,3 +167,57 @@ export const REMOVE_COMMENT_BY_ADMIN = gql`
 		}
 	}
 `;
+
+/**************************
+ *        CAR BRAND       *
+ *************************/
+
+export const CREATE_CAR_BRAND = gql`
+	mutation CreateCarBrand($input: CarBrandInput!) {
+		createCarBrand(input: $input) {
+			_id
+			carBrandName
+			carBrandModels
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const UPDATE_CAR_BRAND = gql`
+	mutation UpdateCarBrand($input: CarBrandUpdate!) {
+		updateCarBrand(input: $input) {
+			_id
+			carBrandName
+			carBrandModels
+			carBrandStatus
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const DELETE_CAR_BRAND_MODEL = gql`
+	mutation DeleteCarBrandModel($input: CarBrandModelInput!) {
+		deleteCarBrandModel(input: $input) {
+			_id
+			carBrandName
+			carBrandModels
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const REMOVE_CAR_BRAND = gql`
+	mutation RemoveCarBrand($input: String!) {
+		removeCarBrand(carBrandName: $input) {
+			_id
+			carBrandName
+			carBrandModels
+			carBrandStatus
+			createdAt
+			updatedAt
+		}
+	}
+`;

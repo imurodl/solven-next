@@ -699,3 +699,33 @@ export const GET_MEMBER_FOLLOWINGS = gql`
 		}
 	}
 `;
+
+/**************************
+ *        CAR BRAND       *
+ *************************/
+
+export const GET_CAR_BRAND_BY_USER = gql`
+	query GetCarBrandByUser($input: String!) {
+		getCarBrandByUser(input: $input) {
+			_id
+			carBrandName
+			carBrandModels
+			carBrandStatus
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const GET_CAR_BRANDS_BY_USER = gql`
+	query GetCarBrandsByUser {
+		getCarBrandsByUser {
+			_id
+			carBrandName
+			carBrandModels
+			carBrandStatus
+			createdAt
+			updatedAt
+		}
+	}
+`;
