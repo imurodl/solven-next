@@ -28,7 +28,7 @@ const withLayoutBasic = (Component: any) => {
 				bgImage = '';
 
 			switch (router.pathname) {
-				case '/property':
+				case '/car':
 					title = 'Property Search';
 					desc = 'We are glad to see you again!';
 					bgImage = '/img/banner/properties.png';

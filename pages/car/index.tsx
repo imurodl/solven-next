@@ -6,8 +6,8 @@ import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import Filter from '../../libs/components/car/Filter';
 import { useRouter } from 'next/router';
-import { PropertiesInquiry } from '../../libs/types/car/car.input';
-import { Property } from '../../libs/types/car/car';
+import { CarsInquiry } from '../../libs/types/car/car.input';
+import { Car } from '../../libs/types/car/car';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import { Direction, Message } from '../../libs/enums/common.enum';
@@ -23,13 +23,13 @@ export const getStaticProps = async ({ locale }: any) => ({
 	},
 });
 
-const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
+const CarList: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
-	const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>(
+	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(
 		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
 	);
-	const [properties, setProperties] = useState<Property[]>([]);
+	const [cars, setCars] = useState<Car[]>([]);
 	const [total, setTotal] = useState<number>(0);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -37,20 +37,20 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	const [filterSortName, setFilterSortName] = useState('New');
 
 	/** APOLLO REQUESTS **/
-	const [likeTargetProperty] = useMutation(LIKE_TARGET_CAR);
+	const [likeTargetCar] = useMutation(LIKE_TARGET_CAR);
 
 	const {
-		loading: getPropertiesLoading,
-		data: getPropertiesData,
-		error: getPropertiesError,
-		refetch: getPropertiesRefetch,
+		loading: getCarsLoading,
+		data: getCarsData,
+		error: getCarsError,
+		refetch: getCarsRefetch,
 	} = useQuery(GET_CARS, {
 		fetchPolicy: 'network-only',
 		variables: { input: searchFilter },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			setProperties(data?.getProperties?.list);
-			setTotal(data?.getProperties?.metaCounter[0]?.total);
+			setCars(data?.getCars?.list);
+			setTotal(data?.getCars?.metaCounter[0]?.total);
 		},
 	});
 
@@ -70,32 +70,28 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 
 	/** HANDLERS **/
 
-	const likePropertyHandler = async (user: T, id: string) => {
+	const likeCarHandler = async (user: T, id: string) => {
 		try {
 			if (!id) return;
 			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
 			//execute likePropertyHandler Mutation
-			await likeTargetProperty({ variables: { input: id } });
+			await likeTargetCar({ variables: { input: id } });
 
 			//execute getPropertiesRefetch
-			await getPropertiesRefetch({ input: initialInput });
+			await getCarsRefetch({ input: initialInput });
 
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
-			console.log('ERROR, likePropertyHandler', err.message);
+			console.log('ERROR, likeCarHandler', err.message);
 			sweetMixinErrorAlert(err.message).then();
 		}
 	};
 
 	const handlePaginationChange = async (event: ChangeEvent<unknown>, value: number) => {
 		searchFilter.page = value;
-		await router.push(
-			`/property?input=${JSON.stringify(searchFilter)}`,
-			`/property?input=${JSON.stringify(searchFilter)}`,
-			{
-				scroll: false,
-			},
-		);
+		await router.push(`/car?input=${JSON.stringify(searchFilter)}`, `/car?input=${JSON.stringify(searchFilter)}`, {
+			scroll: false,
+		});
 		setCurrentPage(value);
 	};
 
@@ -128,7 +124,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	};
 
 	if (device === 'mobile') {
-		return <h1>PROPERTIES MOBILE</h1>;
+		return <h1>CAR LISTINGS MOBILE</h1>;
 	} else {
 		return (
 			<div id="property-list-page" style={{ position: 'relative' }}>
@@ -170,25 +166,23 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 					<Stack className={'property-page'}>
 						<Stack className={'filter-config'}>
 							{/* @ts-ignore */}
-							<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
+							{/* <Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} /> */}
 						</Stack>
 						<Stack className="main-config" mb={'76px'}>
 							<Stack className={'list-config'}>
-								{properties?.length === 0 ? (
+								{cars?.length === 0 ? (
 									<div className={'no-data'}>
 										<img src="/img/icons/icoAlert.svg" alt="" />
 										<p>No Properties found!</p>
 									</div>
 								) : (
-									properties.map((property: Property) => {
-										return (
-											<CarCard property={property} likePropertyHandler={likePropertyHandler} key={property?._id} />
-										);
+									cars.map((car: Car) => {
+										return <CarCard car={car} likeCarHandler={likeCarHandler} key={car?._id} />;
 									})
 								)}
 							</Stack>
 							<Stack className="pagination-config">
-								{properties.length !== 0 && (
+								{cars.length !== 0 && (
 									<Stack className="pagination-box">
 										<Pagination
 											page={currentPage}
@@ -200,10 +194,10 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 									</Stack>
 								)}
 
-								{properties.length !== 0 && (
+								{cars.length !== 0 && (
 									<Stack className="total-result">
 										<Typography>
-											Total {total} propert{total > 1 ? 'ies' : 'y'} available
+											Total {total} car{total > 1 ? 's' : ''} available
 										</Typography>
 									</Stack>
 								)}
@@ -216,23 +210,37 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	}
 };
 
-PropertyList.defaultProps = {
+CarList.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 9,
 		sort: 'createdAt',
 		direction: 'DESC',
 		search: {
-			squaresRange: {
-				start: 0,
-				end: 500,
-			},
+			locationList: [],
+			typeList: [],
+			fuelTypeList: [],
+			transmissionList: [],
+			colorList: [],
+			brandList: [],
+			modelList: [],
+			carOptions: [],
+			carListingptions: [],
 			pricesRange: {
 				start: 0,
-				end: 2000000,
+				end: 1000000000, // adjust if needed
 			},
+			mileageRange: {
+				start: 0,
+				end: 1000000, // adjust if needed
+			},
+			yearRange: {
+				start: 1990,
+				end: new Date().getFullYear(),
+			},
+			text: '',
 		},
 	},
 };
 
-export default withLayoutBasic(PropertyList);
+export default withLayoutBasic(CarList);

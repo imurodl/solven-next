@@ -402,7 +402,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 
 							return availableModels.map((model: string) => (
 								<span onClick={() => propertyRoomSelectHandler(model)} key={model}>
-									{model} model
+									{model}
 								</span>
 							));
 						})()}

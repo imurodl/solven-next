@@ -11,19 +11,23 @@ import { Direction } from '../../enums/common.enum';
 
 export interface CarInput {
 	carType: CarType;
+	carBrand: string;
+	carModel: string;
 	carLocation: CarLocation;
 	carAddress: string;
+	carFuelType: CarFuelType;
+	carTransmission: CarTransmission;
 	carTitle: string;
 	carPrice: number;
-	carSquare: number;
-	carBeds: number;
-	carRooms: number;
+	carSeats: number;
+	carOptions?: string[];
+	carColor: CarColor;
+	carMileage: number;
 	carImages: string[];
+	manufacturedAt: number;
 	carDesc?: string;
 	carBarter?: boolean;
 	carRent?: boolean;
-	memberId?: string;
-	manufacturedAt: number;
 }
 
 interface CarsISearch {
