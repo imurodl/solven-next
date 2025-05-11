@@ -39,8 +39,8 @@ interface CarsISearch {
 	colorList?: CarColor[];
 	brandList?: string[];
 	modelList?: string[];
-	carOptions?: CarOptions[];
-	carListingptions?: string[];
+	carOptions?: string[];
+	carListingOptions?: CarOptions[];
 	pricesRange?: Range;
 	mileageRange?: Range;
 	yearRange?: Range;

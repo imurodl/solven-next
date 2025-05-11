@@ -166,7 +166,7 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 					<Stack className={'property-page'}>
 						<Stack className={'filter-config'}>
 							{/* @ts-ignore */}
-							{/* <Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} /> */}
+							<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
 						</Stack>
 						<Stack className="main-config" mb={'76px'}>
 							<Stack className={'list-config'}>
@@ -225,14 +225,14 @@ CarList.defaultProps = {
 			brandList: [],
 			modelList: [],
 			carOptions: [],
-			carListingptions: [],
+			carListingOptions: [],
 			pricesRange: {
 				start: 0,
-				end: 1000000000, // adjust if needed
+				end: 500000000, // adjust if needed
 			},
 			mileageRange: {
 				start: 0,
-				end: 1000000, // adjust if needed
+				end: 500000, // adjust if needed
 			},
 			yearRange: {
 				start: 1990,
