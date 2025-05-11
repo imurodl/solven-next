@@ -13,6 +13,7 @@ import Chat from '../Chat';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import ScrollToTop from '../common/ScrollToTop';
 
 const withLayoutMain = (Component: any) => {
 	return (props: any) => {
@@ -73,6 +74,7 @@ const withLayoutMain = (Component: any) => {
 						</Stack>
 
 						<Chat />
+						<ScrollToTop />
 
 						<Stack id={'footer'}>
 							<Footer />
