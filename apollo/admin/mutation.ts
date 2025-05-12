@@ -177,7 +177,9 @@ export const CREATE_CAR_BRAND = gql`
 		createCarBrand(input: $input) {
 			_id
 			carBrandName
+			carBrandImg
 			carBrandModels
+			carBrandStatus
 			createdAt
 			updatedAt
 		}
@@ -189,6 +191,7 @@ export const UPDATE_CAR_BRAND = gql`
 		updateCarBrand(input: $input) {
 			_id
 			carBrandName
+			carBrandImg
 			carBrandModels
 			carBrandStatus
 			createdAt
@@ -203,6 +206,8 @@ export const DELETE_CAR_BRAND_MODEL = gql`
 			_id
 			carBrandName
 			carBrandModels
+			carBrandImg
+			carBrandStatus
 			createdAt
 			updatedAt
 		}
@@ -214,6 +219,7 @@ export const REMOVE_CAR_BRAND = gql`
 		removeCarBrand(carBrandName: $input) {
 			_id
 			carBrandName
+			carBrandImg
 			carBrandModels
 			carBrandStatus
 			createdAt

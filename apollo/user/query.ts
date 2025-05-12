@@ -709,6 +709,7 @@ export const GET_CAR_BRAND_BY_USER = gql`
 		getCarBrandByUser(input: $input) {
 			_id
 			carBrandName
+			carBrandImg
 			carBrandModels
 			carBrandStatus
 			createdAt
@@ -722,6 +723,7 @@ export const GET_CAR_BRANDS_BY_USER = gql`
 		getCarBrandsByUser {
 			_id
 			carBrandName
+			carBrandImg
 			carBrandModels
 			carBrandStatus
 			createdAt

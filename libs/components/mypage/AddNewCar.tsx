@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Button, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { CarLocation, CarTransmission, CarColor, CarFuelType, CarType, CarOptions } from '../../enums/car.enum';
-import { REACT_APP_API_URL, propertySquare } from '../../config';
+import { REACT_APP_API_URL } from '../../config';
 import { CarInput } from '../../types/car/car.input';
 import axios from 'axios';
 import { getJwtToken } from '../../auth';
@@ -95,7 +95,7 @@ const AddCar = ({ initialValues, ...props }: any) => {
 				  }`,
 					variables: {
 						files: [null, null, null, null, null],
-						target: 'property',
+						target: 'car',
 					},
 				}),
 			);

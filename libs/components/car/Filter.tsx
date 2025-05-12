@@ -17,7 +17,7 @@ import { CarLocation, CarType, CarFuelType, CarColor, CarTransmission, CarOption
 import { CarsInquiry } from '../../types/car/car.input';
 import { useRouter } from 'next/router';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { carMileage, carYears, propertySquare } from '../../config';
+import { carMileage, carYears } from '../../config';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { GET_CAR_BRANDS_BY_USER } from '../../../apollo/user/query';
 import { useQuery } from '@apollo/client';

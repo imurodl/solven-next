@@ -4,14 +4,6 @@ export const availableOptions = ['carBarter', 'carRent'];
 
 const thisYear = new Date().getFullYear();
 
-export const propertyYears: any = [];
-
-for (let i = 1990; i <= thisYear; i++) {
-	propertyYears.push(String(i));
-}
-
-export const propertySquare = [0, 25, 50, 75, 100, 125, 150, 200, 300, 500];
-
 export const Messages = {
 	error1: 'Something went wrong!',
 	error2: 'Please login first!',

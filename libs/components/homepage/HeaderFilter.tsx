@@ -6,7 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { carMileage, propertySquare, propertyYears } from '../../config';
+import { carMileage, carYears } from '../../config';
 import { CarLocation, CarType } from '../../enums/car.enum';
 import { CarsInquiry } from '../../types/car/car.input';
 import { useRouter } from 'next/router';
@@ -239,11 +239,11 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						...searchFilter,
 						search: {
 							...searchFilter.search,
-							carListingptions: [value],
+							carListingOptions: [value],
 						},
 					});
 				} else {
-					delete searchFilter.search.carListingptions;
+					delete searchFilter.search.carListingOptions;
 					setSearchFilter({
 						...searchFilter,
 						search: {
@@ -329,8 +329,8 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				delete searchFilter.search.modelList;
 			}
 
-			if (searchFilter?.search?.carListingptions?.length == 0) {
-				delete searchFilter.search.carListingptions;
+			if (searchFilter?.search?.carListingOptions?.length == 0) {
+				delete searchFilter.search.carListingOptions;
 			}
 
 			if (searchFilter?.search?.typeList?.length == 0) {
@@ -492,7 +492,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 													inputProps={{ 'aria-label': 'Without label' }}
 													MenuProps={MenuProps}
 												>
-													{propertyYears?.slice(0)?.map((year: number) => (
+													{carYears?.slice(0)?.map((year: number) => (
 														<MenuItem value={year} disabled={yearCheck.end <= year} key={year}>
 															{year}
 														</MenuItem>
@@ -508,7 +508,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 													inputProps={{ 'aria-label': 'Without label' }}
 													MenuProps={MenuProps}
 												>
-													{propertyYears
+													{carYears
 														?.slice(0)
 														.reverse()
 														.map((year: number) => (
