@@ -35,7 +35,9 @@ const ScrollToTop = () => {
 					'&:hover': {
 						cursor: 'pointer',
 						transform: 'scale(1.1)',
-						bgcolor: '#fff',
+						bgcolor: '#405ff2',
+						color: '#fff',
+						transition: 'all 0.5s linear',
 					},
 				}}
 			>

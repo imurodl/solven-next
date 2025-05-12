@@ -10,6 +10,8 @@ import TopCars from '../libs/components/homepage/TopCars';
 import { Stack } from '@mui/material';
 import Advertisement from '../libs/components/homepage/Advertisement';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Features from '../libs/components/homepage/Features';
+import CtaSection from '../libs/components/homepage/CtaSection';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -34,12 +36,14 @@ const Home: NextPage = () => {
 		return (
 			<Stack className={'home-page'}>
 				<TrendCars />
+				<Features />
 				<PopularCars />
 				<Advertisement />
 				<TopCars />
 				<TopAgents />
 				<Events />
 				<CommunityBoards />
+				<CtaSection />
 			</Stack>
 		);
 	}

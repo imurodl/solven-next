@@ -14,7 +14,7 @@
 				button {
 					margin-left: 10px;
 					color: #181a20;
-					font-family: $font;
+					font-family: 'DM Sans';
 					font-size: 14px;
 					font-style: normal;
 					font-weight: bold;
@@ -33,53 +33,69 @@
 				.filter-config {
 					width: 339px;
 					height: auto;
+
 					.filter-main {
 						width: 100%;
-						padding: 30px 24px;
+						padding: 20px 24px;
 						border-radius: 12px;
 						background: #fff;
 						box-shadow: 0 1px 4px 0 rgba(24, 26, 32, 0.07);
+
 						.find-your-home {
 							position: relative;
 							width: 100%;
-							gap: 10px;
+							gap: 2px;
+							margin-bottom: 18px;
+
 							.property-location {
-								gap: 10px;
-								height: 115px;
+								gap: 4px;
+								height: 256px;
 								overflow: hidden;
-								transition: 1s;
-								&:hover {
-									height: 253px;
+								font-size: 14px;
+								font-weight: 400;
+								color: #181a20;
+								cursor: pointer;
+								line-height: 1.5;
+								p {
+									font-family: 'Poppins';
 								}
 							}
+
 							.title-main {
 								width: 100%;
 								height: 25px;
 								color: #181a20;
-								font-family: $font;
 								font-size: 15px;
 								font-style: normal;
 								font-weight: 600;
 								line-height: normal;
+								margin-bottom: 10px;
 							}
+
 							.title {
 								width: auto;
 								height: auto;
 								color: #181a20;
-								font-family: $font;
 								font-size: 14px;
 								font-style: normal;
 								font-weight: 600;
 								line-height: normal;
+								margin-bottom: 8px;
 							}
+
 							.input-box {
 								position: relative;
 								width: 100%;
+								display: flex;
 								flex-direction: row;
 								align-items: center;
+								gap: 8px;
+								margin-bottom: 6px;
+
 								svg {
 									cursor: pointer;
 								}
+
 								.search-input {
 									width: 100%;
 									height: 53px;
@@ -89,12 +105,12 @@
 									outline: none;
 									padding-left: 43px;
 									color: #717171;
-									font-family: $font;
 									font-size: 14px;
 									font-style: normal;
 									font-weight: 400;
 									line-height: 26px;
 								}
+
 								img {
 									position: absolute;
 									width: 18px;
@@ -102,16 +118,23 @@
 									top: 18px;
 									left: 15px;
 								}
+
 								.property-checkbox {
 									width: 16px;
-									height: 15px;
-									border-radius: 12px;
-									margin-right: 10px;
-									svg {
-										width: 19px;
-									}
+									height: 16px;
+									margin-right: 6px;
+								}
+
+								label {
+									font-size: 14px;
+									font-weight: 400;
+									color: #181a20;
+									cursor: pointer;
+									line-height: 1.5;
+									font-family: 'Poppins';
 								}
 							}
+
 							.city-select {
 								width: 100%;
 								height: 49px;
@@ -124,12 +147,12 @@
 								cursor: pointer;
 								box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 								color: #717171;
-								font-family: $font;
 								font-size: 14px;
 								font-style: normal;
 								font-weight: 400;
 								line-height: 26px;
 							}
+
 							.divider {
 								position: absolute;
 								height: 48px;
@@ -137,6 +160,7 @@
 								right: 39px;
 								top: 31px;
 							}
+
 							.arrow-down {
 								position: absolute;
 								width: 15px;
@@ -145,38 +169,43 @@
 								right: 13px;
 								top: 52px;
 							}
+
 							.property-type {
 								color: #181a20;
-								font-family: $font;
 								font-size: 14px;
 								font-style: normal;
 								font-weight: 400;
 								line-height: 19px;
+								font-family: 'DM Sans';
 							}
+
 							.button-group {
 								width: 100%;
 								height: 43.998px;
 								flex-direction: row;
+
 								button {
 									width: 100%;
 									color: #181a20;
 									text-align: center;
-									font-family: $font;
 									font-size: 13px;
 									font-style: normal;
 									font-weight: 600;
 									line-height: normal;
 								}
 							}
+
 							.square-year-input {
 								width: 100%;
 								gap: 10px;
 								flex-direction: row;
 								align-items: center;
+
 								.central-divider {
 									width: 22px;
 									border: 1px solid black;
 								}
+
 								input {
 									width: 100%;
 									height: 49px;
@@ -185,17 +214,15 @@
 									background: #fff;
 									outline: none;
 									padding-left: 15px;
-								}
-								label {
-									line-height: 13px;
-								}
-								input::placeholder {
-									color: #717171;
-									font-family: $font;
-									font-size: 14px;
-									font-style: normal;
-									font-weight: 400;
-									line-height: 26px;
+
+									&::placeholder {
+										color: #717171;
+										font-family: $font;
+										font-size: 14px;
+										font-style: normal;
+										font-weight: 400;
+										line-height: 26px;
+									}
 								}
 							}
 						}

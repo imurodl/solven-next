@@ -2,6 +2,14 @@
 @import 'variables.scss';
 @import 'reset.scss';
 
+.css-16cg59e-MuiTypography-root {
+	font-family: 'Poppins';
+}
+
+.css-1vvkud8-MuiInputBase-input-MuiOutlinedInput-input {
+	padding: 0;
+}
+
 a {
 	white-space: nowrap;
 	text-decoration: none;
