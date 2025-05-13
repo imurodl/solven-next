@@ -14,7 +14,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 	},
 });
 
-const Join: NextPage = () => {
+const Join: NextPage = (props: any) => {
 	const router = useRouter();
 	const device = useDeviceDetect();
 	const [input, setInput] = useState({ nick: '', password: '', phone: '', type: 'USER' });
@@ -69,6 +69,12 @@ const Join: NextPage = () => {
 		return (
 			<Stack className={'join-page'}>
 				<Stack className={'container'}>
+					<Stack className={`header-basic`}>
+						<Stack className={'container'}>
+							<strong>{props.title}</strong>
+							<span>{props.desc}</span>
+						</Stack>
+					</Stack>
 					<Stack className={'main'}>
 						<Stack className={'left'}>
 							{/* @ts-ignore */}

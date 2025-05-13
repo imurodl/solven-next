@@ -129,6 +129,12 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 		return (
 			<div id="property-list-page" style={{ position: 'relative' }}>
 				<div className="container">
+					<Stack className={`header-basic`}>
+						<Stack className={'container'}>
+							<strong>{props.title}</strong>
+							<span>{props.desc}</span>
+						</Stack>
+					</Stack>
 					<Box component={'div'} className={'right'}>
 						<span>Sort by</span>
 						<div>

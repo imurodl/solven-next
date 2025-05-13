@@ -131,6 +131,12 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 		return (
 			<Stack className={'agent-list-page'}>
 				<Stack className={'container'}>
+					<Stack className={`header-basic`}>
+						<Stack className={'container'}>
+							<strong>{props.title}</strong>
+							<span>{props.desc}</span>
+						</Stack>
+					</Stack>
 					<Stack className={'filter'}>
 						<Box component={'div'} className={'left'}>
 							<input

@@ -168,6 +168,161 @@ body::-webkit-scrollbar {
 					}
 				}
 			}
+			.navbar-basic {
+				// position: fixed;
+				padding: 22px 0px;
+				width: 100%;
+				height: 100px;
+				display: flex;
+				flex-direction: row;
+				box-sizing: border-box;
+				z-index: 99;
+				align-items: center;
+				border-top: 1px solid rgba(255, 255, 255, 0.07);
+				background-color: #050b20;
+				.container {
+					flex-direction: row;
+					align-items: center;
+					justify-content: space-between;
+					.logo-box {
+						img {
+							width: 150px;
+							cursor: pointer;
+						}
+					}
+					.router-box {
+						position: relative;
+						width: 617px;
+						display: flex;
+						flex-direction: row;
+						justify-content: space-between;
+						div {
+							position: relative;
+							color: #eeeeeeed;
+							font-family: $font;
+							font-size: 15px;
+							font-style: normal;
+							font-weight: 600;
+							line-height: normal;
+							cursor: pointer;
+							.community_menu {
+								position: absolute;
+								left: -177%;
+								top: 30px;
+								width: 434px;
+								height: 33px;
+								background: white;
+								transition: all ease 2s;
+								&:before {
+									content: '';
+									display: block;
+									position: absolute;
+									top: 0;
+									right: 50%;
+									width: 10px;
+									height: 10px;
+									background: white;
+									transform: translateY(-50%) rotate(45deg);
+									z-index: 0;
+								}
+							}
+						}
+					}
+					.user-box {
+						width: 270px;
+						display: flex;
+						flex-direction: row;
+						justify-content: flex-end;
+						.join-box {
+							width: 184px;
+							height: 47px;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							border-radius: 60px;
+							border: 1px solid #ffffff;
+							cursor: pointer;
+							svg {
+								color: #ffffff;
+								margin-right: 10px;
+							}
+							span {
+								font-family: $font;
+								font-size: 14px;
+								font-style: normal;
+								font-weight: 600;
+								line-height: normal;
+								color: #ffffff;
+							}
+						}
+						.login-user {
+							img {
+								width: 42px;
+								height: 42px;
+								border-radius: 50%;
+								object-fit: cover;
+							}
+						}
+					}
+					.lan-box {
+						margin-left: 28px;
+						display: flex;
+						align-items: center;
+						.notification-icon {
+							color: white;
+						}
+						.btn-lang {
+							border-radius: 4px;
+							img {
+								width: 24px;
+								height: 17px;
+								border-radius: 2px;
+							}
+						}
+						.img-flag {
+							width: 24px;
+							height: 17px;
+							border-radius: 2px;
+							margin-right: 8px;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.header-basic {
+		position: relative;
+		width: 100%;
+		height: 180px;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		background: #f6f6f6;
+		border-radius: 20px;
+		&.auth {
+			height: 180px;
+		}
+		.container {
+			margin-top: 50px;
+			strong {
+				color: #050b20;
+				font-family: $font;
+				font-size: 40px;
+				font-style: normal;
+				font-weight: 600;
+				line-height: normal;
+				letter-spacing: 0.96px;
+				text-transform: capitalize;
+			}
+			span {
+				color: #050b20;
+				font-family: $font;
+				font-size: 20px;
+				font-style: normal;
+				font-weight: 400;
+				line-height: 26px;
+			}
 		}
 	}
 
@@ -407,40 +562,6 @@ body::-webkit-scrollbar {
 						}
 					}
 				}
-			}
-		}
-	}
-
-	.header-basic {
-		position: relative;
-		width: 100%;
-		height: 557px;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		background: black;
-		&.auth {
-			height: 300px;
-		}
-		.container {
-			margin-top: 175px;
-			strong {
-				color: #fff;
-				font-family: $font;
-				font-size: 48px;
-				font-style: normal;
-				font-weight: 600;
-				line-height: normal;
-				letter-spacing: 0.96px;
-				text-transform: capitalize;
-			}
-			span {
-				color: #fff;
-				font-family: $font;
-				font-size: 24px;
-				font-style: normal;
-				font-weight: 400;
-				line-height: 26px;
 			}
 		}
 	}

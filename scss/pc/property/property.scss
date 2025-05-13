@@ -1,8 +1,12 @@
 #pc-wrap {
+	background: #050b20;
 	#property-list-page {
 		padding-bottom: 40px;
 		background: #f6f6f6;
+		border-radius: 80px;
 		.container {
+			display: flex;
+			flex-direction: column;
 			.right {
 				position: absolute;
 				right: 0;

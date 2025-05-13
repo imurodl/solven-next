@@ -110,6 +110,12 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 		return (
 			<div id="community-list-page">
 				<div className="container">
+					<Stack className={`header-basic`}>
+						<Stack className={'container'}>
+							<strong>{props.title}</strong>
+							<span>{props.desc}</span>
+						</Stack>
+					</Stack>
 					<TabContext value={searchCommunity.search.articleCategory}>
 						<Stack className="main-box">
 							<Stack className="left-config">

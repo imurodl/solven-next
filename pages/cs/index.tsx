@@ -14,7 +14,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 	},
 });
 
-const CS: NextPage = () => {
+const CS: NextPage = (props: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 
@@ -37,6 +37,13 @@ const CS: NextPage = () => {
 		return (
 			<Stack className={'cs-page'}>
 				<Stack className={'container'}>
+					<Stack className={`header-basic`}>
+						<Stack className={'container'}>
+							<strong>{props.title}</strong>
+							<span>{props.desc}</span>
+						</Stack>
+					</Stack>
+
 					<Box component={'div'} className={'cs-main-info'}>
 						<Box component={'div'} className={'info'}>
 							<span>Cs center</span>

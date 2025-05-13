@@ -1,10 +1,13 @@
 #pc-wrap {
+	background: #050b20;
 	#community-list-page {
 		position: relative;
+		background: #f6f6f6;
+		border-radius: 80px;
+		padding-bottom: 40px;
 		.container {
-			padding-top: 100px;
+			display: flex;
 			flex-direction: column;
-			gap: 64px;
 			.main-box {
 				flex-direction: row;
 				gap: 31px;
