@@ -146,7 +146,7 @@ const Top = () => {
 					<div>{t('Home')}</div>
 				</Link>
 				<Link href={'/car'}>
-					<div>{t('Car Listings')}</div>
+					<div>{t('Listings')}</div>
 				</Link>
 				<Link href={'/agent'}>
 					<div> {t('Agents')} </div>
@@ -166,7 +166,7 @@ const Top = () => {
 					<Stack className={'container'}>
 						<Box component={'div'} className={'logo-box'}>
 							<Link href={'/'}>
-								<img src="/img/logo/logoWhite.svg" alt="" />
+								<img src="/img/logo/solven.png" alt="" style={{ background: 'transparent' }} />
 							</Link>
 						</Box>
 						<Box component={'div'} className={'router-box'}>
@@ -174,7 +174,7 @@ const Top = () => {
 								<div>{t('Home')}</div>
 							</Link>
 							<Link href={'/car'}>
-								<div>{t('Car Listings')}</div>
+								<div>{t('Listings')}</div>
 							</Link>
 							<Link href={'/agent'}>
 								<div> {t('Agents')} </div>

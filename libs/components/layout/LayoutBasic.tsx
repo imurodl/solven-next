@@ -120,7 +120,7 @@ const withLayoutBasic = (Component: any) => {
 							<Component {...props} title={memoizedValues.title} desc={memoizedValues.desc} />
 						</Stack>
 
-						<Chat />
+						{router.pathname === '/404' ? '' : <Chat />}
 						<ScrollToTop />
 
 						<Stack id={'footer'}>

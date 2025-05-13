@@ -50,7 +50,7 @@ body::-webkit-scrollbar {
 				position: fixed;
 				padding: 22px 0px;
 				width: 100%;
-				height: 87px;
+				height: 100px;
 				display: flex;
 				flex-direction: row;
 				box-sizing: border-box;
@@ -936,6 +936,67 @@ body::-webkit-scrollbar {
 					font-style: normal;
 					font-weight: 400;
 					line-height: normal;
+				}
+			}
+		}
+	}
+}
+
+#pc-wrap {
+	background: #050b20;
+	.error-section-page {
+		padding-bottom: 40px;
+		background: #f6f6f6;
+		border-radius: 80px;
+		height: 90vh;
+		.boxcar-container {
+			max-width: 1300px;
+			margin: 0 auto;
+			.right-box {
+				position: relative;
+				.image-box {
+					position: relative;
+					img {
+						width: 100%;
+						height: auto;
+						border-radius: 16px;
+					}
+					.content-box {
+						position: absolute;
+						left: 50%;
+						transform: translate(-50%, -50%);
+						text-align: center;
+						padding: 40px;
+						border-radius: 12px;
+						max-width: 600px;
+						h2 {
+							font-size: 32px;
+							margin-bottom: 24px;
+							color: #181a20;
+						}
+						.text {
+							font-size: 16px;
+							color: #555;
+							margin-bottom: 36px;
+						}
+						.error-btn {
+							display: inline-flex;
+							align-items: center;
+							gap: 8px;
+							background-color: #405ff2;
+							color: #fff;
+							padding: 20px 30px;
+							border-radius: 16px;
+							font-weight: 600;
+							text-decoration: none;
+							transition: all 1s ease;
+							&:hover {
+								background-color: #334cca;
+								scale: 1.05;
+								transition: all 1s ease;
+							}
+						}
+					}
 				}
 			}
 		}
