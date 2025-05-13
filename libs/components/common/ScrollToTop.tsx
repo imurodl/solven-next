@@ -29,15 +29,19 @@ const ScrollToTop = () => {
 					bottom: 40, // placed 60px below the chat button
 					right: 35,
 					zIndex: 998, // slightly lower than chat button
-					bgcolor: '#fff',
-					color: '#000',
+					bgcolor: '#405FF2',
+					color: '#fff',
 					boxShadow: '0px 0px 10px rgba(0,0,0,0.2)',
+					transition: 'all 1s ease',
 					'&:hover': {
 						cursor: 'pointer',
-						transform: 'scale(1.1)',
-						bgcolor: '#405ff2',
+						bgcolor: '#324bc6',
 						color: '#fff',
-						transition: 'all 0.5s linear',
+						transition: 'all 1s ease',
+						width: '50px',
+						height: '50px',
+						right: 30,
+						bottom: 35,
 					},
 				}}
 			>

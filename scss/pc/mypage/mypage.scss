@@ -1,13 +1,17 @@
 #pc-wrap {
+	background: #050b20;
 	#my-page {
+		padding-bottom: 40px;
 		background: #f6f6f6;
+		border-radius: 80px;
 		.container {
+			display: flex;
+			flex-direction: column;
 			.my-page {
 				position: relative;
 				width: 100%;
 				flex-direction: row;
 				gap: 25px;
-				padding-top: 96px;
 				.back-frame {
 					width: 1260px;
 					height: auto;

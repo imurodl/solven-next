@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Stack, Box, Modal, Divider, Button } from '@mui/material';
+import { Stack, Box, Modal, Divider, Button, Typography, Checkbox } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CloseIcon from '@mui/icons-material/Close';
@@ -194,35 +194,29 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 		[searchFilter],
 	);
 
-	const propertyBedSelectHandler = useCallback(
-		async (carType: CarType | null) => {
+	const carTypeSelectHandler = useCallback(
+		async (e: any) => {
 			try {
-				if (carType !== null) {
-					if (searchFilter?.search?.typeList?.includes(carType)) {
-						setSearchFilter({
-							...searchFilter,
-							search: {
-								...searchFilter.search,
-								typeList: searchFilter.search.typeList.filter((item: CarType) => item !== carType),
-							},
-						});
-					} else {
-						setSearchFilter({
-							...searchFilter,
-							search: {
-								...searchFilter.search,
-								typeList: [...(searchFilter.search.typeList || []), carType],
-							},
-						});
-					}
-				} else {
-					delete searchFilter.search.typeList;
-					setSearchFilter({ ...searchFilter });
+				const isChecked = e.target.checked;
+				const value = e.target.value;
+				if (isChecked) {
+					setSearchFilter({
+						...searchFilter,
+						search: { ...searchFilter.search, typeList: [...(searchFilter?.search?.typeList || []), value] },
+					});
+				} else if (searchFilter?.search?.typeList?.includes(value)) {
+					setSearchFilter({
+						...searchFilter,
+						search: {
+							...searchFilter.search,
+							typeList: searchFilter?.search?.typeList?.filter((item: string) => item !== value),
+						},
+					});
 				}
 
-				console.log('propertyBedSelectHandler:', carType);
+				console.log('carTypeSelectHandler:', e.target.value);
 			} catch (err: any) {
-				console.log('ERROR, propertyBedSelectHandler:', err);
+				console.log('ERROR, carTypeSelectHandler:', err);
 			}
 		},
 		[searchFilter],
@@ -443,24 +437,35 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							<div className={'middle'}>
 								<div className={'row-box'}>
 									<div className={'box'}>
-										<span>Car Type</span>
-										<div className={'inside'}>
-											<div
-												className={`room ${!searchFilter?.search?.typeList ? 'active' : ''}`}
-												onClick={() => propertyBedSelectHandler(null)}
+										<Typography className={'title'}>Car Type</Typography>
+										{carType.map((type: string) => (
+											<Stack
+												className={'input-box'}
+												key={type}
+												flexDirection={'row'}
+												width={'100%'}
+												alignItems={'center'}
+												gap={'4px'}
 											>
-												Any
-											</div>
-											{carTypeOptions.map((type) => (
-												<div
-													key={type}
-													className={`room ${searchFilter?.search?.typeList?.includes(type) ? 'active' : ''}`}
-													onClick={() => propertyBedSelectHandler(type)}
-												>
-													{type}
-												</div>
-											))}
-										</div>
+												<label style={{ cursor: 'pointer' }}>
+													<Typography className="property_type">{type}</Typography>
+												</label>
+												<Checkbox
+													id={type}
+													className="property-checkbox"
+													color="default"
+													size="small"
+													value={type}
+													onChange={carTypeSelectHandler}
+													checked={(searchFilter?.search?.typeList || []).includes(type as CarType)}
+													sx={{
+														width: '16px',
+														height: '16px',
+														mt: '10px',
+													}}
+												/>
+											</Stack>
+										))}
 									</div>
 									<div className={'box'}>
 										<span>options</span>
@@ -527,7 +532,6 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 												<Select
 													value={searchFilter?.search?.mileageRange?.start}
 													onChange={(e: any) => mileageHandler(e, 'start')}
-													displayEmpty
 													inputProps={{ 'aria-label': 'Mileage Start' }}
 													MenuProps={MenuProps}
 												>
@@ -547,7 +551,6 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 												<Select
 													value={searchFilter?.search?.mileageRange?.end}
 													onChange={(e: any) => mileageHandler(e, 'end')}
-													displayEmpty
 													inputProps={{ 'aria-label': 'Mileage End' }}
 													MenuProps={MenuProps}
 												>
@@ -593,13 +596,17 @@ HeaderFilter.defaultProps = {
 		page: 1,
 		limit: 9,
 		search: {
-			mileageRange: {
-				start: 0,
-				end: 500,
-			},
 			pricesRange: {
 				start: 0,
-				end: 2000000,
+				end: 500000000, // adjust if needed
+			},
+			mileageRange: {
+				start: 0,
+				end: 500000, // adjust if needed
+			},
+			yearRange: {
+				start: 1990,
+				end: new Date().getFullYear(),
 			},
 		},
 	},

@@ -27,7 +27,7 @@ export const getStaticProps = async ({ locale }: any) => ({
 	},
 });
 
-const MyPage: NextPage = () => {
+const MyPage: NextPage = (props: any) => {
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
 	const router = useRouter();
@@ -111,6 +111,12 @@ const MyPage: NextPage = () => {
 		return (
 			<div id="my-page" style={{ position: 'relative' }}>
 				<div className="container">
+					<Stack className={`header-basic`}>
+						<Stack className={'container'}>
+							<strong>{props.title}</strong>
+							<span>{props.desc}</span>
+						</Stack>
+					</Stack>
 					<Stack className={'my-page'}>
 						<Stack className={'back-frame'}>
 							<Stack className={'left-config'}>

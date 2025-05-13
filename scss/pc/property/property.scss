@@ -8,12 +8,10 @@
 			display: flex;
 			flex-direction: column;
 			.right {
-				position: absolute;
-				right: 0;
-				top: 3%;
 				display: flex;
 				flex-direction: row;
 				align-items: center;
+				justify-content: flex-end;
 				z-index: 2;
 				button {
 					margin-left: 10px;
@@ -33,7 +31,7 @@
 				width: 100%;
 				flex-direction: row;
 				gap: 25px;
-				padding-top: 96px;
+				padding-top: 16px;
 				.filter-config {
 					width: 339px;
 					height: auto;
@@ -58,6 +56,7 @@
 								font-size: 14px;
 								font-weight: 400;
 								color: #181a20;
+								color: #324bc6;
 								cursor: pointer;
 								line-height: 1.5;
 								p {

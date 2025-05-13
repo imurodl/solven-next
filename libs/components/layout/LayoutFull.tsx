@@ -13,6 +13,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import ScrollToTop from '../common/ScrollToTop';
+import TopBasic from '../TopBasic';
 
 const withLayoutFull = (Component: any) => {
 	return (props: any) => {
@@ -59,7 +60,7 @@ const withLayoutFull = (Component: any) => {
 					</Head>
 					<Stack id="pc-wrap">
 						<Stack id={'top'}>
-							<Top />
+							<TopBasic />
 						</Stack>
 
 						<Stack id={'main'}>

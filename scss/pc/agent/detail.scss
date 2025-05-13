@@ -1,4 +1,5 @@
 #pc-wrap {
+	background: #050b20;
 	.agent-detail-page {
 		position: relative;
 		padding: 133px 0 75px;
@@ -7,6 +8,8 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
+		background: #f6f6f6;
+		border-radius: 80px;
 		.container {
 			display: flex;
 			flex-direction: column;

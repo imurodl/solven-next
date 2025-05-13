@@ -292,9 +292,11 @@ body::-webkit-scrollbar {
 	}
 
 	.header-basic {
+		margin-top: 20px;
+		margin-bottom: 20px;
 		position: relative;
 		width: 100%;
-		height: 180px;
+		height: auto;
 		display: flex;
 		flex-direction: row;
 		justify-content: center;
@@ -483,7 +485,9 @@ body::-webkit-scrollbar {
 					right: 0px;
 					display: flex;
 					flex-direction: row;
+					flex-wrap: wrap;
 					justify-content: space-between;
+					gap: 40px;
 					visibility: hidden;
 					border-radius: 12px;
 					background: #fff;
@@ -497,11 +501,13 @@ body::-webkit-scrollbar {
 					}
 					div {
 						position: relative;
-						width: 272px;
-						height: 168px;
+						width: 15%;
+						height: 60px;
 						border-radius: 15px;
 						cursor: pointer;
 						background-size: cover;
+						display: flex;
+						justify-content: flex-start;
 						span {
 							position: absolute;
 							top: 13px;
@@ -530,6 +536,7 @@ body::-webkit-scrollbar {
 					right: 0px;
 					display: flex;
 					flex-direction: row;
+					flex-wrap: wrap;
 					justify-content: space-between;
 					align-items: center;
 					visibility: hidden;
