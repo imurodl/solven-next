@@ -7,7 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { carMileage, carYears } from '../../config';
-import { CarLocation, CarType } from '../../enums/car.enum';
+import { CarFuelType, CarLocation, CarType } from '../../enums/car.enum';
 import { CarsInquiry } from '../../types/car/car.input';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -67,6 +67,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 	const [openRooms, setOpenRooms] = useState(false);
 	const [carLocation, setCarLocation] = useState<CarLocation[]>(Object.values(CarLocation));
 	const [carType, setCarType] = useState<CarType[]>(Object.values(CarType));
+	const [carFuelType, setCarFuelType] = useState<CarFuelType[]>(Object.values(CarFuelType));
 	const [yearCheck, setYearCheck] = useState({ start: 1900, end: thisYear });
 	const [optionCheck, setOptionCheck] = useState('all');
 	const [carBrands, setCarBrands] = useState<CarBrand[]>([]);
@@ -217,6 +218,34 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				console.log('carTypeSelectHandler:', e.target.value);
 			} catch (err: any) {
 				console.log('ERROR, carTypeSelectHandler:', err);
+			}
+		},
+		[searchFilter],
+	);
+
+	const carFuelTypeSelectHandler = useCallback(
+		async (e: any) => {
+			try {
+				const isChecked = e.target.checked;
+				const value = e.target.value;
+				if (isChecked) {
+					setSearchFilter({
+						...searchFilter,
+						search: { ...searchFilter.search, fuelTypeList: [...(searchFilter?.search?.fuelTypeList || []), value] },
+					});
+				} else if (searchFilter?.search?.fuelTypeList?.includes(value)) {
+					setSearchFilter({
+						...searchFilter,
+						search: {
+							...searchFilter.search,
+							fuelTypeList: searchFilter?.search?.fuelTypeList?.filter((item: string) => item !== value),
+						},
+					});
+				}
+
+				console.log('carFuelTypeSelectHandler:', e.target.value);
+			} catch (err: any) {
+				console.log('ERROR, carFuelTypeSelectHandler:', err);
 			}
 		},
 		[searchFilter],
@@ -437,7 +466,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							<div className={'middle'}>
 								<div className={'row-box'}>
 									<div className={'box'}>
-										<Typography className={'title'}>Car Type</Typography>
+										<span>Car Type</span>
 										{carType.map((type: string) => (
 											<Stack
 												className={'input-box'}
@@ -467,6 +496,39 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 											</Stack>
 										))}
 									</div>
+									<div className={'box'}>
+										<span>Car Fuel Type</span>
+										{carFuelType.map((type: string) => (
+											<Stack
+												className={'input-box'}
+												key={type}
+												flexDirection={'row'}
+												width={'100%'}
+												alignItems={'center'}
+												gap={'4px'}
+											>
+												<label style={{ cursor: 'pointer' }}>
+													<Typography className="property_type">{type}</Typography>
+												</label>
+												<Checkbox
+													id={type}
+													className="property-checkbox"
+													color="default"
+													size="small"
+													value={type}
+													onChange={carFuelTypeSelectHandler}
+													checked={(searchFilter?.search?.fuelTypeList || []).includes(type as CarFuelType)}
+													sx={{
+														width: '16px',
+														height: '16px',
+														mt: '10px',
+													}}
+												/>
+											</Stack>
+										))}
+									</div>
+								</div>
+								<div className="row-box">
 									<div className={'box'}>
 										<span>options</span>
 										<div className={'inside'}>
@@ -526,7 +588,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 										</div>
 									</div>
 									<div className={'box'}>
-										<span>square meter</span>
+										<span>mileage range</span>
 										<div className={'inside space-between align-center'}>
 											<FormControl sx={{ width: '122px' }}>
 												<Select
