@@ -13,6 +13,10 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Features from '../libs/components/homepage/Features';
 import CtaSection from '../libs/components/homepage/CtaSection';
 import CarBrands from '../libs/components/homepage/CarBrands';
+import Background from '../libs/components/homepage/Background';
+import Background2 from '../libs/components/homepage/Background2';
+import CarTempCards from '../libs/components/car/CarTempCards';
+import Background4 from '../libs/components/homepage/FeatureData';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -36,8 +40,12 @@ const Home: NextPage = () => {
 	} else {
 		return (
 			<Stack className={'home-page'}>
+				{/* @ts-ignore */}
 				<CarBrands />
+				<Background />
+				<Background2 />
 				<TrendCars />
+				<Background4/>
 				<Features />
 				<PopularCars />
 				<Advertisement />
