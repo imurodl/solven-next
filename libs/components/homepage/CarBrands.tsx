@@ -42,7 +42,7 @@ const CarBrands: NextPage<{ initialInput: CarsInquiry }> = ({ initialInput }) =>
 			style={{
 				marginTop: '-80px',
 				padding: '80px 0',
-				backgroundColor: '#F6F6F6',
+				backgroundColor: '#F9FBFC',
 				borderTopLeftRadius: '80px',
 				borderTopRightRadius: '80px',
 				position: 'relative',
@@ -66,7 +66,7 @@ const CarBrands: NextPage<{ initialInput: CarsInquiry }> = ({ initialInput }) =>
 				</Stack>
 				<Stack className={'card-box'}>
 					<Swiper
-						slidesPerView={4}
+						slidesPerView={6}
 						spaceBetween={10}
 						modules={[Autoplay, Navigation, Pagination]}
 						navigation={{
@@ -129,7 +129,18 @@ CarBrands.defaultProps = {
 		page: 1,
 		limit: 9,
 		search: {
-			brandList: [],
+			pricesRange: {
+				start: 0,
+				end: 500000000, // adjust if needed
+			},
+			mileageRange: {
+				start: 0,
+				end: 500000, // adjust if needed
+			},
+			yearRange: {
+				start: 1990,
+				end: new Date().getFullYear(),
+			},
 		},
 	},
 };

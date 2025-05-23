@@ -45,7 +45,7 @@ const Home: NextPage = () => {
 				<Background />
 				<Background2 />
 				<TrendCars />
-				<Background4/>
+				<Background4 />
 				<Features />
 				<PopularCars />
 				<Advertisement />

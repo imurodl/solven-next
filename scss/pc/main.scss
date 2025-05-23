@@ -78,12 +78,13 @@ body::-webkit-scrollbar {
 						justify-content: space-between;
 						div {
 							position: relative;
-							color: #eeeeeeed;
+							color: #fff;
 							font-family: $font;
-							font-size: 15px;
+							font-size: 18px;
 							font-style: normal;
-							font-weight: 600;
-							line-height: normal;
+							font-weight: 500;
+							line-height: 36.197px;
+							text-transform: capitalize;
 							cursor: pointer;
 							.community_menu {
 								position: absolute;
@@ -198,12 +199,13 @@ body::-webkit-scrollbar {
 						justify-content: space-between;
 						div {
 							position: relative;
-							color: #eeeeeeed;
+							color: #fff;
 							font-family: $font;
-							font-size: 15px;
+							font-size: 18px;
 							font-style: normal;
-							font-weight: 600;
-							line-height: normal;
+							font-weight: 500;
+							line-height: 36.197px;
+							text-transform: capitalize;
 							cursor: pointer;
 							.community_menu {
 								position: absolute;
@@ -328,17 +330,6 @@ body::-webkit-scrollbar {
 		}
 	}
 
-	// .header-main::before {
-	// 	content: '';
-	// 	position: absolute;
-	// 	top: 0;
-	// 	left: 0;
-	// 	width: 100%;
-	// 	height: 100%;
-	// 	background: #050b20;
-	// 	opacity: 0.4;
-	// }
-
 	.header-main {
 		position: relative;
 		width: 100%;
@@ -353,9 +344,28 @@ body::-webkit-scrollbar {
 			margin-top: 20px;
 			flex-direction: column;
 			align-items: center;
+			.header-main-subtitle {
+				color: #fff;
+				text-align: center;
+				font-family: $font;
+				font-size: 16px;
+				font-style: normal;
+				font-weight: 400;
+				line-height: 16px; /* 100% */
+			}
+			.header-main-title {
+				margin-top: 52px;
+				color: #fff;
+				text-align: center;
+				font-family: 'DM Sans';
+				font-size: 70px;
+				font-style: normal;
+				font-weight: 700;
+				line-height: 70px; /* 100% */
+			}
 			.search-box {
+				margin-top: 120px;
 				position: relative;
-				margin-top: 56px;
 				padding: 16px 29px;
 				width: 1094px;
 				height: 96px;

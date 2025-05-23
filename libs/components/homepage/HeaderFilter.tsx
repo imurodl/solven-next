@@ -657,20 +657,7 @@ HeaderFilter.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 9,
-		search: {
-			pricesRange: {
-				start: 0,
-				end: 500000000, // adjust if needed
-			},
-			mileageRange: {
-				start: 0,
-				end: 500000, // adjust if needed
-			},
-			yearRange: {
-				start: 1990,
-				end: new Date().getFullYear(),
-			},
-		},
+		search: {},
 	},
 };
 

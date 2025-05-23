@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { getJwtToken, logOut, updateUserInfo } from '../auth';
-import { Stack, Box } from '@mui/material';
+import { Stack, Box, Typography } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { alpha, styled } from '@mui/material/styles';
@@ -143,19 +143,29 @@ const Top = () => {
 		return (
 			<Stack className={'top'}>
 				<Link href={'/'}>
-					<div>{t('Home')}</div>
+					<Typography
+						variant="div"
+						fontFamily="DM Sans"
+						fontWeight="500"
+						color="white"
+						fontSize={15}
+						lineHeight="27.8px"
+						sx={{ width: '46px', height: '20px' }}
+					>
+						{t('Home')}
+					</Typography>
 				</Link>
 				<Link href={'/car'}>
-					<div>{t('Listings')}</div>
+					<Typography>{t('Listings')}</Typography>
 				</Link>
 				<Link href={'/agent'}>
-					<div> {t('Agents')} </div>
+					<Typography> {t('Agents')} </Typography>
 				</Link>
 				<Link href={'/community?articleCategory=FREE'}>
-					<div> {t('Community')} </div>
+					<Typography> {t('Community')} </Typography>
 				</Link>
 				<Link href={'/cs'}>
-					<div> {t('CS')} </div>
+					<Typography> {t('CS')} </Typography>
 				</Link>
 			</Stack>
 		);
