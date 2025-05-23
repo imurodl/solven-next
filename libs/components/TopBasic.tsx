@@ -17,6 +17,7 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 
 const Top = () => {
 	const device = useDeviceDetect();
@@ -221,10 +222,8 @@ const Top = () => {
 							) : (
 								<Link href={'/account/join'}>
 									<div className={'join-box'}>
-										<AccountCircleOutlinedIcon />
-										<span>
-											{t('Login')} / {t('Register')}
-										</span>
+										<PersonOutlineOutlinedIcon />
+										<span>Sign in</span>
 									</div>
 								</Link>
 							)}

@@ -446,7 +446,6 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 								<CloseIcon />
 							</div>
 							<div className={'top'}>
-								<span>Find your home</span>
 								<div className={'search-input-box'}>
 									<img src="/img/icons/search.svg" alt="" />
 									<input
@@ -476,22 +475,16 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 												alignItems={'center'}
 												gap={'4px'}
 											>
-												<label style={{ cursor: 'pointer' }}>
-													<Typography className="property_type">{type}</Typography>
+												<label style={{ cursor: 'pointer' }} htmlFor={type}>
+													<Typography className="property-type">{type}</Typography>
 												</label>
 												<Checkbox
 													id={type}
 													className="property-checkbox"
 													color="default"
-													size="small"
 													value={type}
 													onChange={carTypeSelectHandler}
 													checked={(searchFilter?.search?.typeList || []).includes(type as CarType)}
-													sx={{
-														width: '16px',
-														height: '16px',
-														mt: '10px',
-													}}
 												/>
 											</Stack>
 										))}
@@ -499,30 +492,17 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 									<div className={'box'}>
 										<span>Car Fuel Type</span>
 										{carFuelType.map((type: string) => (
-											<Stack
-												className={'input-box'}
-												key={type}
-												flexDirection={'row'}
-												width={'100%'}
-												alignItems={'center'}
-												gap={'4px'}
-											>
-												<label style={{ cursor: 'pointer' }}>
-													<Typography className="property_type">{type}</Typography>
+											<Stack className={'input-box'} key={type} flexDirection={'row'}>
+												<label style={{ cursor: 'pointer' }} htmlFor={type}>
+													<Typography className="property-type">{type}</Typography>
 												</label>
 												<Checkbox
 													id={type}
 													className="property-checkbox"
 													color="default"
-													size="small"
 													value={type}
 													onChange={carFuelTypeSelectHandler}
 													checked={(searchFilter?.search?.fuelTypeList || []).includes(type as CarFuelType)}
-													sx={{
-														width: '16px',
-														height: '16px',
-														mt: '10px',
-													}}
 												/>
 											</Stack>
 										))}
@@ -547,7 +527,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 										</div>
 									</div>
 								</div>
-								<div className={'row-box'} style={{ marginTop: '44px' }}>
+								<div className={'row-box'}>
 									<div className={'box'}>
 										<span>Year Built</span>
 										<div className={'inside space-between align-center'}>
