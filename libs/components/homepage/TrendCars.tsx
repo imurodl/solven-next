@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+'use client';
+import { useState } from 'react';
 import { Stack, Box } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper';
-import { Car } from '../../types/car/car';
-import { CarsInquiry } from '../../types/car/car.input';
+import type { Car } from '../../types/car/car';
+import type { CarsInquiry } from '../../types/car/car.input';
 import TrendCarCard from './TrendCarCard';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_CARS } from '../../../apollo/user/query';
-import { T } from '../../types/common';
+import type { T } from '../../types/common';
 import { LIKE_TARGET_CAR } from '../../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import { Message } from '../../enums/common.enum';
@@ -40,8 +41,8 @@ const TrendCars = (props: TrendCarsProps) => {
 			setTrendCars(data?.getCars?.list);
 		},
 	});
-	/** HANDLERS **/
 
+	/** HANDLERS **/
 	const likeCarHandler = async (user: T, id: string) => {
 		try {
 			if (!id) return;
@@ -64,10 +65,10 @@ const TrendCars = (props: TrendCarsProps) => {
 
 	if (device === 'mobile') {
 		return (
-			<Stack className={'trend-properties'}>
+			<Stack className={'trend-cars'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<span>Trend Properties</span>
+						<span>Trending Cars</span>
 					</Stack>
 					<Stack className={'card-box'}>
 						{trendCars.length === 0 ? (
@@ -76,7 +77,7 @@ const TrendCars = (props: TrendCarsProps) => {
 							</Box>
 						) : (
 							<Swiper
-								className={'trend-property-swiper'}
+								className={'trend-car-swiper'}
 								slidesPerView={'auto'}
 								centeredSlides={true}
 								spaceBetween={15}
@@ -84,7 +85,7 @@ const TrendCars = (props: TrendCarsProps) => {
 							>
 								{trendCars.map((car: Car) => {
 									return (
-										<SwiperSlide key={car._id} className={'trend-property-slide'}>
+										<SwiperSlide key={car._id} className={'trend-car-slide'}>
 											<TrendCarCard car={car} likeCarHandler={likeCarHandler} />
 										</SwiperSlide>
 									);
@@ -97,12 +98,11 @@ const TrendCars = (props: TrendCarsProps) => {
 		);
 	} else {
 		return (
-			<Stack className={'trend-properties'}>
+			<Stack className={'trend-cars'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Trend Car Listings</span>
-							<p>Trend is based on likes</p>
+							<span>Trending Cars</span>
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'pagination-box'}>
@@ -119,9 +119,9 @@ const TrendCars = (props: TrendCarsProps) => {
 							</Box>
 						) : (
 							<Swiper
-								className={'trend-property-swiper'}
-								slidesPerView={'auto'}
-								spaceBetween={15}
+								className={'trend-car-swiper'}
+								slidesPerView={4}
+								spaceBetween={10}
 								modules={[Autoplay, Navigation, Pagination]}
 								navigation={{
 									nextEl: '.swiper-trend-next',
@@ -133,7 +133,7 @@ const TrendCars = (props: TrendCarsProps) => {
 							>
 								{trendCars.map((car: Car) => {
 									return (
-										<SwiperSlide key={car._id} className={'trend-property-slide'}>
+										<SwiperSlide key={car._id} className={'trend-car-slide'}>
 											<TrendCarCard car={car} likeCarHandler={likeCarHandler} />
 										</SwiperSlide>
 									);

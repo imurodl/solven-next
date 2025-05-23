@@ -4,21 +4,20 @@
 		width: 100%;
 		height: auto;
 		.info-box {
-			width: 100%;
 			display: flex;
-			flex-direction: row;
 			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 40px;
+			width: 100%;
+			flex-direction: row;
 			.left {
 				display: flex;
 				flex-direction: column;
 				span {
-					color: #181a20;
-					font-family: $font;
-					font-size: 34px;
-					font-style: normal;
-					font-weight: 500;
-					line-height: 150%;
-					letter-spacing: -0.646px;
+					font-size: 32px;
+					font-weight: 700;
+					margin-bottom: 12px;
+					color: $text-color;
 					text-transform: capitalize;
 					&.white {
 						color: #ffffff;
@@ -47,21 +46,30 @@
 					.swiper-pagination-bullet.swiper-pagination-bullet-active {
 						background: #000000;
 					}
-					.swiper-trend-next {
-						margin-left: 20px;
-						cursor: pointer;
-					}
-					.swiper-trend-prev {
-						margin-right: 20px;
-						cursor: pointer;
-					}
-					.swiper-top-next {
-						margin-left: 20px;
-						cursor: pointer;
-					}
+					.swiper-brand-prev,
+					.swiper-brand-next,
+					.swiper-trend-next,
+					.swiper-trend-prev,
+					.swiper-top-next,
 					.swiper-top-prev {
-						margin-right: 20px;
 						cursor: pointer;
+						color: $text-color;
+						transition: $transition-smooth;
+						&:hover {
+							color: $primary-color;
+							transform: scale(1.1);
+						}
+					}
+
+					.swiper-trend-pagination,
+					.swiper-top-pagination,
+					.swiper-brand-pagination {
+						width: 100px;
+						height: 10px;
+						border-radius: 4px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
 					}
 				}
 				.more-box {
@@ -114,19 +122,88 @@
 				}
 			}
 		}
-		.trend-properties {
-			padding: 108px 0px 76px;
+		.car-brands-section {
+			margin-top: -80px;
+			padding: 80px 0;
+			background-color: $background-light;
+			border-top-left-radius: 80px;
+			border-top-right-radius: 80px;
+			position: relative;
+			z-index: 1;
+			overflow: hidden;
+			.car-brands-container {
+				max-width: 1300px;
+				margin: 0 auto;
+				.info-box {
+					.section-title {
+						font-size: 32px;
+						font-weight: 700;
+						margin-bottom: 12px;
+						color: $text-color;
+					}
+				}
+				.card-box {
+					.swiper-container {
+						width: 100%;
+						height: auto;
+					}
+					.brand-slide {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						.brand-item {
+							width: 200px;
+							padding: 26px;
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+							justify-content: center;
+							cursor: pointer;
+							border-radius: 12px;
+							background-color: #fff;
+							box-shadow: $shadow-light;
+							transition: $transition-smooth;
+							border: 1px solid #e9e9e9;
+							&:hover {
+								box-shadow: $shadow-medium;
+								transition: $transition-smooth;
+								border: 1px solid #405ff2;
+								.brand-name {
+									color: #405ff2;
+								}
+								img {
+									transition: $transition-smooth;
+									transform: scale(1.1);
+								}
+							}
+							img {
+								object-fit: contain;
+								margin-bottom: 12px;
+							}
+							.brand-name {
+								font-size: 14px;
+								color: $text-color;
+								font-weight: 600;
+								transition: $transition-fast;
+							}
+						}
+					}
+				}
+			}
+		}
+		.trend-cars {
+			padding: 40px 0 76px;
 			width: 100%;
-			height: 697px;
-			display: flex;
-			flex-direction: row;
+			height: auto;
+			background: $background-white;
 			.container {
 				flex-direction: column;
+
 				.card-box {
 					position: relative;
-					margin-top: 64px;
 					display: flex;
 					flex-direction: row;
+
 					.empty-list {
 						width: 100%;
 						height: 280px;
@@ -134,145 +211,18 @@
 						justify-content: center;
 						align-items: center;
 					}
-					.trend-property-swiper {
+
+					.trend-car-swiper {
 						width: 100%;
-						height: 400px;
+						height: auto;
 						display: flex;
 						flex-direction: row;
-						.trend-property-slide {
+
+						.trend-car-slide {
 							width: auto;
 							height: auto;
 							display: flex;
-							margin: 10px 0 0 10px;
-						}
-					}
-					.trend-card-box {
-						position: relative;
-						width: 300px;
-						height: 375px;
-						display: flex;
-						flex-direction: column;
-						transition: transform 0.3s;
-						&:hover {
-							opacity: 1;
-							transform: scale(1.05);
-						}
-						.card-img {
-							position: relative;
-							width: 100%;
-							height: 203px;
-							background-size: cover;
-							border-radius: 12px 12px 0px 0px;
-							cursor: pointer;
-							div {
-								position: absolute;
-								padding: 8px 12px;
-								left: 12px;
-								bottom: 12px;
-								border-radius: 6px;
-								background: #fff;
-								color: #181a20;
-								font-family: $font;
-								font-size: 15px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: normal;
-							}
-						}
-						.info {
-							padding: 20px 22px 17px;
-							display: flex;
-							flex-direction: column;
-							box-sizing: border-box;
-							border-radius: 0px 0px 12px 12px;
-							border: 1px solid rgba(196, 196, 196, 0.71);
-							border-top: none;
-							background: #fff;
-							box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
-							.title {
-								overflow: hidden;
-								color: #181a20;
-								text-overflow: ellipsis;
-								white-space: nowrap;
-								font-family: $font;
-								font-size: 15px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: normal;
-								text-transform: capitalize;
-								cursor: pointer;
-							}
-							.desc {
-								margin-top: 5px;
-								overflow: hidden;
-								color: #717171;
-								font-family: $font;
-								font-size: 13px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: normal;
-								text-overflow: ellipsis;
-								white-space: nowrap;
-							}
-							.options {
-								margin-top: 15px;
-								display: flex;
-								flex-direction: row;
-								justify-content: space-between;
-								div {
-									display: flex;
-									flex-direction: row;
-									img {
-										margin-right: 5px;
-										width: 17px;
-										height: 17px;
-									}
-									span {
-										color: #181a20;
-										font-family: $font;
-										font-size: 13px;
-										font-style: normal;
-										font-weight: 400;
-										line-height: normal;
-									}
-								}
-							}
-							.bott {
-								display: flex;
-								flex-direction: row;
-								justify-content: space-between;
-								align-items: center;
-								p {
-									color: #181a20;
-									font-family: $font;
-									font-size: 13px;
-									font-style: normal;
-									font-weight: 400;
-									line-height: normal;
-									text-transform: capitalize;
-								}
-								button {
-									margin-left: 7px;
-									width: 16px;
-									height: 16px;
-									box-sizing: border-box;
-								}
-								.view-like-box {
-									display: flex;
-									flex-direction: row;
-									gap: 7px;
-									align-items: center;
-									.view-cnt {
-										color: #717171;
-										font-family: $font;
-										font-size: 13px;
-										font-style: normal;
-										font-weight: 400;
-										line-height: normal;
-										text-overflow: ellipsis;
-									}
-								}
-							}
+							padding-top: 10px;
 						}
 					}
 				}
@@ -479,13 +429,6 @@
 					}
 				}
 			}
-		}
-		.video-frame {
-			width: 100%;
-			height: 678px;
-			background: black;
-			transform: perspective(0px);
-			box-shadow: -3px 0px 20px 14px #34343480;
 		}
 		.top-properties {
 			padding: 108px 0px 76px;
@@ -735,94 +678,6 @@
 				}
 			}
 		}
-		.events {
-			position: relative;
-			padding: 100px 0px 92px;
-			width: 100%;
-			height: 810px;
-			display: flex;
-			flex-direction: row;
-			background: #181a20;
-			.container {
-				flex-direction: column;
-				align-items: center;
-				.card-wrapper {
-					position: relative;
-					margin-top: 48px;
-					width: 100%;
-					height: auto;
-					display: flex;
-					flex-direction: row;
-					justify-content: space-between;
-					.event-card {
-						position: relative;
-						width: 300px;
-						height: 420px;
-						border-radius: 12px;
-						opacity: 0.9;
-						cursor: pointer;
-						transition: opacity 0.4s;
-						&:hover {
-							opacity: 1;
-							scale: 1.05;
-							transition: 0.3s;
-							.more {
-								opacity: 1;
-							}
-						}
-						.info {
-							position: absolute;
-							display: flex;
-							flex-direction: column;
-							top: 35px;
-							left: 10px;
-							right: 10px;
-							strong {
-								color: #f64747;
-								font-family: $font;
-								font-size: 25px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: normal;
-								text-transform: capitalize;
-							}
-							span {
-								color: #f66767;
-								font-family: $font;
-								font-size: 20px;
-								font-style: normal;
-								font-weight: 500;
-								line-height: 28px;
-								text-transform: capitalize;
-							}
-						}
-						.more {
-							position: absolute;
-							left: 10px;
-							right: 10px;
-							bottom: 41px;
-							display: flex;
-							flex-direction: row;
-							align-items: center;
-							opacity: 0;
-							span {
-								padding: 0px 5px;
-								border-radius: 5px;
-								background: #fffdfdc4;
-								color: #9c67f6;
-								font-family: $font;
-								font-size: 16px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: 26px;
-								text-align: justify;
-								cursor: pointer;
-							}
-						}
-					}
-				}
-			}
-		}
 		.community-board {
 			position: relative;
 			padding: 124px 0px 61px;
@@ -964,108 +819,6 @@
 									letter-spacing: 0.105em;
 									color: #bdbdbd;
 								}
-							}
-						}
-					}
-				}
-			}
-		}
-		.car-brands-section {
-			margin-top: -80px;
-			padding: 80px 0;
-			background-color: #f9fbfc;
-			border-top-left-radius: 80px;
-			border-top-right-radius: 80px;
-			position: relative;
-			z-index: 1;
-			overflow: hidden;
-			.car-brands-container {
-				max-width: 1300px;
-				margin: 0 auto;
-				padding: 0 20px;
-
-				.info-box {
-					display: flex;
-					justify-content: space-between;
-					align-items: center;
-					margin-bottom: 40px;
-
-					.section-title {
-						font-size: 32px;
-						font-weight: 700;
-						margin-bottom: 12px;
-						color: $text-color;
-					}
-
-					.pagination-box {
-						display: flex;
-						align-items: center;
-						.swiper-brand-prev,
-						.swiper-brand-next {
-							cursor: pointer;
-							color: $text-color;
-							transition: $transition-smooth;
-							&:hover {
-								color: $primary-color;
-								transform: scale(1.1);
-							}
-						}
-
-						.swiper-brand-pagination {
-							width: 80px;
-							height: 10px;
-							border-radius: 4px;
-							display: flex;
-							align-items: center;
-							justify-content: center;
-						}
-					}
-				}
-
-				.card-box {
-					.swiper-container {
-						width: 100%;
-						height: auto;
-					}
-
-					.brand-slide {
-						display: flex;
-						justify-content: center;
-						align-items: center;
-
-						.brand-item {
-							width: 200px;
-							padding: 26px;
-							display: flex;
-							flex-direction: column;
-							align-items: center;
-							justify-content: center;
-							cursor: pointer;
-							border-radius: 12px;
-							background-color: #fff;
-							box-shadow: $shadow-light;
-							transition: $transition-smooth;
-
-							&:hover {
-								box-shadow: $shadow-medium;
-								transform: translateY(-4px);
-								transition: $transition-smooth;
-								img {
-									transition: $transition-smooth;
-									scale: 1.1;
-								}
-							}
-
-							img {
-								object-fit: contain;
-								margin-bottom: 12px;
-							}
-
-							.brand-name {
-								font-size: 14px;
-								color: $text-color;
-								font-weight: 600;
-								transition: $transition-fast;
 							}
 						}
 					}

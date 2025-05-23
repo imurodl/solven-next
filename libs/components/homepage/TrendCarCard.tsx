@@ -1,14 +1,18 @@
-import React from 'react';
-import { Stack, Box, Divider, Typography } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
+'use client';
+import { Box, Typography, Card, CardContent } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Car } from '../../types/car/car';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import SpeedIcon from '@mui/icons-material/Speed';
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
+import SettingsIcon from '@mui/icons-material/Settings';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import type { Car } from '../../types/car/car';
 import { REACT_APP_API_URL } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
+import useDeviceDetect from '../../hooks/useDeviceDetect';
+import { useState } from 'react';
 
 interface TrendCarCardProps {
 	car: Car;
@@ -20,6 +24,7 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
+	const [isHovered, setIsHovered] = useState(false);
 
 	/** HANDLERS **/
 	const pushDetailHandler = async (carId: string) => {
@@ -27,120 +32,237 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 		await router.push({ pathname: '/car/detail', query: { id: carId } });
 	};
 
-	if (device === 'mobile') {
-		return (
-			<Stack className="trend-card-box" key={car._id}>
+	const isLiked = car?.meLiked && car?.meLiked[0]?.myFavorite;
+
+	return (
+		<Card
+			sx={{
+				width: 320,
+				borderRadius: '16px',
+				boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+				height: '100%',
+				display: 'flex',
+				flexDirection: 'column',
+				transition: 'transform 0.2s ease-in-out',
+				'&:hover': {
+					transform: 'translateY(-4px)',
+				},
+			}}
+			onMouseEnter={() => setIsHovered(true)}
+			onMouseLeave={() => setIsHovered(false)}
+		>
+			{/* Image Section */}
+			<Box sx={{ position: 'relative', borderRadius: '16px 16px 0 0', overflow: 'hidden' }}>
 				<Box
-					component={'div'}
-					className={'card-img'}
-					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${car?.carImages[0]})` }}
+					sx={{
+						height: 200,
+						backgroundImage: `url(${REACT_APP_API_URL}/${car?.carImages[0]})`,
+						backgroundSize: 'cover',
+						backgroundPosition: 'center',
+						cursor: 'pointer',
+					}}
 					onClick={() => pushDetailHandler(car._id)}
-				>
-					<div>${car.carPrice}</div>
-				</Box>
-				<Box component={'div'} className={'info'}>
-					<strong className={'title'} onClick={() => pushDetailHandler(car._id)}>
-						{car.carTitle}
-					</strong>
-					<p className={'desc'}>{car.carDesc ?? 'no description'}</p>
-					<div className={'options'}>
-						<div>
-							<img src="/img/icons/bed.svg" alt="" />
-							<span>{car.carBrand} bed</span>
-						</div>
-						<div>
-							<img src="/img/icons/room.svg" alt="" />
-							<span>{car.carSeats} rooms</span>
-						</div>
-						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{car.carMileage} m2</span>
-						</div>
-					</div>
-					<Divider sx={{ mt: '15px', mb: '17px' }} />
-					<div className={'bott'}>
-						<p>
-							{car.carRent ? 'Rent' : ''} {car.carRent && car.carBarter && '/'} {car.carBarter ? 'Barter' : ''}
-						</p>
-						<div className="view-like-box">
-							<IconButton color={'default'} onClick={() => likeCarHandler(user, car?._id)}>
-								<RemoveRedEyeIcon />
-							</IconButton>
-							<Typography className="view-cnt">{car?.carViews}</Typography>
-							<IconButton color={'default'}>
-								{car?.meLiked && car?.meLiked[0]?.myFavorite ? (
-									<FavoriteIcon style={{ color: 'red' }} />
-								) : (
-									<FavoriteIcon />
-								)}
-							</IconButton>
-							<Typography className="view-cnt">{car?.carLikes}</Typography>
-						</div>
-					</div>
-				</Box>
-			</Stack>
-		);
-	} else {
-		return (
-			<Stack className="trend-card-box" key={car._id}>
+				/>
+
+				{/* Price Badge */}
 				<Box
-					component={'div'}
-					className={'card-img'}
-					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${car?.carImages[0]})` }}
-					onClick={() => {
-						pushDetailHandler(car._id);
+					sx={{
+						position: 'absolute',
+						bottom: 12,
+						left: 12,
+						backgroundColor: 'rgba(0,0,0,0.7)',
+						color: 'white',
+						padding: '6px 12px',
+						borderRadius: '6px',
+						fontWeight: 'bold',
+						fontSize: '16px',
 					}}
 				>
-					<div>${car.carPrice}</div>
+					${car.carPrice || '95,000'}
 				</Box>
-				<Box component={'div'} className={'info'}>
-					<strong
-						className={'title'}
-						onClick={() => {
-							pushDetailHandler(car._id);
+
+				{/* Views Count - Only visible on hover */}
+				{isHovered && (
+					<Box
+						sx={{
+							position: 'absolute',
+							top: 16,
+							right: 16,
+							backgroundColor: 'rgba(0,0,0,0.7)',
+							color: 'white',
+							padding: '6px 10px',
+							borderRadius: '20px',
+							display: 'flex',
+							alignItems: 'center',
+							gap: 0.5,
+							fontSize: '12px',
+							fontWeight: '500',
+							transition: 'opacity 0.2s ease-in-out',
 						}}
 					>
-						{car.carTitle}
-					</strong>
-					<p className={'desc'}>{car.carDesc ?? 'no description'}</p>
-					<div className={'options'}>
-						<div>
-							<img src="/img/icons/bed.svg" alt="" />
-							<span>{car.carBrand} bed</span>
-						</div>
-						<div>
-							<img src="/img/icons/room.svg" alt="" />
-							<span>{car.carSeats} rooms</span>
-						</div>
-						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{car.carMileage} m2</span>
-						</div>
-					</div>
-					<Divider sx={{ mt: '15px', mb: '17px' }} />
-					<div className={'bott'}>
-						<p>
-							{car.carRent ? 'Rent' : ''} {car.carRent && car.carBarter && '/'} {car.carBarter ? 'Barter' : ''}
-						</p>
-						<div className="view-like-box">
-							<IconButton color={'default'}>
-								<RemoveRedEyeIcon />
-							</IconButton>
-							<Typography className="view-cnt">{car?.carViews}</Typography>
-							<IconButton color={'default'} onClick={() => likeCarHandler(user, car?._id)}>
-								{car?.meLiked && car?.meLiked[0]?.myFavorite ? (
-									<FavoriteIcon style={{ color: 'red' }} />
-								) : (
-									<FavoriteIcon />
-								)}
-							</IconButton>
-							<Typography className="view-cnt">{car?.carLikes}</Typography>
-						</div>
-					</div>
+						<VisibilityIcon sx={{ fontSize: 16 }} />
+						{car.carViews || 0}
+					</Box>
+				)}
+			</Box>
+
+			{/* Content Section */}
+			<CardContent sx={{ padding: '20px 24px', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+				{/* Car Title with hover effect and animated underline */}
+				<Box sx={{ position: 'relative', display: 'inline-block', width: 'fit-content' }}>
+					<Typography
+						variant="h6"
+						component="div"
+						sx={{
+							fontWeight: 'bold',
+							fontSize: '16px',
+							mb: 0.5,
+							cursor: 'pointer',
+							color: '#1a1a1a',
+							transition: 'color 0.3s ease',
+							position: 'relative',
+							'&:hover': {
+								color: '#6200ee',
+							},
+							'&::before': {
+								content: '""',
+								position: 'absolute',
+								width: 0,
+								height: '1px',
+								bottom: '-1px',
+								left: 0,
+								backgroundColor: '#6200ee',
+								transition: 'width 0.3s ease',
+							},
+							'&:hover::before': {
+								width: '100%',
+							},
+						}}
+						onClick={() => pushDetailHandler(car._id)}
+					>
+						{car.carTitle.split(' ').slice(0, 4).join(' ')} ...
+					</Typography>
 				</Box>
-			</Stack>
-		);
-	}
+
+				{/* Car Description */}
+				<Typography
+					variant="body2"
+					color="text.secondary"
+					sx={{
+						mb: 2,
+						fontSize: '14px',
+						lineHeight: 1.4,
+						overflow: 'hidden',
+						textOverflow: 'ellipsis',
+						display: '-webkit-box',
+						WebkitLineClamp: 2,
+						WebkitBoxOrient: 'vertical',
+					}}
+				>
+					{car.carDesc?.slice(0, 36) || '4.0 D5 PowerPulse Momentum 5dr AW'}...
+				</Typography>
+
+				{/* Car Features */}
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						borderTop: '1px solid #eee',
+						borderBottom: '1px solid #eee',
+						py: 2,
+						my: 2,
+					}}
+				>
+					<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+						<SpeedIcon sx={{ color: '#666', fontSize: '20px', mb: 0.5 }} />
+						<Typography variant="body2" color="text.secondary" sx={{ fontSize: '13px' }}>
+							{car.carMileage || '50'} Miles
+						</Typography>
+					</Box>
+
+					<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+						<LocalGasStationIcon sx={{ color: '#666', fontSize: '20px', mb: 0.5 }} />
+						<Typography variant="body2" color="text.secondary" sx={{ fontSize: '13px' }}>
+							{car.carFuelType}
+						</Typography>
+					</Box>
+
+					<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+						<SettingsIcon sx={{ color: '#666', fontSize: '20px', mb: 0.5 }} />
+						<Typography variant="body2" color="text.secondary" sx={{ fontSize: '13px' }}>
+							{car.carTransmission}
+						</Typography>
+					</Box>
+				</Box>
+
+				{/* Barter/Rent Status and Like Button */}
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						alignItems: 'center',
+						mt: 'auto',
+					}}
+				>
+					{/* Barter/Rent Status */}
+					<Box sx={{ display: 'flex', gap: 1 }}>
+						<Typography
+							variant="body2"
+							sx={{
+								fontSize: '14px',
+								color: car.carBarter ? '#1a1a1a' : '#ccc',
+								fontWeight: car.carBarter ? '500' : '400',
+							}}
+						>
+							Barter
+						</Typography>
+						<Typography
+							variant="body2"
+							sx={{
+								fontSize: '14px',
+								color: '#ccc',
+							}}
+						>
+							/
+						</Typography>
+						<Typography
+							variant="body2"
+							sx={{
+								fontSize: '14px',
+								color: car.carRent ? '#1a1a1a' : '#ccc',
+								fontWeight: car.carRent ? '500' : '400',
+							}}
+						>
+							Rent
+						</Typography>
+					</Box>
+
+					{/* Like Button with Count */}
+					<Box
+						sx={{
+							display: 'flex',
+							alignItems: 'center',
+							gap: 1,
+							cursor: 'pointer',
+						}}
+						onClick={(e: any) => {
+							e.stopPropagation();
+							likeCarHandler(user, car?._id);
+						}}
+					>
+						{isLiked ? (
+							<FavoriteIcon sx={{ color: 'red', fontSize: 24 }} />
+						) : (
+							<FavoriteBorderIcon sx={{ color: '#666', fontSize: 24 }} />
+						)}
+						<Typography variant="body2" sx={{ fontSize: '14px', color: '#666' }}>
+							{car.carLikes || 0}
+						</Typography>
+					</Box>
+				</Box>
+			</CardContent>
+		</Card>
+	);
 };
 
 export default TrendCarCard;
