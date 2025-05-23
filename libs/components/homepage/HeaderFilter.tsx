@@ -388,11 +388,11 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					</Stack>
 					<Stack className={'search-box-other'}>
 						<Box className={'advanced-filter'} onClick={() => advancedFilterHandler(true)}>
-							<img src="/img/icons/tune.svg" alt="" />
-							<span>{t('Advanced')}</span>
+							<span>Advanced Search</span>
 						</Box>
 						<Box className={'search-btn'} onClick={pushSearchHandler}>
 							<img src="/img/icons/search_white.svg" alt="" />
+							<p>Search Cars</p>
 						</Box>
 					</Stack>
 
@@ -657,7 +657,20 @@ HeaderFilter.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 9,
-		search: {},
+		search: {
+			pricesRange: {
+				start: 0,
+				end: 500000000, // adjust if needed
+			},
+			mileageRange: {
+				start: 0,
+				end: 500000, // adjust if needed
+			},
+			yearRange: {
+				start: 1990,
+				end: new Date().getFullYear(),
+			},
+		},
 	},
 };
 

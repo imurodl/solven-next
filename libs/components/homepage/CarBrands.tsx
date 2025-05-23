@@ -38,33 +38,19 @@ const CarBrands: NextPage<{ initialInput: CarsInquiry }> = ({ initialInput }) =>
 	};
 
 	return (
-		<section
-			style={{
-				marginTop: '-80px',
-				padding: '80px 0',
-				backgroundColor: '#F9FBFC',
-				borderTopLeftRadius: '80px',
-				borderTopRightRadius: '80px',
-				position: 'relative',
-				zIndex: 1,
-				overflow: 'hidden',
-			}}
-		>
-			<Stack style={{ maxWidth: '1300px', margin: '0 auto' }}>
-				<Stack
-					className={'info-box'}
-					sx={{ marginBottom: '40px', textAlign: 'center', flexDirection: 'row', justifyContent: 'space-between' }}
-				>
-					<h2 style={{ fontSize: '32px', fontWeight: 700, marginBottom: '12px' }}>Explore Our Premium Brands</h2>
+		<section className="car-brands-section">
+			<Stack className="car-brands-container">
+				<Stack className="info-box">
+					<h2 className="section-title">Explore Our Premium Brands</h2>
 					<Box component={'div'} className={'right'}>
 						<Stack className={'pagination-box'} flexDirection={'row'} alignItems={'center'}>
-							<WestIcon className={'swiper-brand-prev'} background={'#000'} />
-							<div className={'swiper-brand-pagination'} color={'#000'}></div>
-							<EastIcon className={'swiper-brand-next'} background={'#000'} />
+							<WestIcon className={'swiper-brand-prev'} />
+							<div className={'swiper-brand-pagination'}></div>
+							<EastIcon className={'swiper-brand-next'} />
 						</Stack>
 					</Box>
 				</Stack>
-				<Stack className={'card-box'}>
+				<Stack className="card-box">
 					<Swiper
 						slidesPerView={6}
 						spaceBetween={10}
@@ -76,33 +62,12 @@ const CarBrands: NextPage<{ initialInput: CarsInquiry }> = ({ initialInput }) =>
 						pagination={{
 							el: '.swiper-brand-pagination',
 						}}
-						style={{
-							width: '100%',
-							height: 'auto',
-							display: 'flex',
-							flexDirection: 'row',
-						}}
+						className="swiper-container"
 					>
 						{getCarBrandsData?.getCarBrandsByUser?.map((carBrand: CarBrand) => {
 							return (
-								<SwiperSlide
-									key={carBrand._id}
-									style={{
-										width: 'auto',
-										height: 'auto',
-										display: 'flex',
-										flexDirection: 'column',
-										alignItems: 'center',
-										justifyContent: 'center',
-									}}
-								>
-									<Stack
-										onClick={() => pushBrandHandler(carBrand.carBrandName)}
-										flexDirection={'column'}
-										alignItems={'center'}
-										width={'200px'}
-										padding={'26px'}
-									>
+								<SwiperSlide key={carBrand._id} className="brand-slide">
+									<Stack onClick={() => pushBrandHandler(carBrand.carBrandName)} className="brand-item">
 										<img
 											alt={carBrand.carBrandName}
 											src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`}
@@ -110,7 +75,7 @@ const CarBrands: NextPage<{ initialInput: CarsInquiry }> = ({ initialInput }) =>
 											height={60}
 											style={{ objectFit: 'contain' }}
 										/>
-										<Typography component="span" sx={{ cursor: 'pointer' }}>
+										<Typography component="span" className="brand-name">
 											{carBrand.carBrandName}
 										</Typography>
 									</Stack>

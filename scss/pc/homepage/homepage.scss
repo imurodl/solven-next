@@ -970,5 +970,107 @@
 				}
 			}
 		}
+		.car-brands-section {
+			margin-top: -80px;
+			padding: 80px 0;
+			background-color: #f9fbfc;
+			border-top-left-radius: 80px;
+			border-top-right-radius: 80px;
+			position: relative;
+			z-index: 1;
+			overflow: hidden;
+			.car-brands-container {
+				max-width: 1300px;
+				margin: 0 auto;
+				padding: 0 20px;
+
+				.info-box {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					margin-bottom: 40px;
+
+					.section-title {
+						font-size: 32px;
+						font-weight: 700;
+						margin-bottom: 12px;
+						color: $text-color;
+					}
+
+					.pagination-box {
+						display: flex;
+						align-items: center;
+						.swiper-brand-prev,
+						.swiper-brand-next {
+							cursor: pointer;
+							color: $text-color;
+							transition: $transition-smooth;
+							&:hover {
+								color: $primary-color;
+								transform: scale(1.1);
+							}
+						}
+
+						.swiper-brand-pagination {
+							width: 80px;
+							height: 10px;
+							border-radius: 4px;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+						}
+					}
+				}
+
+				.card-box {
+					.swiper-container {
+						width: 100%;
+						height: auto;
+					}
+
+					.brand-slide {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+
+						.brand-item {
+							width: 200px;
+							padding: 26px;
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+							justify-content: center;
+							cursor: pointer;
+							border-radius: 12px;
+							background-color: #fff;
+							box-shadow: $shadow-light;
+							transition: $transition-smooth;
+
+							&:hover {
+								box-shadow: $shadow-medium;
+								transform: translateY(-4px);
+								transition: $transition-smooth;
+								img {
+									transition: $transition-smooth;
+									scale: 1.1;
+								}
+							}
+
+							img {
+								object-fit: contain;
+								margin-bottom: 12px;
+							}
+
+							.brand-name {
+								font-size: 14px;
+								color: $text-color;
+								font-weight: 600;
+								transition: $transition-fast;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
