@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Stack, Box } from '@mui/material';
+import { Stack, Box, Divider, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
@@ -24,6 +24,7 @@ const TrendCars = (props: TrendCarsProps) => {
 	const { initialInput } = props;
 	const device = useDeviceDetect();
 	const [trendCars, setTrendCars] = useState<Car[]>([]);
+	const [activeSort, setActiveSort] = useState(initialInput.sort);
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetCar] = useMutation(LIKE_TARGET_CAR);
@@ -57,6 +58,21 @@ const TrendCars = (props: TrendCarsProps) => {
 		} catch (err: any) {
 			console.log('ERROR, likeCarHandler', err.message);
 			sweetMixinErrorAlert(err.message).then();
+		}
+	};
+
+	const carSearchChangeHandler = async (sortInput: string) => {
+		try {
+			await getCarsRefetch({
+				input: {
+					...initialInput,
+					sort: sortInput,
+				},
+			});
+			setActiveSort(sortInput);
+		} catch (err: any) {
+			console.log('ERROR, carSearchChangeHandler', err.message);
+			sweetMixinErrorAlert(err.message);
 		}
 	};
 
@@ -102,7 +118,7 @@ const TrendCars = (props: TrendCarsProps) => {
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Trending Cars</span>
+							<span>Explore Car Listings</span>
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'pagination-box'}>
@@ -111,6 +127,29 @@ const TrendCars = (props: TrendCarsProps) => {
 								<EastIcon className={'swiper-trend-next'} />
 							</div>
 						</Box>
+					</Stack>
+					<Stack className="car-filter-box">
+						<Stack className="car-filter-boxes">
+							<Typography
+								onClick={() => carSearchChangeHandler('carViews')}
+								className={activeSort === 'carViews' ? 'active' : ''}
+							>
+								Popular Cars
+							</Typography>
+							<Typography
+								onClick={() => carSearchChangeHandler('carLikes')}
+								className={activeSort === 'carLikes' ? 'active' : ''}
+							>
+								Trending Cars
+							</Typography>
+							<Typography
+								onClick={() => carSearchChangeHandler('carRank')}
+								className={activeSort === 'carRank' ? 'active' : ''}
+							>
+								Top Cars
+							</Typography>
+						</Stack>
+						<Divider color={'#e9e9e9'} width={'100%'} height={'1px'} />
 					</Stack>
 					<Stack className={'card-box'}>
 						{trendCars.length === 0 ? (
@@ -151,7 +190,7 @@ TrendCars.defaultProps = {
 	initialInput: {
 		page: 1,
 		limit: 8,
-		sort: 'carLikes',
+		sort: 'carViews',
 		direction: 'DESC',
 		search: {},
 	},

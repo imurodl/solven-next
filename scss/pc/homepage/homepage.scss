@@ -7,7 +7,7 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			margin-bottom: 40px;
+			margin-bottom: 30px;
 			width: 100%;
 			flex-direction: row;
 			.left {
@@ -153,7 +153,7 @@
 						align-items: center;
 						.brand-item {
 							width: 200px;
-							padding: 26px;
+							padding: 36px 30px;
 							display: flex;
 							flex-direction: column;
 							align-items: center;
@@ -178,10 +178,11 @@
 							}
 							img {
 								object-fit: contain;
-								margin-bottom: 12px;
+								scale: 1.1;
+								margin-bottom: 20px;
 							}
 							.brand-name {
-								font-size: 14px;
+								font-size: 15px;
 								color: $text-color;
 								font-weight: 600;
 								transition: $transition-fast;
@@ -198,6 +199,41 @@
 			background: $background-white;
 			.container {
 				flex-direction: column;
+
+				.car-filter-box {
+					margin-bottom: 40px;
+					.car-filter-boxes {
+						flex-direction: row;
+						gap: 30px;
+						p {
+							color: #050b20;
+							font-family: $font;
+							font-size: 17px;
+							font-style: normal;
+							font-weight: 500;
+							line-height: 29.6px; /* 185% */
+							position: relative;
+							padding-bottom: 10px;
+							cursor: pointer;
+							&::before {
+								content: '';
+								position: absolute;
+								width: 0;
+								height: 2px;
+								bottom: -2px;
+								left: 0;
+								background-color: #405ff2;
+								transition: width 0.3s ease;
+							}
+							&.active::before {
+								width: 100%;
+							}
+							&:hover::before {
+								width: 100%;
+							}
+						}
+					}
+				}
 
 				.card-box {
 					position: relative;

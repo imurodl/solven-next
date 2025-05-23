@@ -5,7 +5,6 @@ import CommunityBoards from '../libs/components/homepage/CommunityBoards';
 import PopularCars from '../libs/components/homepage/PopularCars';
 import TopAgents from '../libs/components/homepage/TopAgents';
 import TrendCars from '../libs/components/homepage/TrendCars';
-import TopCars from '../libs/components/homepage/TopCars';
 import { Stack } from '@mui/material';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import CtaSection from '../libs/components/homepage/CtaSection';
@@ -26,7 +25,6 @@ const Home: NextPage = () => {
 			<Stack className={'home-page'}>
 				<TrendCars />
 				<PopularCars />
-				<TopCars />
 				<TopAgents />
 			</Stack>
 		);
@@ -37,7 +35,6 @@ const Home: NextPage = () => {
 				<CarBrands />
 				<TrendCars />
 				<PopularCars />
-				<TopCars />
 				<TopAgents />
 				<CommunityBoards />
 				<CtaSection />

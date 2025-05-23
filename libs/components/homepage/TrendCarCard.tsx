@@ -78,7 +78,7 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 						fontSize: '16px',
 					}}
 				>
-					${car.carPrice || '95,000'}
+					${car.carPrice}
 				</Box>
 
 				{/* Views Count - Only visible on hover */}
@@ -101,7 +101,7 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 						}}
 					>
 						<VisibilityIcon sx={{ fontSize: 16 }} />
-						{car.carViews || 0}
+						{car.carViews}
 					</Box>
 				)}
 			</Box>
@@ -121,9 +121,6 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 							color: '#1a1a1a',
 							transition: 'color 0.3s ease',
 							position: 'relative',
-							'&:hover': {
-								color: '#6200ee',
-							},
 							'&::before': {
 								content: '""',
 								position: 'absolute',
@@ -131,7 +128,7 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 								height: '1px',
 								bottom: '-1px',
 								left: 0,
-								backgroundColor: '#6200ee',
+								backgroundColor: '#1a1a1a',
 								transition: 'width 0.3s ease',
 							},
 							'&:hover::before': {
