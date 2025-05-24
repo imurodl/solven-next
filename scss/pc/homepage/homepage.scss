@@ -193,7 +193,7 @@
 			}
 		}
 		.trend-cars {
-			padding: 40px 0 76px;
+			padding: 80px 0;
 			width: 100%;
 			height: auto;
 			background: $background-white;
@@ -201,7 +201,7 @@
 				flex-direction: column;
 
 				.car-filter-box {
-					margin-bottom: 40px;
+					margin-bottom: 30px;
 					.car-filter-boxes {
 						flex-direction: row;
 						gap: 30px;
@@ -264,28 +264,68 @@
 				}
 			}
 		}
-		.popular-properties {
-			padding: 132px 0px 94px;
+		.popular-cars {
+			padding: 80px 0;
 			width: 100%;
-			height: 816px;
 			display: flex;
 			flex-direction: row;
-			background: #f6f6f6;
+			background: #e9e9e9;
+
 			.container {
 				flex-direction: column;
-				align-items: center;
+				// align-items: center;
+
+				.car-filter-box {
+					margin-bottom: 30px;
+					.css-1wmdqt6-MuiDivider-root {
+						border-color: #fff;
+					}
+					.car-filter-boxes {
+						flex-direction: row;
+						gap: 30px;
+						p {
+							color: #050b20;
+							font-family: $font;
+							font-size: 17px;
+							font-style: normal;
+							font-weight: 500;
+							line-height: 29.6px; /* 185% */
+							position: relative;
+							padding-bottom: 10px;
+							cursor: pointer;
+							&::before {
+								content: '';
+								position: absolute;
+								width: 0;
+								height: 2px;
+								bottom: -2px;
+								left: 0;
+								background-color: #405ff2;
+								transition: width 0.3s ease;
+							}
+							&.active::before {
+								width: 100%;
+							}
+							&:hover::before {
+								width: 100%;
+							}
+						}
+					}
+				}
+
 				.card-box {
-					margin-top: 34px;
 					width: 100%;
 					height: auto;
 					display: flex;
 					flex-direction: row;
 					justify-content: space-between;
+
 					.popular-property-swiper {
 						width: 100%;
-						height: 425px;
+						height: 280px;
 						display: flex;
 						flex-direction: row;
+
 						.popular-property-slide {
 							width: auto;
 							height: auto;
@@ -293,24 +333,32 @@
 							margin: 10px 0 10px 10px;
 						}
 					}
+
 					.popular-card-box {
 						position: relative;
-						width: 400px;
-						height: 425px;
+						width: 620px;
+						height: 260px;
 						display: flex;
-						flex-direction: column;
-						transition: transform 0.3s, opacity 0.3s;
+						flex-direction: row;
+						background: $background-white;
+						border-radius: $border-radius-medium;
+						box-shadow: $shadow-medium;
+						overflow: hidden;
+						transition: $transition-smooth;
+
 						&:hover {
 							opacity: 1;
-							transform: scale(1.05);
+							transform: scale(1.02);
 						}
+
 						.card-img {
 							position: relative;
-							width: 100%;
-							height: 203px;
+							width: 40%;
+							height: 100%;
 							background-size: cover;
-							border-radius: 12px 12px 0px 0px;
+							background-position: center;
 							cursor: pointer;
+
 							div.status {
 								position: absolute;
 								padding: 6px 34px;
@@ -318,15 +366,17 @@
 								top: 20px;
 								display: flex;
 								align-items: center;
-								border-radius: 6px;
+								border-radius: $border-radius-small;
 								background: #eb6753;
+
 								img {
 									width: 14px;
 									height: 14px;
 								}
+
 								span {
 									margin-left: 5px;
-									color: #fff;
+									color: $background-white;
 									font-family: $font;
 									font-size: 12px;
 									font-style: normal;
@@ -335,14 +385,15 @@
 									text-transform: uppercase;
 								}
 							}
+
 							div.price {
 								position: absolute;
 								padding: 8px 12px;
 								left: 20px;
 								bottom: 20px;
-								border-radius: 6px;
-								background: #fff;
-								color: #181a20;
+								border-radius: $border-radius-small;
+								background: $background-white;
+								color: $text-color;
 								font-family: $font;
 								font-size: 15px;
 								font-style: normal;
@@ -350,122 +401,226 @@
 								line-height: normal;
 							}
 						}
+
 						.info {
-							padding: 20px 22px 17px;
+							padding: 16px 18px 14px;
+							width: 60%;
 							display: flex;
 							flex-direction: column;
 							box-sizing: border-box;
-							border-radius: 0px 0px 12px 12px;
-							border: 1px solid rgba(196, 196, 196, 0.71);
-							border-top: none;
-							background: #fff;
-							box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
+
 							.title {
-								overflow: hidden;
-								color: #181a20;
-								text-overflow: ellipsis;
-								white-space: nowrap;
+								color: $text-color;
 								font-family: $font;
-								font-size: 15px;
+								font-size: 16px;
 								font-style: normal;
 								font-weight: 600;
 								line-height: normal;
 								text-transform: capitalize;
 								cursor: pointer;
-							}
-							.desc {
-								margin-top: 5px;
+								margin-bottom: 8px;
 								overflow: hidden;
-								color: #717171;
-								font-family: $font;
-								font-size: 13px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: normal;
 								text-overflow: ellipsis;
 								white-space: nowrap;
 							}
-							.options {
-								margin-top: 15px;
-								display: flex;
-								flex-direction: row;
-								justify-content: space-between;
-								div {
-									display: flex;
-									flex-direction: row;
-									img {
-										margin-right: 5px;
-										width: 17px;
-										height: 17px;
+
+							.car-desc {
+								color: $text-muted;
+								font-family: $font;
+								font-size: 12px;
+								font-weight: 400;
+								line-height: 1.3;
+								margin-bottom: 8px;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								display: -webkit-box;
+								-webkit-line-clamp: 2;
+								-webkit-box-orient: vertical;
+							}
+
+							.car-specs {
+								display: grid;
+								grid-template-columns: 1fr 1fr 1fr;
+								gap: 4px 6px;
+								margin-bottom: 12px;
+								margin-top: 10px;
+
+								.spec-item {
+									cursor: help !important;
+									border: 1px solid transparent;
+
+									&:hover {
+										border: 1px solid $border-color;
+										box-shadow: $shadow-light;
+										transform: translateY(-1px);
 									}
+									display: flex;
+									align-items: center;
+									gap: 4px;
+									padding: 8px 6px;
+									background: $background-light;
+									border-radius: $border-radius-medium;
+									transition: $transition-fast;
+									min-height: 24px;
+
+									.spec-icon {
+										width: 14px;
+										height: 14px;
+										color: $text-muted;
+										flex-shrink: 0;
+
+										&.active {
+											color: $text-color;
+										}
+
+										&.inactive {
+											color: #d1d5db;
+										}
+									}
+
+									.color-dot {
+										width: 14px;
+										height: 14px;
+										border-radius: 50%;
+										border: 1px solid $border-light;
+										flex-shrink: 0;
+									}
+
 									span {
-										color: #181a20;
+										color: $text-color;
 										font-family: $font;
-										font-size: 13px;
-										font-style: normal;
+										font-size: 11px;
 										font-weight: 400;
 										line-height: normal;
+										white-space: nowrap;
+										overflow: hidden;
+										text-overflow: ellipsis;
+									}
+
+									&.sale-barter {
+										justify-content: center;
+										gap: 13px;
+
+										span {
+											color: $text-muted;
+											font-size: 12px;
+											margin: 0 1px;
+										}
 									}
 								}
 							}
-							.bott {
+
+							.bottom-section {
 								display: flex;
-								flex-direction: row;
 								justify-content: space-between;
 								align-items: center;
-								p {
-									color: #181a20;
-									font-family: $font;
-									font-size: 13px;
-									font-style: normal;
-									font-weight: 500;
-									line-height: normal;
-									text-transform: capitalize;
-								}
-								button {
-									margin-left: 7px;
-									width: 16px;
-									height: 16px;
-									box-sizing: border-box;
+								margin-top: auto;
+
+								.brand-model-box {
+									display: flex;
+									align-items: center;
+									gap: 10px;
+
+									span {
+										color: $text-color;
+										font-family: $font;
+										font-size: 12px;
+										font-weight: 600;
+										line-height: normal;
+									}
 								}
 								.view-like-box {
 									display: flex;
-									flex-direction: row;
-									gap: 7px;
 									align-items: center;
-									.view-cnt {
-										color: #717171;
+									gap: 8px;
+
+									button {
+										width: 14px;
+										height: 14px;
+										box-sizing: border-box;
+									}
+
+									.view-cnt,
+									.like-cnt {
+										color: $text-muted;
 										font-family: $font;
-										font-size: 13px;
+										font-size: 12px;
 										font-style: normal;
 										font-weight: 400;
 										line-height: normal;
-										text-overflow: ellipsis;
+									}
+
+									.separator {
+										color: $text-muted;
+										font-size: 12px;
+										margin: 0 4px;
 									}
 								}
 							}
 						}
+
+						// Mobile styles
+						@media (max-width: 768px) {
+							width: 400px;
+							height: 425px;
+							flex-direction: column;
+
+							.card-img {
+								width: 100%;
+								height: 203px;
+								border-radius: $border-radius-medium $border-radius-medium 0px 0px;
+							}
+
+							.info {
+								width: 100%;
+								border-radius: 0px 0px $border-radius-medium $border-radius-medium;
+								border: 1px solid $border-light;
+								border-top: none;
+							}
+						}
 					}
 				}
+
 				.pagination-box {
 					display: flex;
 					flex-direction: row;
-					justify-content: center;
+					justify-content: flex-start;
 					align-items: center;
-					.swiper-pagination-bullet.swiper-pagination-bullet-active {
-						background: #000000;
-					}
+					margin-top: 30px;
+					gap: 15px;
+					.swiper-popular-prev,
 					.swiper-popular-next {
-						margin-left: 20px;
+						width: 60px;
+						height: 40px;
+						border-radius: 25px;
+						padding: 5px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
 						cursor: pointer;
+						transition: $transition-smooth;
+						background: $background-white;
+						color: $text-color;
+						border: 1px solid $border-light;
+						box-shadow: $shadow-light;
+						font-size: 18px;
+						font-weight: 600;
+
+						&:hover {
+							transform: scale(1.05);
+							box-shadow: $shadow-medium;
+							background: $background-light;
+						}
 					}
-					.swiper-popular-prev {
-						margin-right: 20px;
-						cursor: pointer;
+
+					// Hide default pagination dots
+					.swiper-popular-pagination {
+						display: none;
 					}
 				}
 			}
 		}
+
 		.top-properties {
 			padding: 108px 0px 76px;
 			width: 100%;
