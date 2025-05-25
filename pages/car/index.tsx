@@ -10,6 +10,7 @@ import { CarsInquiry } from '../../libs/types/car/car.input';
 import { Car } from '../../libs/types/car/car';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 import { Direction, Message } from '../../libs/enums/common.enum';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_CARS } from '../../apollo/user/query';
@@ -34,7 +35,7 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [sortingOpen, setSortingOpen] = useState(false);
-	const [filterSortName, setFilterSortName] = useState('New');
+	const [filterSortName, setFilterSortName] = useState('Newest');
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetCar] = useMutation(LIKE_TARGET_CAR);
@@ -109,7 +110,11 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 		switch (e.currentTarget.id) {
 			case 'new':
 				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: Direction.ASC });
-				setFilterSortName('New');
+				setFilterSortName('Newest');
+				break;
+			case 'old':
+				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: Direction.DESC });
+				setFilterSortName('Oldest');
 				break;
 			case 'lowest':
 				setSearchFilter({ ...searchFilter, sort: 'carPrice', direction: Direction.ASC });
@@ -118,6 +123,7 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 			case 'highest':
 				setSearchFilter({ ...searchFilter, sort: 'carPrice', direction: Direction.DESC });
 				setFilterSortName('Highest Price');
+				break;
 		}
 		setSortingOpen(false);
 		setAnchorEl(null);
@@ -138,7 +144,13 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 					<Box component={'div'} className={'right'}>
 						<span>Sort by</span>
 						<div>
-							<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
+							<Button
+								onClick={sortingClickHandler}
+								endIcon={sortingOpen ? <KeyboardArrowUpRoundedIcon /> : <KeyboardArrowDownRoundedIcon />}
+								style={{
+									border: sortingOpen ? '2px solid black' : '2px solid #e9e9e9',
+								}}
+							>
 								{filterSortName}
 							</Button>
 							<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
@@ -146,14 +158,25 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 									onClick={sortingHandler}
 									id={'new'}
 									disableRipple
+									data-selected={filterSortName === 'Newest'}
 									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 								>
-									New
+									Newest
+								</MenuItem>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'old'}
+									disableRipple
+									data-selected={filterSortName === 'Oldest'}
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									Oldest
 								</MenuItem>
 								<MenuItem
 									onClick={sortingHandler}
 									id={'lowest'}
 									disableRipple
+									data-selected={filterSortName === 'Lowest Price'}
 									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 								>
 									Lowest Price
@@ -162,6 +185,7 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 									onClick={sortingHandler}
 									id={'highest'}
 									disableRipple
+									data-selected={filterSortName === 'Highest Price'}
 									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 								>
 									Highest Price
@@ -221,7 +245,7 @@ CarList.defaultProps = {
 		page: 1,
 		limit: 9,
 		sort: 'createdAt',
-		direction: 'DESC',
+		direction: 'ASC',
 		search: {
 			locationList: [],
 			typeList: [],

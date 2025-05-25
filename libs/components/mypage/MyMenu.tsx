@@ -105,7 +105,7 @@ const MyMenu = () => {
 												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 													My Listings
 												</Typography>
-												<IconButton aria-label="delete" sx={{ ml: '36px', height: '16px' }}>
+												<IconButton aria-label="delete" sx={{ ml: '40px', height: '16px' }}>
 													<PortraitIcon style={{ color: 'red' }} />
 												</IconButton>
 											</div>
@@ -252,7 +252,7 @@ const MyMenu = () => {
 							</ListItem>
 						</List>
 					</Stack>
-					<Stack className={'section'} sx={{ marginTop: '10px' }}>
+					<Stack className={'section'}>
 						<div>
 							<Typography className="title" variant={'h5'}>
 								Community
@@ -302,7 +302,7 @@ const MyMenu = () => {
 							</List>
 						</div>
 					</Stack>
-					<Stack className={'section'} sx={{ marginTop: '30px' }}>
+					<Stack className={'section'}>
 						<Typography className="title" variant={'h5'}>
 							MANAGE ACCOUNT
 						</Typography>

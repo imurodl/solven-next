@@ -24,7 +24,7 @@
 					.left-config {
 						position: relative;
 						padding: 0;
-						width: 266px;
+						width: 280px;
 						min-height: 100vh;
 						background: #050b20;
 						border: none;
@@ -102,7 +102,7 @@
 						.sections {
 							order: 1; // Keep sections at top
 							height: auto;
-							gap: 20px;
+							gap: 30px;
 							margin-top: 20px;
 							flex: 1;
 
@@ -130,14 +130,13 @@
 									padding: 0;
 
 									li {
-										margin-bottom: 2px;
-										border-radius: 0;
+										margin-bottom: 1px;
+										border-radius: 16px;
 										padding: 0;
 										transition: $transition-fast;
 
 										&:hover {
 											background: rgba(255, 255, 255, 0.1);
-											border-radius: 16px;
 										}
 									}
 									.focus {

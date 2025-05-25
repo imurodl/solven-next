@@ -62,6 +62,11 @@ const Filter = (props: FilterType) => {
 
 	/** LIFECYCLES **/
 	useEffect(() => {
+		const brandFromSearch = searchFilter?.search?.brandList?.[0] ?? '';
+		setSelectedBrand(brandFromSearch);
+	}, [searchFilter?.search?.brandList]);
+
+	useEffect(() => {
 		const queryParams = JSON.stringify({
 			...searchFilter,
 			search: {
@@ -526,7 +531,7 @@ const Filter = (props: FilterType) => {
 		return (
 			<Stack className={'filter-main'}>
 				<Stack className={'find-your-home'} mb={'40px'}>
-					<Stack className={'input-box'}>
+					<Stack className={'input-box-search'}>
 						<OutlinedInput
 							value={searchText}
 							type={'text'}
@@ -588,7 +593,7 @@ const Filter = (props: FilterType) => {
 										onChange={carLocationSelectHandler}
 									/>
 									<label htmlFor={location} style={{ cursor: 'pointer' }}>
-										<Typography className="property-type">{location}</Typography>
+										<Typography className="property-type">{location.toLocaleLowerCase()}</Typography>
 									</label>
 								</Stack>
 							);
@@ -596,12 +601,13 @@ const Filter = (props: FilterType) => {
 					</Stack>
 				</Stack>
 
-				<Stack className={'find-your-home'} mb={'30px'}>
-					<Typography className={'title'}>Select Brand</Typography>
+				<Stack className="find-your-home" mb="30px">
+					<Typography className="title">Select Brand</Typography>
 					<FormControl fullWidth>
 						<Select
-							value={selectedBrand}
-							onChange={(e) => {
+							displayEmpty
+							value={selectedBrand || ''}
+							onChange={(e: any) => {
 								const brand = e.target.value;
 								setSelectedBrand(brand);
 								router.push(
@@ -609,8 +615,8 @@ const Filter = (props: FilterType) => {
 										...searchFilter,
 										search: {
 											...searchFilter.search,
-											brandList: [brand],
-											modelList: [], // clear models
+											brandList: brand ? [brand] : [],
+											modelList: [],
 										},
 									})}`,
 									undefined,
@@ -636,7 +642,7 @@ const Filter = (props: FilterType) => {
 						<FormControl fullWidth>
 							<Select
 								value={searchFilter.search.modelList?.[0] || ''}
-								onChange={(e) => {
+								onChange={(e: any) => {
 									const model = e.target.value;
 									router.push(
 										`/car?input=${JSON.stringify({
@@ -680,7 +686,7 @@ const Filter = (props: FilterType) => {
 								checked={(searchFilter?.search?.typeList || []).includes(type as CarType)}
 							/>
 							<label style={{ cursor: 'pointer' }} htmlFor={type}>
-								<Typography className="property_type">{type}</Typography>
+								<Typography className="property_type">{type.toLocaleLowerCase()}</Typography>
 							</label>
 						</Stack>
 					))}
@@ -700,7 +706,7 @@ const Filter = (props: FilterType) => {
 								onChange={() => updateArrayFilter('fuelTypeList', type)}
 							/>
 							<label htmlFor={type} style={{ cursor: 'pointer' }}>
-								<Typography className="property_type">{type}</Typography>
+								<Typography className="property_type">{type.toLocaleLowerCase()}</Typography>
 							</label>
 						</Stack>
 					))}
@@ -934,7 +940,7 @@ const Filter = (props: FilterType) => {
 									onChange={() => updateArrayFilter('transmissionList', trans)}
 								/>
 								<label htmlFor={trans} style={{ cursor: 'pointer' }}>
-									<Typography className="property_type">{trans}</Typography>
+									<Typography className="property_type">{trans.toLocaleLowerCase()}</Typography>
 								</label>
 							</Stack>
 						))}

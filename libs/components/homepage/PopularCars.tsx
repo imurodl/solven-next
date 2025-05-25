@@ -120,10 +120,16 @@ const PopularCars = (props: PopularCarsProps) => {
 								KIA
 							</Typography>
 							<Typography
+								onClick={() => carSearchChangeHandler('CHEVROLET')}
+								className={activeBrand === 'CHEVROLET' ? 'active' : ''}
+							>
+								Chevrolet
+							</Typography>
+							<Typography
 								onClick={() => carSearchChangeHandler('RENAULT KOREA')}
 								className={activeBrand === 'RENAULT KOREA' ? 'active' : ''}
 							>
-								Renault Korea
+								Renault
 							</Typography>
 						</Stack>
 						<Divider color={'#fff'} width={'100%'} height={'1px'} />
