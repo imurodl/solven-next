@@ -32,7 +32,7 @@ const MyMenu = () => {
 		return <div>MY MENU</div>;
 	} else {
 		return (
-			<Stack width={'100%'} padding={'30px 24px'}>
+			<Stack width={'100%'} padding={'30px'}>
 				<Stack className={'profile'}>
 					<Box component={'div'} className={'profile-img'}>
 						<img
@@ -80,7 +80,7 @@ const MyMenu = () => {
 													<img className={'com-icon'} src={'/img/icons/newTab.svg'} alt={'com_icon'} />
 												)}
 												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-													Add Property
+													Add Listing
 												</Typography>
 												<IconButton aria-label="delete" sx={{ ml: '40px', height: '16px' }}>
 													<PortraitIcon style={{ color: 'red' }} />
@@ -103,7 +103,7 @@ const MyMenu = () => {
 													<img className={'com-icon'} src={'/img/icons/home.svg'} alt={'com-icon'} />
 												)}
 												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-													My Properties
+													My Listings
 												</Typography>
 												<IconButton aria-label="delete" sx={{ ml: '36px', height: '16px' }}>
 													<PortraitIcon style={{ color: 'red' }} />
@@ -129,7 +129,7 @@ const MyMenu = () => {
 										)}
 
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-											My Favorites
+											My Favorite
 										</Typography>
 									</div>
 								</Link>

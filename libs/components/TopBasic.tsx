@@ -164,10 +164,21 @@ const Top = () => {
 		return (
 			<Stack className={'navbar'}>
 				<Stack className={`navbar-basic`}>
-					<Stack className={'container'}>
+					<Stack
+						className="container"
+						style={{
+							width: router.pathname === '/mypage' ? '100%' : '1300px',
+						}}
+					>
 						<Box component={'div'} className={'logo-box'}>
 							<Link href={'/'}>
-								<img src="/img/logo/logoWhite.svg" alt="" />
+								<img
+									src="/img/logo/logoWhite.svg"
+									alt=""
+									style={{
+										marginLeft: router.pathname === '/mypage' ? '80px' : '0',
+									}}
+								/>
 							</Link>
 						</Box>
 						<Box component={'div'} className={'router-box'}>
@@ -192,7 +203,13 @@ const Top = () => {
 								<div> {t('CS')} </div>
 							</Link>
 						</Box>
-						<Box component={'div'} className={'user-box'}>
+						<Box
+							component={'div'}
+							className={'user-box'}
+							style={{
+								marginRight: router.pathname === '/mypage' ? '50px' : '0',
+							}}
+						>
 							{user?._id ? (
 								<>
 									<div className={'login-user'} onClick={(event: any) => setLogoutAnchor(event.currentTarget)}>

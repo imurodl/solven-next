@@ -17,7 +17,7 @@ import { CarLocation, CarType, CarFuelType, CarColor, CarTransmission, CarOption
 import { CarsInquiry } from '../../types/car/car.input';
 import { useRouter } from 'next/router';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { carMileage, carYears } from '../../config';
+import { carMileage, carPrices, carYears } from '../../config';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { GET_CAR_BRANDS_BY_USER } from '../../../apollo/user/query';
 import { useQuery } from '@apollo/client';
@@ -526,7 +526,6 @@ const Filter = (props: FilterType) => {
 		return (
 			<Stack className={'filter-main'}>
 				<Stack className={'find-your-home'} mb={'40px'}>
-					<Typography className={'title-main'}>Find Your Car</Typography>
 					<Stack className={'input-box'}>
 						<OutlinedInput
 							value={searchText}
@@ -565,9 +564,7 @@ const Filter = (props: FilterType) => {
 					</Stack>
 				</Stack>
 				<Stack className={'find-your-home'} mb={'30px'}>
-					<p className={'title'} style={{ textShadow: '0px 3px 4px #b9b9b9' }}>
-						Location
-					</p>
+					<p className={'title'}>Location</p>
 					<Stack
 						className={`property-location`}
 						// style={{ height: showMore ? '253px' : '115px' }}
@@ -682,7 +679,7 @@ const Filter = (props: FilterType) => {
 								onChange={carTypeSelectHandler}
 								checked={(searchFilter?.search?.typeList || []).includes(type as CarType)}
 							/>
-							<label style={{ cursor: 'pointer' }}>
+							<label style={{ cursor: 'pointer' }} htmlFor={type}>
 								<Typography className="property_type">{type}</Typography>
 							</label>
 						</Stack>
@@ -711,33 +708,35 @@ const Filter = (props: FilterType) => {
 
 				<Stack className={'find-your-home'} mb={'30px'}>
 					<Typography className={'title'}>Options</Typography>
-					<Stack className={'input-box'}>
-						<Checkbox
-							id={'Barter'}
-							className="property-checkbox"
-							color="default"
-							size="small"
-							value={'carBarter'}
-							checked={(searchFilter?.search?.carOptions || []).includes('carBarter')}
-							onChange={carOptionSelectHandler}
-						/>
-						<label htmlFor={'Barter'} style={{ cursor: 'pointer' }}>
-							<Typography className="propert-type">Barter</Typography>
-						</label>
-					</Stack>
-					<Stack className={'input-box'}>
-						<Checkbox
-							id={'Rent'}
-							className="property-checkbox"
-							color="default"
-							size="small"
-							value={'carRent'}
-							checked={(searchFilter?.search?.carOptions || []).includes('carRent')}
-							onChange={carOptionSelectHandler}
-						/>
-						<label htmlFor={'Rent'} style={{ cursor: 'pointer' }}>
-							<Typography className="propert-type">Rent</Typography>
-						</label>
+					<Stack flexDirection={'row'}>
+						<Stack className={'input-box'}>
+							<Checkbox
+								id={'Barter'}
+								className="property-checkbox"
+								color="default"
+								size="small"
+								value={'carBarter'}
+								checked={(searchFilter?.search?.carOptions || []).includes('carBarter')}
+								onChange={carOptionSelectHandler}
+							/>
+							<label htmlFor={'Barter'} style={{ cursor: 'pointer' }}>
+								<Typography className="propert-type">Barter</Typography>
+							</label>
+						</Stack>
+						<Stack className={'input-box'}>
+							<Checkbox
+								id={'Rent'}
+								className="property-checkbox"
+								color="default"
+								size="small"
+								value={'carRent'}
+								checked={(searchFilter?.search?.carOptions || []).includes('carRent')}
+								onChange={carOptionSelectHandler}
+							/>
+							<label htmlFor={'Rent'} style={{ cursor: 'pointer' }}>
+								<Typography className="propert-type">Rent</Typography>
+							</label>
+						</Stack>
 					</Stack>
 				</Stack>
 
@@ -790,31 +789,50 @@ const Filter = (props: FilterType) => {
 					</Stack>
 				</Stack>
 
-				<Stack className={'find-your-home'} mb={'30px'}>
-					<Typography className={'title'}>Price Range</Typography>
+				<Stack className="find-your-home" mb="30px">
+					<Typography className="title">Price Range</Typography>
 					<Stack className="square-year-input">
-						<input
-							type="number"
-							placeholder="$ min"
-							min={0}
-							value={searchFilter?.search?.pricesRange?.start ?? 0}
-							onChange={(e: any) => {
-								if (e.target.value >= 0) {
-									carPriceHandler(e.target.value, 'start');
-								}
-							}}
-						/>
+						<FormControl>
+							<InputLabel id="price-min-label">Min</InputLabel>
+							<Select
+								labelId="price-min-label"
+								id="price-min-select"
+								value={searchFilter?.search?.pricesRange?.start ?? 0}
+								label="Min"
+								onChange={(e: any) => carPriceHandler(e.target.value, 'start')}
+								MenuProps={MenuProps}
+							>
+								{carPrices.map((price: number) => (
+									<MenuItem value={price} disabled={(searchFilter?.search?.pricesRange?.end || 0) < price} key={price}>
+										${price.toLocaleString()}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+
 						<div className="central-divider"></div>
-						<input
-							type="number"
-							placeholder="$ max"
-							value={searchFilter?.search?.pricesRange?.end ?? 0}
-							onChange={(e: any) => {
-								if (e.target.value >= 0) {
-									carPriceHandler(e.target.value, 'end');
-								}
-							}}
-						/>
+
+						<FormControl>
+							<InputLabel id="price-max-label">Max</InputLabel>
+							<Select
+								labelId="price-max-label"
+								id="price-max-select"
+								value={searchFilter?.search?.pricesRange?.end ?? 500000}
+								label="Max"
+								onChange={(e: any) => carPriceHandler(e.target.value, 'end')}
+								MenuProps={MenuProps}
+							>
+								{carPrices.map((price: number) => (
+									<MenuItem
+										value={price}
+										disabled={(searchFilter?.search?.pricesRange?.start || 0) > price}
+										key={price}
+									>
+										${price.toLocaleString()}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
 					</Stack>
 				</Stack>
 
@@ -903,22 +921,24 @@ const Filter = (props: FilterType) => {
 
 				<Stack className={'find-your-home'}>
 					<Typography className={'title'}>Transmission</Typography>
-					{carTransmissions.map((trans) => (
-						<Stack className={'input-box'} key={trans}>
-							<Checkbox
-								id={trans}
-								className="property-checkbox"
-								color="default"
-								size="small"
-								value={trans}
-								checked={(searchFilter?.search?.transmissionList || []).includes(trans)}
-								onChange={() => updateArrayFilter('transmissionList', trans)}
-							/>
-							<label htmlFor={trans} style={{ cursor: 'pointer' }}>
-								<Typography className="property_type">{trans}</Typography>
-							</label>
-						</Stack>
-					))}
+					<Stack flexDirection={'row'}>
+						{carTransmissions.map((trans) => (
+							<Stack className={'input-box'} key={trans}>
+								<Checkbox
+									id={trans}
+									className="property-checkbox"
+									color="default"
+									size="small"
+									value={trans}
+									checked={(searchFilter?.search?.transmissionList || []).includes(trans)}
+									onChange={() => updateArrayFilter('transmissionList', trans)}
+								/>
+								<label htmlFor={trans} style={{ cursor: 'pointer' }}>
+									<Typography className="property_type">{trans}</Typography>
+								</label>
+							</Stack>
+						))}
+					</Stack>
 				</Stack>
 			</Stack>
 		);

@@ -21,7 +21,9 @@ for (let i = 1990; i <= thisYear; i++) {
 }
 
 // Prices range (example values, adjust as needed)
-export const carPrices: number[] = [0, 1000, 3000, 5000, 10000, 20000, 30000, 50000, 100000];
+export const carPrices = [
+	0, 5000, 10000, 15000, 20000, 25000, 30000, 40000, 50000, 75000, 100000, 150000, 200000, 300000, 500000,
+];
 
 // Mileage range (in kilometers)
 export const carMileage: number[] = [0, 10000, 30000, 50000, 70000, 100000, 150000, 200000];

@@ -6,10 +6,12 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import AppleIcon from '@mui/icons-material/Apple';
 import AndroidIcon from '@mui/icons-material/Android';
 import useDeviceDetect from '../hooks/useDeviceDetect';
+import { useRouter } from 'next/router';
 
 const Footer = () => {
 	const device = useDeviceDetect();
 	const isMobile = device === 'mobile';
+	const router = useRouter();
 
 	const socialIcons = [
 		<FacebookOutlinedIcon key="facebook" />,
@@ -38,7 +40,15 @@ const Footer = () => {
 	];
 
 	return (
-		<Stack sx={{ bgcolor: '#050b20', color: '#fff', margin: '0 auto', gap: 6, width: '1300px' }}>
+		<Stack
+			sx={{
+				bgcolor: '#050b20',
+				color: '#fff',
+				margin: router.pathname === '/mypage' ? '0 4rem' : '0 auto',
+				gap: 6,
+				width: router.pathname === '/mypage' ? '100%' : '1300px',
+			}}
+		>
 			{/* Subscribe Section */}
 			<Stack
 				direction={isMobile ? 'column' : 'row'}

@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Box, Button, CircularProgress, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
-import withLayoutFull from '../../libs/components/layout/LayoutFull';
 import { NextPage } from 'next';
 import Review from '../../libs/components/car/Review';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -33,6 +32,7 @@ import { Direction, Message } from '../../libs/enums/common.enum';
 import { CREATE_COMMENT, LIKE_TARGET_CAR } from '../../apollo/user/mutation';
 import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import { create } from 'domain';
+import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -664,4 +664,4 @@ PropertyDetail.defaultProps = {
 	},
 };
 
-export default withLayoutFull(PropertyDetail);
+export default withLayoutBasic(PropertyDetail);

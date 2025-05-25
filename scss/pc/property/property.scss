@@ -1,3 +1,69 @@
+// Material-UI Select Overrides
+.MuiFormControl-root {
+	.MuiInputLabel-root {
+		color: $text-muted;
+		font-family: $font;
+		font-size: 14px;
+
+		&.Mui-focused {
+			color: $primary-color;
+		}
+	}
+
+	.MuiSelect-select {
+		padding: 12px 16px;
+		color: $text-color;
+		font-family: $font;
+		font-size: 14px;
+		border-radius: $border-radius-small;
+	}
+
+	.MuiOutlinedInput-root {
+		border-radius: $border-radius-small;
+
+		.MuiOutlinedInput-notchedOutline {
+			border-color: $border-color;
+		}
+
+		&:hover .MuiOutlinedInput-notchedOutline {
+			border-color: darken($border-color, 10%);
+		}
+
+		&.Mui-focused .MuiOutlinedInput-notchedOutline {
+			border-color: $primary-color;
+			border-width: 1px;
+		}
+	}
+}
+
+.MuiPaper-root.MuiMenu-paper {
+	border-radius: $border-radius-small;
+	border: 1px solid $border-light;
+	box-shadow: $shadow-medium;
+	margin-top: 4px;
+
+	.MuiMenuItem-root {
+		font-family: $font;
+		font-size: 14px;
+		color: $text-color;
+		padding: 10px 16px;
+		transition: $transition-fast;
+
+		&:hover {
+			background: $background-light;
+		}
+
+		&.Mui-selected {
+			background: rgba($primary-color, 0.1);
+			color: $primary-color;
+
+			&:hover {
+				background: rgba($primary-color, 0.15);
+			}
+		}
+	}
+}
+
 #pc-wrap {
 	background: #050b20;
 	#property-list-page {
@@ -38,52 +104,58 @@
 
 					.filter-main {
 						width: 100%;
-						padding: 20px 24px;
-						border-radius: 12px;
-						background: #fff;
-						box-shadow: 0 1px 4px 0 rgba(24, 26, 32, 0.07);
+						padding: 24px;
+						border-radius: $border-radius-medium;
+						background: $background-white;
+						box-shadow: $shadow-medium;
+						border: 1px solid $border-light;
 
 						.find-your-home {
 							position: relative;
 							width: 100%;
 							gap: 2px;
-							margin-bottom: 18px;
+							margin-bottom: 24px;
 
 							.property-location {
 								gap: 4px;
-								height: 256px;
-								overflow: hidden;
+								max-height: none;
+								overflow: visible;
 								font-size: 14px;
 								font-weight: 400;
-								color: #181a20;
-								color: #324bc6;
+								color: $text-color;
 								cursor: pointer;
 								line-height: 1.5;
+
 								p {
-									font-family: 'Poppins';
+									font-family: $font;
 								}
 							}
 
 							.title-main {
 								width: 100%;
-								height: 25px;
-								color: #181a20;
-								font-size: 15px;
+								height: auto;
+								color: $text-color;
+								font-family: $font;
+								font-size: 18px;
 								font-style: normal;
-								font-weight: 600;
-								line-height: normal;
-								margin-bottom: 10px;
+								font-weight: 700;
+								line-height: 1.4;
+								margin-bottom: 16px;
+								padding-bottom: 8px;
+								border-bottom: 1px solid $border-light;
 							}
 
 							.title {
 								width: auto;
 								height: auto;
-								color: #181a20;
-								font-size: 14px;
+								color: $text-color;
+								font-family: $font;
+								font-size: 15px;
 								font-style: normal;
 								font-weight: 600;
 								line-height: normal;
-								margin-bottom: 8px;
+								margin-bottom: 12px;
+								text-transform: capitalize;
 							}
 
 							.input-box {
@@ -93,144 +165,339 @@
 								flex-direction: row;
 								align-items: center;
 								gap: 8px;
-								margin-bottom: 6px;
+								margin-bottom: 8px;
 
 								svg {
 									cursor: pointer;
+									color: $text-muted;
+									transition: $transition-fast;
+
+									&:hover {
+										color: $primary-color;
+									}
 								}
 
 								.search-input {
 									width: 100%;
-									height: 53px;
-									border-radius: 8px;
-									border: 1px solid #ddd;
-									background: #fff;
+									height: 48px;
+									border-radius: $border-radius-small;
+									border: 1px solid $border-color;
+									background: $background-white;
 									outline: none;
-									padding-left: 43px;
-									color: #717171;
+									padding-left: 45px;
+									color: $text-color;
+									font-family: $font;
 									font-size: 14px;
 									font-style: normal;
 									font-weight: 400;
-									line-height: 26px;
+									line-height: 1.5;
+									transition: $transition-fast;
+
+									&:focus {
+										border-color: $primary-color;
+										box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+									}
+
+									&::placeholder {
+										color: $text-muted;
+									}
 								}
 
 								img {
 									position: absolute;
 									width: 18px;
-									height: 17px;
-									top: 18px;
+									height: 18px;
+									top: 15px;
 									left: 15px;
+									opacity: 0.6;
 								}
 
 								.property-checkbox {
-									width: 16px;
-									height: 16px;
-									margin-right: 6px;
+									width: 18px;
+									height: 18px;
+									margin-right: 8px;
+									accent-color: $primary-color;
+									cursor: pointer;
 								}
 
 								label {
 									font-size: 14px;
 									font-weight: 400;
-									color: #181a20;
+									color: $text-color;
 									cursor: pointer;
 									line-height: 1.5;
-									font-family: 'Poppins';
+									font-family: $font;
+									transition: $transition-fast;
+
+									&:hover {
+										color: $primary-color;
+									}
 								}
 							}
 
 							.city-select {
 								width: 100%;
-								height: 49px;
-								border-radius: 8px;
-								border: 1px solid #ddd;
-								background: #fff;
+								height: 48px;
+								border-radius: $border-radius-small;
+								border: 1px solid $border-color;
+								background: $background-white;
 								outline: none;
-								padding-left: 15px;
+								padding-left: 16px;
+								padding-right: 40px;
 								appearance: none;
 								cursor: pointer;
-								box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-								color: #717171;
+								box-shadow: none;
+								color: $text-color;
+								font-family: $font;
 								font-size: 14px;
 								font-style: normal;
 								font-weight: 400;
-								line-height: 26px;
+								line-height: 1.5;
+								transition: $transition-fast;
+								background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+								background-position: right 12px center;
+								background-repeat: no-repeat;
+								background-size: 16px;
+
+								&:focus {
+									border-color: $primary-color;
+									box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+								}
+
+								&:hover {
+									border-color: darken($border-color, 10%);
+								}
+
+								option {
+									color: $text-color;
+									background: $background-white;
+									padding: 8px;
+								}
 							}
 
 							.divider {
-								position: absolute;
-								height: 48px;
-								border-left: 1px solid #ddd;
-								right: 39px;
-								top: 31px;
+								display: none; // Remove custom divider since we're using background arrow
 							}
 
 							.arrow-down {
-								position: absolute;
-								width: 15px;
-								height: 8px;
-								color: #ddd;
-								right: 13px;
-								top: 52px;
+								display: none; // Remove custom arrow since we're using background arrow
 							}
 
 							.property-type {
-								color: #181a20;
+								color: $text-color;
 								font-size: 14px;
 								font-style: normal;
 								font-weight: 400;
-								line-height: 19px;
-								font-family: 'DM Sans';
+								line-height: 1.5;
+								font-family: $font;
 							}
 
 							.button-group {
 								width: 100%;
-								height: 43.998px;
+								height: auto;
 								flex-direction: row;
+								gap: 8px;
+								margin-bottom: 16px;
 
 								button {
-									width: 100%;
-									color: #181a20;
+									flex: 1;
+									height: 44px;
+									color: $text-color;
+									background: $background-light;
+									border: 1px solid $border-color;
+									border-radius: $border-radius-small;
 									text-align: center;
+									font-family: $font;
 									font-size: 13px;
 									font-style: normal;
-									font-weight: 600;
+									font-weight: 500;
 									line-height: normal;
+									cursor: pointer;
+									transition: $transition-fast;
+
+									&:hover {
+										background: darken($background-light, 5%);
+										border-color: $primary-color;
+									}
+
+									&.active {
+										background: $primary-color;
+										color: $background-white;
+										border-color: $primary-color;
+									}
 								}
 							}
 
 							.square-year-input {
 								width: 100%;
-								gap: 10px;
+								gap: 12px;
 								flex-direction: row;
 								align-items: center;
+								display: flex;
 
 								.central-divider {
-									width: 22px;
-									border: 1px solid black;
+									width: 16px;
+									height: 1px;
+									background: $border-color;
+									border: none;
+									flex-shrink: 0;
 								}
 
 								input {
-									width: 100%;
-									height: 49px;
-									border-radius: 8px;
-									border: 1px solid #ddd;
-									background: #fff;
+									flex: 1;
+									height: 48px;
+									border-radius: $border-radius-small;
+									border: 1px solid $border-color;
+									background: $background-white;
 									outline: none;
-									padding-left: 15px;
+									padding: 0 16px;
+									color: $text-color;
+									font-family: $font;
+									font-size: 14px;
+									transition: $transition-fast;
+
+									&:focus {
+										border-color: $primary-color;
+										box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+									}
 
 									&::placeholder {
-										color: #717171;
+										color: $text-muted;
 										font-family: $font;
 										font-size: 14px;
 										font-style: normal;
 										font-weight: 400;
-										line-height: 26px;
+									}
+								}
+
+								select {
+									flex: 1;
+									height: 48px;
+									border-radius: $border-radius-small;
+									border: 1px solid $border-color;
+									background: $background-white;
+									outline: none;
+									padding: 0 16px;
+									appearance: none;
+									cursor: pointer;
+									color: $text-color;
+									font-family: $font;
+									font-size: 14px;
+									transition: $transition-fast;
+									background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+									background-position: right 12px center;
+									background-repeat: no-repeat;
+									background-size: 16px;
+
+									&:focus {
+										border-color: $primary-color;
+										box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+									}
+								}
+							}
+
+							// Price Range Slider Styling
+							.price-range-container {
+								margin-bottom: 16px;
+
+								.price-slider {
+									width: 100%;
+									height: 6px;
+									border-radius: 3px;
+									background: $border-light;
+									outline: none;
+									margin: 20px 0;
+									position: relative;
+
+									&::-webkit-slider-thumb {
+										appearance: none;
+										width: 20px;
+										height: 20px;
+										border-radius: 50%;
+										background: $primary-color;
+										cursor: pointer;
+										border: 2px solid $background-white;
+										box-shadow: $shadow-light;
+									}
+
+									&::-moz-range-thumb {
+										width: 20px;
+										height: 20px;
+										border-radius: 50%;
+										background: $primary-color;
+										cursor: pointer;
+										border: 2px solid $background-white;
+										box-shadow: $shadow-light;
+									}
+								}
+
+								.price-labels {
+									display: flex;
+									justify-content: space-between;
+									font-family: $font;
+									font-size: 13px;
+									color: $text-muted;
+									margin-top: 8px;
+								}
+							}
+
+							// Action Buttons
+							.filter-actions {
+								margin-top: 32px;
+								display: flex;
+								flex-direction: column;
+								gap: 12px;
+
+								.find-listing-btn {
+									width: 100%;
+									height: 48px;
+									background: $primary-color;
+									color: $background-white;
+									border: none;
+									border-radius: $border-radius-small;
+									font-family: $font;
+									font-size: 14px;
+									font-weight: 600;
+									cursor: pointer;
+									transition: $transition-fast;
+									display: flex;
+									align-items: center;
+									justify-content: center;
+									gap: 8px;
+
+									&:hover {
+										background: $primary-dark;
+										transform: translateY(-1px);
+										box-shadow: $shadow-medium;
+									}
+
+									&:active {
+										transform: translateY(0);
+									}
+								}
+
+								.reset-search-btn {
+									width: 100%;
+									height: 40px;
+									background: transparent;
+									color: $text-muted;
+									border: none;
+									font-family: $font;
+									font-size: 14px;
+									font-weight: 500;
+									cursor: pointer;
+									text-decoration: underline;
+									transition: $transition-fast;
+
+									&:hover {
+										color: $primary-color;
 									}
 								}
 							}
 						}
 					}
 				}
+
 				.main-config {
 					width: 936px;
 					align-items: center;
