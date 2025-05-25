@@ -111,12 +111,6 @@ const MyPage: NextPage = (props: any) => {
 		return (
 			<div id="my-page" style={{ position: 'relative' }}>
 				<div className="container">
-					<Stack className={`header-basic`}>
-						<Stack className={'container'}>
-							<strong>{props.title}</strong>
-							<span>{props.desc}</span>
-						</Stack>
-					</Stack>
 					<Stack className={'my-page'}>
 						<Stack className={'back-frame'}>
 							<Stack className={'left-config'}>

@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import { REACT_APP_API_URL } from '../../config';
 import { logOut } from '../../auth';
 import { sweetConfirmAlert, sweetMixinErrorAlert } from '../../sweetAlert';
+import PersonIcon from '@mui/icons-material/Person';
 
 const MyMenu = () => {
 	const device = useDeviceDetect();
@@ -54,8 +55,10 @@ const MyMenu = () => {
 						)}
 					</Stack>
 				</Stack>
+
 				<Stack className={'sections'}>
-					<Stack className={'section'} style={{ height: user.memberType === 'AGENT' ? '228px' : '153px' }}>
+					<Stack className={'section'}>
+						{/* style={{ height: user.memberType === 'AGENT' ? '228px' : '153px' }} */}
 						<Typography className="title" variant={'h5'}>
 							MANAGE LISTINGS
 						</Typography>
@@ -79,7 +82,7 @@ const MyMenu = () => {
 												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 													Add Property
 												</Typography>
-												<IconButton aria-label="delete" sx={{ ml: '40px' }}>
+												<IconButton aria-label="delete" sx={{ ml: '40px', height: '16px' }}>
 													<PortraitIcon style={{ color: 'red' }} />
 												</IconButton>
 											</div>
@@ -102,7 +105,7 @@ const MyMenu = () => {
 												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 													My Properties
 												</Typography>
-												<IconButton aria-label="delete" sx={{ ml: '36px' }}>
+												<IconButton aria-label="delete" sx={{ ml: '36px', height: '16px' }}>
 													<PortraitIcon style={{ color: 'red' }} />
 												</IconButton>
 											</div>
@@ -313,11 +316,12 @@ const MyMenu = () => {
 									scroll={false}
 								>
 									<div className={'flex-box'}>
-										{category === 'myProfile' ? (
-											<img className={'com-icon'} src={'/img/icons/userWhite.svg'} alt={'com-icon'} />
-										) : (
-											<img className={'com-icon'} src={'/img/icons/user.svg'} alt={'com-icon'} />
-										)}
+										<PersonIcon
+											className="com-icon"
+											sx={{
+												color: category === 'myProfile' ? '#fff' : '#050B20', // or use theme variable
+											}}
+										/>
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 											My Profile
 										</Typography>
