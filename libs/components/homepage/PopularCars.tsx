@@ -169,7 +169,7 @@ PopularCars.defaultProps = {
 		sort: 'carViews',
 		direction: 'DESC',
 		search: {
-			// brandList: ['HYUNDAI'],
+			brandList: ['HYUNDAI'],
 		},
 	},
 };

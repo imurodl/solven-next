@@ -12,7 +12,7 @@ const CtaSection = () => {
 				borderBottomRightRadius: 24,
 			}}
 		>
-			<Container sx={{ maxWidth: '1300px', mx: 'auto' }}>
+			<Container sx={{ width: '1300px', mx: 'auto' }}>
 				<Grid container spacing={6}>
 					{/* CTA Block 1 */}
 					<Grid item xs={12} md={6}>

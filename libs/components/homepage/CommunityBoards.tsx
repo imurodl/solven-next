@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import CommunityCard from './CommunityCard';
 import { BoardArticle } from '../../types/board-article/board-article';
 import { GET_BOARD_ARTICLES } from '../../../apollo/user/query';
@@ -54,8 +54,10 @@ const CommunityBoards = () => {
 		return (
 			<Stack className={'community-board'}>
 				<Stack className={'container'}>
-					<Stack>
-						<Typography variant={'h1'}>COMMUNITY BOARD HIGHLIGHTS</Typography>
+					<Stack className={'info-box'}>
+						<Box component={'div'} className="left">
+							<span>Community Board Highlight</span>
+						</Box>
 					</Stack>
 					<Stack className="community-main">
 						<Stack className={'community-left'}>

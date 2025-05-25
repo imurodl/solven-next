@@ -37,7 +37,7 @@ const Home: NextPage = () => {
 				<PopularCars />
 				<TopAgents />
 				<CommunityBoards />
-				<CtaSection />
+				{/* <CtaSection /> */}
 			</Stack>
 		);
 	}
