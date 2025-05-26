@@ -165,14 +165,17 @@
 							background-color: #fff;
 							box-shadow: $shadow-light;
 							transition: $transition-smooth;
-							border: 1px solid #e9e9e9;
+							border: 1px solid $border-light;
+
 							&:hover {
 								box-shadow: $shadow-medium;
 								transition: $transition-smooth;
-								border: 1px solid #405ff2;
+								border-color: $primary-color;
+
 								.brand-name {
-									color: #405ff2;
+									color: $primary-color;
 								}
+
 								img {
 									transition: $transition-smooth;
 									transform: scale(1.1);
@@ -262,18 +265,21 @@
 							width: auto;
 							height: auto;
 							display: flex;
-							padding-top: 10px;
+							padding: 10px 0;
 							.trend-car-card {
 								width: 320px;
 								border-radius: 16px;
-								box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+								box-shadow: $shadow-light;
 								height: 100%;
 								display: flex;
 								flex-direction: column;
-								transition: transform 0.2s ease-in-out;
+								transition: $transition-smooth;
+								border: 1px solid $border-light;
 
 								&:hover {
 									transform: translateY(-4px);
+									box-shadow: $shadow-medium;
+									border-color: $primary-color;
 								}
 
 								.car-image-section {
@@ -468,6 +474,62 @@
 
 			.container {
 				flex-direction: column;
+
+				.info-box {
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: space-between;
+					margin-bottom: 30px;
+
+					.left {
+						span {
+							color: #111827;
+							font-family: $font;
+							font-size: 32px;
+							font-weight: 700;
+							line-height: 1.2;
+						}
+					}
+
+					.right {
+						.more-box {
+							display: flex;
+							align-items: center;
+							gap: 8px;
+							cursor: pointer;
+							transition: $transition-fast;
+
+							&:hover {
+								transform: translateX(4px);
+								span {
+									color: #1e40af;
+								}
+								img {
+									filter: invert(23%) sepia(75%) saturate(1739%) hue-rotate(213deg) brightness(94%) contrast(89%);
+								}
+							}
+
+							a {
+								text-decoration: none;
+								span {
+									color: $text-color;
+									font-family: $font;
+									font-size: 16px;
+									font-weight: 500;
+									transition: $transition-fast;
+								}
+							}
+
+							img {
+								width: 20px;
+								height: 20px;
+								transition: $transition-fast;
+							}
+						}
+					}
+				}
+
 				.car-filter-box {
 					margin-bottom: 30px;
 					.car-filter-boxes {
@@ -527,18 +589,26 @@
 					.popular-card-box {
 						position: relative;
 						width: 620px;
-						height: 260px;
+						height: 240px;
 						display: flex;
 						flex-direction: row;
 						background: $background-white;
-						border-radius: $border-radius-medium;
-						box-shadow: $shadow-medium;
+						border-radius: 12px;
+						box-shadow: $shadow-light;
 						overflow: hidden;
 						transition: $transition-smooth;
+						border: 1px solid $border-light;
 
 						&:hover {
-							opacity: 1;
-							transform: scale(1.02);
+							transform: translateY(-4px);
+							box-shadow: $shadow-medium;
+							border-color: $primary-color;
+
+							.card-img {
+								&::after {
+									opacity: 0.2;
+								}
+							}
 						}
 
 						.card-img {
@@ -549,202 +619,191 @@
 							background-position: center;
 							cursor: pointer;
 
+							&::after {
+								content: '';
+								position: absolute;
+								top: 0;
+								left: 0;
+								right: 0;
+								bottom: 0;
+								background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
+								opacity: 0.3;
+								transition: opacity 0.3s ease;
+							}
+
 							div.status {
 								position: absolute;
-								padding: 6px 34px;
-								left: 20px;
-								top: 20px;
+								padding: 6px 12px;
+								left: 16px;
+								top: 16px;
 								display: flex;
 								align-items: center;
-								border-radius: $border-radius-small;
-								background: #eb6753;
+								border-radius: 6px;
+								background: rgba(235, 103, 83, 0.9);
+								z-index: 1;
 
 								img {
-									width: 14px;
-									height: 14px;
+									width: 12px;
+									height: 12px;
+									filter: brightness(0) invert(1);
 								}
 
 								span {
-									margin-left: 5px;
-									color: $background-white;
-									font-family: $font;
-									font-size: 12px;
-									font-style: normal;
+									margin-left: 4px;
+									color: #ffffff;
+									font-size: 11px;
 									font-weight: 600;
-									line-height: normal;
 									text-transform: uppercase;
+									letter-spacing: 0.5px;
 								}
 							}
 
 							div.price {
 								position: absolute;
-								padding: 8px 12px;
-								left: 20px;
-								bottom: 20px;
-								border-radius: $border-radius-small;
-								background: $background-white;
-								color: $text-color;
-								font-family: $font;
+								padding: 6px 12px;
+								left: 16px;
+								bottom: 16px;
+								border-radius: 6px;
+								background: rgba(255, 255, 255, 0.95);
+								color: #1a1a1a;
 								font-size: 15px;
-								font-style: normal;
 								font-weight: 600;
-								line-height: normal;
+								z-index: 1;
+								box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 							}
 						}
 
 						.info {
-							padding: 16px 18px 14px;
+							padding: 20px;
 							width: 60%;
 							display: flex;
 							flex-direction: column;
 							box-sizing: border-box;
 
 							.title {
-								color: $text-color;
-								font-family: $font;
+								color: #1a1a1a;
 								font-size: 16px;
-								font-style: normal;
 								font-weight: 600;
-								line-height: normal;
-								text-transform: capitalize;
+								line-height: 1.4;
+								margin-bottom: 8px;
 								cursor: pointer;
-								margin-bottom: 8px;
-								overflow: hidden;
-								text-overflow: ellipsis;
-								white-space: nowrap;
-							}
-
-							.car-desc {
-								color: $text-muted;
-								font-family: $font;
-								font-size: 12px;
-								font-weight: 400;
-								line-height: 1.3;
-								margin-bottom: 8px;
+								transition: color 0.2s ease;
 								overflow: hidden;
 								text-overflow: ellipsis;
 								display: -webkit-box;
-								line-clamp: 2;
 								-webkit-line-clamp: 2;
 								-webkit-box-orient: vertical;
+
+								&:hover {
+									color: $primary-color;
+								}
+							}
+
+							.car-desc {
+								color: #666;
+								font-size: 13px;
+								font-weight: 400;
+								line-height: 1.5;
+								margin-bottom: 12px;
+								display: -webkit-box;
+								-webkit-line-clamp: 2;
+								-webkit-box-orient: vertical;
+								overflow: hidden;
 							}
 
 							.car-specs {
-								display: grid;
-								grid-template-columns: 1fr 1fr 1fr;
-								gap: 4px 6px;
-								margin-bottom: 12px;
-								margin-top: 10px;
+								display: flex;
+								justify-content: space-between;
+								margin: 8px -4px 16px;
 
 								.spec-item {
-									cursor: help !important;
+									flex: 1;
+									margin: 0 4px;
+									padding: 10px;
+									background: #f8f9fa;
+									border-radius: 10px;
 									border: 1px solid transparent;
+									transition: all 0.2s ease;
+									cursor: help;
+									display: flex;
+									flex-direction: column;
+									align-items: center;
+									text-align: center;
 
 									&:hover {
-										border: 1px solid $border-color;
-										box-shadow: $shadow-light;
-										transform: translateY(-1px);
+										background: #fff;
+										border-color: rgba(64, 95, 242, 0.1);
+										box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+										.spec-icon {
+											color: $primary-color;
+											transform: translateY(-2px);
+										}
 									}
-									display: flex;
-									align-items: center;
-									gap: 4px;
-									padding: 8px 6px;
-									// background: $background-light;
-									border-radius: $border-radius-medium;
-									transition: $transition-fast;
-									min-height: 24px;
 
 									.spec-icon {
-										width: 14px;
-										height: 14px;
-										color: $text-muted;
-										flex-shrink: 0;
-
-										&.active {
-											color: $text-color;
-										}
-
-										&.inactive {
-											color: #d1d5db;
-										}
-									}
-
-									.color-dot {
-										width: 14px;
-										height: 14px;
-										border-radius: 50%;
-										border: 1px solid $border-light;
-										flex-shrink: 0;
+										width: 18px;
+										height: 18px;
+										color: #666;
+										margin-bottom: 6px;
+										transition: all 0.2s ease;
 									}
 
 									span {
-										color: $text-color;
-										font-family: $font;
-										font-size: 11px;
-										font-weight: 400;
-										line-height: normal;
+										color: #1a1a1a;
+										font-size: 12px;
+										font-weight: 500;
 										white-space: nowrap;
 										overflow: hidden;
 										text-overflow: ellipsis;
-									}
-
-									&.sale-barter {
-										justify-content: center;
-										gap: 13px;
-
-										span {
-											color: $text-muted;
-											font-size: 12px;
-											margin: 0 1px;
-										}
+										max-width: 100%;
 									}
 								}
 							}
 
 							.bottom-section {
+								margin-top: auto;
 								display: flex;
 								justify-content: space-between;
 								align-items: center;
-								margin-top: auto;
+								padding-top: 12px;
+								border-top: 1px solid #eee;
 
 								.brand-model-box {
 									display: flex;
-									align-items: center;
-									gap: 10px;
+									flex-direction: column;
+									gap: 2px;
 
 									span {
-										color: $text-color;
-										font-family: $font;
+										color: #666;
 										font-size: 12px;
-										font-weight: 600;
-										line-height: normal;
+										font-weight: 500;
+
+										&:first-child {
+											color: #1a1a1a;
+										}
 									}
 								}
+
 								.view-like-box {
 									display: flex;
 									align-items: center;
-									gap: 8px;
+									gap: 12px;
 
-									button {
-										width: 14px;
-										height: 14px;
-										box-sizing: border-box;
+									.MuiIconButton-root {
+										padding: 4px;
+										color: #666;
+										font-size: 20px;
+
+										&:hover {
+											color: $primary-color;
+										}
 									}
 
-									.view-cnt,
-									.like-cnt {
-										color: $text-muted;
-										font-family: $font;
+									.view-cnt {
 										font-size: 12px;
-										font-style: normal;
-										font-weight: 400;
-										line-height: normal;
-									}
-
-									.separator {
-										color: $text-muted;
-										font-size: 12px;
-										margin: 0 4px;
+										color: #666;
+										margin-left: -8px;
 									}
 								}
 							}
@@ -752,21 +811,19 @@
 
 						// Mobile styles
 						@media (max-width: 768px) {
-							width: 400px;
-							height: 425px;
+							width: 100%;
+							max-width: 400px;
+							height: auto;
 							flex-direction: column;
 
 							.card-img {
 								width: 100%;
-								height: 203px;
-								border-radius: $border-radius-medium $border-radius-medium 0px 0px;
+								height: 180px;
 							}
 
 							.info {
 								width: 100%;
-								border-radius: 0px 0px $border-radius-medium $border-radius-medium;
-								border: 1px solid $border-light;
-								border-top: none;
+								padding: 16px;
 							}
 						}
 					}

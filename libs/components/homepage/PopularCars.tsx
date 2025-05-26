@@ -128,7 +128,7 @@ const PopularCars = (props: PopularCarsProps) => {
 						<Box component={'div'} className={'right'}>
 							<div className={'more-box'}>
 								<Link href={'/car'}>
-									<span>See All Categories</span>
+									<span>See All Listings</span>
 								</Link>
 								<img src="/img/icons/rightup.svg" alt="" />
 							</div>

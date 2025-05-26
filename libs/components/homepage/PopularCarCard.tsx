@@ -118,6 +118,12 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 					<p className={'car-desc'}>{car.carDesc?.slice(0, 50) || ''}...</p>
 
 					<div className={'car-specs'}>
+						<Tooltip title={'Manufactured Year'} placement="top" arrow>
+							<div className={'spec-item'} style={{ cursor: 'pointer' }}>
+								<CalendarTodayIcon className={'spec-icon'} />
+								<span>{car?.manufacturedAt}</span>
+							</div>
+						</Tooltip>
 						<Tooltip title={'Car Mileage'} placement="top" arrow>
 							<div className={'spec-item'} style={{ cursor: 'pointer' }}>
 								<SpeedIcon className={'spec-icon'} />
@@ -134,43 +140,6 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 							<div className={'spec-item'} style={{ cursor: 'pointer' }}>
 								<SettingsIcon className={'spec-icon'} />
 								<span>{car?.carTransmission}</span>
-							</div>
-						</Tooltip>
-						<Tooltip title={'Car Seats'} placement="top" arrow>
-							<div className={'spec-item'} style={{ cursor: 'pointer' }}>
-								<EventSeatIcon className={'spec-icon'} />
-								<span>{car?.carSeats} seats</span>
-							</div>
-						</Tooltip>
-						<Tooltip title={'Manufactured Year'} placement="top" arrow>
-							<div className={'spec-item'} style={{ cursor: 'pointer' }}>
-								<CalendarTodayIcon className={'spec-icon'} />
-								<span>{car?.manufacturedAt}</span>
-							</div>
-						</Tooltip>
-						<Tooltip title={'Car Type'} placement="top" arrow>
-							<div className={'spec-item'} style={{ cursor: 'pointer' }}>
-								<DirectionsCarIcon className={'spec-icon'} />
-								<span>{car?.carType}</span>
-							</div>
-						</Tooltip>
-						<Tooltip title={'Car Color'} placement="top" arrow>
-							<div className={'spec-item'} style={{ cursor: 'pointer' }}>
-								<div className={'color-dot'} style={{ backgroundColor: car?.carColor?.toLowerCase() }}></div>
-								<span>{car?.carColor}</span>
-							</div>
-						</Tooltip>
-						<Tooltip title={'Car Location'} placement="top" arrow>
-							<div className={'spec-item'} style={{ cursor: 'pointer' }}>
-								<LocationOnIcon className={'spec-icon'} />
-								<span>{car?.carLocation}</span>
-							</div>
-						</Tooltip>
-						<Tooltip title={'Car Rent & Car Barter Status'} placement="top" arrow>
-							<div className={'spec-item sale-barter'} style={{ cursor: 'pointer' }}>
-								<CarRentalIcon className={car?.carRent ? 'spec-icon active' : 'spec-icon inactive'} />
-								<span></span>
-								<SwapHorizIcon className={car?.carBarter ? 'spec-icon active' : 'spec-icon inactive'} />
 							</div>
 						</Tooltip>
 					</div>
