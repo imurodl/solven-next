@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { Box, Stack, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 import CommunityCard from './CommunityCard';
 import { BoardArticle } from '../../types/board-article/board-article';
 import { GET_BOARD_ARTICLES } from '../../../apollo/user/query';
 import { useQuery } from '@apollo/client';
 import { BoardArticleCategory } from '../../enums/board-article.enum';
 import { T } from '../../types/common';
+import { ArrowForward } from '@mui/icons-material';
 
 const CommunityBoards = () => {
 	const device = useDeviceDetect();
@@ -18,6 +19,7 @@ const CommunityBoards = () => {
 	});
 	const [newsArticles, setNewsArticles] = useState<BoardArticle[]>([]);
 	const [freeArticles, setFreeArticles] = useState<BoardArticle[]>([]);
+	const [recommendArticles, setRecommendArticles] = useState<BoardArticle[]>([]);
 
 	/** APOLLO REQUESTS **/
 	const {
@@ -27,7 +29,7 @@ const CommunityBoards = () => {
 		refetch: getNewsArticlesRefetch,
 	} = useQuery(GET_BOARD_ARTICLES, {
 		fetchPolicy: 'network-only',
-		variables: { input: { ...searchCommunity, limit: 6, search: { articleCategory: BoardArticleCategory.NEWS } } },
+		variables: { input: { ...searchCommunity, limit: 3, search: { articleCategory: BoardArticleCategory.NEWS } } },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
 			setNewsArticles(data?.getBoardArticles?.list);
@@ -48,49 +50,82 @@ const CommunityBoards = () => {
 		},
 	});
 
+	const {
+		loading: getRecommendArticlesLoading,
+		data: getRecommendArticlesData,
+		error: getRecommendArticlesError,
+		refetch: getRecommendArticlesRefetch,
+	} = useQuery(GET_BOARD_ARTICLES, {
+		fetchPolicy: 'network-only',
+		variables: { input: { ...searchCommunity, limit: 3, search: { articleCategory: BoardArticleCategory.RECOMMEND } } },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setRecommendArticles(data?.getBoardArticles?.list);
+		},
+	});
+
 	if (device === 'mobile') {
 		return <div>COMMUNITY BOARDS (MOBILE)</div>;
-	} else {
-		return (
-			<Stack className={'community-board'}>
-				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<Box component={'div'} className="left">
-							<span>Community Board Highlight</span>
-						</Box>
-					</Stack>
-					<Stack className="community-main">
-						<Stack className={'community-left'}>
-							<Stack className={'content-top'}>
-								<Link href={'/community?articleCategory=NEWS'}>
-									<span>News</span>
-								</Link>
-								<img src="/img/icons/arrowBig.svg" alt="" />
-							</Stack>
-							<Stack className={'card-wrap'}>
-								{newsArticles.map((article, index) => {
-									return <CommunityCard vertical={true} article={article} index={index} key={article?._id} />;
-								})}
-							</Stack>
-						</Stack>
-						<Stack className={'community-right'}>
-							<Stack className={'content-top'}>
-								<Link href={'/community?articleCategory=FREE'}>
-									<span>Free</span>
-								</Link>
-								<img src="/img/icons/arrowBig.svg" alt="" />
-							</Stack>
-							<Stack className={'card-wrap vertical'}>
-								{freeArticles.map((article, index) => {
-									return <CommunityCard vertical={false} article={article} index={index} key={article?._id} />;
-								})}
-							</Stack>
-						</Stack>
-					</Stack>
-				</Stack>
-			</Stack>
-		);
 	}
+
+	return (
+		<section className="community-board">
+			<div className="container">
+				<div className="info-box">
+					<div className="left">
+						<span>Blog Posts</span>
+					</div>
+					<div className="right">
+						<Link href="/community" className="more-box">
+							<span>View All Posts</span>
+							<img src="/img/icons/rightup.svg" alt="" />
+						</Link>
+					</div>
+				</div>
+				<div className="community-main">
+					<div className="community-section">
+						<div className="content-top">
+							<Link href="/community?articleCategory=NEWS">
+								<span>News</span>
+								<img src="/img/icons/arrowBig.svg" alt="View all news" />
+							</Link>
+						</div>
+						<div className="card-wrap">
+							{newsArticles.map((article, index) => (
+								<CommunityCard vertical={false} article={article} index={index} key={article?._id} />
+							))}
+						</div>
+					</div>
+					<div className="community-section">
+						<div className="content-top">
+							<Link href="/community?articleCategory=FREE">
+								<span>Free Board</span>
+								<img src="/img/icons/arrowBig.svg" alt="View all free posts" />
+							</Link>
+						</div>
+						<div className="card-wrap">
+							{freeArticles.map((article, index) => (
+								<CommunityCard vertical={false} article={article} index={index} key={article?._id} />
+							))}
+						</div>
+					</div>
+					<div className="community-section">
+						<div className="content-top">
+							<Link href="/community?articleCategory=RECOMMEND">
+								<span>Recommended</span>
+								<img src="/img/icons/arrowBig.svg" alt="View recommended posts" />
+							</Link>
+						</div>
+						<div className="card-wrap">
+							{recommendArticles.map((article, index) => (
+								<CommunityCard vertical={false} article={article} index={index} key={article?._id} />
+							))}
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	);
 };
 
 export default CommunityBoards;
