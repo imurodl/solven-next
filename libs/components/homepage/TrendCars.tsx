@@ -118,7 +118,7 @@ const TrendCars = (props: TrendCarsProps) => {
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Explore Car Listings</span>
+							<span>Featured Car Listings</span>
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'pagination-box'}>

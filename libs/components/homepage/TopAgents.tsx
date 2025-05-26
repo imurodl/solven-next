@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+'use client';
+
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Stack, Box } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import TopAgentCard from './TopAgentCard';
-import { Member } from '../../types/member/member';
-import { AgentsInquiry } from '../../types/member/member.input';
-import { useQuery } from '@apollo/client';
-import { T } from '../../types/common';
+import type { Member } from '../../types/member/member';
+import type { AgentsInquiry } from '../../types/member/member.input';
+import { useMutation, useQuery } from '@apollo/client';
+import type { T } from '../../types/common';
 import { GET_AGENTS } from '../../../apollo/user/query';
+import { LIKE_TARGET_MEMBER } from '../../../apollo/user/mutation';
+import { Messages } from '../../config';
+import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 
 interface TopAgentsProps {
 	initialInput: AgentsInquiry;
@@ -23,6 +29,8 @@ const TopAgents = (props: TopAgentsProps) => {
 	const [topAgents, setTopAgents] = useState<Member[]>([]);
 
 	/** APOLLO REQUESTS **/
+	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
+
 	const {
 		loading: getAgentsLoading,
 		data: getAgentsData,
@@ -36,7 +44,24 @@ const TopAgents = (props: TopAgentsProps) => {
 			setTopAgents(data?.getAgents?.list);
 		},
 	});
-	/** HANDLERS **/
+
+	const likeMemberHandler = async (user: any, id: string) => {
+		try {
+			if (!id) return;
+			if (!user._id) throw new Error(Messages.error2);
+
+			await likeTargetMember({
+				variables: {
+					input: id,
+				},
+			});
+			await getAgentsRefetch({ input: initialInput });
+			await sweetTopSmallSuccessAlert('success', 800);
+		} catch (err: any) {
+			console.log('ERROR, likePropertyHandler:', err.message);
+			sweetMixinErrorAlert(err.message).then();
+		}
+	};
 
 	if (device === 'mobile') {
 		return (
@@ -48,15 +73,15 @@ const TopAgents = (props: TopAgentsProps) => {
 					<Stack className={'wrapper'}>
 						<Swiper
 							className={'top-agents-swiper'}
-							slidesPerView={'auto'}
+							slidesPerView={4}
 							centeredSlides={true}
-							spaceBetween={29}
+							spaceBetween={20}
 							modules={[Autoplay]}
 						>
 							{topAgents.map((agent: Member) => {
 								return (
 									<SwiperSlide className={'top-agents-slide'} key={agent?._id}>
-										<TopAgentCard agent={agent} key={agent?.memberNick} />
+										<TopAgentCard agent={agent} key={agent?.memberNick} likeMemberHandler={likeMemberHandler} />
 									</SwiperSlide>
 								);
 							})}
@@ -75,20 +100,20 @@ const TopAgents = (props: TopAgentsProps) => {
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'more-box'}>
-								<span>See All Agents</span>
+								<span>View All Agents</span>
 								<img src="/img/icons/rightup.svg" alt="" />
 							</div>
 						</Box>
 					</Stack>
 					<Stack className={'wrapper'}>
 						<Box component={'div'} className={'switch-btn swiper-agents-prev'}>
-							<ArrowBackIosNewIcon />
+							<ChevronLeftIcon />
 						</Box>
 						<Box component={'div'} className={'card-wrapper'}>
 							<Swiper
 								className={'top-agents-swiper'}
 								slidesPerView={'auto'}
-								spaceBetween={29}
+								spaceBetween={24}
 								modules={[Autoplay, Navigation, Pagination]}
 								navigation={{
 									nextEl: '.swiper-agents-next',
@@ -98,14 +123,14 @@ const TopAgents = (props: TopAgentsProps) => {
 								{topAgents.map((agent: Member) => {
 									return (
 										<SwiperSlide className={'top-agents-slide'} key={agent?._id}>
-											<TopAgentCard agent={agent} key={agent?.memberNick} />
+											<TopAgentCard agent={agent} key={agent?._id} likeMemberHandler={likeMemberHandler} />
 										</SwiperSlide>
 									);
 								})}
 							</Swiper>
 						</Box>
 						<Box component={'div'} className={'switch-btn swiper-agents-next'}>
-							<ArrowBackIosNewIcon />
+							<ChevronRightIcon />
 						</Box>
 					</Stack>
 				</Stack>
