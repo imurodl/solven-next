@@ -10,11 +10,13 @@ import { Car } from '../../types/car/car';
 import Link from 'next/link';
 import { CarsInquiry } from '../../types/car/car.input';
 import { GET_CARS } from '../../../apollo/user/query';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { T } from '../../types/common';
-import { sweetMixinErrorAlert } from '../../sweetAlert';
+import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { LIKE_TARGET_CAR } from '../../../apollo/user/mutation';
+import { Message } from '../../enums/common.enum';
 
 interface PopularCarsProps {
 	initialInput: CarsInquiry;
@@ -24,9 +26,11 @@ const PopularCars = (props: PopularCarsProps) => {
 	const { initialInput } = props;
 	const device = useDeviceDetect();
 	const [popularCars, setPopularCars] = useState<Car[]>([]);
-	const [activeBrand, setActiveBrand] = useState(initialInput.search.brandList?.[0]);
+	const [activeBrand, setActiveBrand] = useState(initialInput.search.brandList?.[0] || '');
 
 	/** APOLLO REQUESTS **/
+	const [likeTargetCar] = useMutation(LIKE_TARGET_CAR);
+
 	const {
 		loading: getCarsLoading,
 		data: getCarsData,
@@ -40,19 +44,44 @@ const PopularCars = (props: PopularCarsProps) => {
 			setPopularCars(data?.getCars?.list);
 		},
 	});
+
 	/** HANDLERS **/
+	const likeCarHandler = async (user: T, id: string) => {
+		try {
+			if (!id) return;
+			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
+			//execute likeCarHandler Mutation
+			await likeTargetCar({ variables: { input: id } });
+
+			//execute getCarsRefetch
+			await getCarsRefetch({ input: initialInput });
+
+			await sweetTopSmallSuccessAlert('success', 800);
+		} catch (err: any) {
+			console.log('ERROR, likeCarHandler', err.message);
+			sweetMixinErrorAlert(err.message).then();
+		}
+	};
+
 	const carSearchChangeHandler = async (brand: string) => {
 		try {
+			const updatedSearch = { ...initialInput.search };
+
+			// If brand is empty (All), remove brandList
+			if (brand === '') {
+				delete updatedSearch.brandList;
+			} else {
+				updatedSearch.brandList = [brand];
+			}
+
 			await getCarsRefetch({
 				input: {
 					...initialInput,
-					search: {
-						...initialInput.search,
-						brandList: [brand], // ✅ update brandList inside search
-					},
+					search: updatedSearch,
 				},
 			});
-			setActiveBrand(brand); // update activeBrand for UI state
+
+			setActiveBrand(brand);
 		} catch (err: any) {
 			console.log('ERROR, carSearchChangeHandler', err.message);
 			sweetMixinErrorAlert(err.message);
@@ -79,7 +108,7 @@ const PopularCars = (props: PopularCarsProps) => {
 							{popularCars.map((car: Car) => {
 								return (
 									<SwiperSlide key={car._id} className={'popular-property-slide'}>
-										<PopularCarCard car={car} />
+										<PopularCarCard car={car} likeCarHandler={likeCarHandler} />
 									</SwiperSlide>
 								);
 							})}
@@ -108,6 +137,12 @@ const PopularCars = (props: PopularCarsProps) => {
 					<Stack className="car-filter-box">
 						<Stack className="car-filter-boxes">
 							<Typography
+								onClick={() => carSearchChangeHandler('')} //
+								className={activeBrand === '' ? 'active' : ''}
+							>
+								All
+							</Typography>
+							<Typography
 								onClick={() => carSearchChangeHandler('HYUNDAI')}
 								className={activeBrand === 'HYUNDAI' ? 'active' : ''}
 							>
@@ -124,12 +159,6 @@ const PopularCars = (props: PopularCarsProps) => {
 								className={activeBrand === 'CHEVROLET' ? 'active' : ''}
 							>
 								Chevrolet
-							</Typography>
-							<Typography
-								onClick={() => carSearchChangeHandler('RENAULT KOREA')}
-								className={activeBrand === 'RENAULT KOREA' ? 'active' : ''}
-							>
-								Renault
 							</Typography>
 						</Stack>
 						<Divider color={'#fff'} width={'100%'} height={'1px'} />
@@ -151,7 +180,7 @@ const PopularCars = (props: PopularCarsProps) => {
 							{popularCars.map((car: Car) => {
 								return (
 									<SwiperSlide key={car._id} className={'popular-property-slide'}>
-										<PopularCarCard car={car} />
+										<PopularCarCard car={car} likeCarHandler={likeCarHandler} />
 									</SwiperSlide>
 								);
 							})}
@@ -175,7 +204,7 @@ PopularCars.defaultProps = {
 		sort: 'carViews',
 		direction: 'DESC',
 		search: {
-			brandList: ['HYUNDAI'],
+			brandList: [],
 		},
 	},
 };

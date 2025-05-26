@@ -18,13 +18,13 @@
 					height: auto;
 					display: flex;
 					flex-direction: row;
-					gap: 4rem;
-					background: $background-light;
+					background: #050b20;
 					overflow: hidden;
 					.left-config {
 						position: relative;
 						padding: 0;
-						width: 280px;
+						min-width: 260px;
+						max-width: 16%;
 						min-height: 100vh;
 						background: #050b20;
 						border: none;
@@ -34,7 +34,6 @@
 						flex-direction: column;
 						justify-content: space-between;
 
-						// Move profile to bottom
 						.profile {
 							margin-top: auto; // Push to bottom
 							margin-bottom: 20px;
@@ -181,10 +180,12 @@
 					}
 					.main-config {
 						position: relative;
-						width: 994px; // Adjust width to account for sidebar
-						margin-top: 52px;
+						min-width: 84%;
 						align-items: center;
 						gap: 109px;
+						border-radius: $border-radius-small;
+						padding: 80px;
+						background: $background-light;
 						.list-config {
 							display: flex;
 							width: 100%;

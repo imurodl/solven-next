@@ -16,16 +16,17 @@ import EventSeatIcon from '@mui/icons-material/EventSeat';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import SellIcon from '@mui/icons-material/Sell';
 import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import CarRentalIcon from '@mui/icons-material/CarRental';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 interface PopularCarCardProps {
 	car: Car;
+	likeCarHandler: any;
 }
 
 const PopularCarCard = (props: PopularCarCardProps) => {
-	const { car } = props;
+	const { car, likeCarHandler } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -35,6 +36,8 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 		console.log('ID', carId);
 		await router.push({ pathname: '/car/detail', query: { id: carId } });
 	};
+
+	const isLiked = car?.meLiked && car?.meLiked[0]?.myFavorite;
 
 	if (device === 'mobile') {
 		return (
@@ -182,10 +185,28 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 								<RemoveRedEyeIcon />
 							</IconButton>
 							<Typography className="view-cnt">{car?.carViews}</Typography>
-							<IconButton color={'default'}>
-								<FavoriteIcon />
-							</IconButton>
-							<Typography className="like-cnt">{car?.carLikes}</Typography>
+							{/* Like Button with Count */}
+							<Box
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									gap: 1,
+									cursor: 'pointer',
+								}}
+								onClick={(e: any) => {
+									e.stopPropagation();
+									likeCarHandler(user, car?._id);
+								}}
+							>
+								{isLiked ? (
+									<FavoriteIcon sx={{ color: 'red', fontSize: 24 }} />
+								) : (
+									<FavoriteBorderIcon sx={{ color: '#666', fontSize: 24 }} />
+								)}
+								<Typography variant="body2" sx={{ fontSize: '14px', color: '#666' }}>
+									{car.carLikes}
+								</Typography>
+							</Box>
 						</div>
 					</div>
 				</Box>
