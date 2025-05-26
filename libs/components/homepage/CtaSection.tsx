@@ -1,75 +1,41 @@
-import React from 'react';
-import { Box, Container, Grid, Typography, Button } from '@mui/material';
+'use client';
+import { useReactiveVar } from '@apollo/client';
+import { Box, Container, Grid } from '@mui/material';
 import Link from 'next/link';
-import { BorderBottom } from '@mui/icons-material';
+import { userVar } from '../../../apollo/store';
 
 const CtaSection = () => {
+	const user = useReactiveVar(userVar);
+
 	return (
-		<Box backgroundColor={'#050b20'}>
-			<Box
-				sx={{
-					padding: '80px 0',
-					borderBottomLeftRadius: '80px',
-					borderBottomRightRadius: '80px',
-					backgroundColor: '#fff',
-				}}
-			>
+		<Box className="cta-section">
+			<Box className="cta-container">
 				<Container sx={{ width: '1300px', mx: 'auto' }}>
-					<Grid container spacing={6}>
-						{/* CTA Block 1 */}
+					<Grid container spacing={4}>
+						{/* Buy Car CTA */}
 						<Grid item xs={12} md={6}>
-							<Box
-								className="wow fadeInUp"
-								sx={{
-									p: 8,
-									borderRadius: 3,
-									boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
-									position: 'relative',
-									backgroundColor: '#e9f2ff',
-									display: 'flex',
-									flexDirection: 'row',
-									justifyContent: 'space-between',
-								}}
-							>
-								<Box>
-									<Typography sx={{ fontWeight: 700, fontSize: '1.8rem', mb: 2 }}>
-										Are You Looking <br /> For a Car ?
-									</Typography>
-									<Typography sx={{ fontSize: '0.95rem', lineHeight: 1.6, mb: 3 }}>
-										We are committed to providing our customers with exceptional service.
-									</Typography>
-									<Button
-										component={Link}
-										href="/pricing"
-										variant="contained"
-										sx={{
-											mt: 2,
-											textTransform: 'none',
-											fontSize: '1rem',
-											px: 6,
-											py: 3,
-											backgroundColor: '#405FF2',
-											color: '#fff',
-											borderRadius: 4,
-											boxShadow: 'none',
-											'&:hover': {
-												backgroundColor: '#324ed1',
-											},
-											display: 'inline-flex',
-											alignItems: 'center',
-											gap: 1,
-										}}
-									>
-										Get Started
+							<Box className="cta-card buy-card">
+								<Box className="content-wrapper">
+									<h2 className="title">
+										Are You Looking
+										<br />
+										For a Car?
+									</h2>
+									<p className="description">
+										Find your dream car from our extensive collection. We offer the best deals and exceptional service
+										for every customer.
+									</p>
+									<Link href="/car" className="cta-button">
+										Browse Cars
 										<svg xmlns="http://www.w3.org/2000/svg" width={14} height={14} viewBox="0 0 14 14" fill="none">
 											<path
 												d="M13.6109 0H5.05533C4.84037 0 4.66643 0.173943 4.66643 0.388901C4.66643 0.603859 4.84037 0.777802 5.05533 0.777802H12.6721L0.113697 13.3362C-0.0382246 13.4881 -0.0382246 13.7342 0.113697 13.8861C0.18964 13.962 0.289171 14 0.388666 14C0.488161 14 0.587656 13.962 0.663635 13.8861L13.222 1.3277V8.94447C13.222 9.15943 13.3959 9.33337 13.6109 9.33337C13.8259 9.33337 13.9998 9.15943 13.9998 8.94447V0.388901C13.9998 0.173943 13.8258 0 13.6109 0Z"
 												fill="white"
 											/>
 										</svg>
-									</Button>
+									</Link>
 								</Box>
-								<Box className="hover-img" sx={{ mt: 18 }}>
+								<Box className="hover-img">
 									<svg xmlns="http://www.w3.org/2000/svg" width={110} height={110} viewBox="0 0 110 110" fill="none">
 										<path
 											d="M43.1686 14.8242C36.3829 14.8242 30.2324 18.8167 27.4699 25.0145L16.292 50.093C9.59105 50.5534 4.29688 56.1314 4.29688 62.9492V75.8398C4.29688 81.7725 9.10637 86.582 15.0391 86.582H17.9835C17.9994 85.7553 18.0204 84.9288 18.0469 84.1023C17.3476 82.6768 16.9533 81.0745 16.9533 79.3796L16.7578 71.7578C16.7578 66.1212 17.9046 60.9441 22.0885 60.1012C24.0773 59.7006 25.7424 58.3456 26.5573 56.4876L40.3605 25.0145C43.1228 18.8167 49.2733 14.8242 56.0592 14.8242H43.1686Z"
@@ -120,60 +86,29 @@ const CtaSection = () => {
 							</Box>
 						</Grid>
 
-						{/* CTA Block 2 */}
+						{/* Sell Car CTA */}
 						<Grid item xs={12} md={6}>
-							<Box
-								className="wow fadeInUp"
-								sx={{
-									p: 8,
-									borderRadius: 3,
-									boxShadow: '0 10px 30px rgba(0,0,0,0.05)',
-									position: 'relative',
-									backgroundColor: '#ffe9f3',
-									display: 'flex',
-									flexDirection: 'row',
-									justifyContent: 'space-between',
-								}}
-							>
-								<Box>
-									<Typography sx={{ fontWeight: 700, fontSize: '1.8rem', mb: 2 }}>
-										Do You Want to <br /> Sell a Car ?
-									</Typography>
-									<Typography sx={{ fontSize: '0.95rem', lineHeight: 1.6, mb: 3 }}>
-										We are committed to providing our customers with exceptional service.
-									</Typography>
-									<Button
-										component={Link}
-										href="/pricing"
-										variant="contained"
-										sx={{
-											mt: 2,
-											textTransform: 'none',
-											fontSize: '1rem',
-											px: 6,
-											py: 3,
-											backgroundColor: '#000',
-											color: '#fff',
-											borderRadius: 4,
-											boxShadow: 'none',
-											'&:hover': {
-												backgroundColor: '#111',
-											},
-											display: 'inline-flex',
-											alignItems: 'center',
-											gap: 1,
-										}}
-									>
-										Get Started
+							<Box className="cta-card sell-card">
+								<Box className="content-wrapper">
+									<h2 className="title">
+										Do You Want to
+										<br />
+										Sell a Car?
+									</h2>
+									<p className="description">
+										List your car with us and reach thousands of potential buyers. Get the best value for your vehicle.
+									</p>
+									<Link href={user?._id ? '/mypage' : '/account/join'} className="cta-button">
+										List Your Car
 										<svg xmlns="http://www.w3.org/2000/svg" width={14} height={14} viewBox="0 0 14 14" fill="none">
 											<path
 												d="M13.6109 0H5.05533C4.84037 0 4.66643 0.173943 4.66643 0.388901C4.66643 0.603859 4.84037 0.777802 5.05533 0.777802H12.6721L0.113697 13.3362C-0.0382246 13.4881 -0.0382246 13.7342 0.113697 13.8861C0.18964 13.962 0.289171 14 0.388666 14C0.488161 14 0.587656 13.962 0.663635 13.8861L13.222 1.3277V8.94447C13.222 9.15943 13.3959 9.33337 13.6109 9.33337C13.8259 9.33337 13.9998 9.15943 13.9998 8.94447V0.388901C13.9998 0.173943 13.8258 0 13.6109 0Z"
 												fill="white"
 											/>
 										</svg>
-									</Button>
+									</Link>
 								</Box>
-								<Box className="hover-img" sx={{ mt: 18 }}>
+								<Box className="hover-img">
 									<svg xmlns="http://www.w3.org/2000/svg" width={110} height={110} viewBox="0 0 110 110" fill="none">
 										<path
 											d="M17.1875 84.2276V25.7724C17.1875 13.9118 26.779 4.29688 38.6109 4.29688H25.5664C13.7008 4.29688 4.08203 13.9156 4.08203 25.7812V84.2188C4.08203 96.0841 13.7008 105.703 25.5664 105.703H38.6109C26.779 105.703 17.1875 96.0882 17.1875 84.2276Z"
