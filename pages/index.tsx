@@ -25,7 +25,7 @@ const Home: NextPage = () => {
 	useEffect(() => {
 		if (typeof window !== 'undefined') {
 			AOS.init({
-				duration: 1500,
+				duration: 1200,
 				easing: 'ease-in-out',
 				once: true,
 			});
@@ -64,7 +64,9 @@ const Home: NextPage = () => {
 				<div data-aos="fade-up">
 					<CommunityBoards />
 				</div>
-				{/* <div data-aos="fade-up"><CtaSection /></div> */}
+				<div data-aos="fade-up">
+					<CtaSection />
+				</div>
 			</Stack>
 		);
 	}

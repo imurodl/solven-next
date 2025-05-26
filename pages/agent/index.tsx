@@ -26,7 +26,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
-	const [filterSortName, setFilterSortName] = useState('Recent');
+	const [filterSortName, setFilterSortName] = useState('Newest');
 	const [sortingOpen, setSortingOpen] = useState(false);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [searchFilter, setSearchFilter] = useState<any>(
@@ -78,21 +78,21 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 
 	const sortingHandler = (e: React.MouseEvent<HTMLLIElement>) => {
 		switch (e.currentTarget.id) {
-			case 'recent':
+			case 'new':
 				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: 'DESC' });
-				setFilterSortName('Recent');
+				setFilterSortName('Newest');
 				break;
 			case 'old':
 				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: 'ASC' });
-				setFilterSortName('Oldest order');
+				setFilterSortName('Oldest');
 				break;
 			case 'likes':
 				setSearchFilter({ ...searchFilter, sort: 'memberLikes', direction: 'DESC' });
-				setFilterSortName('Likes');
+				setFilterSortName('Most Likes');
 				break;
 			case 'views':
 				setSearchFilter({ ...searchFilter, sort: 'memberViews', direction: 'DESC' });
-				setFilterSortName('Views');
+				setFilterSortName('Most Views');
 				break;
 		}
 		setSortingOpen(false);
@@ -161,17 +161,17 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 									{filterSortName}
 								</Button>
 								<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
-									<MenuItem onClick={sortingHandler} id={'recent'} disableRipple>
-										Recent
+									<MenuItem onClick={sortingHandler} id={'new'} disableRipple>
+										Newest
 									</MenuItem>
 									<MenuItem onClick={sortingHandler} id={'old'} disableRipple>
 										Oldest
 									</MenuItem>
 									<MenuItem onClick={sortingHandler} id={'likes'} disableRipple>
-										Likes
+										Most Likes
 									</MenuItem>
 									<MenuItem onClick={sortingHandler} id={'views'} disableRipple>
-										Views
+										Most Views
 									</MenuItem>
 								</Menu>
 							</div>
