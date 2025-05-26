@@ -536,7 +536,7 @@ const Filter = (props: FilterType) => {
 							value={searchText}
 							type={'text'}
 							className={'search-input'}
-							placeholder={'What are you looking for?'}
+							placeholder={'Find Cars'}
 							onChange={(e: any) => setSearchText(e.target.value)}
 							onKeyDown={(event: any) => {
 								if (event.key == 'Enter') {
@@ -891,7 +891,7 @@ const Filter = (props: FilterType) => {
 							<Select
 								labelId="year-range-end-label"
 								id="year-range-end"
-								value={searchFilter?.search?.yearRange?.end ?? 2025}
+								value={searchFilter?.search?.yearRange?.end ?? new Date().getFullYear()}
 								label="Max"
 								onChange={(e: any) => {
 									const value = Number(e.target.value);
@@ -913,7 +913,7 @@ const Filter = (props: FilterType) => {
 								MenuProps={MenuProps}
 							>
 								{Array.from({ length: 35 }, (_, i) => {
-									const year = 1990 + i;
+									const year = 1990 + i + 1;
 									return (
 										<MenuItem key={year} value={year} disabled={(searchFilter?.search?.yearRange?.start || 0) > year}>
 											{year}

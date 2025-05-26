@@ -39,11 +39,6 @@ const TopAgentCard = (props: TopAgentProps) => {
 		// Handle follow functionality
 	};
 
-	const handleView = () => {
-		// Handle view profile functionality
-		router.push(`/agent/${agent._id}`);
-	};
-
 	if (device === 'mobile') {
 		return (
 			<Stack className="top-agent-card">
@@ -86,57 +81,52 @@ const TopAgentCard = (props: TopAgentProps) => {
 					<p>{agent?.memberDesc || 'No description available'}</p>
 				</div>
 
-				<div className="agent-actions">
-					<button className="action-btn like-btn" onClick={handleLike}>
-						<FavoriteBorderIcon />
-						Like
-					</button>
-					<button className="action-btn follow-btn" onClick={handleFollow}>
-						Follow
-					</button>
-					<button className="action-btn view-btn" onClick={handleView}>
-						<VisibilityIcon />
-						View
-					</button>
-				</div>
+				<div className="agent-actions"></div>
 			</Stack>
 		);
 	} else {
 		return (
 			<Stack className="top-agent-card">
-				<div className="agent-header">
-					<img src={agentImage || '/placeholder.svg'} alt={agent?.memberNick} />
-					<div className="agent-info">
-						<div className="name-section">
-							<PersonIcon />
-							<strong>{agent?.memberNick}</strong>
-						</div>
-						<div className="phone-section">
-							<PhoneIcon />
-							<span>{agent?.memberPhone || 'No contact info'}</span>
+				<Link
+					href={{
+						pathname: '/agent/detail',
+						query: { agentId: agent?._id },
+					}}
+				>
+					<div className="agent-header">
+						<img src={agentImage || '/placeholder.svg'} alt={agent?.memberNick} />
+						<div className="agent-info">
+							<div className="name-section">
+								<PersonIcon />
+								<strong>{agent?.memberNick}</strong>
+							</div>
+							<div className="phone-section">
+								<PhoneIcon />
+								<span>{agent?.memberPhone || 'No contact info'}</span>
+							</div>
 						</div>
 					</div>
-				</div>
+				</Link>
 
 				<div className="agent-stats">
 					<Stack gap={'5px'}>
 						<div className="stat-item">
 							<DirectionsCarIcon />
-							<span>{agent?.memberCars || 0}</span>
+							<span>{agent?.memberCars}</span>
 						</div>
 						<Typography component={'p'}>Listings</Typography>
 					</Stack>
 					<Stack gap={'5px'}>
 						<div className="stat-item">
 							<PeopleIcon />
-							<span>{agent?.memberFollowers || 0}</span>
+							<span>{agent?.memberFollowers}</span>
 						</div>
 						<Typography component={'p'}>Followers</Typography>
 					</Stack>
 					<Stack gap={'5px'}>
 						<div className="stat-item">
 							<PeopleIcon />
-							<span>{agent?.memberFollowings || 0}</span>
+							<span>{agent?.memberFollowings}</span>
 						</div>
 						<Typography component={'p'}>Followings</Typography>
 					</Stack>
@@ -173,7 +163,7 @@ const TopAgentCard = (props: TopAgentProps) => {
 							<FavoriteBorderIcon sx={{ color: '#666', fontSize: 24 }} />
 						)}
 						<Typography variant="body2" sx={{ fontSize: '14px', color: '#666' }}>
-							{agent.memberLikes}
+							{agent?.memberLikes}
 						</Typography>
 					</Box>
 				</div>

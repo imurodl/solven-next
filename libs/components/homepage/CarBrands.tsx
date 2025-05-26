@@ -13,9 +13,19 @@ import { Autoplay, Navigation, Pagination } from 'swiper';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
 
-const CarBrands: NextPage<{ initialInput: CarsInquiry }> = ({ initialInput }) => {
+const CarBrands: NextPage<{ initialInput?: CarsInquiry }> = ({ initialInput }) => {
 	const router = useRouter();
-	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(initialInput);
+	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(
+		initialInput || {
+			page: 1,
+			limit: 9,
+			search: {
+				pricesRange: { start: 0, end: 500000000 },
+				mileageRange: { start: 0, end: 500000 },
+				yearRange: { start: 1990, end: new Date().getFullYear() },
+			},
+		},
+	);
 
 	const { data: getCarBrandsData } = useQuery(GET_CAR_BRANDS_BY_USER, {
 		fetchPolicy: 'network-only',

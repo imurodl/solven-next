@@ -18,13 +18,17 @@ export const GET_AGENTS = gql`
 				memberImage
 				memberAddress
 				memberDesc
-				memberWarnings
-				memberBlocks
 				memberCars
-				memberRank
+				memberArticles
+				memberFollowers
+				memberFollowings
 				memberPoints
 				memberLikes
+				memberComments
+				memberRank
+				memberWarnings
 				memberViews
+				memberBlocks
 				deletedAt
 				createdAt
 				updatedAt

@@ -3,6 +3,7 @@
 		position: relative;
 		width: 100%;
 		height: auto;
+		background: #fff;
 		.info-box {
 			display: flex;
 			justify-content: space-between;
@@ -278,9 +279,6 @@
 				flex-direction: column;
 				.car-filter-box {
 					margin-bottom: 30px;
-					.css-1wmdqt6-MuiDivider-root {
-						border-color: #fff;
-					}
 					.car-filter-boxes {
 						flex-direction: row;
 						gap: 30px;
@@ -612,6 +610,9 @@
 							transform: scale(1.05);
 							box-shadow: $shadow-medium;
 							background: $background-light;
+							svg {
+								color: $primary-color;
+							}
 						}
 					}
 
@@ -653,7 +654,7 @@
 							align-items: center;
 							gap: 8px;
 							cursor: pointer;
-							transition: all 0.2s ease-in-out;
+							transition: $transition-fast;
 							&:hover {
 								transform: translateX(4px);
 								span {
@@ -661,11 +662,11 @@
 								}
 							}
 							span {
-								color: #6b7280;
-								font-family: 'DM Sans', sans-serif;
+								color: $text-color;
+								font-family: $font;
 								font-size: 16px;
 								font-weight: 500;
-								transition: all 0.2s ease-in-out;
+								transition: $transition-fast;
 							}
 							img {
 								width: 16px;
@@ -681,31 +682,30 @@
 					align-items: center;
 					justify-content: space-between;
 					.switch-btn {
-						width: 48px;
-						height: 48px;
+						width: 60px;
+						height: 60px;
+						border-radius: 25px;
 						display: flex;
 						align-items: center;
 						justify-content: center;
-						border-radius: 50%;
-						background: #ffffff;
-						border: 1px solid #e5e7eb;
-						box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 						cursor: pointer;
-						transition: all 0.3s ease;
+						transition: $transition-smooth;
+						background: $background-light;
+						color: $text-color;
+						border: 1px solid $border-light;
+						box-shadow: $shadow-light;
+						font-size: 18px;
+						font-weight: 600;
 						&:hover {
-							background: #1e40af;
-							border-color: #1e40af;
-							transform: translateY(-2px);
-							box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+							transform: scale(1.05);
+							box-shadow: $shadow-medium;
+							background: $background-light;
 							svg {
-								color: #ffffff;
+								color: $primary-color;
 							}
 						}
 						svg {
-							width: 20px;
-							height: 20px;
-							color: #6b7280;
-							transition: all 0.2s ease-in-out;
+							font-size: 2rem;
 						}
 					}
 					.card-wrapper {
@@ -749,7 +749,8 @@
 								display: flex;
 								align-items: flex-start;
 								gap: 12px;
-								margin-bottom: 24px;
+								margin-bottom: 32px;
+								cursor: pointer;
 								img {
 									width: 100px;
 									height: 100px;
@@ -813,16 +814,15 @@
 									display: flex;
 									align-items: center;
 									gap: 4px;
-									cursor: pointer;
 									justify-content: center;
 									svg {
 										width: 15px;
 										height: 15px;
-										color: #050b20;
+										color: $text-muted;
 									}
 									span {
-										color: #111827;
-										font-family: 'DM Sans', sans-serif;
+										color: $text-color;
+										font-family: $font;
 										font-size: 15px;
 										font-weight: 600;
 									}
@@ -839,8 +839,8 @@
 								margin-bottom: 24px;
 								min-height: 48px;
 								p {
-									color: #6b7280;
-									font-family: 'DM Sans', sans-serif;
+									color: $text-color;
+									font-family: $font;
 									font-size: 14px;
 									font-weight: 400;
 									line-height: 1.5;
@@ -857,7 +857,7 @@
 								width: 100%;
 								justify-content: space-between;
 								.view-btn {
-									padding: 8px 16px;
+									padding: 8px 20px;
 									border-radius: $border-radius-medium;
 									&:hover {
 										background: rgba($primary-color, 0.1);

@@ -258,11 +258,11 @@ CarList.defaultProps = {
 			carListingOptions: [],
 			pricesRange: {
 				start: 0,
-				end: 500000000, // adjust if needed
+				end: 1000000, // adjust if needed
 			},
 			mileageRange: {
 				start: 0,
-				end: 500000, // adjust if needed
+				end: 300000, // adjust if needed
 			},
 			yearRange: {
 				start: 1990,

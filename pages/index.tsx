@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../libs/hooks/useDeviceDetect';
 import withLayoutMain from '../libs/components/layout/LayoutHome';
@@ -9,7 +10,8 @@ import { Stack } from '@mui/material';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import CtaSection from '../libs/components/homepage/CtaSection';
 import CarBrands from '../libs/components/homepage/CarBrands';
-import CarTempCards from '../libs/components/car/CarTempCards';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -20,24 +22,49 @@ export const getStaticProps = async ({ locale }: any) => ({
 const Home: NextPage = () => {
 	const device = useDeviceDetect();
 
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			AOS.init({
+				duration: 1500,
+				easing: 'ease-in-out',
+				once: true,
+			});
+		}
+	}, []);
+
 	if (device === 'mobile') {
 		return (
-			<Stack className={'home-page'}>
-				<TrendCars />
-				<PopularCars />
-				<TopAgents />
+			<Stack className="home-page">
+				<div data-aos="fade-up">
+					<TrendCars />
+				</div>
+				<div data-aos="fade-up">
+					<PopularCars />
+				</div>
+				<div data-aos="fade-up">
+					<TopAgents />
+				</div>
 			</Stack>
 		);
 	} else {
 		return (
-			<Stack className={'home-page'}>
-				{/* @ts-ignore */}
-				<CarBrands />
-				<TrendCars />
-				<PopularCars />
-				<TopAgents />
-				<CommunityBoards />
-				{/* <CtaSection /> */}
+			<Stack className="home-page">
+				<div data-aos="fade-up">
+					<CarBrands />
+				</div>
+				<div data-aos="fade-up">
+					<TrendCars />
+				</div>
+				<div data-aos="fade-up">
+					<PopularCars />
+				</div>
+				<div data-aos="fade-up">
+					<TopAgents />
+				</div>
+				<div data-aos="fade-up">
+					<CommunityBoards />
+				</div>
+				{/* <div data-aos="fade-up"><CtaSection /></div> */}
 			</Stack>
 		);
 	}
