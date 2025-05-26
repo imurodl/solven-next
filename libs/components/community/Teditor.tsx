@@ -86,17 +86,17 @@ const TuiEditor = () => {
 			const editor = editorRef.current;
 			const articleContent = editor?.getInstance().getHTML() as string;
 			memoizedValues.articleContent = articleContent;
-	
+
 			if (memoizedValues.articleContent === '' && memoizedValues.articleTitle === '') {
 				throw new Error(Message.INSERT_ALL_INPUTS);
 			}
-	
+
 			await createboardArticle({
 				variables: {
 					input: { ...memoizedValues, articleCategory },
 				},
 			});
-	
+
 			await sweetTopSuccessAlert('Article is created successfully', 700);
 			await router.push({
 				pathname: '/mypage',
@@ -109,7 +109,7 @@ const TuiEditor = () => {
 			sweetErrorHandling(new Error(Message.INSERT_ALL_INPUTS)).then();
 		}
 	};
-	
+
 	const doDisabledCheck = () => {
 		if (memoizedValues.articleContent === '' || memoizedValues.articleTitle === '') {
 			return true;
@@ -181,7 +181,7 @@ const TuiEditor = () => {
 				<Button
 					variant="contained"
 					color="primary"
-					style={{ margin: '30px', width: '250px', height: '45px' }}
+					style={{ margin: '30px', width: '250px', height: '45px', color: '#fff' }}
 					onClick={handleRegisterButton}
 				>
 					Register

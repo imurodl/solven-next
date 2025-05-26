@@ -31,32 +31,32 @@ const withLayoutBasic = (Component: any) => {
 
 			switch (router.pathname) {
 				case '/car':
-					title = 'Property Search';
-					desc = 'We are glad to see you again!';
+					title = 'Car Search';
+					desc = 'Home / Listings';
 					break;
 				case '/agent':
 					title = 'Agents';
-					desc = 'Home / For Rent';
+					desc = 'Home / Agents';
 					break;
 				case '/agent/detail':
 					title = 'Agent Page';
-					desc = 'Home / For Rent';
+					desc = 'Home / Agents / Detail';
 					break;
 				case '/mypage':
 					title = 'my page';
-					desc = 'Home / For Rent';
+					desc = 'Home / My Page';
 					break;
 				case '/community':
 					title = 'Community';
-					desc = 'Home / For Rent';
+					desc = 'Home / Community';
 					break;
 				case '/community/detail':
 					title = 'Community Detail';
-					desc = 'Home / For Rent';
+					desc = 'Home / Community / Detail';
 					break;
 				case '/cs':
-					title = 'CS';
-					desc = 'We are glad to see you again!';
+					title = 'Help';
+					desc = 'Home / Help';
 					break;
 				case '/account/join':
 					title = 'Login/Signup';
@@ -65,7 +65,7 @@ const withLayoutBasic = (Component: any) => {
 					break;
 				case '/member':
 					title = 'Member Page';
-					desc = 'Home / For Rent';
+					desc = 'Home / Member';
 					break;
 				default:
 					break;
