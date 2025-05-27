@@ -31,23 +31,19 @@ const Review = (props: ReviewProps) => {
 		return <div>REVIEW</div>;
 	} else {
 		return (
-			<Stack className={'review-config'}>
-				<Stack className={'review-mb-info'}>
-					<Stack className={'img-name-box'}>
-						<img src={imagePath} alt="" className={'img-box'} />
-						<Stack>
-							<Typography className={'name'} onClick={() => goMemberPage(comment?.memberData?._id as string)}>
-								{comment.memberData?.memberNick}
-							</Typography>
-							<Typography className={'date'}>
-								<Moment format={'DD MMMM, YYYY'}>{comment.createdAt}</Moment>
-							</Typography>
-						</Stack>
+			<Stack className="review-item">
+				<Stack className="review-header">
+					<img src={imagePath} alt="" className="reviewer-image" />
+					<Stack className="reviewer-info">
+						<Typography className="reviewer-name" onClick={() => goMemberPage(comment?.memberData?._id as string)}>
+							{comment.memberData?.memberNick}
+						</Typography>
+						<Typography className="review-date">
+							<Moment format={'DD MMMM, YYYY'}>{comment.createdAt}</Moment>
+						</Typography>
 					</Stack>
 				</Stack>
-				<Stack className={'desc-box'}>
-					<Typography className={'description'}>{comment.commentContent}</Typography>
-				</Stack>
+				<Typography className="review-content">{comment.commentContent}</Typography>
 			</Stack>
 		);
 	}
