@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import { Button, Stack, Typography, Tab, Tabs, IconButton, Backdrop, Pagination } from '@mui/material';
+import { Button, Stack, Typography, Tab, Tabs, IconButton, Backdrop, Pagination, Box } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import Moment from 'react-moment';
@@ -366,15 +366,66 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 										</Stack>
 									</Stack>
 								</Stack>
-								<Stack
-									className="second-box-config"
-									sx={{ borderBottom: total > 0 ? 'none' : '1px solid #eee', border: '1px solid #eee' }}
-								>
-									<Typography className="title-text">Comments ({total})</Typography>
-									<Stack className="leave-comment">
-										<input
-											type="text"
-											placeholder="Leave a comment"
+								<Stack className="reviews-config">
+									<Typography className="section-title">Comments ({total})</Typography>
+
+									{comments?.length > 0 && (
+										<Stack className="review-list">
+											{comments?.map((commentData) => (
+												<Stack className="review-item" key={commentData?._id}>
+													<Stack className="review-header">
+														<Stack className="user-info">
+															<img
+																src={getCommentMemberImage(commentData?.memberData?.memberImage)}
+																alt=""
+																onClick={() => goMemberPage(commentData?.memberData?._id)}
+															/>
+															<Stack className="info">
+																<Typography className="name" onClick={() => goMemberPage(commentData?.memberData?._id)}>
+																	{commentData?.memberData?.memberNick}
+																</Typography>
+																<Typography className="date">
+																	<Moment format={'DD.MM.YY HH:mm'}>{commentData?.createdAt}</Moment>
+																</Typography>
+															</Stack>
+														</Stack>
+														{commentData?.memberId === user?._id && (
+															<Stack className="actions">
+																<IconButton
+																	onClick={() => {
+																		setUpdatedCommentId(commentData?._id);
+																		updateButtonHandler(commentData?._id, CommentStatus.DELETE);
+																	}}
+																>
+																	<DeleteForeverIcon />
+																</IconButton>
+																<IconButton
+																	onClick={() => {
+																		setUpdatedComment(commentData?.commentContent);
+																		setUpdatedCommentWordsCnt(commentData?.commentContent?.length);
+																		setUpdatedCommentId(commentData?._id);
+																		setOpenBackdrop(true);
+																	}}
+																>
+																	<EditIcon />
+																</IconButton>
+															</Stack>
+														)}
+													</Stack>
+													<Typography className="review-content">{commentData?.commentContent}</Typography>
+												</Stack>
+											))}
+										</Stack>
+									)}
+
+									{/* Write comment section */}
+									<Stack className="write-review">
+										<Stack className="write-header">
+											<Typography className="title">Write a comment</Typography>
+											<Typography className="counter">{wordsCnt}/100</Typography>
+										</Stack>
+										<textarea
+											placeholder="Share your thoughts..."
 											value={comment}
 											onChange={(e) => {
 												if (e.target.value.length > 100) return;
@@ -383,142 +434,22 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 											}}
 										/>
 										<Stack className="button-box">
-											<Typography>{wordsCnt}/100</Typography>
-											<Button onClick={creteCommentHandler}>comment</Button>
+											<Button onClick={creteCommentHandler}>Post Comment</Button>
 										</Stack>
 									</Stack>
+
+									{total > 0 && (
+										<Box className="pagination-box">
+											<Pagination
+												count={Math.ceil(total / searchFilter.limit) || 1}
+												page={searchFilter.page}
+												shape="circular"
+												color="primary"
+												onChange={paginationHandler}
+											/>
+										</Box>
+									)}
 								</Stack>
-								{total > 0 && (
-									<Stack className="comments">
-										<Typography className="comments-title">Comments</Typography>
-									</Stack>
-								)}
-								{comments?.map((commentData, index) => {
-									return (
-										<Stack className="comments-box" key={commentData?._id}>
-											<Stack className="main-comment">
-												<Stack className="member-info">
-													<Stack
-														className="name-date"
-														onClick={() => goMemberPage(commentData?.memberData?._id as string)}
-													>
-														<img src={getCommentMemberImage(commentData?.memberData?.memberImage)} alt="" />
-														<Stack className="name-date-column">
-															<Typography className="name">{commentData?.memberData?.memberNick}</Typography>
-															<Typography className="date">
-																<Moment className={'time-added'} format={'DD.MM.YY HH:mm'}>
-																	{commentData?.createdAt}
-																</Moment>
-															</Typography>
-														</Stack>
-													</Stack>
-													{commentData?.memberId === user?._id && (
-														<Stack className="buttons">
-															<IconButton
-																onClick={() => {
-																	setUpdatedCommentId(commentData?._id);
-																	updateButtonHandler(commentData?._id, CommentStatus.DELETE);
-																}}
-															>
-																<DeleteForeverIcon sx={{ color: '#757575', cursor: 'pointer' }} />
-															</IconButton>
-															<IconButton
-																onClick={(e: any) => {
-																	setUpdatedComment(commentData?.commentContent);
-																	setUpdatedCommentWordsCnt(commentData?.commentContent?.length);
-																	setUpdatedCommentId(commentData?._id);
-																	setOpenBackdrop(true);
-																}}
-															>
-																<EditIcon sx={{ color: '#757575' }} />
-															</IconButton>
-															<Backdrop
-																sx={{
-																	top: '40%',
-																	right: '25%',
-																	left: '25%',
-																	width: '1000px',
-																	height: 'fit-content',
-																	borderRadius: '10px',
-																	color: '#ffffff',
-																	zIndex: 999,
-																}}
-																open={openBackdrop}
-															>
-																<Stack
-																	sx={{
-																		width: '100%',
-																		height: '100%',
-																		background: 'white',
-																		border: '1px solid #b9b9b9',
-																		padding: '15px',
-																		gap: '10px',
-																		borderRadius: '10px',
-																		boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-																	}}
-																>
-																	<Typography variant="h4" color={'#b9b9b9'}>
-																		Update comment
-																	</Typography>
-																	<Stack gap={'20px'}>
-																		<input
-																			autoFocus
-																			value={updatedComment}
-																			onChange={(e) => updateCommentInputHandler(e.target.value)}
-																			type="text"
-																			style={{
-																				border: '1px solid #b9b9b9',
-																				outline: 'none',
-																				height: '40px',
-																				padding: '0px 10px',
-																				borderRadius: '5px',
-																			}}
-																		/>
-																		<Stack width={'100%'} flexDirection={'row'} justifyContent={'space-between'}>
-																			<Typography variant="subtitle1" color={'#b9b9b9'}>
-																				{updatedCommentWordsCnt}/100
-																			</Typography>
-																			<Stack sx={{ flexDirection: 'row', alignSelf: 'flex-end', gap: '10px' }}>
-																				<Button
-																					variant="outlined"
-																					color="inherit"
-																					onClick={() => cancelButtonHandler()}
-																				>	
-																					Cancel
-																				</Button>
-																				<Button
-																					variant="contained"
-																					color="inherit"
-																					onClick={() => updateButtonHandler(updatedCommentId, undefined)}
-																				>
-																					Update
-																				</Button>
-																			</Stack>
-																		</Stack>
-																	</Stack>
-																</Stack>
-															</Backdrop>
-														</Stack>
-													)}
-												</Stack>
-												<Stack className="content">
-													<Typography>{commentData?.commentContent}</Typography>
-												</Stack>
-											</Stack>
-										</Stack>
-									);
-								})}
-								{total > 0 && (
-									<Stack className="pagination-box">
-										<Pagination
-											count={Math.ceil(total / searchFilter.limit) || 1}
-											page={searchFilter.page}
-											shape="circular"
-											color="primary"
-											onChange={paginationHandler}
-										/>
-									</Stack>
-								)}
 							</div>
 						</div>
 					</Stack>
