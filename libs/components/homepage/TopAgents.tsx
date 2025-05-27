@@ -142,7 +142,7 @@ const TopAgents = (props: TopAgentsProps) => {
 TopAgents.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 10,
+		limit: 8,
 		sort: 'memberRank',
 		direction: 'DESC',
 		search: {},

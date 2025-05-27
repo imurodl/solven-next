@@ -461,7 +461,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 									/>
 								</div>
 							</div>
-							<Divider sx={{ mt: '30px', mb: '35px' }} />
+							<Divider />
 							<div className={'middle'}>
 								<div className={'row-box'}>
 									<div className={'box'}>
@@ -611,11 +611,10 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 									</div>
 								</div>
 							</div>
-							<Divider sx={{ mt: '60px', mb: '18px' }} />
 							<div className={'bottom'}>
 								<div onClick={resetFilterHandler}>
 									<img src="/img/icons/reset.svg" alt="" />
-									<span>Reset all filters</span>
+									<span>Reset All filters</span>
 								</div>
 								<Button
 									startIcon={<img src={'/img/icons/search.svg'} />}

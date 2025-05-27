@@ -18,12 +18,8 @@ const CarBrands: NextPage<{ initialInput?: CarsInquiry }> = ({ initialInput }) =
 	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(
 		initialInput || {
 			page: 1,
-			limit: 9,
-			search: {
-				pricesRange: { start: 0, end: 500000000 },
-				mileageRange: { start: 0, end: 500000 },
-				yearRange: { start: 1990, end: new Date().getFullYear() },
-			},
+			limit: 8,
+			search: {},
 		},
 	);
 
@@ -74,7 +70,7 @@ const CarBrands: NextPage<{ initialInput?: CarsInquiry }> = ({ initialInput }) =
 						}}
 						className="swiper-container"
 					>
-						{getCarBrandsData?.getCarBrandsByUser?.map((carBrand: CarBrand) => {
+						{getCarBrandsData?.getCarBrandsByUser?.slice(0, 8).map((carBrand: CarBrand) => {
 							return (
 								<SwiperSlide key={carBrand._id} className="brand-slide">
 									<Stack onClick={() => pushBrandHandler(carBrand.carBrandName)} className="brand-item">
@@ -102,21 +98,8 @@ const CarBrands: NextPage<{ initialInput?: CarsInquiry }> = ({ initialInput }) =
 CarBrands.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 9,
-		search: {
-			pricesRange: {
-				start: 0,
-				end: 500000000, // adjust if needed
-			},
-			mileageRange: {
-				start: 0,
-				end: 500000, // adjust if needed
-			},
-			yearRange: {
-				start: 1990,
-				end: new Date().getFullYear(),
-			},
-		},
+		limit: 8,
+		search: {},
 	},
 };
 

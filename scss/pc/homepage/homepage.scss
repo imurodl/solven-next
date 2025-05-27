@@ -1462,3 +1462,315 @@
 		}
 	}
 }
+
+.advanced-filter-modal {
+	position: relative;
+	width: 700px;
+	height: auto;
+	padding: 32px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: $background-white;
+	border-radius: $border-radius-medium;
+	box-shadow: $shadow-medium;
+	// Close button
+	.close {
+		position: absolute;
+		top: 16px;
+		right: 16px;
+		width: 32px;
+		height: 32px;
+		border-radius: 8px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		transition: $transition-smooth;
+
+		&:hover {
+			background: rgba($primary-color, 0.08);
+
+			svg {
+				color: $primary-color;
+				transform: rotate(90deg);
+			}
+		}
+
+		svg {
+			width: 16px;
+			height: 16px;
+			color: $text-muted;
+			transition: $transition-smooth;
+		}
+	}
+	// Header section
+	.top {
+		width: 90%;
+		height: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		margin-bottom: 12px;
+
+		.search-input-box {
+			width: 100%;
+			padding: 10px 12px;
+			display: flex;
+			align-items: center;
+			border-radius: 10px;
+			background: $background-light;
+			transition: $transition-smooth;
+
+			&:focus-within {
+				background: $background-white;
+				box-shadow: inset 0 0 0 1.5px $primary-color;
+			}
+
+			img {
+				width: 16px;
+				height: 16px;
+				color: $text-muted;
+			}
+
+			input {
+				margin-left: 10px;
+				width: 100%;
+				height: 20px;
+				color: $text-color;
+				font-family: $font;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 1.4;
+				border: none;
+				outline: none;
+				background: transparent;
+
+				&::placeholder {
+					color: $text-muted;
+				}
+			}
+		}
+	}
+	// Content section
+	.middle {
+		position: relative;
+		width: 100%;
+		height: auto;
+		display: flex;
+		flex-direction: column;
+		gap: 30px;
+		// padding: 16px 30px;
+		.row-box {
+			position: relative;
+			width: 100%;
+			height: auto;
+			display: flex;
+			justify-content: space-between;
+			gap: 16px;
+
+			.box {
+				position: relative;
+				width: 48%;
+				height: auto;
+				display: flex;
+				flex-direction: column;
+				gap: 8px;
+				span {
+					color: $text-muted;
+					font-family: $font;
+					font-size: 12px;
+					font-weight: 600;
+					line-height: 1.2;
+					text-transform: uppercase;
+					letter-spacing: 0.8px;
+					margin: 0;
+					padding-left: 4px;
+				}
+
+				.input-box {
+					width: 160px;
+					display: flex;
+					// flex-direction: row;
+					align-items: center;
+					justify-content: flex-end;
+					flex-direction: row-reverse;
+					padding: 10px 16px;
+					border-radius: 8px;
+					transition: $transition-smooth;
+					background: $background-light;
+					gap: 16px;
+					&:hover {
+						background: rgba($primary-color, 0.05);
+
+						.property-type {
+							color: $primary-color;
+						}
+					}
+
+					.property-type {
+						font-family: $font;
+						font-size: 14px;
+						font-weight: 600;
+						cursor: pointer;
+						color: $text-color;
+						transition: $transition-fast;
+					}
+
+					.property-checkbox {
+						&.MuiCheckbox-root {
+							padding: 4px;
+							margin-right: -4px;
+							border-radius: 6px;
+							transition: $transition-smooth;
+							&:hover {
+								background: rgba($primary-color, 0.08);
+							}
+
+							.MuiSvgIcon-root {
+								width: 18px;
+								height: 18px;
+								color: $text-muted;
+								transition: $transition-smooth;
+							}
+
+							&.Mui-checked {
+								.MuiSvgIcon-root {
+									color: $primary-color;
+								}
+							}
+						}
+					}
+				}
+
+				.inside {
+					position: relative;
+					width: 100%;
+					height: auto;
+					display: flex;
+
+					&.space-between {
+						justify-content: space-between;
+					}
+
+					&.align-center {
+						align-items: center;
+					}
+
+					.minus-line {
+						width: 12px;
+						height: 1px;
+						background: $border-color;
+						margin: 0 4px;
+					}
+
+					.MuiFormControl-root {
+						.MuiSelect-select {
+							padding: 10px 14px;
+							border-radius: 10px;
+							background: $background-light;
+							border: 1px solid $border-light;
+							transition: $transition-smooth;
+							font-size: 13px;
+							color: $text-color;
+
+							&:hover {
+								background: darken($background-light, 3%);
+								border-color: $border-color;
+							}
+
+							&.Mui-focused {
+								border-color: $primary-color;
+								background: $background-white;
+								box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+							}
+						}
+
+						.MuiOutlinedInput-notchedOutline {
+							border: none;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// Footer section
+	.bottom {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 20px;
+		padding-top: 16px;
+		border-top: 1px solid $border-light;
+
+		div {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			cursor: pointer;
+			padding: 6px 10px;
+			border-radius: 8px;
+			transition: $transition-smooth;
+
+			&:hover {
+				background: rgba($primary-color, 0.05);
+
+				img {
+					transform: rotate(180deg);
+				}
+
+				span {
+					color: $primary-color;
+				}
+			}
+
+			img {
+				width: 14px;
+				height: 14px;
+				transition: $transition-smooth;
+			}
+
+			span {
+				color: $text-muted;
+				font-size: 13px;
+				font-weight: 500;
+				transition: $transition-smooth;
+			}
+		}
+
+		.search-btn {
+			height: auto;
+			padding: 16px 8px;
+			border-radius: 60px;
+			background: $primary-color;
+			color: $background-white;
+			font-weight: 500;
+			font-size: 14px;
+			border: none;
+			cursor: pointer;
+			transition: $transition-smooth;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+
+			&:hover {
+				background: darken($primary-color, 5%);
+				transform: scale(1.05);
+			}
+
+			&:active {
+				transform: scale(1);
+			}
+
+			img {
+				width: 16px;
+				height: 16px;
+				filter: brightness(0) invert(1);
+			}
+		}
+	}
+}

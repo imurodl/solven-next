@@ -189,7 +189,7 @@ const TrendCars = (props: TrendCarsProps) => {
 TrendCars.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 8,
+		limit: 6,
 		sort: 'carViews',
 		direction: 'DESC',
 		search: {},

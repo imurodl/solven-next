@@ -137,12 +137,6 @@ const PopularCars = (props: PopularCarsProps) => {
 					<Stack className="car-filter-box">
 						<Stack className="car-filter-boxes">
 							<Typography
-								onClick={() => carSearchChangeHandler('')} //
-								className={activeBrand === '' ? 'active' : ''}
-							>
-								All
-							</Typography>
-							<Typography
 								onClick={() => carSearchChangeHandler('HYUNDAI')}
 								className={activeBrand === 'HYUNDAI' ? 'active' : ''}
 							>
@@ -200,11 +194,11 @@ const PopularCars = (props: PopularCarsProps) => {
 PopularCars.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 7,
+		limit: 6,
 		sort: 'carViews',
 		direction: 'DESC',
 		search: {
-			brandList: [],
+			brandList: ['HYUNDAI'],
 		},
 	},
 };

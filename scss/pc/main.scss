@@ -1204,18 +1204,7 @@ body::-webkit-scrollbar {
 }
 
 .advanced-filter-modal {
-	position: relative;
 	width: 662px;
-	height: auto;
-	padding: 32px 0 24px 0;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	background: $background-white;
-	border-radius: $border-radius-small;
-	box-shadow: $shadow-medium;
-
-	// Close button
 	.close {
 		position: absolute;
 		top: 30px;
@@ -1228,14 +1217,11 @@ body::-webkit-scrollbar {
 		justify-content: center;
 		background: $background-light;
 		border: 1px solid $border-light;
-		cursor: pointer;
 		transition: $transition-fast;
-
 		&:hover {
 			background: darken($background-light, 5%);
 			border-color: $text-muted;
 		}
-
 		svg,
 		img {
 			width: 18px;
@@ -1243,15 +1229,13 @@ body::-webkit-scrollbar {
 			color: $text-color;
 		}
 	}
-
 	// Header section
 	.top {
 		width: 580px;
 		height: auto;
 		display: flex;
 		flex-direction: column;
-		gap: 12px;
-
+		justify-content: flex-start;
 		.search-input-box {
 			width: 90%;
 			padding: 18px 16px;
@@ -1261,19 +1245,16 @@ body::-webkit-scrollbar {
 			border: 1px solid $border-light;
 			background: $background-white;
 			transition: $transition-fast;
-
 			&:focus-within {
 				border-color: $primary-color;
 				box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
 			}
-
 			img {
 				width: 18px;
 				height: 18px;
 				color: $text-muted;
 				filter: none;
 			}
-
 			input {
 				margin-left: 12px;
 				width: 100%;
@@ -1286,81 +1267,23 @@ body::-webkit-scrollbar {
 				border: none;
 				outline: none;
 				background: transparent;
-
 				&::placeholder {
 					color: $text-muted;
 				}
 			}
 		}
 	}
-
-	// Divider
 	hr {
 		width: 100%;
 		height: 1px;
 		background: $border-light;
 		border: none;
-		margin: 24px 0;
+		margin: 20px 0;
 	}
-
-	// Content section
 	.middle {
-		position: relative;
-		width: 593px;
-		height: auto;
-		display: flex;
-		flex-direction: column;
-		gap: 24px;
-
 		.row-box {
-			position: relative;
-			width: 100%;
-			height: auto;
-			display: flex;
-			justify-content: space-between;
-			gap: 20px;
-
 			.box {
-				position: relative;
-				width: 285px;
-				height: auto;
-				display: flex;
-				flex-direction: column;
-				gap: 14px;
-
-				span {
-					color: $text-color;
-					font-family: $font;
-					font-size: 15px;
-					font-weight: 600;
-					line-height: 1.4;
-					text-transform: capitalize;
-					margin: 0;
-					padding-top: 4px;
-					text-decoration: underline;
-				}
-
 				.input-box {
-					width: 120px;
-					display: flex;
-					flex-direction: row;
-					align-items: center;
-					justify-content: space-between;
-					gap: 20px;
-
-					.property-type {
-						font-family: $font;
-						font-size: 14px;
-						font-weight: 600;
-						cursor: pointer;
-						color: $text-color;
-						transition: $transition-fast;
-
-						&:hover {
-							color: $primary-color;
-						}
-					}
-
 					.property-checkbox {
 						&.MuiCheckbox-root {
 							width: 20px;
@@ -1368,7 +1291,6 @@ body::-webkit-scrollbar {
 							padding: 0;
 							margin: 0;
 							border-radius: 4px;
-
 							.MuiSvgIcon-root {
 								width: 20px;
 								height: 20px;
@@ -1378,7 +1300,6 @@ body::-webkit-scrollbar {
 								color: transparent;
 								transition: $transition-fast;
 							}
-
 							&.Mui-checked {
 								.MuiSvgIcon-root {
 									color: $text-color;
@@ -1386,7 +1307,6 @@ body::-webkit-scrollbar {
 									scale: 1.1;
 								}
 							}
-
 							.MuiTouchRipple-root {
 								display: none;
 							}
@@ -1518,7 +1438,6 @@ body::-webkit-scrollbar {
 
 	// Footer section
 	.bottom {
-		width: 604px;
 		height: auto;
 		display: flex;
 		justify-content: space-between;
