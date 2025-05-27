@@ -1,223 +1,311 @@
 #pc-wrap {
-	background: #050b20;
+	background: $text-color;
+
 	.cs-page {
 		position: relative;
-		padding-bottom: 40px;
-		background: #f6f6f6;
+		background: $background-light;
 		border-radius: 80px;
-		width: 100%;
-		height: auto;
+		padding-bottom: 80px;
+		min-height: calc(100vh - 80px);
+
 		.container {
 			display: flex;
 			flex-direction: column;
+			max-width: 1300px;
+			margin: 0 auto;
+
 			.cs-main-info {
-				display: flex;
-				flex-direction: column;
+				padding: 80px 0 40px;
+
 				.info {
+					margin-bottom: 40px;
+					text-align: left;
 					display: flex;
 					flex-direction: column;
-					align-items: center;
+					align-items: flex-start;
+
 					span {
-						color: #000;
-						font-family: $font;
-						font-size: 35px;
-						font-style: normal;
+						font-size: 36px;
 						font-weight: 700;
-						line-height: normal;
-						letter-spacing: 0.525px;
+						background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+						-webkit-background-clip: text;
+						-webkit-text-fill-color: transparent;
+						position: relative;
+						display: inline-block;
 					}
+
 					p {
-						color: #757575;
-						font-family: $font;
+						color: $text-muted;
 						font-size: 16px;
-						font-style: normal;
-						font-weight: 400;
-						line-height: normal;
+						line-height: 1.6;
+
+						a {
+							color: $text-color;
+							font-weight: 500;
+							text-decoration: none;
+							transition: $transition-smooth;
+
+							&:hover {
+								color: $primary-color;
+							}
+						}
 					}
 				}
+
 				.btns {
-					margin-top: 50px;
 					display: flex;
-					flex-direction: row;
 					justify-content: center;
-					:first-child {
-						border-radius: 4px 0 0 4px;
-					}
-					:last-child {
-						border-radius: 0 4px 4px 0;
-					}
+					gap: 16px;
+
 					div {
-						width: 204px;
-						height: 46px;
+						padding: 12px 24px;
+						border-radius: $border-radius-medium;
+						font-size: 15px;
+						font-weight: 600;
 						display: flex;
-						justify-content: center;
 						align-items: center;
-						border: 1px solid #eee;
+						gap: 8px;
 						cursor: pointer;
-						color: #bdbdbd;
-						font-family: $font;
-						font-size: 14px;
-						font-style: normal;
-						font-weight: 700;
-						line-height: normal;
-						letter-spacing: 0.42px;
+						transition: $transition-smooth;
+						background: $background-white;
+						color: $text-muted;
+						border: 1px solid $border-light;
+						box-shadow: $shadow-light;
+
+						svg {
+							font-size: 20px;
+						}
+
+						&:hover {
+							transform: translateY(-2px);
+							box-shadow: $shadow-medium;
+							border-color: rgba($primary-color, 0.2);
+							color: $primary-color;
+							background: rgba($primary-color, 0.05);
+						}
+
 						&.active {
-							border: 1px solid #725ce8;
-							background: #405ff2;
-							color: #fff;
+							background: $primary-color;
+							color: $background-white;
+							border-color: $primary-color;
+
+							&:hover {
+								background: $primary-dark;
+							}
 						}
 					}
 				}
 			}
+
 			.cs-content {
-				margin-top: 25px;
-				display: flex;
-				flex-direction: column;
+				background: $background-white;
+				border-radius: $border-radius-medium;
+				box-shadow: $shadow-light;
+				border: 1px solid $border-light;
+				padding: 40px;
+				transition: $transition-smooth;
+
+				&:hover {
+					box-shadow: $shadow-medium;
+					border-color: rgba($primary-color, 0.2);
+				}
+
 				.title {
-					margin-bottom: 25px;
-					color: #000;
-					font-family: $font;
-					font-size: 27px;
-					font-style: normal;
+					font-size: 24px;
 					font-weight: 700;
-					line-height: normal;
-					letter-spacing: 0.54px;
+					color: $text-color;
+					margin-bottom: 32px;
+					padding-bottom: 16px;
+					border-bottom: 1px solid $border-light;
 				}
-				.pagination {
-					margin-top: 50px;
-					display: flex;
-					flex-direction: row;
-					justify-content: center;
-				}
+
 				.notice-content {
 					.main {
-						border: 1px solid #eee;
+						border-radius: $border-radius-medium;
+						overflow: hidden;
+						background: $background-white;
+						border: 1px solid $border-light;
+
 						.top {
-							padding: 25px 33px;
-							display: flex;
-							flex-direction: row;
-							justify-content: space-between;
+							padding: 20px 32px;
+							background: rgba($primary-color, 0.02);
+							border-bottom: 1px solid $border-light;
+
 							span {
-								color: #000;
-								font-family: $font;
 								font-size: 14px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: normal;
-								text-transform: capitalize;
+								font-weight: 600;
+								color: $text-muted;
+								text-transform: uppercase;
+								letter-spacing: 0.5px;
 							}
 						}
+
 						.bottom {
-							display: flex;
-							flex-direction: column;
 							.notice-card {
-								padding: 20px 14px 20px 30px;
+								padding: 24px 32px;
 								display: flex;
-								flex-direction: row;
-								justify-content: space-between;
-								border: 1px solid #eee;
+								align-items: center;
+								border-bottom: 1px solid $border-light;
+								transition: $transition-smooth;
+
+								&:hover {
+									background: rgba($primary-color, 0.02);
+
+									.notice-title {
+										color: $primary-color;
+									}
+								}
+
 								&.event {
-									background: #f6d79a;
+									background: #fef3c7;
+
+									&:hover {
+										background: #fde68a;
+									}
 								}
-								div {
-									padding: 6px 9px;
-									border-radius: 12px;
-									border: 1px solid #405ff2;
-									color: #405ff2;
-									font-family: $font;
-									font-size: 12px;
-									font-style: normal;
-									font-weight: 400;
-								}
+
 								.notice-number {
-									margin-left: 18px;
-									width: 39px;
-									color: #bdbdbd;
-									font-family: $font;
+									min-width: 48px;
+									color: $text-muted;
 									font-size: 14px;
-									font-style: normal;
-									font-weight: 400;
-									line-height: normal;
+									font-weight: 500;
 								}
+
 								.notice-title {
-									width: 1060px;
-									color: #000;
-									font-family: $font;
+									flex: 1;
 									font-size: 16px;
-									font-style: normal;
-									font-weight: 400;
-									line-height: normal;
+									color: $text-color;
+									font-weight: 500;
+									margin: 0 24px;
+									transition: $transition-smooth;
 								}
+
 								.notice-date {
-									color: #bdbdbd;
-									font-family: $font;
+									color: $text-muted;
 									font-size: 14px;
-									font-style: normal;
-									font-weight: 400;
-									line-height: normal;
+									font-weight: 500;
 								}
 							}
 						}
 					}
 				}
+
 				.faq-content {
-					margin-top: 25px;
-					display: flex;
-					flex-direction: column;
 					.categories {
 						display: flex;
-						flex-direction: row;
 						justify-content: center;
-						div {
-							width: 14%;
-							height: 40px;
-							display: flex;
-							justify-content: center;
-							align-items: center;
-							color: #bdbdbd;
-							text-align: center;
-							font-family: $font;
+						gap: 12px;
+						margin-bottom: 40px;
+						flex-wrap: wrap;
+
+						.MuiChip-root {
+							padding: 20px 24px;
+							border-radius: 12px;
 							font-size: 15px;
-							font-style: normal;
-							font-weight: 400;
-							line-height: normal;
-							letter-spacing: -0.225px;
-							cursor: pointer;
-							&.active {
-								border-bottom: 1px solid #405ff2;
-								color: #405ff2;
+							font-weight: 600;
+							background: $background-white;
+							border: 1px solid $border-light;
+							transition: $transition-smooth;
+							box-shadow: $shadow-light;
+							color: $text-muted;
+
+							&:hover {
+								background: rgba($primary-color, 0.05);
+								color: $primary-color;
+								border-color: $primary-color;
+								box-shadow: $shadow-medium;
+								transform: translateY(-2px);
+							}
+
+							&.Mui-selected {
+								background: $primary-color;
+								color: $background-white;
+								border-color: $primary-color;
+								box-shadow: 0 8px 16px rgba($primary-color, 0.2);
+								transform: translateY(-2px);
+
+								.MuiChip-label {
+									color: $background-white;
+								}
+
+								&:hover {
+									background: $primary-dark;
+									box-shadow: 0 8px 16px rgba($primary-color, 0.3);
+								}
+							}
+
+							.MuiChip-label {
+								padding: 0;
+								color: inherit;
+
+								.MuiBox-root {
+									display: flex;
+									align-items: center;
+									gap: 8px;
+
+									span {
+										font-size: 18px; // Emoji size
+									}
+								}
 							}
 						}
 					}
+
 					.wrap {
-						margin-top: 50px;
-						.MuiAccordionDetails-root {
-							padding: 30px 20px;
-							background: #fafafa;
-						}
-						.badge {
-							margin: 0 24px;
-							display: inline-block;
-							padding: 4px 10px;
-							border: 1px solid #725ce8;
-							border-radius: 7px;
-							color: #725ce8;
-						}
-						.question {
-							.badge {
-								background: #e92c28;
-								color: #fff;
+						.MuiAccordion-root {
+							border-radius: $border-radius-medium;
+							margin-bottom: 16px;
+							overflow: hidden;
+							box-shadow: none;
+							border: 1px solid $border-light;
+							transition: $transition-smooth;
+
+							&:before {
+								display: none;
 							}
-						}
-						.answer {
-							margin-left: 80px;
-							display: flex;
-							white-space: nowrap;
-							align-items: center;
-							flex-direction: row;
-							.badge {
-								color: #405ff2;
-								border: 1px solid #405ff2;
+
+							&:hover {
+								border-color: rgba($primary-color, 0.2);
+							}
+
+							&.Mui-expanded {
+								margin: 16px 0;
+								box-shadow: $shadow-medium;
+							}
+
+							.MuiAccordionSummary-root {
+								padding: 24px;
+								background: $background-white;
+
+								&:hover {
+									background: rgba($primary-color, 0.02);
+								}
+
+								&.Mui-expanded {
+									background: rgba($primary-color, 0.02);
+								}
+
+								.MuiAccordionSummary-content {
+									margin: 0;
+									gap: 12px;
+
+									svg {
+										color: $primary-color;
+									}
+
+									.MuiTypography-root {
+										color: $text-color;
+										font-weight: 500;
+									}
+								}
+							}
+
+							.MuiAccordionDetails-root {
+								padding: 24px;
+								background: $background-white;
+								border-top: 1px solid $border-light;
+								color: $text-muted;
+								line-height: 1.6;
 							}
 						}
 					}

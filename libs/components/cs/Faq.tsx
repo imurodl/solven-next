@@ -1,47 +1,28 @@
 import React, { SyntheticEvent, useState } from 'react';
-import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
-import { AccordionDetails, Box, Stack, Typography } from '@mui/material';
-import MuiAccordionSummary, { AccordionSummaryProps } from '@mui/material/AccordionSummary';
-import { useRouter } from 'next/router';
-import { styled } from '@mui/material/styles';
+import { Box, Stack, Typography, Accordion, AccordionSummary, AccordionDetails, Chip } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
-const Accordion = styled((props: AccordionProps) => <MuiAccordion disableGutters elevation={0} square {...props} />)(
-	({ theme }) => ({
-		border: `1px solid ${theme.palette.divider}`,
-		'&:not(:last-child)': {
-			borderBottom: 0,
-		},
-		'&:before': {
-			display: 'none',
-		},
-	}),
-);
-const AccordionSummary = styled((props: AccordionSummaryProps) => (
-	<MuiAccordionSummary expandIcon={<KeyboardArrowDownRoundedIcon sx={{ fontSize: '1.4rem' }} />} {...props} />
-))(({ theme }) => ({
-	backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, .05)' : '#fff',
-	'& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
-		transform: 'rotate(180deg)',
-	},
-	'& .MuiAccordionSummary-content': {
-		marginLeft: theme.spacing(1),
-	},
-}));
+const categories = [
+	{ id: 'property', label: 'Property', icon: '🏠' },
+	{ id: 'payment', label: 'Payment', icon: '💳' },
+	{ id: 'buyers', label: 'Buyers', icon: '👥' },
+	{ id: 'sellers', label: 'Sellers', icon: '🏡' },
+	{ id: 'agents', label: 'Agents', icon: '👔' },
+	{ id: 'legal', label: 'Legal', icon: '⚖️' },
+	{ id: 'general', label: 'General', icon: 'ℹ️' },
+	{ id: 'support', label: 'Support', icon: '🤝' },
+];
 
 const Faq = () => {
 	const device = useDeviceDetect();
-	const router = useRouter();
 	const [category, setCategory] = useState<string>('property');
 	const [expanded, setExpanded] = useState<string | false>('panel1');
 
-	/** APOLLO REQUESTS **/
-	/** LIFECYCLES **/
-	
-	/** HANDLERS **/
-	const changeCategoryHandler = (category: string) => {
-		setCategory(category);
+	const changeCategoryHandler = (newCategory: string) => {
+		setCategory(newCategory);
+		setExpanded(false);
 	};
 
 	const handleChange = (panel: string) => (event: SyntheticEvent, newExpanded: boolean) => {
@@ -219,307 +200,266 @@ const Faq = () => {
 					'Depending on the terms of the offer and the stage of the transaction, you may have options to withdraw your offer.',
 			},
 		],
-
+		sellers: [
+			{
+				id: 'seller-01',
+				subject: 'How do I list my property on your platform?',
+				content:
+					'You can list your property by creating an account and following our simple listing process. Our team will guide you through each step.',
+			},
+			{
+				id: 'seller-02',
+				subject: 'What commission rates do you charge?',
+				content:
+					'Our commission rates are competitive and vary based on the property value and type of service required. Contact us for specific details.',
+			},
+			{
+				id: 'seller-03',
+				subject: 'How long does it typically take to sell a property?',
+				content:
+					'The selling time varies depending on market conditions, property location, and pricing. On average, properties sell within 30-90 days.',
+			},
+			{
+				id: 'seller-04',
+				subject: 'What documents do I need to sell my property?',
+				content:
+					'Required documents include proof of ownership, tax records, property details, and any relevant permits or certificates.',
+			},
+			{
+				id: 'seller-05',
+				subject: 'How do you determine the listing price?',
+				content:
+					'We conduct a thorough market analysis, considering comparable properties, location, condition, and current market trends.',
+			},
+		],
 		agents: [
 			{
-				id: '00f5a45ed8897f8090116a04',
-				subject: 'What do I need to do if I want to become an agent?',
+				id: 'agent-01',
+				subject: 'How can I become an agent on your platform?',
 				content:
-					'If you really decide to become an agent, you should read our terms and conditions and contact the admin!',
+					'To become an agent, you need to submit your credentials, complete our verification process, and agree to our terms of service.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a62',
-				subject: 'What qualifications do I need to become a real estate agent?',
-				content: 'Complete pre-licensing course, pass licensing exam, meet state requirements.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a63',
-				subject: 'How do I find clients as a new real estate agent?',
-				content: 'Build network, use online/offline marketing, join reputable brokerage.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a64',
-				subject: 'What are some effective marketing strategies for selling properties?',
-				content: 'Use social media, online platforms, networking events, and direct mail.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a65',
-				subject: 'How do I handle negotiations with buyers and sellers?',
-				content: 'Develop strong negotiation skills, understand market trends, represent client interests.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a66',
-				subject: 'What should I do to stay updated with market trends and changes?',
-				content: 'Attend industry events, follow real estate news, participate in training.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a67',
-				subject: 'How do I handle difficult clients or situations?',
+				id: 'agent-02',
+				subject: 'What support do you provide to agents?',
 				content:
-					'Approach with professionalism, empathy, and patience. Listen actively, address issues collaboratively.',
+					'We provide marketing tools, lead generation, training resources, and dedicated support to help agents succeed.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a68',
-				subject: 'What tools and technologies should I utilize as a real estate agent?',
-				content: 'Use CRM software, virtual tours, digital marketing tools, and mobile apps.',
+				id: 'agent-03',
+				subject: 'How are agent commissions structured?',
+				content:
+					'Commission structures are competitive and based on property values and transaction types. Contact us for detailed information.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a69',
-				subject: 'How do I ensure compliance with real estate laws and regulations?',
-				content: 'Stay updated with laws, attend education courses, consult legal professionals.',
+				id: 'agent-04',
+				subject: 'What tools are available for agents?',
+				content:
+					'Agents have access to our property management system, marketing tools, client database, and analytics dashboard.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a70',
-				subject: 'What strategies can I use to grow my real estate business?',
-				content: 'Build relationships, provide exceptional service, seek referrals, and continuously improve skills.',
+				id: 'agent-05',
+				subject: 'How do you handle agent-client disputes?',
+				content: 'We have a dedicated resolution process to handle any disputes fairly and professionally.',
 			},
 		],
-		membership: [
+		legal: [
 			{
-				id: '00f5a45ed8897f8090116a05',
-				subject: 'Do you have a membership service on your site?',
-				content: 'membership service is not available on our site yet!',
-			},
-			{
-				id: '00f5a45ed8897f8090116a60',
-				subject: 'What are the benefits of becoming a member on your website?',
-				content: 'We currently do not offer membership benefits, but stay tuned for updates on any future offerings.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a59',
-				subject: 'Is there a fee associated with becoming a member?',
-				content: 'As membership services are not available, there are no associated fees at this time.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a58',
-				subject: 'Will membership provide access to exclusive content or features?',
-				content: "We don't currently have membership-exclusive content or features.",
-			},
-			{
-				id: '00f5a45ed8897f8090116a57',
-				subject: 'How can I sign up for a membership on your site?',
-				content: 'As of now, we do not have a sign-up process for memberships.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a56',
-				subject: 'Do members receive discounts on property listings or services?',
-				content: 'Membership discounts are not part of our current offerings.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a55',
-				subject: 'Are there plans to introduce a membership program in the future?',
+				id: 'legal-01',
+				subject: 'What legal protection do you provide?',
 				content:
-					"While we can't confirm any plans at this time, we're always exploring ways to enhance our services for users.",
+					'We ensure all transactions comply with local laws and regulations, and provide standard legal documentation.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a54',
-				subject: 'What kind of content or benefits can members expect if a membership program is introduced?',
-				content: "We're evaluating potential benefits and features, but specifics are not available yet.",
+				id: 'legal-02',
+				subject: 'How do you handle property disputes?',
+				content:
+					'We have a structured dispute resolution process and work with legal professionals to resolve any issues.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a33',
-				subject: 'Do you offer a premium membership option on your platform?',
-				content: 'Currently, we do not provide a premium membership option.',
+				id: 'legal-03',
+				subject: 'What are the terms of service?',
+				content:
+					'Our terms of service cover user rights, responsibilities, and platform usage guidelines. You can view them on our website.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a32',
-				subject: 'Will membership grant access to exclusive deals or discounts?',
-				content: 'Membership perks, including deals or discounts, are not available at this time.',
-			},
-		],
-		community: [
-			{
-				id: '00f5a45ed8897f8090116a06',
-				subject: 'What should I do if there is abusive or criminal behavior in the community section?',
-				content: 'If you encounter this situation, please report it immediately or contact the admin!',
+				id: 'legal-04',
+				subject: 'How do you protect user data?',
+				content: 'We follow strict data protection protocols and comply with relevant privacy laws and regulations.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a44',
-				subject: 'How can I participate in the community section of your website?',
-				content: 'Create an account and engage in discussions.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a45',
-				subject: 'Are there guidelines for posting?',
-				content: 'Yes, follow our community guidelines.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a46',
-				subject: 'What should I do if I encounter spam or irrelevant posts?',
-				content: 'Report them to the admin.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a47',
-				subject: 'Can I connect with other members outside of the community section?',
-				content: 'Currently, no.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a48',
-				subject: 'Can I share personal experiences or recommendations?',
-				content: 'Yes, if relevant you can share personal experiences and recommendations.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a49',
-				subject: 'How can I ensure privacy?',
-				content: 'Avoid sharing sensitive information.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a50',
-				subject: 'How can I contribute positively?',
-				content: 'Respect others and engage constructively.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a51',
-				subject: 'What if I notice misinformation?',
-				content: 'Provide correct information or report to the admin.',
-			},
-			{
-				id: '00f5a45ed8897f8090116a52',
-				subject: 'Are there moderators?',
-				content: 'Yes, we have moderators.',
+				id: 'legal-05',
+				subject: 'What happens in case of contract breaches?',
+				content: 'Contract breaches are handled according to our terms of service and applicable laws.',
 			},
 		],
-		other: [
+		general: [
 			{
-				id: '00f5a45ed8897f8090116a40',
-				subject: 'Who should I contact if I want to buy your site?',
-				content: 'We have no plans to sell the site at this time!',
+				id: 'general-01',
+				subject: 'How do I create an account?',
+				content: 'You can create an account by clicking the "Sign Up" button and following the registration process.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a39',
-				subject: 'Can I advertise my services on your website?',
-				content: 'We currently do not offer advertising opportunities on our site.',
+				id: 'general-02',
+				subject: 'What are your operating hours?',
+				content: 'Our online platform is available 24/7, and our support team is available during business hours.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a38',
-				subject: 'Are there sponsorship opportunities available on your platform?',
-				content: 'At this time, we do not have sponsorship opportunities.',
+				id: 'general-03',
+				subject: 'How can I contact customer service?',
+				content: 'You can reach us through our contact form, email, phone, or live chat during business hours.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a36',
-				subject: 'Can I contribute guest posts or articles to your website?',
-				content: "We're not accepting guest posts or articles at the moment.",
+				id: 'general-04',
+				subject: 'Is your platform available internationally?',
+				content: 'Yes, our platform serves multiple regions, but availability may vary by location.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a35',
-				subject: 'Is there a referral program for recommending your website to others?',
-				content: "We don't have a referral program in place currently.",
+				id: 'general-05',
+				subject: 'How do I update my account information?',
+				content: 'You can update your account information through your profile settings in the dashboard.',
+			},
+		],
+		support: [
+			{
+				id: 'support-01',
+				subject: 'How can I get technical support?',
+				content: 'Technical support is available through our help desk, live chat, or email support system.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a34',
-				subject: 'Do you offer affiliate partnerships for promoting your services?',
-				content: 'Affiliate partnerships are not available at this time.',
+				id: 'support-02',
+				subject: 'What is your response time for support tickets?',
+				content: 'We aim to respond to all support tickets within 24 hours during business days.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a33',
-				subject: 'Can I purchase merchandise related to your website?',
-				content: "We don't have merchandise available for purchase.",
+				id: 'support-03',
+				subject: 'Do you offer phone support?',
+				content: 'Yes, phone support is available during business hours for urgent matters.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a32',
-				subject: 'Are there any job openings or opportunities to work with your team?',
-				content: 'Currently, we do not have any job openings or opportunities available.',
+				id: 'support-04',
+				subject: 'How do I report a problem with the website?',
+				content: 'You can report issues through our support ticket system or contact our technical team directly.',
 			},
 			{
-				id: '00f5a45ed8897f8090116a31',
-				subject: 'Do you host events or webinars related to real estate?',
-				content: "We're not hosting events or webinars at this time.",
-			},
-			{
-				id: '00f5a45ed8897f8090116a30',
-				subject: 'Can I request custom features or functionalities for your website?',
-				content: "We're not accepting requests for custom features or functionalities.",
+				id: 'support-05',
+				subject: 'What support resources are available?',
+				content: 'We offer documentation, video tutorials, FAQs, and direct support channels.',
 			},
 		],
 	};
 
 	if (device === 'mobile') {
 		return <div>FAQ MOBILE</div>;
-	} else {
-		return (
-			<Stack className={'faq-content'}>
-				<Box className={'categories'} component={'div'}>
-					<div
-						className={category === 'property' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('property');
-						}}
-					>
-						Property
-					</div>
-					<div
-						className={category === 'payment' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('payment');
-						}}
-					>
-						Payment
-					</div>
-					<div
-						className={category === 'buyers' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('buyers');
-						}}
-					>
-						Foy Buyers
-					</div>
-					<div
-						className={category === 'agents' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('agents');
-						}}
-					>
-						For Agents
-					</div>
-					<div
-						className={category === 'membership' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('membership');
-						}}
-					>
-						Membership
-					</div>
-					<div
-						className={category === 'community' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('community');
-						}}
-					>
-						Community
-					</div>
-					<div
-						className={category === 'other' ? 'active' : ''}
-						onClick={() => {
-							changeCategoryHandler('other');
-						}}
-					>
-						Other
-					</div>
-				</Box>
-				<Box className={'wrap'} component={'div'}>
-					{data[category] &&
-						data[category].map((ele: any) => (
-							<Accordion expanded={expanded === ele?.id} onChange={handleChange(ele?.id)} key={ele?.subject}>
-								<AccordionSummary id="panel1d-header" className="question" aria-controls="panel1d-content">
-									<Typography className="badge" variant={'h4'}>
-										Q
-									</Typography>
-									<Typography> {ele?.subject}</Typography>
-								</AccordionSummary>
-								<AccordionDetails>
-									<Stack className={'answer flex-box'}>
-										<Typography className="badge" variant={'h4'} color={'primary'}>
-											A
-										</Typography>
-										<Typography> {ele?.content}</Typography>
-									</Stack>
-								</AccordionDetails>
-							</Accordion>
-						))}
-				</Box>
-			</Stack>
-		);
 	}
+
+	return (
+		<Stack className={'faq-content'}>
+			<Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 4 }}>
+				<Typography variant="h4" component="h1" className={'title'} sx={{ mb: 0 }}>
+					Frequently Asked Questions
+				</Typography>
+				<Typography variant="body2" color="text.secondary" sx={{ flex: 1 }}>
+					Find answers to common questions about our services
+				</Typography>
+			</Box>
+
+			<Box className={'categories'}>
+				{categories.map((cat) => (
+					<Chip
+						key={cat.id}
+						label={
+							<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+								<span>{cat.icon}</span>
+								<span>{cat.label}</span>
+							</Box>
+						}
+						onClick={() => changeCategoryHandler(cat.id)}
+						sx={{
+							py: 2.5,
+							px: 2,
+							borderRadius: '12px',
+							fontSize: '14px',
+							fontWeight: 600,
+							transition: 'all 0.2s ease-in-out',
+							...(category === cat.id
+								? {
+										backgroundColor: '#3B82F6',
+										color: '#ffffff',
+										transform: 'translateY(-4px)',
+										boxShadow: '0 8px 16px rgba(59, 130, 246, 0.2)',
+										'&:hover': {
+											backgroundColor: '#2563EB',
+											boxShadow: '0 8px 16px rgba(59, 130, 246, 0.3)',
+										},
+								  }
+								: {
+										backgroundColor: '#F8FAFC',
+										color: '#64748B',
+										'&:hover': {
+											backgroundColor: '#EFF6FF',
+											color: '#3B82F6',
+											transform: 'translateY(-4px)',
+											boxShadow: '0 8px 16px rgba(59, 130, 246, 0.1)',
+										},
+								  }),
+						}}
+					/>
+				))}
+			</Box>
+
+			<Box className={'wrap'}>
+				{data[category].map((item: any, index: number) => (
+					<Accordion
+						key={item.id}
+						expanded={expanded === `panel${index + 1}`}
+						onChange={handleChange(`panel${index + 1}`)}
+						sx={{
+							'&.MuiAccordion-root': {
+								borderRadius: '12px',
+								mb: 2,
+								overflow: 'hidden',
+								border: '1px solid #E2E8F0',
+								'&:before': {
+									display: 'none',
+								},
+								'&.Mui-expanded': {
+									margin: '8px 0',
+								},
+							},
+						}}
+					>
+						<AccordionSummary
+							expandIcon={<ExpandMoreIcon />}
+							sx={{
+								backgroundColor: '#ffffff',
+								'&:hover': {
+									backgroundColor: '#F8FAFC',
+								},
+								'&.Mui-expanded': {
+									backgroundColor: '#F8FAFC',
+								},
+							}}
+						>
+							<Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+								<HelpOutlineIcon sx={{ color: '#3B82F6' }} />
+								<Typography sx={{ color: '#1E293B', fontWeight: 500 }}>{item.subject}</Typography>
+							</Box>
+						</AccordionSummary>
+						<AccordionDetails
+							sx={{
+								backgroundColor: '#ffffff',
+								borderTop: '1px solid #E2E8F0',
+								p: 3,
+							}}
+						>
+							<Typography sx={{ color: '#64748B', lineHeight: 1.6 }}>{item.content}</Typography>
+						</AccordionDetails>
+					</Accordion>
+				))}
+			</Box>
+		</Stack>
+	);
 };
 
 export default Faq;
