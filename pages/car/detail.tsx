@@ -76,9 +76,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const [carId, setCarId] = useState<string | null>(null);
-	const [car, setCar] = useState<Car | null>(null);
 	const [slideImage, setSlideImage] = useState<string>('');
-	const [destinationCars, setDestinationCars] = useState<Car[]>([]);
 	const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>(initialComment);
 	const [carComments, setCarComments] = useState<Comment[]>([]);
 	const [commentTotal, setCommentTotal] = useState<number>(0);
@@ -103,8 +101,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		skip: !carId,
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			if (data?.getCar) setCar(data?.getCar);
-			if (data?.getCar) setSlideImage(data?.getCar?.carImages[0]);
+			if (data?.getCar?.carImages?.[0]) setSlideImage(data.getCar.carImages[0]);
 		},
 	});
 
@@ -122,15 +119,11 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 				sort: 'createdAt',
 				direction: Direction.DESC,
 				search: {
-					locationList: car?.carLocation ? [car?.carLocation] : [],
+					locationList: getCarData?.getCar?.carLocation ? [getCarData.getCar.carLocation] : [],
 				},
 			},
 		},
-		skip: !carId && !car,
-		notifyOnNetworkStatusChange: true,
-		onCompleted: (data: T) => {
-			if (data?.getCars?.list) setDestinationCars(data?.getCars?.list);
-		},
+		skip: !carId,
 	});
 
 	const {
@@ -150,6 +143,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 			setCommentTotal(data?.getComments?.metaCounter[0]?.total ?? 0);
 		},
 	});
+
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (router.query.id) {
@@ -182,22 +176,46 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		try {
 			if (!id) return;
 			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
-			//execute likePropertyHandler Mutation
-			await likeTargetCar({ variables: { input: id } });
+			if (!getCarData?.getCar) return;
 
-			//execute getPropertiesRefetch
-			await getCarRefetch({ input: id });
-			await getCarsRefetch({
-				input: {
-					page: 1,
-					limit: 4,
-					sort: 'createdAt',
-					direction: Direction.DESC,
-					search: {
-						locationList: [car?.carLocation],
+			const currentLikeState = getCarData.getCar.meLiked && getCarData.getCar.meLiked[0]?.myFavorite;
+
+			await likeTargetCar({
+				variables: { input: id },
+				optimisticResponse: {
+					__typename: 'Mutation',
+					likeTargetCar: {
+						__typename: 'Car',
+						...getCarData.getCar,
+						carLikes: currentLikeState ? getCarData.getCar.carLikes - 1 : getCarData.getCar.carLikes + 1,
+						meLiked: [
+							{
+								__typename: 'Like',
+								memberId: user._id,
+								likeRefId: id,
+								myFavorite: !currentLikeState,
+							},
+						],
 					},
 				},
 			});
+
+			// Refetch only the relevant data based on which car was liked
+			if (getCarData.getCar._id === id) {
+				await getCarRefetch({ input: id });
+			} else {
+				await getCarsRefetch({
+					input: {
+						page: 1,
+						limit: 4,
+						sort: 'createdAt',
+						direction: Direction.DESC,
+						search: {
+							locationList: getCarData.getCar?.carLocation ? [getCarData.getCar.carLocation] : undefined,
+						},
+					},
+				});
+			}
 
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
@@ -262,33 +280,38 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 							<Stack className="images-container">
 								<Stack className="main-image-info-container">
 									<Box className="main-image-box">
-										<img src={`${REACT_APP_API_URL}/${slideImage || car?.carImages?.[0]}`} alt={car?.carTitle} />
+										<img
+											src={`${REACT_APP_API_URL}/${slideImage || getCarData?.getCar?.carImages?.[0]}`}
+											alt={getCarData?.getCar?.carTitle}
+										/>
 									</Box>
 
 									<Stack className="car-info-box">
 										<Stack className="content-wrapper">
-											<Typography className="title-main">{car?.carTitle}</Typography>
+											<Typography className="title-main">{getCarData?.getCar?.carTitle}</Typography>
 											<Typography className="listed-date">
-												Listed {moment().diff(car?.createdAt, 'days')} days ago
+												Listed {moment().diff(getCarData?.getCar?.createdAt, 'days')} days ago
 											</Typography>
 
 											<Stack className="main-info-row">
 												<Stack className="info-item">
 													<AttachMoneyIcon />
 													<Stack>
-														<Typography className="info-value">${formatterStr(car?.carPrice)}</Typography>
+														<Typography className="info-value">
+															${formatterStr(getCarData?.getCar?.carPrice)}
+														</Typography>
 													</Stack>
 												</Stack>
 												<Stack className="info-item">
 													<CalendarTodayIcon />
 													<Stack>
-														<Typography className="info-value">{car?.manufacturedAt}</Typography>
+														<Typography className="info-value">{getCarData?.getCar?.manufacturedAt}</Typography>
 													</Stack>
 												</Stack>
 												<Stack className="info-item">
 													<SpeedIcon />
 													<Stack>
-														<Typography className="info-value">{car?.carMileage} km</Typography>
+														<Typography className="info-value">{getCarData?.getCar?.carMileage} km</Typography>
 													</Stack>
 												</Stack>
 											</Stack>
@@ -296,47 +319,50 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											<Stack className="description-section">
 												<Typography className="section-title">Description</Typography>
 												<Typography className="description-text">
-													{car?.carDesc || 'No description available.'}
+													{getCarData?.getCar?.carDesc || 'No description available.'}
 												</Typography>
 											</Stack>
 
 											<Stack className="address-section">
 												<Typography className="section-title">Location</Typography>
 												<Typography className="address-text">
-													{car?.carAddress || car?.carLocation || 'Address not available'}
+													{getCarData?.getCar?.carAddress || getCarData?.getCar?.carLocation || 'Address not available'}
 												</Typography>
 											</Stack>
 										</Stack>
 
 										<Stack className="action-buttons">
 											<Button className="view-btn" startIcon={<RemoveRedEyeIcon />}>
-												{car?.carViews}
+												{getCarData?.getCar?.carViews}
 											</Button>
 											<Button
 												className="like-btn"
 												startIcon={
-													car?.meLiked && car?.meLiked[0]?.myFavorite ? (
+													getCarData?.getCar?.meLiked && getCarData?.getCar?.meLiked[0]?.myFavorite ? (
 														<FavoriteIcon className="liked" />
 													) : (
 														<FavoriteBorderIcon />
 													)
 												}
-												onClick={() => car?._id && likeCarHandler(user, car._id)}
+												onClick={() => getCarData?.getCar?._id && likeCarHandler(user, getCarData.getCar._id)}
 											>
-												{car?.carLikes}
+												{getCarData?.getCar?.carLikes}
 											</Button>
 										</Stack>
 									</Stack>
 								</Stack>
 
 								<Stack className="thumbnail-list">
-									{car?.carImages?.map((image: string, index: number) => (
+									{getCarData?.getCar?.carImages?.map((image: string, index: number) => (
 										<Box
 											key={index}
 											className={`thumbnail-item ${slideImage === image ? 'active' : ''}`}
 											onClick={() => changeImageHandler(image)}
 										>
-											<img src={`${REACT_APP_API_URL}/${image}`} alt={`${car?.carTitle} - Image ${index + 1}`} />
+											<img
+												src={`${REACT_APP_API_URL}/${image}`}
+												alt={`${getCarData?.getCar?.carTitle} - Image ${index + 1}`}
+											/>
 										</Box>
 									))}
 								</Stack>
@@ -351,7 +377,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										</Stack>
 										<Stack className="spec-content">
 											<Typography className="spec-label">Car Type</Typography>
-											<Typography className="spec-value">{car?.carType}</Typography>
+											<Typography className="spec-value">{getCarData?.getCar?.carType}</Typography>
 										</Stack>
 									</Stack>
 									<Stack className="spec-item">
@@ -360,7 +386,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										</Stack>
 										<Stack className="spec-content">
 											<Typography className="spec-label">Mileage</Typography>
-											<Typography className="spec-value">{car?.carMileage} km</Typography>
+											<Typography className="spec-value">{getCarData?.getCar?.carMileage} km</Typography>
 										</Stack>
 									</Stack>
 									<Stack className="spec-item">
@@ -369,7 +395,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										</Stack>
 										<Stack className="spec-content">
 											<Typography className="spec-label">Fuel Type</Typography>
-											<Typography className="spec-value">{car?.carFuelType}</Typography>
+											<Typography className="spec-value">{getCarData?.getCar?.carFuelType}</Typography>
 										</Stack>
 									</Stack>
 									<Stack className="spec-item">
@@ -378,7 +404,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										</Stack>
 										<Stack className="spec-content">
 											<Typography className="spec-label">Color</Typography>
-											<Typography className="spec-value">{car?.carColor}</Typography>
+											<Typography className="spec-value">{getCarData?.getCar?.carColor}</Typography>
 										</Stack>
 									</Stack>
 									<Stack className="spec-item">
@@ -387,7 +413,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										</Stack>
 										<Stack className="spec-content">
 											<Typography className="spec-label">Seats</Typography>
-											<Typography className="spec-value">{car?.carSeats} seats</Typography>
+											<Typography className="spec-value">{getCarData?.getCar?.carSeats} seats</Typography>
 										</Stack>
 									</Stack>
 									<Stack className="spec-item">
@@ -396,7 +422,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										</Stack>
 										<Stack className="spec-content">
 											<Typography className="spec-label">Transmission</Typography>
-											<Typography className="spec-value">{car?.carTransmission}</Typography>
+											<Typography className="spec-value">{getCarData?.getCar?.carTransmission}</Typography>
 										</Stack>
 									</Stack>
 								</Stack>
@@ -404,7 +430,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 									<Typography className="section-title">Car Features</Typography>
 									<Stack className="features-grid">
 										{carFeaturesList.map((feature) => {
-											const isAvailable = car?.carOptions?.includes(feature.id);
+											const isAvailable = getCarData?.getCar?.carOptions?.includes(feature.id);
 											const IconComponent = feature.icon;
 											return (
 												<Stack className={`feature-item ${isAvailable ? 'available' : 'unavailable'}`} key={feature.id}>
@@ -461,15 +487,15 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										<img
 											className="profile-image"
 											src={
-												car?.memberData?.memberImage
-													? `${REACT_APP_API_URL}/${car?.memberData?.memberImage}`
+												getCarData?.getCar?.memberData?.memberImage
+													? `${REACT_APP_API_URL}/${getCarData.getCar.memberData.memberImage}`
 													: '/img/profile/defaultUser.svg'
 											}
 											alt="Seller"
 										/>
 										<Stack className="profile-details">
-											<Link href={`/member?memberId=${car?.memberData?._id}`}>
-												<Typography className="seller-name">{car?.memberData?.memberNick}</Typography>
+											<Link href={`/member?memberId=${getCarData?.getCar?.memberData?._id}`}>
+												<Typography className="seller-name">{getCarData?.getCar?.memberData?.memberNick}</Typography>
 											</Link>
 											<Typography className="seller-type">Verified Seller</Typography>
 											<Stack className="seller-rating">
@@ -480,7 +506,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 									</Stack>
 									<Stack className="contact-buttons">
 										<Button className="contact-button primary" startIcon={<PhoneIcon />}>
-											{car?.memberData?.memberPhone}
+											{getCarData?.getCar?.memberData?.memberPhone}
 										</Button>
 										<Button className="contact-button secondary" startIcon={<EmailIcon />}>
 											Send Message
@@ -490,7 +516,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 							</Stack>
 						</Stack>
 						{/* Similar Cars Section */}
-						{destinationCars.length > 0 && (
+						{getCarsData?.getCars?.list?.length > 0 && (
 							<Stack className="similar-cars-config">
 								<Stack className="title-pagination-box">
 									<Stack className="title-box">
@@ -517,7 +543,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											el: '.swiper-similar-pagination',
 										}}
 									>
-										{destinationCars.map((car: Car) => (
+										{getCarsData?.getCars?.list?.map((car: Car) => (
 											<SwiperSlide className="similar-cars-slide" key={car._id}>
 												<CarBigCard car={car} likeCarHandler={likeCarHandler} />
 											</SwiperSlide>
