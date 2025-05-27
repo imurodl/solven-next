@@ -2,7 +2,7 @@ import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import { Stack, Box, Button, Pagination } from '@mui/material';
+import { Stack, Box, Button, Pagination, Typography } from '@mui/material';
 import { Menu, MenuItem } from '@mui/material';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import AgentCard from '../../libs/components/common/AgentCard';
@@ -15,6 +15,7 @@ import { GET_AGENTS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { Messages } from '../../libs/config';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import Link from 'next/link';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -131,12 +132,14 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 		return (
 			<Stack className={'agent-list-page'}>
 				<Stack className={'container'}>
-					<Stack className={`header-basic`}>
-						<Stack className={'container'}>
-							<strong>{props.title}</strong>
-							<span>{props.desc}</span>
-						</Stack>
-					</Stack>
+					<Box className={'agent-main-info'}>
+						<Box className={'info'}>
+							<Typography component="span">Agents</Typography>
+							<Typography component="p">
+								<Link href="/">Home</Link> / Agents
+							</Typography>
+						</Box>
+					</Box>
 					<Stack className={'filter'}>
 						<Box component={'div'} className={'left'}>
 							<input
