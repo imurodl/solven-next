@@ -1,12 +1,43 @@
 #pc-wrap {
 	background: #050b20;
 	#property-list-page {
-		padding-bottom: 40px;
-		background: #f6f6f6;
+		position: relative;
+		background: #f8f9fc;
 		border-radius: 80px;
+		padding-bottom: 80px;
+		min-height: calc(100vh - 80px);
+
 		.container {
 			display: flex;
 			flex-direction: column;
+			max-width: 1300px;
+			margin: 0 auto;
+
+			.header-basic {
+				padding: 60px 0 0 0;
+				text-align: center;
+
+				.container {
+					align-items: flex-start;
+
+					strong {
+						font-size: 36px;
+						font-weight: 700;
+						background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+						-webkit-background-clip: text;
+						-webkit-text-fill-color: transparent;
+						position: relative;
+						display: inline-block;
+					}
+
+					span {
+						color: $text-muted;
+						font-size: 16px;
+						line-height: 1.6;
+						max-width: 600px;
+					}
+				}
+			}
 			.right {
 				display: flex;
 				flex-direction: row;
