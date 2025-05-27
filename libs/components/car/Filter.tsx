@@ -19,6 +19,7 @@ import { useRouter } from 'next/router';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { carMileage, carPrices, carYears } from '../../config';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { GET_CAR_BRANDS_BY_USER } from '../../../apollo/user/query';
 import { useQuery } from '@apollo/client';
 
@@ -327,20 +328,24 @@ const Filter = (props: FilterType) => {
 
 	// for CarFuelType, CarTransmission and CarColor
 	const updateArrayFilter = async (field: keyof CarsInquiry['search'], value: string) => {
-		const current = (searchFilter.search[field] as string[]) || [];
-		const updated = current.includes(value) ? current.filter((item) => item !== value) : [...current, value];
+		const currentList = Array.isArray(searchFilter?.search?.[field]) ? (searchFilter.search[field] as string[]) : [];
 
-		await router.push(
-			`/car?input=${JSON.stringify({
-				...searchFilter,
-				search: {
-					...searchFilter.search,
-					[field]: updated.length > 0 ? updated : undefined,
-				},
-			})}`,
-			undefined,
-			{ scroll: false },
-		);
+		const newList = currentList.includes(value)
+			? currentList.filter((item: string) => item !== value)
+			: [...currentList, value];
+
+		const newFilter = {
+			...searchFilter,
+			search: {
+				...searchFilter.search,
+				[field]: newList,
+			},
+		};
+
+		setSearchFilter(newFilter);
+		await router.push(`/car?input=${JSON.stringify(newFilter)}`, `/car?input=${JSON.stringify(newFilter)}`, {
+			scroll: false,
+		});
 	};
 
 	const carOptionSelectHandler = useCallback(
@@ -515,440 +520,438 @@ const Filter = (props: FilterType) => {
 	);
 
 	const refreshHandler = async () => {
-		try {
-			setSearchText('');
-			await router.push(`/car?input=${JSON.stringify(initialInput)}`, `/car?input=${JSON.stringify(initialInput)}`, {
-				scroll: false,
-			});
-		} catch (err: any) {
-			console.log('ERROR, refreshHandler:', err);
-		}
+		setSearchText('');
+		setSelectedBrand('');
+		setSearchFilter(initialInput);
+		await router.push(`/car?input=${JSON.stringify(initialInput)}`, `/car?input=${JSON.stringify(initialInput)}`, {
+			scroll: false,
+		});
+	};
+
+	const clearAllHandler = async () => {
+		setSearchText('');
+		setSelectedBrand('');
+		setSearchFilter({
+			...initialInput,
+			search: {
+				pricesRange: {
+					start: 0,
+					end: 500000000,
+				},
+				mileageRange: {
+					start: 0,
+					end: 500000,
+				},
+				yearRange: {
+					start: 1990,
+					end: new Date().getFullYear(),
+				},
+			},
+		});
+		await router.push(
+			`/car?input=${JSON.stringify({
+				...initialInput,
+				search: {
+					pricesRange: {
+						start: 0,
+						end: 500000000,
+					},
+					mileageRange: {
+						start: 0,
+						end: 500000,
+					},
+					yearRange: {
+						start: 1990,
+						end: new Date().getFullYear(),
+					},
+				},
+			})}`,
+			undefined,
+			{ scroll: false },
+		);
 	};
 
 	if (device === 'mobile') {
-		return <div>CAR LISTINGS FILTER</div>;
-	} else {
-		return (
-			<Stack className={'filter-main'}>
-				<Stack className={'find-your-home'} mb={'40px'}>
-					<Stack className={'input-box-search'}>
-						<OutlinedInput
+		return <div>FILTER MOBILE</div>;
+	}
+
+	const yearStart = searchFilter?.search?.yearRange?.start ?? carYears[0];
+	const yearEnd = searchFilter?.search?.yearRange?.end ?? carYears[carYears.length - 1];
+	const mileageStart = searchFilter?.search?.mileageRange?.start ?? carMileage[0];
+	const mileageEnd = searchFilter?.search?.mileageRange?.end ?? carMileage[carMileage.length - 1];
+
+	return (
+		<div className="filter-config">
+			<div className="filter-main">
+				<div className="find-your-home">
+					<div className="title-main">
+						Find Your Car
+						<IconButton className="refresh-icon" onClick={clearAllHandler}>
+							<RefreshIcon />
+						</IconButton>
+					</div>
+
+					<div className="input-box-search">
+						<input
+							type="text"
+							className="search-input"
+							placeholder="Search by name..."
 							value={searchText}
-							type={'text'}
-							className={'search-input'}
-							placeholder={'Find Cars'}
-							onChange={(e: any) => setSearchText(e.target.value)}
-							onKeyDown={(event: any) => {
-								if (event.key == 'Enter') {
-									setSearchFilter({
-										...searchFilter,
-										search: { ...searchFilter.search, text: searchText },
-									});
-								}
+							onChange={(e) => {
+								setSearchText(e.target.value);
+								setSearchFilter({
+									...searchFilter,
+									search: { ...searchFilter.search, text: e.target.value },
+								});
 							}}
-							endAdornment={
-								<>
-									<CancelRoundedIcon
-										onClick={() => {
-											setSearchText('');
-											setSearchFilter({
-												...searchFilter,
-												search: { ...searchFilter.search, text: '' },
-											});
-										}}
-									/>
-								</>
-							}
 						/>
-						<img src={'/img/icons/search_icon.png'} alt={''} />
-						<Tooltip title="Reset">
-							<IconButton onClick={refreshHandler}>
-								<RefreshIcon />
-							</IconButton>
-						</Tooltip>
-					</Stack>
-				</Stack>
-				<Stack className={'find-your-home'} mb={'30px'}>
-					<p className={'title'}>Location</p>
-					<Stack
-						className={`property-location`}
-						// style={{ height: showMore ? '253px' : '115px' }}
-						onMouseEnter={() => setShowMore(true)}
-						onMouseLeave={() => {
-							if (!searchFilter?.search?.locationList) {
-								setShowMore(false);
-							}
-						}}
-					>
-						{carLocation.map((location: string) => {
-							return (
-								<Stack className={'input-box'} key={location}>
-									<Checkbox
-										id={location}
-										className="property-checkbox"
-										color="default"
-										size="small"
-										value={location}
-										checked={(searchFilter?.search?.locationList || []).includes(location as CarLocation)}
-										onChange={carLocationSelectHandler}
-									/>
-									<label htmlFor={location} style={{ cursor: 'pointer' }}>
-										<Typography className="property-type">{location.toLocaleLowerCase()}</Typography>
-									</label>
-								</Stack>
-							);
-						})}
-					</Stack>
-				</Stack>
+						<img src="/img/icons/search.svg" alt="search" />
+					</div>
 
-				<Stack className="find-your-home" mb="30px">
-					<Typography className="title">Select Brand</Typography>
-					<FormControl fullWidth>
-						<Select
-							displayEmpty
-							value={selectedBrand || ''}
-							onChange={(e: any) => {
-								const brand = e.target.value;
-								setSelectedBrand(brand);
-								router.push(
-									`/car?input=${JSON.stringify({
-										...searchFilter,
-										search: {
-											...searchFilter.search,
-											brandList: brand ? [brand] : [],
-											modelList: [],
-										},
-									})}`,
-									undefined,
-									{ scroll: false },
-								);
-							}}
-						>
-							<MenuItem disabled value="">
-								Select a brand
-							</MenuItem>
-							{getCarBrandsData?.getCarBrandsByUser?.map((brand: any) => (
-								<MenuItem key={brand._id} value={brand.carBrandName}>
-									{brand.carBrandName}
-								</MenuItem>
-							))}
-						</Select>
-					</FormControl>
-				</Stack>
+					<div className="title">Location</div>
+					<div className="filter-section">
+						{carLocation.map((location) => (
+							<div key={location} className="input-box">
+								<Checkbox
+									id={location}
+									className="property-checkbox"
+									checked={searchFilter?.search?.locationList?.includes(location)}
+									onChange={() => updateArrayFilter('locationList', location)}
+								/>
+								<label htmlFor={location}>{location}</label>
+							</div>
+						))}
+					</div>
 
-				{selectedBrand && (
-					<Stack className={'find-your-home'} mb={'30px'}>
-						<Typography className={'title'}>Select Model</Typography>
+					<div className="title">Car Type</div>
+					<div className="filter-section">
+						{carType.map((type) => (
+							<div key={type} className="input-box">
+								<Checkbox
+									id={type}
+									className="property-checkbox"
+									checked={searchFilter?.search?.typeList?.includes(type)}
+									onChange={() => updateArrayFilter('typeList', type)}
+								/>
+								<label htmlFor={type}>{type}</label>
+							</div>
+						))}
+					</div>
+
+					<div className="title">Brand</div>
+					<div className="filter-section">
 						<FormControl fullWidth>
 							<Select
-								value={searchFilter.search.modelList?.[0] || ''}
+								displayEmpty
+								value={selectedBrand || ''}
 								onChange={(e: any) => {
-									const model = e.target.value;
+									const brand = e.target.value;
+									setSelectedBrand(brand);
 									router.push(
 										`/car?input=${JSON.stringify({
 											...searchFilter,
 											search: {
 												...searchFilter.search,
-												modelList: [model],
+												brandList: brand ? [brand] : [],
+												modelList: [],
 											},
 										})}`,
 										undefined,
 										{ scroll: false },
 									);
 								}}
+								sx={{ '.MuiSelect-select': { height: 'auto' } }}
 							>
 								<MenuItem disabled value="">
-									Select a model
+									Select a brand
 								</MenuItem>
-								{getCarBrandsData?.getCarBrandsByUser
-									?.find((b: any) => b.carBrandName === selectedBrand)
-									?.carBrandModels?.map((model: string) => (
-										<MenuItem key={model} value={model}>
-											{model}
-										</MenuItem>
-									))}
+								{getCarBrandsData?.getCarBrandsByUser?.map((brand: any) => (
+									<MenuItem key={brand._id} value={brand.carBrandName}>
+										{brand.carBrandName}
+									</MenuItem>
+								))}
 							</Select>
 						</FormControl>
-					</Stack>
-				)}
+					</div>
 
-				<Stack className={'find-your-home'} mb={'30px'}>
-					<Typography className={'title'}>Car Type</Typography>
-					{carType.map((type: string) => (
-						<Stack className={'input-box'} key={type}>
-							<Checkbox
-								id={type}
-								className="property-checkbox"
-								color="default"
-								size="small"
-								value={type}
-								onChange={carTypeSelectHandler}
-								checked={(searchFilter?.search?.typeList || []).includes(type as CarType)}
-							/>
-							<label style={{ cursor: 'pointer' }} htmlFor={type}>
-								<Typography className="property_type">{type.toLocaleLowerCase()}</Typography>
-							</label>
-						</Stack>
-					))}
-				</Stack>
-
-				<Stack className={'find-your-home'} mb={'30px'}>
-					<Typography className={'title'}>Fuel Type</Typography>
-					{carFuelTypes.map((type) => (
-						<Stack className={'input-box'} key={type}>
-							<Checkbox
-								id={type}
-								className="property-checkbox"
-								color="default"
-								size="small"
-								value={type}
-								checked={(searchFilter?.search?.fuelTypeList || []).includes(type)}
-								onChange={() => updateArrayFilter('fuelTypeList', type)}
-							/>
-							<label htmlFor={type} style={{ cursor: 'pointer' }}>
-								<Typography className="property_type">{type.toLocaleLowerCase()}</Typography>
-							</label>
-						</Stack>
-					))}
-				</Stack>
-
-				<Stack className={'find-your-home'} mb={'30px'}>
-					<Typography className={'title'}>Options</Typography>
-					<Stack flexDirection={'row'}>
-						<Stack className={'input-box'}>
-							<Checkbox
-								id={'Barter'}
-								className="property-checkbox"
-								color="default"
-								size="small"
-								value={'carBarter'}
-								checked={(searchFilter?.search?.carOptions || []).includes('carBarter')}
-								onChange={carOptionSelectHandler}
-							/>
-							<label htmlFor={'Barter'} style={{ cursor: 'pointer' }}>
-								<Typography className="propert-type">Barter</Typography>
-							</label>
-						</Stack>
-						<Stack className={'input-box'}>
-							<Checkbox
-								id={'Rent'}
-								className="property-checkbox"
-								color="default"
-								size="small"
-								value={'carRent'}
-								checked={(searchFilter?.search?.carOptions || []).includes('carRent')}
-								onChange={carOptionSelectHandler}
-							/>
-							<label htmlFor={'Rent'} style={{ cursor: 'pointer' }}>
-								<Typography className="propert-type">Rent</Typography>
-							</label>
-						</Stack>
-					</Stack>
-				</Stack>
-
-				<Stack className={'find-your-home'} mb={'30px'}>
-					<Typography className={'title'}>Mileage range</Typography>
-					<Stack className="square-year-input">
-						<FormControl>
-							<InputLabel id="demo-simple-select-label">Min</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={searchFilter?.search?.mileageRange?.start ?? 0}
-								label="Min"
-								onChange={(e: any) => carMileageHandler(e, 'start')}
-								MenuProps={MenuProps}
-							>
-								{carMileage.map((mileage: number) => (
-									<MenuItem
-										value={mileage}
-										disabled={(searchFilter?.search?.mileageRange?.end || 0) < mileage}
-										key={mileage}
+					{selectedBrand && (
+						<>
+							<div className="title">Model</div>
+							<div className="filter-section">
+								<FormControl fullWidth>
+									<Select
+										value={searchFilter.search.modelList?.[0] || ''}
+										onChange={(e: any) => {
+											const model = e.target.value;
+											router.push(
+												`/car?input=${JSON.stringify({
+													...searchFilter,
+													search: {
+														...searchFilter.search,
+														modelList: [model],
+													},
+												})}`,
+												undefined,
+												{ scroll: false },
+											);
+										}}
+										sx={{ '.MuiSelect-select': { height: 'auto' } }}
 									>
-										{mileage}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-						<div className="central-divider"></div>
-						<FormControl>
-							<InputLabel id="demo-simple-select-label">Max</InputLabel>
-							<Select
-								labelId="demo-simple-select-label"
-								id="demo-simple-select"
-								value={searchFilter?.search?.mileageRange?.end ?? 500000}
-								label="Max"
-								onChange={(e: any) => carMileageHandler(e, 'end')}
-								MenuProps={MenuProps}
-							>
-								{carMileage.map((mileage: number) => (
-									<MenuItem
-										value={mileage}
-										disabled={(searchFilter?.search?.mileageRange?.start || 0) > mileage}
-										key={mileage}
-									>
-										{mileage}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-					</Stack>
-				</Stack>
-
-				<Stack className="find-your-home" mb="30px">
-					<Typography className="title">Price Range</Typography>
-					<Stack className="square-year-input">
-						<FormControl>
-							<InputLabel id="price-min-label">Min</InputLabel>
-							<Select
-								labelId="price-min-label"
-								id="price-min-select"
-								value={searchFilter?.search?.pricesRange?.start ?? 0}
-								label="Min"
-								onChange={(e: any) => carPriceHandler(e.target.value, 'start')}
-								MenuProps={MenuProps}
-							>
-								{carPrices.map((price: number) => (
-									<MenuItem value={price} disabled={(searchFilter?.search?.pricesRange?.end || 0) < price} key={price}>
-										${price.toLocaleString()}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-
-						<div className="central-divider"></div>
-
-						<FormControl>
-							<InputLabel id="price-max-label">Max</InputLabel>
-							<Select
-								labelId="price-max-label"
-								id="price-max-select"
-								value={searchFilter?.search?.pricesRange?.end ?? 500000}
-								label="Max"
-								onChange={(e: any) => carPriceHandler(e.target.value, 'end')}
-								MenuProps={MenuProps}
-							>
-								{carPrices.map((price: number) => (
-									<MenuItem
-										value={price}
-										disabled={(searchFilter?.search?.pricesRange?.start || 0) > price}
-										key={price}
-									>
-										${price.toLocaleString()}
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-					</Stack>
-				</Stack>
-
-				<Stack className={'find-your-home'} mb={'30px'}>
-					<Typography className={'title'}>Year Range</Typography>
-					<Stack className="square-year-input">
-						{/* Start Year */}
-						<FormControl>
-							<InputLabel id="year-range-start-label">from</InputLabel>
-							<Select
-								labelId="year-range-start-label"
-								id="year-range-start"
-								value={searchFilter?.search?.yearRange?.start ?? 2000}
-								label="Min"
-								onChange={(e: any) => {
-									const value = Number(e.target.value);
-									router.push(
-										`/car?input=${JSON.stringify({
-											...searchFilter,
-											search: {
-												...searchFilter.search,
-												yearRange: {
-													...searchFilter.search.yearRange,
-													start: value,
-												},
-											},
-										})}`,
-										undefined,
-										{ scroll: false },
-									);
-								}}
-								MenuProps={MenuProps}
-							>
-								{Array.from({ length: 35 }, (_, i) => {
-									const year = 1990 + i;
-									return (
-										<MenuItem key={year} value={year} disabled={(searchFilter?.search?.yearRange?.end || 0) < year}>
-											{year}
+										<MenuItem disabled value="">
+											Select a model
 										</MenuItem>
-									);
-								})}
-							</Select>
-						</FormControl>
+										{getCarBrandsData?.getCarBrandsByUser
+											?.find((b: any) => b.carBrandName === selectedBrand)
+											?.carBrandModels?.map((model: string) => (
+												<MenuItem key={model} value={model}>
+													{model}
+												</MenuItem>
+											))}
+									</Select>
+								</FormControl>
+							</div>
+						</>
+					)}
 
-						<div className="central-divider"></div>
-
-						{/* End Year */}
-						<FormControl>
-							<InputLabel id="year-range-end-label">to</InputLabel>
-							<Select
-								labelId="year-range-end-label"
-								id="year-range-end"
-								value={searchFilter?.search?.yearRange?.end ?? new Date().getFullYear()}
-								label="Max"
-								onChange={(e: any) => {
-									const value = Number(e.target.value);
-									router.push(
-										`/car?input=${JSON.stringify({
-											...searchFilter,
-											search: {
-												...searchFilter.search,
-												yearRange: {
-													...searchFilter.search.yearRange,
-													end: value,
-												},
-											},
-										})}`,
-										undefined,
-										{ scroll: false },
-									);
-								}}
-								MenuProps={MenuProps}
-							>
-								{Array.from({ length: 35 }, (_, i) => {
-									const year = 1990 + i + 1;
-									return (
-										<MenuItem key={year} value={year} disabled={(searchFilter?.search?.yearRange?.start || 0) > year}>
-											{year}
-										</MenuItem>
-									);
-								})}
-							</Select>
-						</FormControl>
-					</Stack>
-				</Stack>
-
-				<Stack className={'find-your-home'}>
-					<Typography className={'title'}>Transmission</Typography>
-					<Stack flexDirection={'row'}>
-						{carTransmissions.map((trans) => (
-							<Stack className={'input-box'} key={trans}>
+					<div className="title">Fuel Type</div>
+					<div className="filter-section">
+						{carFuelTypes.map((type) => (
+							<div key={type} className="input-box">
 								<Checkbox
-									id={trans}
+									id={type}
 									className="property-checkbox"
-									color="default"
-									size="small"
-									value={trans}
-									checked={(searchFilter?.search?.transmissionList || []).includes(trans)}
-									onChange={() => updateArrayFilter('transmissionList', trans)}
+									checked={searchFilter?.search?.fuelTypeList?.includes(type)}
+									onChange={() => updateArrayFilter('fuelTypeList', type)}
 								/>
-								<label htmlFor={trans} style={{ cursor: 'pointer' }}>
-									<Typography className="property_type">{trans.toLocaleLowerCase()}</Typography>
-								</label>
-							</Stack>
+								<label htmlFor={type}>{type}</label>
+							</div>
 						))}
-					</Stack>
-				</Stack>
-			</Stack>
-		);
-	}
+					</div>
+
+					{showMore && (
+						<>
+							<div className="title">Transmission</div>
+							<div className="filter-section">
+								{carTransmissions.map((trans) => (
+									<div key={trans} className="input-box">
+										<Checkbox
+											id={trans}
+											className="property-checkbox"
+											checked={searchFilter?.search?.transmissionList?.includes(trans)}
+											onChange={() => updateArrayFilter('transmissionList', trans)}
+										/>
+										<label htmlFor={trans}>{trans}</label>
+									</div>
+								))}
+							</div>
+
+							<div className="title">Year Range</div>
+							<div className="filter-section">
+								<div className="range-group">
+									<FormControl>
+										<Select
+											value={yearStart}
+											onChange={(e) =>
+												setSearchFilter({
+													...searchFilter,
+													search: {
+														...searchFilter.search,
+														yearRange: {
+															...searchFilter.search.yearRange,
+															start: Number(e.target.value),
+														},
+													},
+												})
+											}
+											MenuProps={MenuProps}
+										>
+											{carYears.map((year) => (
+												<MenuItem key={year} value={year} disabled={yearEnd <= year}>
+													{year}
+												</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+									<div className="range-separator" />
+									<FormControl>
+										<Select
+											value={yearEnd}
+											onChange={(e) =>
+												setSearchFilter({
+													...searchFilter,
+													search: {
+														...searchFilter.search,
+														yearRange: {
+															...searchFilter.search.yearRange,
+															end: Number(e.target.value),
+														},
+													},
+												})
+											}
+											MenuProps={MenuProps}
+										>
+											{carYears.map((year) => (
+												<MenuItem key={year} value={year} disabled={yearStart >= year}>
+													{year}
+												</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</div>
+							</div>
+
+							<div className="title">Price Range</div>
+							<div className="filter-section">
+								<div className="range-group">
+									<FormControl>
+										<Select
+											value={searchFilter?.search?.pricesRange?.start ?? 0}
+											onChange={(e) => carPriceHandler(Number(e.target.value), 'start')}
+											MenuProps={MenuProps}
+											sx={{ '.MuiSelect-select': { height: 'auto' } }}
+										>
+											{carPrices.map((price) => (
+												<MenuItem
+													key={price}
+													value={price}
+													disabled={(searchFilter?.search?.pricesRange?.end || 0) < price}
+												>
+													${price.toLocaleString()}
+												</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+									<div className="range-separator" />
+									<FormControl>
+										<Select
+											value={searchFilter?.search?.pricesRange?.end ?? 500000}
+											onChange={(e) => carPriceHandler(Number(e.target.value), 'end')}
+											MenuProps={MenuProps}
+											sx={{ '.MuiSelect-select': { height: 'auto' } }}
+										>
+											{carPrices.map((price) => (
+												<MenuItem
+													key={price}
+													value={price}
+													disabled={(searchFilter?.search?.pricesRange?.start || 0) > price}
+												>
+													${price.toLocaleString()}
+												</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</div>
+							</div>
+
+							<div className="title">Mileage Range</div>
+							<div className="filter-section">
+								<div className="range-group">
+									<FormControl>
+										<Select
+											value={mileageStart}
+											onChange={(e) =>
+												setSearchFilter({
+													...searchFilter,
+													search: {
+														...searchFilter.search,
+														mileageRange: {
+															...searchFilter.search.mileageRange,
+															start: Number(e.target.value),
+														},
+													},
+												})
+											}
+											MenuProps={MenuProps}
+											sx={{ '.MuiSelect-select': { height: 'auto' } }}
+										>
+											{carMileage.map((mileage) => (
+												<MenuItem key={mileage} value={mileage} disabled={mileageEnd <= mileage}>
+													{mileage}
+												</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+									<div className="range-separator" />
+									<FormControl>
+										<Select
+											value={mileageEnd}
+											onChange={(e) =>
+												setSearchFilter({
+													...searchFilter,
+													search: {
+														...searchFilter.search,
+														mileageRange: {
+															...searchFilter.search.mileageRange,
+															end: Number(e.target.value),
+														},
+													},
+												})
+											}
+											MenuProps={MenuProps}
+											sx={{ '.MuiSelect-select': { height: 'auto' } }}
+										>
+											{carMileage.map((mileage) => (
+												<MenuItem key={mileage} value={mileage} disabled={mileageStart >= mileage}>
+													{mileage}
+												</MenuItem>
+											))}
+										</Select>
+									</FormControl>
+								</div>
+							</div>
+
+							<div className="title">Options</div>
+							<div className="filter-section">
+								<div className="select-group">
+									<FormControl>
+										<Select
+											value={searchFilter?.search?.carListingOptions?.[0] || 'all'}
+											onChange={(e) => {
+												const value = e.target.value;
+												if (value === 'all') {
+													setSearchFilter({
+														...searchFilter,
+														search: {
+															...searchFilter.search,
+															carListingOptions: [],
+														},
+													});
+												} else {
+													setSearchFilter({
+														...searchFilter,
+														search: {
+															...searchFilter.search,
+															carListingOptions: [value],
+														},
+													});
+												}
+											}}
+											sx={{ '.MuiSelect-select': { height: 'auto' } }}
+										>
+											<MenuItem value="all">All Options</MenuItem>
+											<MenuItem value="carBarter">Barter</MenuItem>
+											<MenuItem value="carRent">Rent</MenuItem>
+										</Select>
+									</FormControl>
+								</div>
+							</div>
+						</>
+					)}
+				</div>
+			</div>
+
+			<div className="filter-footer">
+				<div className="show-more" onClick={() => setShowMore(!showMore)}>
+					<span>{showMore ? 'Show Less' : 'Show More'}</span>
+					<ExpandMoreIcon style={{ transform: showMore ? 'rotate(180deg)' : 'none' }} />
+				</div>
+				<div className="clear-filter" onClick={clearAllHandler}>
+					<span>Clear All</span>
+					<RefreshIcon />
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default Filter;

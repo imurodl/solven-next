@@ -48,10 +48,11 @@
 					.filter-main {
 						width: 100%;
 						padding: 24px;
-						border-radius: $border-radius-medium;
+						border-radius: 16px;
 						background: $background-white;
-						box-shadow: $shadow-medium;
+						box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
 						border: 1px solid $border-light;
+						transition: all 0.3s ease;
 
 						.find-your-home {
 							position: relative;
@@ -61,8 +62,8 @@
 							.property-location {
 								max-height: none;
 								overflow: visible;
-								font-size: 16px;
-								font-weight: 400;
+								font-size: 14px;
+								font-weight: 500;
 								color: $text-color;
 								cursor: pointer;
 								line-height: 1.5;
@@ -77,438 +78,257 @@
 								height: auto;
 								color: $text-color;
 								font-family: $font;
-								font-size: 18px;
-								font-style: normal;
+								font-size: 20px;
 								font-weight: 700;
 								line-height: 1.4;
 								margin-bottom: 16px;
-								padding-bottom: 8px;
+								padding-bottom: 12px;
 								border-bottom: 1px solid $border-light;
+								display: flex;
+								justify-content: space-between;
+								align-items: center;
+
+								.refresh-icon {
+									width: 32px;
+									height: 32px;
+									border-radius: 8px;
+									display: flex;
+									align-items: center;
+									justify-content: center;
+									cursor: pointer;
+									transition: all 0.2s ease;
+									background: $background-light;
+
+									&:hover {
+										background: rgba($primary-color, 0.1);
+										transform: rotate(180deg);
+
+										svg {
+											color: $primary-color;
+										}
+									}
+
+									svg {
+										font-size: 18px;
+										color: $text-muted;
+										transition: all 0.2s ease;
+									}
+								}
 							}
 
 							.title {
 								width: auto;
 								height: auto;
-								color: $text-color;
+								color: $text-muted;
 								font-family: $font;
-								font-size: 15px;
-								font-style: normal;
+								font-size: 14px;
 								font-weight: 600;
 								line-height: normal;
 								margin-bottom: 12px;
-								text-transform: capitalize;
+								text-transform: uppercase;
+								letter-spacing: 0.5px;
 							}
 
 							.input-box {
 								position: relative;
 								width: 100%;
 								display: flex;
-								flex-direction: row;
 								align-items: center;
-								gap: 8px;
-								transition: $transition-fast;
-								padding: 4px 6px;
-								&:hover {
-									background: rgba($primary-color, 0.1);
-									border-radius: $border-radius-small;
-									transition: $transition-fast;
-									P {
-										transform: scale(1.05);
-										transition: $transition-fast;
-									}
-								}
-								svg {
-									cursor: pointer;
-									color: $text-muted;
-									transition: $transition-fast;
+								padding: 8px 12px;
+								border-radius: 8px;
+								transition: all 0.2s ease;
+								cursor: pointer;
 
-									&:hover {
+								&:hover {
+									background: rgba($primary-color, 0.05);
+
+									label {
 										color: $primary-color;
 									}
 								}
-								.search-input {
-									width: 100%;
-									height: 48px;
-									border-radius: $border-radius-small;
-									border: 1px solid $border-color;
-									background: $background-white;
-									outline: none;
-									padding-left: 45px;
-									color: $text-color;
-									font-family: $font;
-									font-size: 16px;
-									font-style: normal;
-									font-weight: 400;
-									line-height: 1.5;
-									transition: $transition-fast;
-									&:focus {
-										border-color: $primary-color;
-										box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
-									}
-									&::placeholder {
-										color: $text-muted;
-									}
-								}
-								img {
-									position: absolute;
-									width: 18px;
-									height: 18px;
-									top: 15px;
-									left: 15px;
-									opacity: 0.6;
-								}
+
 								.property-checkbox {
-									width: 18px;
-									height: 18px;
-									margin-right: 8px;
-									accent-color: $primary-color;
-									cursor: pointer;
+									&.MuiCheckbox-root {
+										padding: 0;
+										margin-right: 10px;
+
+										.MuiSvgIcon-root {
+											font-size: 20px;
+											color: $text-muted;
+											transition: all 0.2s ease;
+										}
+
+										&.Mui-checked {
+											.MuiSvgIcon-root {
+												color: $primary-color;
+											}
+										}
+									}
 								}
+
 								label {
-									font-size: 16px;
-									font-weight: 400;
+									font-size: 14px;
 									color: $text-color;
 									cursor: pointer;
 									line-height: 1.5;
 									font-family: $font;
-									transition: $transition-fast;
+									transition: all 0.2s ease;
 									text-transform: capitalize;
-									width: 80%;
-									&:hover {
-										color: $primary-color;
-									}
+									flex: 1;
 								}
 							}
 
 							.input-box-search {
 								position: relative;
 								width: 100%;
-								display: flex;
-								flex-direction: row;
-								align-items: center;
-								gap: 8px;
-								transition: $transition-fast;
-								svg {
-									cursor: pointer;
-									color: $text-muted;
-									transition: $transition-fast;
+								margin-bottom: 16px;
 
-									&:hover {
-										color: $primary-color;
-									}
-								}
 								.search-input {
 									width: 100%;
-									height: 48px;
-									border-radius: $border-radius-small;
-									border: 1px solid $border-color;
-									background: $background-white;
-									outline: none;
-									padding-left: 45px;
+									height: 44px;
+									padding: 0 16px 0 42px;
+									border-radius: 10px;
+									border: 1px solid $border-light;
+									background: $background-light;
+									font-size: 14px;
 									color: $text-color;
-									font-family: $font;
-									font-size: 16px;
-									font-style: normal;
-									font-weight: 400;
-									line-height: 1.5;
-									transition: $transition-fast;
+									transition: all 0.2s ease;
+
 									&:focus {
 										border-color: $primary-color;
+										background: $background-white;
 										box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
 									}
+
 									&::placeholder {
 										color: $text-muted;
 									}
 								}
+
 								img {
 									position: absolute;
-									width: 18px;
-									height: 18px;
-									top: 15px;
-									left: 15px;
-									opacity: 0.6;
-								}
-								.property-checkbox {
-									width: 18px;
-									height: 18px;
-									margin-right: 8px;
-									accent-color: $primary-color;
-									cursor: pointer;
-								}
-								label {
-									font-size: 16px;
-									font-weight: 400;
-									color: $text-color;
-									cursor: pointer;
-									line-height: 1.5;
-									font-family: $font;
-									transition: $transition-fast;
-									text-transform: capitalize;
-									width: 80%;
-									&:hover {
-										color: $primary-color;
-									}
-								}
-							}
-
-							.city-select {
-								width: 100%;
-								height: 48px;
-								border-radius: $border-radius-small;
-								border: 1px solid $border-color;
-								background: $background-white;
-								outline: none;
-								padding-left: 16px;
-								padding-right: 40px;
-								appearance: none;
-								cursor: pointer;
-								box-shadow: none;
-								color: $text-color;
-								font-family: $font;
-								font-size: 16px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: 1.5;
-								transition: $transition-fast;
-								background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-								background-position: right 12px center;
-								background-repeat: no-repeat;
-								background-size: 16px;
-
-								&:focus {
-									border-color: $primary-color;
-									box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
-								}
-
-								&:hover {
-									border-color: darken($border-color, 10%);
-								}
-
-								option {
-									color: $text-color;
-									background: $background-white;
-									padding: 8px;
-								}
-							}
-
-							.divider {
-								display: none; // Remove custom divider since we're using background arrow
-							}
-
-							.arrow-down {
-								display: none; // Remove custom arrow since we're using background arrow
-							}
-
-							.property-type {
-								color: $text-color;
-								font-size: 16px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: 1.5;
-								font-family: $font;
-							}
-
-							.button-group {
-								width: 100%;
-								height: auto;
-								flex-direction: row;
-								gap: 8px;
-								margin-bottom: 16px;
-
-								button {
-									flex: 1;
-									height: 44px;
-									color: $text-color;
-									background: $background-light;
-									border: 1px solid $border-color;
-									border-radius: $border-radius-small;
-									text-align: center;
-									font-family: $font;
-									font-size: 13px;
-									font-style: normal;
-									font-weight: 500;
-									line-height: normal;
-									cursor: pointer;
-									transition: $transition-fast;
-
-									&:hover {
-										background: darken($background-light, 5%);
-										border-color: $primary-color;
-									}
-
-									&.active {
-										background: $primary-color;
-										color: $background-white;
-										border-color: $primary-color;
-									}
-								}
-							}
-
-							.square-year-input {
-								width: 100%;
-								gap: 12px;
-								flex-direction: row;
-								align-items: center;
-								display: flex;
-
-								.central-divider {
+									left: 14px;
+									top: 50%;
+									transform: translateY(-50%);
 									width: 16px;
+									height: 16px;
+									opacity: 0.5;
+								}
+							}
+
+							.select-group {
+								margin-bottom: 24px;
+
+								.MuiFormControl-root {
+									width: 100%;
+
+									.MuiSelect-select {
+										padding: 10px 14px;
+										font-size: 14px;
+										background: $background-light;
+										border: 1px solid $border-light;
+										border-radius: 10px;
+										transition: all 0.2s ease;
+
+										&:hover {
+											background: darken($background-light, 2%);
+										}
+
+										&.Mui-focused {
+											border-color: $primary-color;
+											background: $background-white;
+											box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+										}
+									}
+
+									.MuiOutlinedInput-notchedOutline {
+										border: none;
+									}
+								}
+							}
+
+							.range-group {
+								display: flex;
+								gap: 12px;
+								align-items: center;
+								margin-bottom: 24px;
+
+								.MuiFormControl-root {
+									flex: 1;
+
+									.MuiSelect-select {
+										padding: 10px 14px;
+										font-size: 14px;
+										background: $background-light;
+										border: 1px solid $border-light;
+										border-radius: 10px;
+										transition: all 0.2s ease;
+
+										&:hover {
+											background: darken($background-light, 2%);
+										}
+
+										&.Mui-focused {
+											border-color: $primary-color;
+											background: $background-white;
+											box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+										}
+									}
+
+									.MuiOutlinedInput-notchedOutline {
+										border: none;
+									}
+								}
+
+								.range-separator {
+									width: 12px;
 									height: 1px;
 									background: $border-color;
-									border: none;
-									flex-shrink: 0;
+								}
+							}
+						}
+					}
+
+					.filter-footer {
+						margin-top: 24px;
+						padding-top: 24px;
+						border-top: 1px solid $border-light;
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+
+						.show-more,
+						.clear-filter {
+							display: flex;
+							align-items: center;
+							gap: 6px;
+							padding: 8px 12px;
+							border-radius: 8px;
+							cursor: pointer;
+							transition: all 0.2s ease;
+
+							&:hover {
+								background: rgba($primary-color, 0.05);
+
+								span {
+									color: $primary-color;
 								}
 
-								input {
-									flex: 1;
-									height: 48px;
-									border-radius: $border-radius-small;
-									border: 1px solid $border-color;
-									background: $background-white;
-									outline: none;
-									padding: 0 16px;
-									color: $text-color;
-									font-family: $font;
-									font-size: 16px;
-									transition: $transition-fast;
-
-									&:focus {
-										border-color: $primary-color;
-										box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
-									}
-
-									&::placeholder {
-										color: $text-muted;
-										font-family: $font;
-										font-size: 16px;
-										font-style: normal;
-										font-weight: 400;
-									}
-								}
-
-								select {
-									flex: 1;
-									height: 48px;
-									border-radius: $border-radius-small;
-									border: 1px solid $border-color;
-									background: $background-white;
-									outline: none;
-									padding: 0 16px;
-									appearance: none;
-									cursor: pointer;
-									color: $text-color;
-									font-family: $font;
-									font-size: 16px;
-									transition: $transition-fast;
-									background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-									background-position: right 12px center;
-									background-repeat: no-repeat;
-									background-size: 16px;
-
-									&:focus {
-										border-color: $primary-color;
-										box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
-									}
+								svg {
+									color: $primary-color;
 								}
 							}
 
-							// Price Range Slider Styling
-							.price-range-container {
-								margin-bottom: 16px;
-
-								.price-slider {
-									width: 100%;
-									height: 6px;
-									border-radius: 3px;
-									background: $border-light;
-									outline: none;
-									margin: 20px 0;
-									position: relative;
-
-									&::-webkit-slider-thumb {
-										appearance: none;
-										width: 20px;
-										height: 20px;
-										border-radius: 50%;
-										background: $primary-color;
-										cursor: pointer;
-										border: 2px solid $background-white;
-										box-shadow: $shadow-light;
-									}
-
-									&::-moz-range-thumb {
-										width: 20px;
-										height: 20px;
-										border-radius: 50%;
-										background: $primary-color;
-										cursor: pointer;
-										border: 2px solid $background-white;
-										box-shadow: $shadow-light;
-									}
-								}
-
-								.price-labels {
-									display: flex;
-									justify-content: space-between;
-									font-family: $font;
-									font-size: 13px;
-									color: $text-muted;
-									margin-top: 8px;
-								}
+							span {
+								font-size: 13px;
+								color: $text-muted;
+								transition: all 0.2s ease;
 							}
 
-							// Action Buttons
-							.filter-actions {
-								margin-top: 32px;
-								display: flex;
-								flex-direction: column;
-								gap: 12px;
-
-								.find-listing-btn {
-									width: 100%;
-									height: 48px;
-									background: $primary-color;
-									color: $background-white;
-									border: none;
-									border-radius: $border-radius-small;
-									font-family: $font;
-									font-size: 16px;
-									font-weight: 600;
-									cursor: pointer;
-									transition: $transition-fast;
-									display: flex;
-									align-items: center;
-									justify-content: center;
-									gap: 8px;
-
-									&:hover {
-										background: $primary-dark;
-										transform: translateY(-1px);
-										box-shadow: $shadow-medium;
-									}
-
-									&:active {
-										transform: translateY(0);
-									}
-								}
-
-								.reset-search-btn {
-									width: 100%;
-									height: 40px;
-									background: transparent;
-									color: $text-muted;
-									border: none;
-									font-family: $font;
-									font-size: 16px;
-									font-weight: 500;
-									cursor: pointer;
-									text-decoration: underline;
-									transition: $transition-fast;
-
-									&:hover {
-										color: $primary-color;
-									}
-								}
+							svg {
+								font-size: 18px;
+								color: $text-muted;
+								transition: all 0.2s ease;
 							}
 						}
 					}

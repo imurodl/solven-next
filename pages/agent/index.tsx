@@ -157,7 +157,13 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 						<Box component={'div'} className={'right'}>
 							<span>Sort by</span>
 							<div>
-								<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
+								<Button
+									onClick={sortingClickHandler}
+									endIcon={<KeyboardArrowDownRoundedIcon />}
+									style={{
+										border: sortingOpen ? '2px solid #1e40af' : '2px solid #e9e9e9',
+									}}
+								>
 									{filterSortName}
 								</Button>
 								<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>

@@ -148,7 +148,7 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 								onClick={sortingClickHandler}
 								endIcon={sortingOpen ? <KeyboardArrowUpRoundedIcon /> : <KeyboardArrowDownRoundedIcon />}
 								style={{
-									border: sortingOpen ? '2px solid black' : '2px solid #e9e9e9',
+									border: sortingOpen ? '2px solid #1e40af' : '2px solid #e9e9e9',
 								}}
 							>
 								{filterSortName}
