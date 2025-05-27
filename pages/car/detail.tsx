@@ -47,6 +47,21 @@ import EmailIcon from '@mui/icons-material/Email';
 import { Rating } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import AcUnitIcon from '@mui/icons-material/AcUnit';
+import BluetoothIcon from '@mui/icons-material/Bluetooth';
+import GpsFixedIcon from '@mui/icons-material/GpsFixed';
+import HeadsetIcon from '@mui/icons-material/Headset';
+import SecurityIcon from '@mui/icons-material/Security';
+import SensorDoorIcon from '@mui/icons-material/SensorDoor';
+import WifiIcon from '@mui/icons-material/Wifi';
+import AirlineSeatReclineExtraIcon from '@mui/icons-material/AirlineSeatReclineExtra';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import LocalParkingIcon from '@mui/icons-material/LocalParking';
+import SunroofIcon from '@mui/icons-material/Brightness5';
+import TireRepairIcon from '@mui/icons-material/Build';
+import UsbIcon from '@mui/icons-material/Usb';
+import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
+import { CarFuelType, CarLocation, CarType, CarOptions } from '../../libs/enums/car.enum';
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -209,6 +224,25 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		}
 	};
 
+	const carFeaturesList = [
+		{ id: CarOptions.HEATED_SEATS, icon: AirlineSeatReclineExtraIcon, label: 'Heated Seats' },
+		{ id: CarOptions.VENTILATED_SEATS, icon: AirlineSeatReclineExtraIcon, label: 'Ventilated Seats' },
+		{ id: CarOptions.POWER_SEATS, icon: AirlineSeatReclineExtraIcon, label: 'Power Seats' },
+		{ id: CarOptions.LEATHER_SEATS, icon: AirlineSeatReclineExtraIcon, label: 'Leather Seats' },
+		{ id: CarOptions.HEATED_STEERING, icon: DirectionsCarIcon, label: 'Heated Steering' },
+		{ id: CarOptions.SMART_KEY, icon: SecurityIcon, label: 'Smart Key' },
+		{ id: CarOptions.CRUISE_CONTROL, icon: SpeedIcon, label: 'Cruise Control' },
+		{ id: CarOptions.NAVIGATION, icon: GpsFixedIcon, label: 'Navigation' },
+		{ id: CarOptions.PARKING_SENSOR_REAR, icon: LocalParkingIcon, label: 'Rear Parking Sensor' },
+		{ id: CarOptions.PARKING_SENSOR_FRONT, icon: LocalParkingIcon, label: 'Front Parking Sensor' },
+		{ id: CarOptions.REAR_CAMERA, icon: CameraAltIcon, label: 'Rear Camera' },
+		{ id: CarOptions.CAMERA_360, icon: CameraAltIcon, label: '360° Camera' },
+		{ id: CarOptions.SUNROOF, icon: SunroofIcon, label: 'Sunroof' },
+		{ id: CarOptions.BLACK_BOX, icon: SecurityIcon, label: 'Black Box' },
+		{ id: CarOptions.LANE_KEEP_ASSIST, icon: DirectionsCarIcon, label: 'Lane Keep Assist' },
+		{ id: CarOptions.BLIND_SPOT_WARNING, icon: RemoveRedEyeIcon, label: 'Blind Spot Warning' },
+	];
+
 	if (getCarsLoading) {
 		return (
 			<Stack sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '1800px' }}>
@@ -232,37 +266,46 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 									</Box>
 
 									<Stack className="car-info-box">
-										<Typography className="title-main">{car?.carTitle}</Typography>
-										<Typography className="listed-date">
-											Listed {moment().diff(car?.createdAt, 'days')} days ago
-										</Typography>
-
-										<Stack className="main-info-row">
-											<Stack className="info-item">
-												<AttachMoneyIcon />
-												<Stack>
-													<Typography className="info-value">${formatterStr(car?.carPrice)}</Typography>
-												</Stack>
-											</Stack>
-											<Stack className="info-item">
-												<CalendarTodayIcon />
-												<Stack>
-													<Typography className="info-value">{car?.manufacturedAt}</Typography>
-												</Stack>
-											</Stack>
-											<Stack className="info-item">
-												<SpeedIcon />
-												<Stack>
-													<Typography className="info-value">{car?.carMileage} km</Typography>
-												</Stack>
-											</Stack>
-										</Stack>
-
-										<Stack className="description-section">
-											<Typography className="section-title">Description</Typography>
-											<Typography className="description-text">
-												{car?.carDesc || 'No description available.'}
+										<Stack className="content-wrapper">
+											<Typography className="title-main">{car?.carTitle}</Typography>
+											<Typography className="listed-date">
+												Listed {moment().diff(car?.createdAt, 'days')} days ago
 											</Typography>
+
+											<Stack className="main-info-row">
+												<Stack className="info-item">
+													<AttachMoneyIcon />
+													<Stack>
+														<Typography className="info-value">${formatterStr(car?.carPrice)}</Typography>
+													</Stack>
+												</Stack>
+												<Stack className="info-item">
+													<CalendarTodayIcon />
+													<Stack>
+														<Typography className="info-value">{car?.manufacturedAt}</Typography>
+													</Stack>
+												</Stack>
+												<Stack className="info-item">
+													<SpeedIcon />
+													<Stack>
+														<Typography className="info-value">{car?.carMileage} km</Typography>
+													</Stack>
+												</Stack>
+											</Stack>
+
+											<Stack className="description-section">
+												<Typography className="section-title">Description</Typography>
+												<Typography className="description-text">
+													{car?.carDesc || 'No description available.'}
+												</Typography>
+											</Stack>
+
+											<Stack className="address-section">
+												<Typography className="section-title">Location</Typography>
+												<Typography className="address-text">
+													{car?.carAddress || car?.carLocation || 'Address not available'}
+												</Typography>
+											</Stack>
 										</Stack>
 
 										<Stack className="action-buttons">
@@ -360,17 +403,16 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 								<Stack className="car-features">
 									<Typography className="section-title">Car Features</Typography>
 									<Stack className="features-grid">
-										{car?.carOptions?.map((option: string) => (
-											<Stack className="feature-item" key={option}>
-												<CheckCircleIcon className="feature-icon" />
-												<Typography className="feature-text">
-													{option
-														.split('_')
-														.map((word) => word.charAt(0) + word.slice(1).toLowerCase())
-														.join(' ')}
-												</Typography>
-											</Stack>
-										))}
+										{carFeaturesList.map((feature) => {
+											const isAvailable = car?.carOptions?.includes(feature.id);
+											const IconComponent = feature.icon;
+											return (
+												<Stack className={`feature-item ${isAvailable ? 'available' : 'unavailable'}`} key={feature.id}>
+													<IconComponent className="feature-icon" />
+													<Typography className="feature-text">{feature.label}</Typography>
+												</Stack>
+											);
+										})}
 									</Stack>
 								</Stack>
 								{/* Comments section */}

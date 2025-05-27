@@ -10,7 +10,6 @@
 		.car-detail-config {
 			width: 100%;
 			height: auto;
-			padding-top: 56px;
 			gap: 30px;
 
 			.car-info-config {
@@ -187,7 +186,7 @@
 						justify-content: space-between;
 
 						.main-image-box {
-							width: 800px;
+							width: 700px;
 							height: 700px;
 							border-radius: 16px;
 							overflow: hidden;
@@ -206,7 +205,7 @@
 						}
 
 						.car-info-box {
-							width: 480px;
+							width: 560px;
 							padding: 32px;
 							background: $background-white;
 							border-radius: 16px;
@@ -214,6 +213,29 @@
 							border: 1px solid $border-light;
 							display: flex;
 							flex-direction: column;
+							justify-content: space-between;
+							height: 700px;
+
+							.content-wrapper {
+								flex: 1;
+								overflow-y: auto;
+								padding-right: 8px;
+
+								&::-webkit-scrollbar {
+									width: 4px;
+								}
+
+								&::-webkit-scrollbar-track {
+									background: $background-light;
+									border-radius: 4px;
+								}
+
+								&::-webkit-scrollbar-thumb {
+									background: $border-color;
+									border-radius: 4px;
+								}
+							}
+
 							.title-main {
 								font-size: 28px;
 								font-weight: 700;
@@ -268,22 +290,34 @@
 									color: $text-muted;
 									font-size: 15px;
 									line-height: 1.6;
-									max-height: 200px;
-									overflow-y: auto;
-									padding-right: 12px;
+								}
+							}
 
-									&::-webkit-scrollbar {
-										width: 4px;
-									}
+							.address-section {
+								margin-bottom: 32px;
 
-									&::-webkit-scrollbar-track {
-										background: $background-light;
-										border-radius: 4px;
-									}
+								.section-title {
+									font-size: 18px;
+									font-weight: 600;
+									color: $text-color;
+									margin-bottom: 12px;
+								}
 
-									&::-webkit-scrollbar-thumb {
-										background: $border-color;
-										border-radius: 4px;
+								.address-text {
+									color: $text-muted;
+									font-size: 15px;
+									line-height: 1.6;
+									display: flex;
+									align-items: center;
+									gap: 8px;
+
+									&::before {
+										content: '';
+										display: inline-block;
+										width: 6px;
+										height: 6px;
+										border-radius: 50%;
+										background-color: $primary-color;
 									}
 								}
 							}
@@ -292,6 +326,10 @@
 								display: flex;
 								gap: 20px;
 								flex-direction: row;
+								margin-top: 24px;
+								padding-top: 24px;
+								border-top: 1px solid $border-light;
+
 								.view-btn,
 								.like-btn {
 									flex: 1;
@@ -465,36 +503,62 @@
 
 						.features-grid {
 							display: grid;
-							grid-template-columns: repeat(3, 1fr);
+							grid-template-columns: repeat(8, 1fr);
 							gap: 16px;
+							row-gap: 24px;
 
 							.feature-item {
 								display: flex;
+								flex-direction: column;
 								align-items: center;
-								gap: 12px;
-								padding: 12px;
+								gap: 8px;
+								padding: 16px 8px;
 								border-radius: 8px;
 								background: $background-light;
 								transition: all 0.3s ease;
+								text-align: center;
 
-								&:hover {
-									background: rgba($primary-color, 0.1);
+								&.available {
+									.feature-icon {
+										color: $text-color;
+									}
+									.feature-text {
+										color: $text-color;
+									}
+
+									&:hover {
+										background: rgba($primary-color, 0.1);
+										.feature-icon {
+											color: $primary-color;
+										}
+										.feature-text {
+											color: $primary-color;
+										}
+									}
+								}
+
+								&.unavailable {
+									background: $background-light;
+									opacity: 0.6;
 
 									.feature-icon {
-										color: $primary-color;
+										color: $text-muted;
+									}
+									.feature-text {
+										color: $text-muted;
 									}
 								}
 
 								.feature-icon {
-									color: $text-muted;
-									font-size: 20px;
+									font-size: 24px;
 									transition: all 0.3s ease;
 								}
 
 								.feature-text {
-									color: $text-color;
-									font-size: 14px;
+									font-size: 12px;
 									font-weight: 500;
+									transition: all 0.3s ease;
+									line-height: 1.2;
 								}
 							}
 						}
