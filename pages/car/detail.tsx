@@ -62,6 +62,7 @@ import TireRepairIcon from '@mui/icons-material/Build';
 import UsbIcon from '@mui/icons-material/Usb';
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 import { CarFuelType, CarLocation, CarType, CarOptions } from '../../libs/enums/car.enum';
+import { Member } from '../../libs/types/member/member';
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -77,6 +78,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	const user = useReactiveVar(userVar);
 	const [carId, setCarId] = useState<string | null>(null);
 	const [slideImage, setSlideImage] = useState<string>('');
+	const [sellerInfo, setSellerInfo] = useState<Member>();
 	const [commentInquiry, setCommentInquiry] = useState<CommentsInquiry>(initialComment);
 	const [carComments, setCarComments] = useState<Comment[]>([]);
 	const [commentTotal, setCommentTotal] = useState<number>(0);
@@ -102,6 +104,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
 			if (data?.getCar?.carImages?.[0]) setSlideImage(data.getCar.carImages[0]);
+			if (getCarData?.getCar?.memberData) setSellerInfo(getCarData?.getCar?.memberData);
 		},
 	});
 
@@ -487,15 +490,15 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										<img
 											className="profile-image"
 											src={
-												getCarData?.getCar?.memberData?.memberImage
-													? `${REACT_APP_API_URL}/${getCarData.getCar.memberData.memberImage}`
+												sellerInfo?.memberImage
+													? `${REACT_APP_API_URL}/${sellerInfo.memberImage}`
 													: '/img/profile/defaultUser.svg'
 											}
 											alt="Seller"
 										/>
 										<Stack className="profile-details">
-											<Link href={`/member?memberId=${getCarData?.getCar?.memberData?._id}`}>
-												<Typography className="seller-name">{getCarData?.getCar?.memberData?.memberNick}</Typography>
+											<Link href={`/member?memberId=${sellerInfo?._id}`}>
+												<Typography className="seller-name">{sellerInfo?.memberNick}</Typography>
 											</Link>
 											<Typography className="seller-type">Verified Seller</Typography>
 											<Stack className="seller-rating">
@@ -506,7 +509,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 									</Stack>
 									<Stack className="contact-buttons">
 										<Button className="contact-button primary" startIcon={<PhoneIcon />}>
-											{getCarData?.getCar?.memberData?.memberPhone}
+											{sellerInfo?.memberPhone}
 										</Button>
 										<Button className="contact-button secondary" startIcon={<EmailIcon />}>
 											Send Message
