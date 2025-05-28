@@ -251,24 +251,6 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 		setSearchFilter({ ...searchFilter, page: value });
 	};
 
-	if (boardArticleLoading) {
-		return (
-			<Stack
-				sx={{
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					width: '100%',
-					height: '800px',
-					borderRadius: '80px',
-					background: '#f4f5f5',
-				}}
-			>
-				<CircularProgress size={'6rem'} />
-			</Stack>
-		);
-	}
-
 	if (device === 'mobile') {
 		return <div>COMMUNITY DETAIL PAGE MOBILE</div>;
 	} else {
