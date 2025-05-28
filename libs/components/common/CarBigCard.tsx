@@ -35,10 +35,11 @@ const CarBigCard = (props: CarBigCardProps) => {
 		return <div>CAR BIG CARD</div>;
 	} else {
 		return (
-			<Stack className="property-big-card-box" onClick={() => goCarDetailPage(car?._id)}>
+			<Stack className="property-big-card-box">
 				<Box
 					component={'div'}
 					className={'card-img'}
+					onClick={() => goCarDetailPage(car?._id)}
 					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${car?.carImages?.[0]})` }}
 				>
 					{car && car?.carRank >= topCarRank && (
@@ -50,7 +51,9 @@ const CarBigCard = (props: CarBigCardProps) => {
 					<div className={'price'}>${formatterStr(car?.carPrice)}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>
-					<strong className={'title'}>{car?.carTitle}</strong>
+					<strong onClick={() => goCarDetailPage(car?._id)} className={'title'}>
+						{car?.carTitle}
+					</strong>
 					<p className={'desc'}>{car?.carAddress}</p>
 					<div className={'options'}>
 						<div>

@@ -69,19 +69,8 @@ const Join: NextPage = (props: any) => {
 		return (
 			<Stack className={'join-page'}>
 				<Stack className={'container'}>
-					<Stack className={`header-basic`}>
-						<Stack className={'container'}>
-							<strong>{props.title}</strong>
-							<span>{props.desc}</span>
-						</Stack>
-					</Stack>
 					<Stack className={'main'}>
 						<Stack className={'left'}>
-							{/* @ts-ignore */}
-							<Box className={'logo'}>
-								<img src="/img/logo/logoText.svg" alt="" />
-								<span>Nestar</span>
-							</Box>
 							<Box className={'info'}>
 								<span>{loginView ? 'login' : 'signup'}</span>
 								<p>{loginView ? 'Login' : 'Sign'} in with this account across the following sites.</p>
@@ -133,32 +122,20 @@ const Join: NextPage = (props: any) => {
 									<div className={'type-option'}>
 										<span className={'text'}>I want to be registered as:</span>
 										<div>
-											<FormGroup>
-												<FormControlLabel
-													control={
-														<Checkbox
-															size="small"
-															name={'USER'}
-															onChange={checkUserTypeHandler}
-															checked={input?.type == 'USER'}
-														/>
-													}
-													label="User"
-												/>
-											</FormGroup>
-											<FormGroup>
-												<FormControlLabel
-													control={
-														<Checkbox
-															size="small"
-															name={'AGENT'}
-															onChange={checkUserTypeHandler}
-															checked={input?.type == 'AGENT'}
-														/>
-													}
-													label="Agent"
-												/>
-											</FormGroup>
+											<button
+												type="button"
+												className={`type-button ${input?.type === 'USER' ? 'active' : ''}`}
+												onClick={() => handleInput('type', 'USER')}
+											>
+												User
+											</button>
+											<button
+												type="button"
+												className={`type-button ${input?.type === 'AGENT' ? 'active' : ''}`}
+												onClick={() => handleInput('type', 'AGENT')}
+											>
+												Agent
+											</button>
 										</div>
 									</div>
 								)}
@@ -168,7 +145,7 @@ const Join: NextPage = (props: any) => {
 										<FormGroup>
 											<FormControlLabel control={<Checkbox defaultChecked size="small" />} label="Remember me" />
 										</FormGroup>
-										<a>Lost your password?</a>
+										{/* <a>Lost your password?</a> */}
 									</div>
 								)}
 

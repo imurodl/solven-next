@@ -28,6 +28,7 @@
 						font-size: 36px;
 						font-weight: 700;
 						background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+						background-clip: text;
 						-webkit-background-clip: text;
 						-webkit-text-fill-color: transparent;
 						position: relative;

@@ -19,6 +19,7 @@
 					font-weight: 700;
 					margin-bottom: 12px;
 					background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+					background-clip: text;
 					-webkit-background-clip: text;
 					-webkit-text-fill-color: transparent;
 					text-transform: capitalize;
@@ -146,6 +147,7 @@
 						font-weight: 700;
 						margin-bottom: 12px;
 						background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+						background-clip: text;
 						-webkit-background-clip: text;
 						-webkit-text-fill-color: transparent;
 					}
@@ -345,45 +347,55 @@
 									.car-title-wrapper {
 										position: relative;
 										display: inline-block;
-										width: fit-content;
+										width: 100%;
 										margin-bottom: 4px;
+										overflow: hidden;
 										.car-title {
+											height: 44px;
 											font-weight: bold;
 											font-size: 16px;
 											margin-bottom: 4px;
 											cursor: pointer;
-											color: #1a1a1a;
-											transition: color 0.3s ease;
-											position: relative;
+											color: $text-color;
+											transition: $transition-smooth;
+											background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+											background-clip: text;
+											-webkit-background-clip: text;
+											-webkit-text-fill-color: transparent;
+											overflow: hidden;
+											text-overflow: ellipsis;
+											display: -webkit-box;
+											line-clamp: 2;
+											-webkit-line-clamp: 2;
+											-webkit-box-orient: vertical;
+											white-space: normal;
+											line-height: 1.4;
 
-											&::before {
-												content: '';
-												position: absolute;
-												width: 0;
-												height: 1px;
-												bottom: -1px;
-												left: 0;
-												background-color: #1a1a1a;
-												transition: width 0.3s ease;
+											&:hover {
+												background: linear-gradient(135deg, $primary-color 0%, lighten($primary-color, 10%) 100%);
+												background-clip: text;
+												-webkit-background-clip: text;
+												-webkit-text-fill-color: transparent;
 											}
 
-											&:hover::before {
-												width: 100%;
+											&::before {
+												display: none;
 											}
 										}
 									}
 
 									.car-description {
-										color: rgba(0, 0, 0, 0.6);
+										color: $text-muted;
 										margin-bottom: 8px;
 										font-size: 14px;
 										line-height: 1.4;
 										overflow: hidden;
 										text-overflow: ellipsis;
 										display: -webkit-box;
-										line-clamp: 1;
-										-webkit-line-clamp: 1;
+										line-clamp: 2;
+										-webkit-line-clamp: 2;
 										-webkit-box-orient: vertical;
+										white-space: normal;
 									}
 
 									.car-features {
@@ -697,6 +709,7 @@
 								overflow: hidden;
 								text-overflow: ellipsis;
 								display: -webkit-box;
+								line-clamp: 2;
 								-webkit-line-clamp: 2;
 								-webkit-box-orient: vertical;
 
@@ -712,6 +725,7 @@
 								line-height: 1.5;
 								margin-bottom: 12px;
 								display: -webkit-box;
+								line-clamp: 2;
 								-webkit-line-clamp: 2;
 								-webkit-box-orient: vertical;
 								overflow: hidden;
@@ -832,47 +846,6 @@
 								padding: 16px;
 							}
 						}
-					}
-				}
-
-				.pagination-box {
-					display: flex;
-					flex-direction: row;
-					justify-content: flex-start;
-					align-items: center;
-					margin-top: 30px;
-					gap: 15px;
-					.swiper-popular-prev,
-					.swiper-popular-next {
-						width: 60px;
-						height: 40px;
-						border-radius: 25px;
-						padding: 5px;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-						cursor: pointer;
-						transition: $transition-smooth;
-						background: $background-white;
-						color: $text-color;
-						border: 1px solid $border-light;
-						box-shadow: $shadow-light;
-						font-size: 18px;
-						font-weight: 600;
-
-						&:hover {
-							transform: scale(1.05);
-							box-shadow: $shadow-medium;
-							background: $background-light;
-							svg {
-								color: $primary-color;
-							}
-						}
-					}
-
-					// Hide default pagination dots
-					.swiper-popular-pagination {
-						display: none;
 					}
 				}
 			}
