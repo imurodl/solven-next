@@ -266,8 +266,18 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 
 	if (getCarsLoading) {
 		return (
-			<Stack sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '1800px' }}>
-				<CircularProgress size={'4rem'} />
+			<Stack
+				sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					width: '100%',
+					height: '800px',
+					borderRadius: '80px',
+					background: '#f4f5f5',
+				}}
+			>
+				<CircularProgress size={'6rem'} />
 			</Stack>
 		);
 	}

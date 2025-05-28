@@ -12,7 +12,7 @@
 			flex-direction: column;
 			max-width: 1300px;
 			margin: 0 auto;
-			padding-top: 40px;
+			padding: 80px 0;
 			gap: 24px;
 
 			.main-box {
@@ -898,5 +898,96 @@
 		margin-top: 32px;
 		padding-top: 32px;
 		border-top: 1px solid $border-light;
+	}
+}
+
+.edit-comment-box {
+	width: 100%;
+	max-width: 600px;
+	padding: 32px;
+	border-radius: 16px;
+	background: $background-white;
+	box-shadow: $shadow-medium;
+	border: 1px solid $border-light;
+
+	.write-header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 16px;
+
+		.title {
+			font-size: 18px;
+			font-weight: 600;
+			color: $text-color;
+		}
+
+		.counter {
+			color: $text-muted;
+			font-size: 14px;
+		}
+	}
+
+	textarea {
+		width: 100%;
+		min-height: 120px;
+		padding: 16px;
+		border: 1px solid $border-light;
+		border-radius: 12px;
+		background: $background-light;
+		font-size: 15px;
+		line-height: 1.6;
+		resize: vertical;
+		transition: $transition-smooth;
+
+		&:hover {
+			border-color: rgba($primary-color, 0.3);
+		}
+
+		&:focus {
+			outline: none;
+			border-color: $primary-color;
+			background: $background-white;
+			box-shadow: 0 0 0 4px rgba($primary-color, 0.1);
+		}
+	}
+
+	.button-box {
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-end;
+		gap: 12px;
+		margin-top: 16px;
+
+		button {
+			padding: 12px 24px;
+			border-radius: 12px;
+			font-weight: 600;
+			font-size: 15px;
+			border: none;
+			transition: $transition-smooth;
+
+			&:first-child {
+				background: $background-light;
+				color: $text-color;
+				border: 1px solid $border-light;
+
+				&:hover {
+					background: darken($background-light, 5%);
+					transform: translateY(-2px);
+				}
+			}
+
+			&:last-child {
+				background: $primary-color;
+				color: white;
+
+				&:hover {
+					background: darken($primary-color, 5%);
+					transform: translateY(-2px);
+				}
+			}
+		}
 	}
 }

@@ -3,7 +3,18 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import { Button, Stack, Typography, Tab, Tabs, IconButton, Backdrop, Pagination, Box } from '@mui/material';
+import {
+	Button,
+	Stack,
+	Typography,
+	Tab,
+	Tabs,
+	IconButton,
+	Backdrop,
+	Pagination,
+	Box,
+	CircularProgress,
+} from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import Moment from 'react-moment';
@@ -240,6 +251,24 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 		setSearchFilter({ ...searchFilter, page: value });
 	};
 
+	if (boardArticleLoading) {
+		return (
+			<Stack
+				sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					alignItems: 'center',
+					width: '100%',
+					height: '800px',
+					borderRadius: '80px',
+					background: '#f4f5f5',
+				}}
+			>
+				<CircularProgress size={'6rem'} />
+			</Stack>
+		);
+	}
+
 	if (device === 'mobile') {
 		return <div>COMMUNITY DETAIL PAGE MOBILE</div>;
 	} else {
@@ -454,6 +483,23 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 						</div>
 					</Stack>
 				</div>
+				<Backdrop open={openBackdrop} sx={{ zIndex: 999 }}>
+					<Stack className="edit-comment-box">
+						<Stack className="write-header">
+							<Typography className="title">Edit comment</Typography>
+							<Typography className="counter">{updatedCommentWordsCnt}/100</Typography>
+						</Stack>
+						<textarea
+							placeholder="Update your comment..."
+							value={updatedComment}
+							onChange={(e) => updateCommentInputHandler(e.target.value)}
+						/>
+						<Stack className="button-box">
+							<Button onClick={cancelButtonHandler}>Cancel</Button>
+							<Button onClick={() => updateButtonHandler(updatedCommentId)}>Update</Button>
+						</Stack>
+					</Stack>
+				</Backdrop>
 			</div>
 		);
 	}
