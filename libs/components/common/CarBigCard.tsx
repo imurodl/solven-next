@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, Box, Divider, Typography } from '@mui/material';
+import { Stack, Box, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -10,6 +10,10 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { useRouter } from 'next/router';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import SpeedIcon from '@mui/icons-material/Speed';
+import SettingsIcon from '@mui/icons-material/Settings';
+import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 
 interface CarBigCardProps {
 	car: Car;
@@ -23,7 +27,7 @@ const CarBigCard = (props: CarBigCardProps) => {
 	const router = useRouter();
 
 	/** HANDLERS **/
-	const goCarDetatilPage = (carId: string) => {
+	const goCarDetailPage = (carId: string) => {
 		router.push(`/car/detail?id=${carId}`);
 	};
 
@@ -31,7 +35,7 @@ const CarBigCard = (props: CarBigCardProps) => {
 		return <div>CAR BIG CARD</div>;
 	} else {
 		return (
-			<Stack className="property-big-card-box" onClick={() => goCarDetatilPage(car?._id)}>
+			<Stack className="property-big-card-box" onClick={() => goCarDetailPage(car?._id)}>
 				<Box
 					component={'div'}
 					className={'card-img'}
@@ -39,11 +43,10 @@ const CarBigCard = (props: CarBigCardProps) => {
 				>
 					{car && car?.carRank >= topCarRank && (
 						<div className={'status'}>
-							<img src="/img/icons/electricity.svg" alt="" />
+							<DirectionsCarIcon />
 							<span>top</span>
 						</div>
 					)}
-
 					<div className={'price'}>${formatterStr(car?.carPrice)}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>
@@ -51,43 +54,65 @@ const CarBigCard = (props: CarBigCardProps) => {
 					<p className={'desc'}>{car?.carAddress}</p>
 					<div className={'options'}>
 						<div>
-							<img src="/img/icons/bed.svg" alt="" />
-							<span>{car?.carMileage} mileage</span>
+							<SpeedIcon />
+							<span>{car?.carMileage}km</span>
 						</div>
 						<div>
-							<img src="/img/icons/room.svg" alt="" />
-							<span>{car?.carSeats} seats</span>
+							<LocalGasStationIcon />
+							<span>{car?.carFuelType}</span>
 						</div>
 						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{car?.carTransmission} m2</span>
+							<SettingsIcon />
+							<span>{car?.carTransmission}</span>
 						</div>
 					</div>
-					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bott'}>
 						<div>
 							{car?.carRent ? <p>Rent</p> : <span>Rent</span>}
 							{car?.carBarter ? <p>Barter</p> : <span>Barter</span>}
 						</div>
 						<div className="buttons-box">
-							<IconButton color={'default'}>
-								<RemoveRedEyeIcon />
-							</IconButton>
-							<Typography className="view-cnt">{car?.carViews}</Typography>
-							<IconButton
-								color={'default'}
+							<Stack flexDirection={'row'} style={{ width: 'auto' }}>
+								<IconButton
+									color={'default'}
+									sx={{
+										width: '32px',
+										height: '32px',
+										'& svg': {
+											fontSize: '20px',
+										},
+									}}
+								>
+									<RemoveRedEyeIcon />
+								</IconButton>
+								<Typography className="view-cnt">{car?.carViews}</Typography>
+							</Stack>
+							<Stack
+								flexDirection={'row'}
+								style={{ width: 'auto' }}
 								onClick={(e: any) => {
 									e.stopPropagation();
 									likeCarHandler(user, car?._id);
 								}}
 							>
-								{car?.meLiked && car?.meLiked[0]?.myFavorite ? (
-									<FavoriteIcon style={{ color: 'red' }} />
-								) : (
-									<FavoriteIcon />
-								)}
-							</IconButton>
-							<Typography className="view-cnt">{car?.carLikes}</Typography>
+								<IconButton
+									color={'default'}
+									sx={{
+										width: '32px',
+										height: '32px',
+										'& svg': {
+											fontSize: '22px',
+										},
+									}}
+								>
+									{car?.meLiked && car?.meLiked[0]?.myFavorite ? (
+										<FavoriteIcon style={{ color: '#eb6753' }} />
+									) : (
+										<FavoriteIcon />
+									)}
+								</IconButton>
+								<Typography className="view-cnt">{car?.carLikes}</Typography>
+							</Stack>
 						</div>
 					</div>
 				</Box>

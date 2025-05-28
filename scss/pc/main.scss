@@ -691,6 +691,7 @@ body::-webkit-scrollbar {
 		margin-top: 42px;
 		display: flex;
 		flex-direction: column;
+		background: $background-light;
 		.info {
 			display: flex;
 			flex-direction: row;
