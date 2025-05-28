@@ -6,7 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { carMileage, carYears } from '../../config';
+import { carMileage, carYears, REACT_APP_API_URL } from '../../config';
 import { CarFuelType, CarLocation, CarType } from '../../enums/car.enum';
 import { CarsInquiry } from '../../types/car/car.input';
 import { useRouter } from 'next/router';
@@ -412,6 +412,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						{carBrands.map((carBrand: CarBrand) => {
 							return (
 								<div onClick={() => propertyTypeSelectHandler(carBrand.carBrandName)} key={carBrand._id}>
+									<img src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`} alt={carBrand.carBrandName} />
 									<span>{carBrand.carBrandName}</span>
 								</div>
 							);
