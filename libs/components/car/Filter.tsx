@@ -77,7 +77,6 @@ const Filter = (props: FilterType) => {
 
 		if (searchFilter?.search?.locationList?.length == 0) {
 			delete searchFilter.search.locationList;
-			setShowMore(false);
 			router
 				.push(
 					`/car?input=${JSON.stringify({
@@ -326,6 +325,40 @@ const Filter = (props: FilterType) => {
 		[searchFilter],
 	);
 
+	const carFuelTypeSelectHandler = useCallback(
+		async (e: any) => {
+			try {
+				const isChecked = e.target.checked;
+				const value = e.target.value;
+				if (isChecked) {
+					await router.push(
+						`/car?input=${JSON.stringify({
+							...searchFilter,
+							search: { ...searchFilter.search, fuelTypeList: [...(searchFilter?.search?.fuelTypeList || []), value] },
+						})}`,
+						undefined,
+						{ scroll: false },
+					);
+				} else if (searchFilter?.search?.fuelTypeList?.includes(value)) {
+					await router.push(
+						`/car?input=${JSON.stringify({
+							...searchFilter,
+							search: {
+								...searchFilter.search,
+								fuelTypeList: searchFilter?.search?.fuelTypeList?.filter((item: string) => item !== value),
+							},
+						})}`,
+						undefined,
+						{ scroll: false },
+					);
+				}
+			} catch (err: any) {
+				console.log('ERROR, carFuelTypeSelectHandler:', err);
+			}
+		},
+		[searchFilter],
+	);
+
 	// for CarFuelType, CarTransmission and CarColor
 	const updateArrayFilter = async (field: keyof CarsInquiry['search'], value: string) => {
 		const currentList = Array.isArray(searchFilter?.search?.[field]) ? (searchFilter.search[field] as string[]) : [];
@@ -390,8 +423,6 @@ const Filter = (props: FilterType) => {
 						{ scroll: false },
 					);
 				}
-
-				console.log('carOptionSelectHandler:', e.target.value);
 			} catch (err: any) {
 				console.log('ERROR, carOptionSelectHandler:', err);
 			}
@@ -529,9 +560,13 @@ const Filter = (props: FilterType) => {
 	};
 
 	const clearAllHandler = async () => {
+		// Reset text search and brand
 		setSearchText('');
 		setSelectedBrand('');
-		setSearchFilter({
+		setShowMore(false);
+
+		// Reset all filter states
+		const clearedFilter = {
 			...initialInput,
 			search: {
 				pricesRange: {
@@ -546,29 +581,20 @@ const Filter = (props: FilterType) => {
 					start: 1990,
 					end: new Date().getFullYear(),
 				},
+				locationList: [],
+				typeList: [],
+				brandList: [],
+				modelList: [],
+				fuelTypeList: [],
+				transmissionList: [],
+				colorList: [],
+				carListingOptions: [],
+				text: '',
 			},
-		});
-		await router.push(
-			`/car?input=${JSON.stringify({
-				...initialInput,
-				search: {
-					pricesRange: {
-						start: 0,
-						end: 500000000,
-					},
-					mileageRange: {
-						start: 0,
-						end: 500000,
-					},
-					yearRange: {
-						start: 1990,
-						end: new Date().getFullYear(),
-					},
-				},
-			})}`,
-			undefined,
-			{ scroll: false },
-		);
+		};
+
+		setSearchFilter(clearedFilter);
+		await router.push(`/car?input=${JSON.stringify(clearedFilter)}`, undefined, { scroll: false });
 	};
 
 	if (device === 'mobile') {
@@ -718,12 +744,25 @@ const Filter = (props: FilterType) => {
 						{carFuelTypes.map((type) => (
 							<div key={type} className="input-box">
 								<Checkbox
-									id={type}
+									id={`fuel-${type}`}
+									value={type}
 									className="property-checkbox"
 									checked={searchFilter?.search?.fuelTypeList?.includes(type)}
-									onChange={() => updateArrayFilter('fuelTypeList', type)}
+									onChange={(e) => {
+										const newFilter = {
+											...searchFilter,
+											search: {
+												...searchFilter.search,
+												fuelTypeList: e.target.checked
+													? [...(searchFilter?.search?.fuelTypeList || []), type]
+													: searchFilter?.search?.fuelTypeList?.filter((item) => item !== type) || [],
+											},
+										};
+										setSearchFilter(newFilter);
+										router.push(`/car?input=${JSON.stringify(newFilter)}`, undefined, { scroll: false });
+									}}
 								/>
-								<label htmlFor={type}>{type}</label>
+								<label htmlFor={`fuel-${type}`}>{type}</label>
 							</div>
 						))}
 					</div>
@@ -732,17 +771,19 @@ const Filter = (props: FilterType) => {
 						<>
 							<div className="title">Transmission</div>
 							<div className="filter-section">
-								{carTransmissions.map((trans) => (
-									<div key={trans} className="input-box">
-										<Checkbox
-											id={trans}
-											className="property-checkbox"
-											checked={searchFilter?.search?.transmissionList?.includes(trans)}
-											onChange={() => updateArrayFilter('transmissionList', trans)}
-										/>
-										<label htmlFor={trans}>{trans}</label>
-									</div>
-								))}
+								<div style={{ display: 'flex', gap: '20px' }}>
+									{carTransmissions.map((trans) => (
+										<div key={trans} className="input-box">
+											<Checkbox
+												id={trans}
+												className="property-checkbox"
+												checked={searchFilter?.search?.transmissionList?.includes(trans)}
+												onChange={() => updateArrayFilter('transmissionList', trans)}
+											/>
+											<label htmlFor={trans}>{trans}</label>
+										</div>
+									))}
+								</div>
 							</div>
 
 							<div className="title">Year Range</div>
@@ -902,37 +943,31 @@ const Filter = (props: FilterType) => {
 
 							<div className="title">Options</div>
 							<div className="filter-section">
-								<div className="select-group">
-									<FormControl>
-										<Select
-											value={searchFilter?.search?.carListingOptions?.[0] || 'all'}
-											onChange={(e) => {
-												const value = e.target.value;
-												if (value === 'all') {
-													setSearchFilter({
-														...searchFilter,
-														search: {
-															...searchFilter.search,
-															carListingOptions: [],
-														},
-													});
-												} else {
-													setSearchFilter({
-														...searchFilter,
-														search: {
-															...searchFilter.search,
-															carListingOptions: [value],
-														},
-													});
-												}
-											}}
-											sx={{ '.MuiSelect-select': { height: 'auto' } }}
-										>
-											<MenuItem value="all">All Options</MenuItem>
-											<MenuItem value="carBarter">Barter</MenuItem>
-											<MenuItem value="carRent">Rent</MenuItem>
-										</Select>
-									</FormControl>
+								<div style={{ display: 'flex', gap: '20px' }}>
+									<div className="input-box">
+										<Checkbox
+											id="barter-option"
+											className="property-checkbox"
+											value="carBarter"
+											checked={(searchFilter?.search?.carOptions || []).includes('carBarter')}
+											onChange={carOptionSelectHandler}
+										/>
+										<label htmlFor="barter-option" style={{ cursor: 'pointer' }}>
+											<Typography className="propert-type">Barter</Typography>
+										</label>
+									</div>
+									<div className="input-box">
+										<Checkbox
+											id="rent-option"
+											className="property-checkbox"
+											value="carRent"
+											checked={(searchFilter?.search?.carOptions || []).includes('carRent')}
+											onChange={carOptionSelectHandler}
+										/>
+										<label htmlFor="rent-option" style={{ cursor: 'pointer' }}>
+											<Typography className="propert-type">Rent</Typography>
+										</label>
+									</div>
 								</div>
 							</div>
 						</>
