@@ -12,7 +12,7 @@
 				width: 100%;
 				flex-direction: row;
 				justify-content: space-between;
-				gap: 0; // Remove gap to make sidebar flush
+				gap: 0;
 				.back-frame {
 					width: 100%;
 					height: auto;
@@ -23,8 +23,7 @@
 					.left-config {
 						position: relative;
 						padding: 0;
-						min-width: 260px;
-						max-width: 16%;
+						width: 280px;
 						min-height: 100vh;
 						background: #050b20;
 						border: none;
@@ -180,7 +179,7 @@
 					}
 					.main-config {
 						position: relative;
-						min-width: 84%;
+						width: calc(100% - 280px);
 						align-items: center;
 						gap: 109px;
 						border-radius: $border-radius-small;
