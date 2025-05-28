@@ -54,7 +54,7 @@ const withLayoutBasic = (Component: any) => {
 					title = 'Community Detail';
 					desc = 'Home / Community / Detail';
 					break;
-				case '/cs':
+				case '/help':
 					title = 'Help';
 					desc = 'Home / Help';
 					break;

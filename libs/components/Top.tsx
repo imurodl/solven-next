@@ -165,8 +165,8 @@ const Top = () => {
 				<Link href={'/community?articleCategory=FREE'}>
 					<Typography> {t('Community')} </Typography>
 				</Link>
-				<Link href={'/cs'}>
-					<Typography> {t('CS')} </Typography>
+				<Link href={'/help'}>
+					<Typography> Help </Typography>
 				</Link>
 			</Stack>
 		);
@@ -198,8 +198,8 @@ const Top = () => {
 									<div> {t('My Page')} </div>
 								</Link>
 							)}
-							<Link href={'/cs'}>
-								<div> {t('CS')} </div>
+							<Link href={'/help'}>
+								<div> Help </div>
 							</Link>
 						</Box>
 						<Box component={'div'} className={'user-box'}>

@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 import { Box, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import Notice from '../../libs/components/cs/Notice';
-import Faq from '../../libs/components/cs/Faq';
+import Notice from '../../libs/components/help/Notice';
+import Faq from '../../libs/components/help/Faq';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import SupportIcon from '@mui/icons-material/Support';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
@@ -25,7 +25,7 @@ const CS: NextPage = (props: any) => {
 	const changeTabHandler = (tab: string) => {
 		router.push(
 			{
-				pathname: '/cs',
+				pathname: '/help',
 				query: { tab: tab },
 			},
 			undefined,
