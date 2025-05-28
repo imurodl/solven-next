@@ -1,168 +1,145 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 import Link from 'next/link';
-import { List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import Collapse from '@mui/material/Collapse';
-import Typography from '@mui/material/Typography';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import { ChatsCircle, Headset, User, UserCircleGear } from 'phosphor-react';
-import cookies from 'js-cookie';
+import { List, Stack, Typography, Box } from '@mui/material';
+import { User, UserCircleGear, ChatsCircle, Headset, SignOut } from 'phosphor-react';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
+import { useReactiveVar } from '@apollo/client';
+import { userVar } from '../../../apollo/store';
+import { REACT_APP_API_URL } from '../../config';
+import { logOut } from '../../auth';
+import { sweetConfirmAlert } from '../../sweetAlert';
 
-const AdminMenuList = (props: any) => {
+const AdminMenuList = () => {
 	const router = useRouter();
 	const device = useDeviceDetect();
 	const [mobileLayout, setMobileLayout] = useState(false);
-	const [openSubMenu, setOpenSubMenu] = useState('Users');
-	const [openMenu, setOpenMenu] = useState(typeof window === 'object' ? cookies.get('admin_menu') === 'true' : false);
-	const [clickMenu, setClickMenu] = useState<any>([]);
-	const [clickSubMenu, setClickSubMenu] = useState('');
+	const user = useReactiveVar(userVar);
+	const pathname = router.asPath;
 
-	const {
-		router: { pathname },
-	} = props;
-
-	const pathnames = pathname.split('/').filter((x: any) => x);
-
-	/** LIFECYCLES **/
-	useEffect(() => {
-		if (device === 'mobile') setMobileLayout(true);
-
-		switch (pathnames[1]) {
-			case 'cars':
-				setClickMenu(['Cars']);
-				break;
-			case 'community':
-				setClickMenu(['Community']);
-				break;
-			case 'cs':
-				setClickMenu(['Cs']);
-				break;
-			default:
-				setClickMenu(['Users']);
-				break;
-		}
-
-		switch (pathnames[2]) {
-			case 'logs':
-				setClickSubMenu('Logs');
-				break;
-			case 'inquiry':
-				setClickSubMenu('1:1 Inquiry');
-				break;
-			case 'notice':
-				setClickSubMenu('Notice');
-				break;
-			case 'faq':
-				setClickSubMenu('FAQ');
-				break;
-			case 'board_create':
-				setClickSubMenu('Board Create');
-				break;
-			default:
-				setClickSubMenu('List');
-				break;
-		}
-	}, []);
-
-	/** HANDLERS **/
-	const subMenuChangeHandler = (target: string) => {
-		if (clickMenu.find((item: string) => item === target)) {
-			// setOpenSubMenu('');
-			setClickMenu(clickMenu.filter((menu: string) => target !== menu));
-		} else {
-			// setOpenSubMenu(target);
-			setClickMenu([...clickMenu, target]);
+	const logoutHandler = async () => {
+		try {
+			if (await sweetConfirmAlert('Do you want to logout?')) logOut();
+			router.push('/').then();
+		} catch (err: any) {
+			console.log('ERROR, logoutHandler:', err.message);
 		}
 	};
 
-	const menu_set = [
+	const menu_sections = [
 		{
-			title: 'Users',
-			icon: <User size={20} color="#bdbdbd" weight="fill" />,
-			on_click: () => subMenuChangeHandler('Users'),
+			title: 'MANAGE USERS',
+			items: [
+				{
+					title: 'User List',
+					icon: <User size={20} weight="fill" className="menu-icon" />,
+					url: '/_admin/users',
+				},
+			],
 		},
 		{
-			title: 'Cars',
-			icon: <UserCircleGear size={20} color="#bdbdbd" weight="fill" />,
-			on_click: () => subMenuChangeHandler('Cars'),
+			title: 'MANAGE LISTINGS',
+			items: [
+				{
+					title: 'Car List',
+					icon: <UserCircleGear size={20} weight="fill" className="menu-icon" />,
+					url: '/_admin/cars',
+				},
+			],
 		},
 		{
-			title: 'Community',
-			icon: <ChatsCircle size={20} color="#bdbdbd" weight="fill" />,
-			on_click: () => subMenuChangeHandler('Community'),
+			title: 'COMMUNITY',
+			items: [
+				{
+					title: 'Articles',
+					icon: <ChatsCircle size={20} weight="fill" className="menu-icon" />,
+					url: '/_admin/community',
+				},
+			],
 		},
 		{
-			title: 'Cs',
-			icon: <Headset size={20} color="#bdbdbd" weight="fill" />,
-			on_click: () => subMenuChangeHandler('Cs'),
+			title: 'HELP CENTER',
+			items: [
+				{
+					title: 'FAQ',
+					icon: <Headset size={20} weight="fill" className="menu-icon" />,
+					url: '/_admin/cs/faq',
+				},
+				{
+					title: 'Notice',
+					icon: <Headset size={20} weight="fill" className="menu-icon" />,
+					url: '/_admin/cs/notice',
+				},
+			],
 		},
 	];
 
-	const sub_menu_set: any = {
-		Users: [{ title: 'List', url: '/_admin/users' }],
-		Cars: [{ title: 'List', url: '/_admin/cars' }],
-		Community: [{ title: 'List', url: '/_admin/community' }],
-		Cs: [
-			{ title: 'FAQ', url: '/_admin/cs/faq' },
-			{ title: 'Notice', url: '/_admin/cs/notice' },
-		],
-	};
+	if (device === 'mobile') {
+		return <div>ADMIN MENU</div>;
+	}
 
 	return (
-		<>
-			{menu_set.map((item, index) => (
-				<List className={'menu_wrap'} key={index} disablePadding>
-					<ListItemButton
-						onClick={item.on_click}
-						component={'li'}
-						className={clickMenu[0] === item.title ? 'menu on' : 'menu'}
-						sx={{
-							minHeight: 48,
-							justifyContent: openMenu ? 'initial' : 'center',
-							px: 2.5,
-						}}
-					>
-						<ListItemIcon
-							sx={{
-								minWidth: 0,
-								mr: openMenu ? 3 : 'auto',
-								justifyContent: 'center',
-							}}
-						>
-							{item.icon}
-						</ListItemIcon>
-						<ListItemText>{item.title}</ListItemText>
-						{clickMenu.find((menu: string) => item.title === menu) ? <ExpandLess /> : <ExpandMore />}
-					</ListItemButton>
-					<Collapse
-						in={!!clickMenu.find((menu: string) => menu === item.title)}
-						className="menu"
-						timeout="auto"
-						component="li"
-						unmountOnExit
-					>
-						<List className="menu-list" disablePadding>
-							{sub_menu_set[item.title] &&
-								sub_menu_set[item.title].map((sub: any, i: number) => (
-									<Link href={sub.url} shallow={true} replace={true} key={i}>
-										<ListItemButton
-											component="li"
-											className={clickMenu[0] === item.title && clickSubMenu === sub.title ? 'li on' : 'li'}
-										>
-											<Typography variant={sub.title} component={'span'}>
-												{sub.title}
-											</Typography>
-										</ListItemButton>
-									</Link>
-								))}
+		<Stack className="admin-menu">
+			{/* Profile Section */}
+			<Stack className="profile">
+				<Box component="div" className="profile-img">
+					<img
+						src={user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'}
+						alt="member-photo"
+					/>
+				</Box>
+				<Stack className="user-info">
+					<Typography className="user-name">{user?.memberNick || 'Admin'}</Typography>
+					<Box component="div" className="user-phone">
+						<img src="/img/icons/call.svg" alt="icon" />
+						<Typography className="p-number">{user?.memberPhone || '01074864433'}</Typography>
+					</Box>
+					<Typography className="view-list">ADMIN</Typography>
+				</Stack>
+			</Stack>
+
+			{/* Menu Sections */}
+			<Stack className="sections">
+				{menu_sections.map((section, index) => (
+					<Stack key={index} className="section">
+						<Typography className="title" variant="h5">
+							{section.title}
+						</Typography>
+						<List className="sub-section">
+							{section.items.map((item, i) => (
+								<Link key={i} href={item.url} shallow={true} replace={true}>
+									<div className={`flex-box ${pathname === item.url ? 'focus' : ''}`}>
+										{item.icon}
+										<Typography className="sub-title" variant="subtitle1" component="p">
+											{item.title}
+										</Typography>
+									</div>
+								</Link>
+							))}
 						</List>
-					</Collapse>
-				</List>
-			))}
-		</>
+					</Stack>
+				))}
+
+				{/* Logout Section */}
+				<Stack className="section">
+					<Typography className="title" variant="h5">
+						MANAGE ACCOUNT
+					</Typography>
+					<List className="sub-section">
+						<div className="flex-box" onClick={logoutHandler}>
+							<SignOut size={20} weight="fill" className="menu-icon" />
+							<Typography className="sub-title" variant="subtitle1" component="p">
+								Logout
+							</Typography>
+						</div>
+					</List>
+				</Stack>
+			</Stack>
+		</Stack>
 	);
 };
 
 export default withRouter(AdminMenuList);
+function setLoading(arg0: boolean) {
+	throw new Error('Function not implemented.');
+}
