@@ -4,6 +4,8 @@ import { format } from 'date-fns';
 import { useReactiveVar } from '@apollo/client';
 import { socketVar, userVar } from '../../../apollo/store';
 import ScrollableFeed from 'react-scrollable-feed';
+import { useSwipeable } from 'react-swipeable';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 interface Notification {
 	id: string;
@@ -13,6 +15,67 @@ interface Notification {
 	status: string;
 	createdAt: Date;
 }
+
+const NotificationItem = ({ notification, onRead }: { notification: Notification; onRead: () => void }) => {
+	const handlers = useSwipeable({
+		onSwipedRight: () => {
+			if (notification.status === 'WAIT') {
+				onRead();
+			}
+		},
+		trackMouse: true,
+	});
+
+	const getNotificationIcon = (type: string) => {
+		switch (type) {
+			case 'LIKE':
+				return '❤️';
+			case 'COMMENT':
+				return '💬';
+			default:
+				return '📢';
+		}
+	};
+
+	return (
+		<div {...handlers}>
+			<MenuItem
+				sx={{
+					py: 2,
+					px: 3,
+					borderBottom: '1px solid rgba(0, 0, 0, 0.05)',
+					backgroundColor: notification.status === 'WAIT' ? 'rgba(64, 95, 242, 0.05)' : 'transparent',
+					'&:hover': {
+						backgroundColor: 'rgba(64, 95, 242, 0.1)',
+					},
+					position: 'relative',
+					transition: 'all 0.3s ease',
+				}}
+			>
+				<Stack spacing={1} sx={{ width: '100%' }}>
+					<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+						<Typography variant="body2" sx={{ fontSize: '20px' }}>
+							{getNotificationIcon(notification.type)}
+						</Typography>
+						<Stack sx={{ flex: 1 }}>
+							<Typography variant="body1" sx={{ fontWeight: 500 }}>
+								{notification.title}
+							</Typography>
+							{notification.desc && (
+								<Typography variant="body2" color="text.secondary">
+									{notification.desc}
+								</Typography>
+							)}
+						</Stack>
+					</Box>
+					<Typography variant="caption" color="text.secondary">
+						{format(new Date(notification.createdAt), 'MMM dd, yyyy HH:mm')}
+					</Typography>
+				</Stack>
+			</MenuItem>
+		</div>
+	);
+};
 
 const NotificationModal = ({
 	anchorEl,
@@ -65,6 +128,29 @@ const NotificationModal = ({
 		}
 	}, [open, user?._id]);
 
+	// Mark notifications as read when modal opens
+	useEffect(() => {
+		if (open && notifications.length > 0 && socket?.readyState === WebSocket.OPEN) {
+			console.log('NotificationModal: Marking notifications as read');
+
+			// Mark each unread notification as read
+			notifications.forEach((notification) => {
+				if (notification.status === 'WAIT') {
+					socket.send(
+						JSON.stringify({
+							event: 'readNotification',
+							notificationId: notification.id,
+						}),
+					);
+				}
+			});
+
+			// Update local state
+			setNotifications((prev) => prev.map((n) => ({ ...n, status: 'READ' })));
+			setUnreadCount(0);
+		}
+	}, [open, notifications, socket?.readyState]);
+
 	useEffect(() => {
 		console.log('NotificationModal: Socket state:', {
 			socketExists: !!socket,
@@ -107,28 +193,25 @@ const NotificationModal = ({
 						});
 					} else if (data.event === 'notifications_list') {
 						console.log('NotificationModal: Received notifications list:', data.data);
+						// Show all notifications
 						setNotifications(data.data);
 
-						// Update unread count
-						const newUnreadCount = data.data.filter((n: Notification) => n.status === 'WAIT').length;
-						setUnreadCount(newUnreadCount);
-					} else if (data.event === 'unreadNotifications') {
-						console.log('NotificationModal: Received initial unread notifications:', data.payload);
-						// Add unread notifications to the list
+						// Update unread count based on WAIT status
+						const unreadCount = data.data.filter((n: Notification) => n.status === 'WAIT').length;
+						setUnreadCount(unreadCount);
+					} else if (data.event === 'notificationStatus') {
+						// Handle notification status update from server
+						console.log('NotificationModal: Received status update:', data.payload);
+						const { id, status } = data.payload;
+
 						setNotifications((prev) => {
-							const newNotifications = [...data.payload];
-							// Add existing notifications that aren't in the unread list
-							prev.forEach((notification) => {
-								if (!newNotifications.some((n) => n.id === notification.id)) {
-									newNotifications.push(notification);
-								}
-							});
+							const updatedNotifications = prev.map((n) => (n.id === id ? { ...n, status } : n));
 
 							// Update unread count
-							const newUnreadCount = newNotifications.filter((n) => n.status === 'WAIT').length;
+							const newUnreadCount = updatedNotifications.filter((n) => n.status === 'WAIT').length;
 							setUnreadCount(newUnreadCount);
 
-							return newNotifications;
+							return updatedNotifications;
 						});
 					}
 				} catch (error) {
@@ -149,44 +232,30 @@ const NotificationModal = ({
 		};
 	}, [socket, user]);
 
-	const getNotificationIcon = (type: string) => {
-		switch (type) {
-			case 'LIKE':
-				return '❤️';
-			case 'COMMENT':
-				return '💬';
-			default:
-				return '📢';
-		}
-	};
-
-	const handleNotificationClick = async (notification: Notification) => {
+	const handleReadNotification = async (notification: Notification) => {
 		if (notification.status === 'WAIT') {
 			try {
-				// Update notification status locally
-				setNotifications((prev) => prev.map((n) => (n.id === notification.id ? { ...n, status: 'READ' } : n)));
-
-				// Update unread count
-				setUnreadCount((prev) => Math.max(0, prev - 1));
-
-				// Send read status to server
 				if (socket?.readyState === WebSocket.OPEN) {
 					socket.send(
 						JSON.stringify({
-							event: 'mark_notification_read',
-							payload: {
-								notificationId: notification.id,
-							},
+							event: 'readNotification',
+							notificationId: notification.id,
 						}),
 					);
+
+					// Remove the notification from the list when marked as read
+					setNotifications((prev) => prev.filter((n) => n.id !== notification.id));
+
+					// Update unread count
+					const newUnreadCount = Math.max(0, unreadCount - 1);
+					setUnreadCount(newUnreadCount);
+				} else {
+					console.error('NotificationModal: Socket not ready to mark notification as read');
 				}
 			} catch (error) {
 				console.error('Error marking notification as read:', error);
 			}
 		}
-
-		// TODO: Handle navigation based on notification type
-		onClose();
 	};
 
 	return (
@@ -222,14 +291,16 @@ const NotificationModal = ({
 					alignItems: 'center',
 				}}
 			>
-				<Typography variant="h6" sx={{ fontWeight: 600 }}>
-					Notifications
-				</Typography>
-				{unreadCount > 0 && (
-					<Typography variant="caption" color="primary">
-						{unreadCount} unread
+				<Stack direction="row" alignItems="center" spacing={1}>
+					<Typography variant="h6" sx={{ fontWeight: 600 }}>
+						Notifications
 					</Typography>
-				)}
+					{unreadCount > 0 && (
+						<Typography variant="caption" color="primary">
+							{unreadCount} unread
+						</Typography>
+					)}
+				</Stack>
 			</Box>
 
 			<ScrollableFeed>
@@ -240,40 +311,11 @@ const NotificationModal = ({
 						</Box>
 					) : (
 						notifications.map((notification) => (
-							<MenuItem
+							<NotificationItem
 								key={notification.id}
-								onClick={() => handleNotificationClick(notification)}
-								sx={{
-									py: 2,
-									px: 3,
-									borderBottom: '1px solid rgba(0, 0, 0, 0.05)',
-									backgroundColor: notification.status === 'WAIT' ? 'rgba(64, 95, 242, 0.05)' : 'transparent',
-									'&:hover': {
-										backgroundColor: 'rgba(64, 95, 242, 0.1)',
-									},
-								}}
-							>
-								<Stack spacing={1} sx={{ width: '100%' }}>
-									<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-										<Typography variant="body2" sx={{ fontSize: '20px' }}>
-											{getNotificationIcon(notification.type)}
-										</Typography>
-										<Stack>
-											<Typography variant="body1" sx={{ fontWeight: 500 }}>
-												{notification.title}
-											</Typography>
-											{notification.desc && (
-												<Typography variant="body2" color="text.secondary">
-													{notification.desc}
-												</Typography>
-											)}
-										</Stack>
-									</Box>
-									<Typography variant="caption" color="text.secondary">
-										{format(new Date(notification.createdAt), 'MMM dd, yyyy HH:mm')}
-									</Typography>
-								</Stack>
-							</MenuItem>
+								notification={notification}
+								onRead={() => handleReadNotification(notification)}
+							/>
 						))
 					)}
 				</Stack>
