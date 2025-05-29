@@ -19,8 +19,10 @@ const AdminMenuList = () => {
 
 	const logoutHandler = async () => {
 		try {
-			if (await sweetConfirmAlert('Do you want to logout?')) logOut();
-			router.push('/').then();
+			if (await sweetConfirmAlert('Do you want to logout?')) {
+				logOut();
+				router.push('/').then();
+			}
 		} catch (err: any) {
 			console.log('ERROR, logoutHandler:', err.message);
 		}
