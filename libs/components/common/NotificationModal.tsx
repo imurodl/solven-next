@@ -107,21 +107,13 @@ const NotificationModal = ({
 		onUnreadCountChange?.(unreadCount);
 	}, [unreadCount, onUnreadCountChange]);
 
-	// Fetch existing notifications when modal opens
+	// Fetch notifications when modal opens
 	useEffect(() => {
 		if (open && user?._id) {
 			console.log('NotificationModal: Modal opened, fetching notifications');
 
-			// Send a message to request notifications
 			if (socket?.readyState === WebSocket.OPEN) {
-				const requestMessage = {
-					event: 'get_notifications',
-					payload: {
-						userId: user._id,
-					},
-				};
-				console.log('NotificationModal: Requesting notifications:', requestMessage);
-				socket.send(JSON.stringify(requestMessage));
+				socket.send(JSON.stringify({ event: 'get_notifications' }));
 			} else {
 				console.error('NotificationModal: Socket not ready to request notifications');
 			}
@@ -133,41 +125,24 @@ const NotificationModal = ({
 		if (open && notifications.length > 0 && socket?.readyState === WebSocket.OPEN) {
 			console.log('NotificationModal: Marking notifications as read');
 
-			// Mark each unread notification as read
-			notifications.forEach((notification) => {
-				if (notification.status === 'WAIT') {
-					socket.send(
-						JSON.stringify({
-							event: 'readNotification',
-							notificationId: notification.id,
-						}),
-					);
-				}
-			});
+			// Get IDs of unread notifications
+			const unreadNotificationIds = notifications.filter((n) => n.status === 'WAIT').map((n) => n.id);
 
-			// Update local state
-			setNotifications((prev) => prev.map((n) => ({ ...n, status: 'READ' })));
-			setUnreadCount(0);
+			if (unreadNotificationIds.length > 0) {
+				console.log('Sending markNotificationsAsRead with IDs:', unreadNotificationIds);
+				// Send markNotificationsAsRead event with just the array of IDs
+				socket.send(
+					JSON.stringify({
+						event: 'markNotificationsAsRead',
+						// Send just the array of IDs as the backend expects
+						data: unreadNotificationIds,
+					}),
+				);
+			}
 		}
-	}, [open, notifications, socket?.readyState]);
+	}, [open, notifications]);
 
 	useEffect(() => {
-		console.log('NotificationModal: Socket state:', {
-			socketExists: !!socket,
-			userExists: !!user?._id,
-			readyState: socket?.readyState,
-			connectionState:
-				socket?.readyState === WebSocket.OPEN
-					? 'OPEN'
-					: socket?.readyState === WebSocket.CONNECTING
-					? 'CONNECTING'
-					: socket?.readyState === WebSocket.CLOSED
-					? 'CLOSED'
-					: socket?.readyState === WebSocket.CLOSING
-					? 'CLOSING'
-					: 'UNKNOWN',
-		});
-
 		if (socket && user?._id) {
 			socket.onmessage = (msg) => {
 				try {
@@ -175,42 +150,29 @@ const NotificationModal = ({
 					console.log('Received websocket message:', data);
 
 					if (data.event === 'notification') {
-						// Handle the notification payload from the backend
+						// Handle new notification
 						const notification = data.payload;
 						setNotifications((prev) => {
-							// Check for duplicates
 							const isDuplicate = prev.some((n) => n.id === notification.id);
 							if (isDuplicate) return prev;
 
-							// Add new notification at the beginning
 							const newNotifications = [notification, ...prev];
-
-							// Update unread count
-							const newUnreadCount = newNotifications.filter((n) => n.status === 'WAIT').length;
-							setUnreadCount(newUnreadCount);
-
+							setUnreadCount(newNotifications.filter((n) => n.status === 'WAIT').length);
 							return newNotifications;
 						});
 					} else if (data.event === 'notifications_list') {
+						// Handle notifications list (now only contains unread notifications)
 						console.log('NotificationModal: Received notifications list:', data.data);
-						// Show all notifications
 						setNotifications(data.data);
-
-						// Update unread count based on WAIT status
-						const unreadCount = data.data.filter((n: Notification) => n.status === 'WAIT').length;
-						setUnreadCount(unreadCount);
+						setUnreadCount(data.data.length); // All notifications in the list are unread
 					} else if (data.event === 'notificationStatus') {
-						// Handle notification status update from server
+						// Handle status updates
 						console.log('NotificationModal: Received status update:', data.payload);
 						const { id, status } = data.payload;
 
 						setNotifications((prev) => {
 							const updatedNotifications = prev.map((n) => (n.id === id ? { ...n, status } : n));
-
-							// Update unread count
-							const newUnreadCount = updatedNotifications.filter((n) => n.status === 'WAIT').length;
-							setUnreadCount(newUnreadCount);
-
+							setUnreadCount(updatedNotifications.filter((n) => n.status === 'WAIT').length);
 							return updatedNotifications;
 						});
 					}
@@ -231,32 +193,6 @@ const NotificationModal = ({
 			}
 		};
 	}, [socket, user]);
-
-	const handleReadNotification = async (notification: Notification) => {
-		if (notification.status === 'WAIT') {
-			try {
-				if (socket?.readyState === WebSocket.OPEN) {
-					socket.send(
-						JSON.stringify({
-							event: 'readNotification',
-							notificationId: notification.id,
-						}),
-					);
-
-					// Remove the notification from the list when marked as read
-					setNotifications((prev) => prev.filter((n) => n.id !== notification.id));
-
-					// Update unread count
-					const newUnreadCount = Math.max(0, unreadCount - 1);
-					setUnreadCount(newUnreadCount);
-				} else {
-					console.error('NotificationModal: Socket not ready to mark notification as read');
-				}
-			} catch (error) {
-				console.error('Error marking notification as read:', error);
-			}
-		}
-	};
 
 	return (
 		<Menu
@@ -314,7 +250,7 @@ const NotificationModal = ({
 							<NotificationItem
 								key={notification.id}
 								notification={notification}
-								onRead={() => handleReadNotification(notification)}
+								onRead={() => {}} // Empty function since we handle read status when modal opens
 							/>
 						))
 					)}
