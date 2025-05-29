@@ -112,6 +112,24 @@ const NotificationModal = ({
 						// Update unread count
 						const newUnreadCount = data.data.filter((n: Notification) => n.status === 'WAIT').length;
 						setUnreadCount(newUnreadCount);
+					} else if (data.event === 'unreadNotifications') {
+						console.log('NotificationModal: Received initial unread notifications:', data.payload);
+						// Add unread notifications to the list
+						setNotifications((prev) => {
+							const newNotifications = [...data.payload];
+							// Add existing notifications that aren't in the unread list
+							prev.forEach((notification) => {
+								if (!newNotifications.some((n) => n.id === notification.id)) {
+									newNotifications.push(notification);
+								}
+							});
+
+							// Update unread count
+							const newUnreadCount = newNotifications.filter((n) => n.status === 'WAIT').length;
+							setUnreadCount(newUnreadCount);
+
+							return newNotifications;
+						});
 					}
 				} catch (error) {
 					console.error('Error processing notification:', error);

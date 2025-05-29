@@ -83,6 +83,12 @@ const Top = () => {
 						if (data.payload.status === 'WAIT') {
 							setHasUnreadNotifications(true);
 						}
+					} else if (data.event === 'unreadNotifications') {
+						console.log('TopBasic: Received initial unread notifications:', data.payload);
+						// If there are any unread notifications, show the badge
+						if (data.payload && data.payload.length > 0) {
+							setHasUnreadNotifications(true);
+						}
 					}
 				} catch (error) {
 					console.error('TopBasic: Error processing message:', error);
