@@ -45,7 +45,7 @@ const Join: NextPage = (props: any) => {
 		console.warn(input);
 		try {
 			await logIn(input.nick, input.password);
-			await router.push(`${router.query.referrer ?? '/'}`);
+			window.location.href = router.query.referrer?.toString() ?? '/';
 		} catch (err: any) {
 			await sweetMixinErrorAlert(err.message);
 		}
