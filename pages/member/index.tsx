@@ -60,7 +60,7 @@ const MemberPage: NextPage = () => {
 				},
 			});
 			await sweetTopSmallSuccessAlert('Followed!', 800);
-			await refetch({ input: query })
+			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
 		}
@@ -77,7 +77,7 @@ const MemberPage: NextPage = () => {
 				},
 			});
 			await sweetTopSmallSuccessAlert('Unfollowed!', 800);
-			await refetch({ input: query })
+			await refetch({ input: query });
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
 		}
@@ -86,17 +86,17 @@ const MemberPage: NextPage = () => {
 		try {
 			if (!id) return;
 			if (!user._id) throw new Error(Messages.error2);
-			
+
 			await likeTargetMember({
 				variables: {
 					input: id,
 				},
 			});
-			await sweetTopSmallSuccessAlert("Success!", 800);
-			await refetch({ input: query })
+			await sweetTopSmallSuccessAlert('Success!', 800);
+			await refetch({ input: query });
 		} catch (err: any) {
 			console.log('ERROR, likeMemberHandler:', err.message);
-			sweetMixinErrorAlert(err.message).then()
+			sweetMixinErrorAlert(err.message).then();
 		}
 	};
 
@@ -120,7 +120,7 @@ const MemberPage: NextPage = () => {
 							<Stack className={'left-config'}>
 								<MemberMenu subscribeHandler={subscribeHandler} unsubscribeHandler={unsubscribeHandler} />
 							</Stack>
-							<Stack className="main-config" mb={'76px'}>
+							<Stack className="main-config">
 								<Stack className={'list-config'}>
 									{category === 'properties' && <MemberProperties />}
 									{category === 'followers' && (

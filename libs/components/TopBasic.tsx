@@ -229,7 +229,7 @@ const Top = () => {
 					<Stack
 						className="container"
 						style={{
-							width: router.pathname === '/mypage' ? '100%' : '1300px',
+							width: router.pathname === '/mypage' || '/member?' ? '100%' : '1300px',
 						}}
 					>
 						<Box component={'div'} className={'logo-box'}>
@@ -238,7 +238,7 @@ const Top = () => {
 									src="/img/logo/logoWhite.svg"
 									alt=""
 									style={{
-										marginLeft: router.pathname === '/mypage' ? '80px' : '0',
+										marginLeft: router.pathname === '/mypage' || '/member?' ? '80px' : '0',
 									}}
 								/>
 							</Link>
@@ -269,7 +269,7 @@ const Top = () => {
 							component={'div'}
 							className={'user-box'}
 							style={{
-								marginRight: router.pathname === '/mypage' ? '50px' : '0',
+								marginRight: router.pathname === '/mypage' || '/member?' ? '50px' : '0',
 							}}
 						>
 							{user?._id ? (

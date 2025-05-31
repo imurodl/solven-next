@@ -60,24 +60,13 @@ const MemberMenu = (props: MemberMenuProps) => {
 						<Typography className={'view-list'}>{member?.memberType}</Typography>
 					</Stack>
 				</Stack>
-				<Stack className="follow-button-box">
+				<Stack className="follow-button">
 					{member?.meFollowed && member?.meFollowed[0]?.myFollowing ? (
-						<>
-							<Button
-								variant="outlined"
-								sx={{ background: '#b9b9b9' }}
-								onClick={() => unsubscribeHandler(member?._id, getMemberRefetch, memberId)}
-							>
-								Unfollow
-							</Button>
-							<Typography>Following</Typography>
-						</>
+						<Button className="following" onClick={() => unsubscribeHandler(member?._id, getMemberRefetch, memberId)}>
+							Unfollow
+						</Button>
 					) : (
-						<Button
-							variant="contained"
-							sx={{ background: '#ff5d18', ':hover': { background: '#ff5d18' } }}
-							onClick={() => subscribeHandler(member?._id, getMemberRefetch, memberId)}
-						>
+						<Button className="follow" onClick={() => subscribeHandler(member?._id, getMemberRefetch, memberId)}>
 							Follow
 						</Button>
 					)}

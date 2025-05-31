@@ -182,6 +182,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 						<img
 							src={agent?.memberImage ? `${REACT_APP_API_URL}/${agent?.memberImage}` : '/img/profile/defaultUser.svg'}
 							alt=""
+							onClick={() => redirectToMemberPageHandler(agent?._id as string)}
 						/>
 						<Box component={'div'} className={'info'} onClick={() => redirectToMemberPageHandler(agent?._id as string)}>
 							<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>

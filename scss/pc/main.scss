@@ -1015,30 +1015,24 @@ body::-webkit-scrollbar {
 		.footer {
 			background-color: #050b20;
 			color: #fff;
-			padding: 60px 0 0;
-
 			.footer-inner {
 				max-width: 1920px;
 				margin: 0 auto;
 				padding: 0 20px;
 			}
-
 			.footer-container {
 				max-width: 1300px;
 				margin: 0 auto;
 				width: 100%;
-
 				&.mypage {
 					max-width: 100%;
 					padding: 0 4rem;
 				}
-
 				.subscribe-section {
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
 					margin-bottom: 48px;
-
 					.title-box {
 						h2 {
 							font-weight: 500;
@@ -1047,7 +1041,6 @@ body::-webkit-scrollbar {
 							font-family: $font;
 							margin-bottom: 8px;
 						}
-
 						p {
 							font-weight: 400;
 							font-size: 16px;
@@ -1056,12 +1049,10 @@ body::-webkit-scrollbar {
 							font-family: $font;
 						}
 					}
-
 					.input-box {
 						display: flex;
 						align-items: center;
 						gap: 8px;
-
 						input {
 							background: #f8f5f0;
 							border-radius: 50px;
@@ -1072,12 +1063,10 @@ body::-webkit-scrollbar {
 							border: none;
 							outline: none;
 							font-family: $font;
-
 							&::placeholder {
 								color: #6b7280;
 							}
 						}
-
 						button {
 							background: #405ff2;
 							color: #fff;
@@ -1089,14 +1078,12 @@ body::-webkit-scrollbar {
 							cursor: pointer;
 							transition: $transition-fast;
 							font-family: $font;
-
 							&:hover {
 								background: #0146a6;
 							}
 						}
 					}
 				}
-
 				.footer-content {
 					display: flex;
 					justify-content: space-between;
@@ -1104,10 +1091,8 @@ body::-webkit-scrollbar {
 					padding-top: 32px;
 					border-top: 1px solid #333;
 					flex-wrap: wrap;
-
 					.footer-column {
 						min-width: 150px;
-
 						.column-title {
 							font-weight: 700;
 							margin-bottom: 8px;
@@ -1115,13 +1100,11 @@ body::-webkit-scrollbar {
 							font-size: 17px;
 							color: #fff;
 						}
-
 						.footer-links {
 							display: flex;
 							flex-direction: column;
 							gap: 16px;
 							margin-top: 16px;
-
 							a {
 								cursor: pointer;
 								color: #fff;
@@ -1131,7 +1114,6 @@ body::-webkit-scrollbar {
 								font-family: $font;
 								text-decoration: none;
 								transition: $transition-fast;
-
 								&:hover {
 									text-decoration: underline;
 									color: #fff;
@@ -1139,22 +1121,18 @@ body::-webkit-scrollbar {
 							}
 						}
 					}
-
 					.app-section {
 						min-width: 220px;
-
 						.app-title {
 							font-weight: 700;
 							margin-bottom: 16px;
 							font-family: $font;
 							color: #fff;
 						}
-
 						.app-buttons {
 							display: flex;
 							flex-direction: column;
 							gap: 12px;
-
 							.app-button {
 								display: flex;
 								align-items: center;
@@ -1166,30 +1144,24 @@ body::-webkit-scrollbar {
 								cursor: pointer;
 								transition: $transition-fast;
 								text-decoration: none;
-
 								&:hover {
 									background: #fff;
 									color: #000;
-
 									.app-icon {
 										color: #000;
 									}
 								}
-
 								.app-icon {
 									color: #fff;
 									transition: $transition-fast;
 								}
-
 								.app-text {
 									display: flex;
 									flex-direction: column;
-
 									.store-type {
 										font-size: 12px;
 										opacity: 0.8;
 									}
-
 									.store-name {
 										font-weight: 700;
 										font-size: 14px;
@@ -1197,33 +1169,27 @@ body::-webkit-scrollbar {
 								}
 							}
 						}
-
 						.social-section {
 							margin-top: 32px;
-
 							.social-title {
 								font-weight: 600;
 								margin-bottom: 16px;
 								font-family: $font;
 								color: #fff;
 							}
-
 							.social-icons {
 								display: flex;
 								gap: 8px;
-
 								.social-icon {
 									color: #fff;
 									padding: 8px;
 									border-radius: 8px;
 									cursor: pointer;
 									transition: $transition-fast;
-
 									&:hover {
 										background: rgba(255, 255, 255, 0.1);
 										transform: translateY(-2px);
 									}
-
 									svg {
 										font-size: 24px;
 									}
@@ -1233,65 +1199,52 @@ body::-webkit-scrollbar {
 					}
 				}
 			}
-
 			.footer-bottom {
 				margin-top: 48px;
 				padding: 24px 0;
 				border-top: 1px solid rgba(255, 255, 255, 0.1);
 				text-align: center;
-
 				p {
 					color: rgba(255, 255, 255, 0.7);
 					font-size: 14px;
 					font-family: $font;
-
 					a {
 						color: #fff;
 						text-decoration: none;
 						font-weight: 500;
 						transition: $transition-fast;
-
 						&:hover {
 							color: $primary-color;
 						}
 					}
 				}
 			}
-
 			@media (max-width: 768px) {
 				.footer-inner {
 					padding: 0;
 				}
-
 				.footer-container {
 					padding: 0 20px;
-
 					&.mypage {
 						padding: 0 20px;
 					}
-
 					.subscribe-section {
 						flex-direction: column;
 						align-items: flex-start;
 						gap: 24px;
-
 						.input-box {
 							width: 100%;
-
 							input {
 								flex: 1;
 							}
 						}
 					}
-
 					.footer-content {
 						gap: 32px;
-
 						.footer-column {
 							width: calc(50% - 16px);
 							min-width: auto;
 						}
-
 						.app-section {
 							width: 100%;
 						}

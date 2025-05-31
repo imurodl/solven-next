@@ -42,7 +42,7 @@ const Footer = () => {
 	return (
 		<footer className="footer">
 			<div className="footer-inner">
-				<div className={`footer-container ${router.pathname === '/mypage' ? 'mypage' : ''}`}>
+				<div className={`footer-container ${router.pathname === '/mypage' || '/member?' ? 'mypage' : ''}`}>
 					{/* Subscribe Section */}
 					<div className="subscribe-section">
 						<div className="title-box">
