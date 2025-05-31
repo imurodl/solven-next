@@ -101,120 +101,59 @@ body::-webkit-scrollbar {
 				z-index: 99;
 				align-items: center;
 				border-top: 1px solid rgba(255, 255, 255, 0.07);
+				transition: all 0.3s ease;
+				background-color: transparent;
+
 				&.transparent {
-					background-color: #181a209e;
-				}
-				.container {
-					flex-direction: row;
-					align-items: center;
-					justify-content: space-between;
-					.logo-box {
-						img {
-							width: 100px;
-							cursor: pointer;
+					background-color: rgba(5, 11, 32, 0.65);
+					backdrop-filter: blur(2px);
+					border-top-color: rgba(255, 255, 255, 0.07);
+					box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+
+					.container {
+						.router-box {
+							div {
+								color: #fff;
+
+								&:hover,
+								&.active {
+									background: rgba(255, 255, 255, 0.1);
+								}
+							}
 						}
-					}
-					.router-box {
-						position: relative;
-						width: 617px;
-						display: flex;
-						flex-direction: row;
-						justify-content: space-between;
-						div {
-							position: relative;
-							color: #fff;
-							font-family: $font;
-							font-size: 16px;
-							font-style: normal;
-							font-weight: 600;
-							line-height: 28px;
-							text-transform: capitalize;
-							cursor: pointer;
-							.community_menu {
-								position: absolute;
-								left: -177%;
-								top: 30px;
-								width: 434px;
-								height: 33px;
-								background: white;
-								transition: all ease 2s;
-								&:before {
-									content: '';
-									display: block;
-									position: absolute;
-									top: 0;
-									right: 50%;
-									width: 10px;
-									height: 10px;
-									background: white;
-									transform: translateY(-50%) rotate(45deg);
-									z-index: 0;
+						.user-box {
+							.join-box {
+								&:hover {
+									background: rgba(255, 255, 255, 0.1);
+									border-color: rgba(255, 255, 255, 0.2);
+								}
+								svg {
+									color: #fff;
+								}
+								span {
+									color: #fff;
+								}
+							}
+							.lan-box {
+								.notification-icon {
+									color: #fff;
+									&:hover {
+										background: rgba(255, 255, 255, 0.1);
+									}
+								}
+								.btn-lang {
+									&:hover {
+										background: rgba(255, 255, 255, 0.1);
+									}
 								}
 							}
 						}
 					}
-					.user-box {
-						width: 270px;
-						display: flex;
-						flex-direction: row;
-						justify-content: flex-end;
-						.join-box {
-							width: 184px;
-							height: 47px;
-							display: flex;
-							align-items: center;
-							justify-content: center;
-							gap: 10px;
-							cursor: pointer;
-							svg {
-								color: #ffffff;
-							}
-							span {
-								position: relative;
-								color: #fff;
-								font-family: $font;
-								font-size: 16px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: 28px;
-								cursor: pointer;
-							}
-						}
-						.login-user {
-							img {
-								width: 42px;
-								height: 42px;
-								border-radius: 50%;
-								object-fit: cover;
-							}
-						}
-					}
-					.lan-box {
-						margin-left: 28px;
-						display: flex;
-						align-items: center;
-						.notification-icon {
-							color: white;
-						}
-						.btn-lang {
-							border-radius: 4px;
-							img {
-								width: 24px;
-								height: 17px;
-								border-radius: 2px;
-							}
-						}
-						.img-flag {
-							width: 24px;
-							height: 17px;
-							border-radius: 2px;
-							margin-right: 8px;
-						}
-					}
 				}
 			}
+
 			.navbar-basic {
-				// position: fixed;
+				position: relative;
 				padding: 22px 0px;
 				width: 100%;
 				height: 100px;
@@ -223,8 +162,13 @@ body::-webkit-scrollbar {
 				box-sizing: border-box;
 				z-index: 99;
 				align-items: center;
-				border-top: 1px solid rgba(255, 255, 255, 0.07);
 				background-color: #050b20;
+				border-top: 1px solid rgba(255, 255, 255, 0.07);
+			}
+
+			// Common styles for both navbars
+			.navbar-main,
+			.navbar-basic {
 				.container {
 					flex-direction: row;
 					align-items: center;
@@ -233,6 +177,10 @@ body::-webkit-scrollbar {
 						img {
 							width: 100px;
 							cursor: pointer;
+							transition: $transition-fast;
+							&:hover {
+								transform: scale(1.05);
+							}
 						}
 					}
 					.router-box {
@@ -251,24 +199,41 @@ body::-webkit-scrollbar {
 							line-height: 28px;
 							text-transform: capitalize;
 							cursor: pointer;
+							padding: 6px 12px;
+							border-radius: 8px;
+							transition: all 0.3s ease;
+							&:hover,
+							&.active {
+								background: rgba(255, 255, 255, 0.1);
+								transform: translateY(-1px);
+							}
 							.community_menu {
 								position: absolute;
 								left: -177%;
-								top: 30px;
+								top: 40px;
 								width: 434px;
-								height: 33px;
 								background: white;
-								transition: all ease 2s;
+								border-radius: 12px;
+								box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+								transition: all 0.3s ease;
+								opacity: 0;
+								visibility: hidden;
+								transform: translateY(10px);
+								&.show {
+									opacity: 1;
+									visibility: visible;
+									transform: translateY(0);
+								}
 								&:before {
 									content: '';
 									display: block;
 									position: absolute;
-									top: 0;
+									top: -5px;
 									right: 50%;
 									width: 10px;
 									height: 10px;
 									background: white;
-									transform: translateY(-50%) rotate(45deg);
+									transform: translateX(50%) rotate(45deg);
 									z-index: 0;
 								}
 							}
@@ -287,8 +252,19 @@ body::-webkit-scrollbar {
 							justify-content: center;
 							gap: 10px;
 							cursor: pointer;
+							border-radius: 8px;
+							transition: all 0.3s ease;
+							border: 1px solid transparent;
+							&:hover {
+								background: rgba(255, 255, 255, 0.1);
+								border-color: rgba(255, 255, 255, 0.2);
+								svg {
+									transform: translateX(2px);
+								}
+							}
 							svg {
 								color: #ffffff;
+								transition: all 0.3s ease;
 							}
 							span {
 								position: relative;
@@ -307,6 +283,12 @@ body::-webkit-scrollbar {
 								height: 42px;
 								border-radius: 50%;
 								object-fit: cover;
+								border: 2px solid transparent;
+								transition: all 0.3s ease;
+								&:hover {
+									border-color: $primary-color;
+									transform: scale(1.05);
+								}
 							}
 						}
 					}
@@ -314,11 +296,34 @@ body::-webkit-scrollbar {
 						margin-left: 28px;
 						display: flex;
 						align-items: center;
+						gap: 12px;
 						.notification-icon {
 							color: white;
+							font-size: 20px;
+							padding: 6px;
+							border-radius: 8px;
+							transition: all 0.3s ease;
+							cursor: pointer;
+							min-width: 36px;
+							min-height: 36px;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+
+							&:hover {
+								background: rgba(255, 255, 255, 0.1);
+								transform: translateY(-1px);
+							}
 						}
 						.btn-lang {
-							border-radius: 4px;
+							border-radius: 8px;
+							padding: 6px;
+							transition: all 0.3s ease;
+							cursor: pointer;
+							&:hover {
+								background: rgba(255, 255, 255, 0.1);
+								transform: translateY(-1px);
+							}
 							img {
 								width: 24px;
 								height: 17px;
@@ -1198,7 +1203,7 @@ body::-webkit-scrollbar {
 
 							.social-title {
 								font-weight: 600;
-								margin-bottom: 8px;
+								margin-bottom: 16px;
 								font-family: $font;
 								color: #fff;
 							}
