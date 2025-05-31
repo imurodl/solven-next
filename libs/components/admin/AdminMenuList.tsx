@@ -68,6 +68,11 @@ const AdminMenuList = () => {
 					url: '/_admin/cs/faq',
 				},
 				{
+					title: 'Terms',
+					icon: <Headset size={20} weight="fill" className="menu-icon" />,
+					url: '/_admin/cs/terms',
+				},
+				{
 					title: 'Notice',
 					icon: <Headset size={20} weight="fill" className="menu-icon" />,
 					url: '/_admin/cs/notice',

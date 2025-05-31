@@ -12,7 +12,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import TablePagination from '@mui/material/TablePagination';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { NoticeList } from '../../../libs/components/admin/cs/NoticeList';
+import { TermsList } from '../../../libs/components/admin/cs/TermsList';
 import { NoticeCreate } from '../../../libs/components/admin/cs/NoticeCreate';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
@@ -20,7 +20,7 @@ import { GET_ALL_NOTICES } from '../../../apollo/user/query';
 import { NoticeStatus, NoticeCategory } from '../../../libs/enums/notice.enum';
 import { typeNotice } from '../../../libs/types/notice/notice';
 
-const AdminNotice: NextPage = () => {
+const AdminTerms: NextPage = () => {
 	const router = useRouter();
 	const [currentTab, setCurrentTab] = useState<string>('all');
 	const [searchCategory, setSearchCategory] = useState<string>('title');
@@ -35,10 +35,21 @@ const AdminNotice: NextPage = () => {
 		variables: {
 			input: {
 				limit: 1,
-				noticeCategory: NoticeCategory.NOTICE,
+				noticeCategory: NoticeCategory.TERMS,
 			},
 		},
 	});
+
+	const getStatusCount = (status?: NoticeStatus) => {
+		if (!noticesData?.getAllNotices?.metaCounter) return 0;
+
+		if (!status) {
+			return noticesData.getAllNotices.metaCounter.reduce((acc: number, curr: any) => acc + curr.count, 0);
+		}
+
+		const statusCount = noticesData.getAllNotices.metaCounter.find((counter: any) => counter.status === status);
+		return statusCount ? statusCount.count : 0;
+	};
 
 	const handleTabChange = (tab: string) => {
 		setCurrentTab(tab);
@@ -72,11 +83,11 @@ const AdminNotice: NextPage = () => {
 	return (
 		<Box component={'div'} className={'content'}>
 			<Box component={'div'} className={'title flex_space'}>
-				<Typography variant={'h2'}>Notice Management</Typography>
+				<Typography variant={'h2'}>Terms Management</Typography>
 				{!showCreateForm && (
 					<Button className="btn_add" variant={'contained'} size={'medium'} onClick={() => setShowCreateForm(true)}>
 						<AddRoundedIcon sx={{ mr: '8px' }} />
-						ADD NOTICE
+						ADD TERMS
 					</Button>
 				)}
 			</Box>
@@ -85,7 +96,7 @@ const AdminNotice: NextPage = () => {
 				<NoticeCreate
 					onClose={handleCloseForm}
 					editNotice={editingNotice}
-					defaultCategory={NoticeCategory.NOTICE}
+					defaultCategory={NoticeCategory.TERMS}
 					disableCategory
 				/>
 			)}
@@ -100,28 +111,28 @@ const AdminNotice: NextPage = () => {
 									value="all"
 									className={currentTab === 'all' ? 'li on' : 'li'}
 								>
-									All
+									All ({getStatusCount()})
 								</ListItem>
 								<ListItem
 									onClick={() => handleTabChange('active')}
 									value="active"
 									className={currentTab === 'active' ? 'li on' : 'li'}
 								>
-									Active
+									Active ({getStatusCount(NoticeStatus.ACTIVE)})
 								</ListItem>
 								<ListItem
 									onClick={() => handleTabChange('hold')}
 									value="hold"
 									className={currentTab === 'hold' ? 'li on' : 'li'}
 								>
-									Hold
+									Hold ({getStatusCount(NoticeStatus.HOLD)})
 								</ListItem>
 								<ListItem
 									onClick={() => handleTabChange('delete')}
 									value="delete"
 									className={currentTab === 'delete' ? 'li on' : 'li'}
 								>
-									Deleted
+									Deleted ({getStatusCount(NoticeStatus.DELETE)})
 								</ListItem>
 							</List>
 							<Divider />
@@ -140,7 +151,7 @@ const AdminNotice: NextPage = () => {
 									onChange={(e) => handleSearchInput(e.target.value)}
 									sx={{ width: '100%' }}
 									className={'search'}
-									placeholder={`Search notices by ${searchCategory}`}
+									placeholder={`Search terms by ${searchCategory}`}
 									endAdornment={
 										<>
 											{searchInput && (
@@ -155,7 +166,7 @@ const AdminNotice: NextPage = () => {
 							</Stack>
 							<Divider />
 						</Box>
-						<NoticeList
+						<TermsList
 							dense={false}
 							searchInput={searchInput}
 							searchCategory={searchCategory}
@@ -181,4 +192,4 @@ const AdminNotice: NextPage = () => {
 	);
 };
 
-export default withAdminLayout(AdminNotice);
+export default withAdminLayout(AdminTerms);

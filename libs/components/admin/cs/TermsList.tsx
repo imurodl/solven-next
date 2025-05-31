@@ -22,7 +22,7 @@ import { NoticeStatus } from '../../../enums/notice.enum';
 import { format } from 'date-fns';
 import { sweetConfirmAlert } from '../../../sweetAlert';
 
-interface NoticeListType {
+interface TermsListType {
 	dense?: boolean;
 	searchInput?: string;
 	searchCategory: string;
@@ -30,7 +30,7 @@ interface NoticeListType {
 	onEdit: (notice: typeNotice) => void;
 }
 
-export const NoticeList = (props: NoticeListType) => {
+export const TermsList = (props: TermsListType) => {
 	const { dense, searchInput, searchCategory, currentTab, onEdit } = props;
 	const router = useRouter();
 	const [page, setPage] = React.useState(0);
@@ -44,7 +44,7 @@ export const NoticeList = (props: NoticeListType) => {
 				limit: rowsPerPage,
 				search: searchInput || undefined,
 				noticeStatus: currentTab === 'all' ? undefined : currentTab?.toUpperCase(),
-				noticeCategory: 'NOTICE',
+				noticeCategory: 'TERMS',
 			},
 		},
 	});
@@ -59,7 +59,7 @@ export const NoticeList = (props: NoticeListType) => {
 						limit: rowsPerPage,
 						search: searchInput || undefined,
 						noticeStatus: currentTab === 'all' ? undefined : currentTab?.toUpperCase(),
-						noticeCategory: 'NOTICE',
+						noticeCategory: 'TERMS',
 					},
 				},
 			},
@@ -76,7 +76,7 @@ export const NoticeList = (props: NoticeListType) => {
 						limit: rowsPerPage,
 						search: searchInput || undefined,
 						noticeStatus: currentTab === 'all' ? undefined : currentTab?.toUpperCase(),
-						noticeCategory: 'NOTICE',
+						noticeCategory: 'TERMS',
 					},
 				},
 			},
@@ -84,7 +84,7 @@ export const NoticeList = (props: NoticeListType) => {
 	});
 
 	const handleDelete = async (noticeId: string) => {
-		if (await sweetConfirmAlert('Do you want to delete this notice?')) {
+		if (await sweetConfirmAlert('Do you want to delete this terms?')) {
 			try {
 				await removeNotice({
 					variables: {
@@ -92,7 +92,7 @@ export const NoticeList = (props: NoticeListType) => {
 					},
 				});
 			} catch (error) {
-				console.error('Error deleting notice:', error);
+				console.error('Error deleting terms:', error);
 			}
 		}
 	};
@@ -100,7 +100,7 @@ export const NoticeList = (props: NoticeListType) => {
 	const handleStatusChange = async (notice: typeNotice, newStatus: NoticeStatus) => {
 		const confirmMessage =
 			newStatus === NoticeStatus.DELETE
-				? 'Do you want to delete this notice?'
+				? 'Do you want to delete this terms?'
 				: `Do you want to change the status to ${newStatus}?`;
 
 		if (await sweetConfirmAlert(confirmMessage)) {
@@ -125,7 +125,7 @@ export const NoticeList = (props: NoticeListType) => {
 					});
 				}
 			} catch (error) {
-				console.error('Error updating notice status:', error);
+				console.error('Error updating terms status:', error);
 			}
 		}
 	};

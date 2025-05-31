@@ -20,11 +20,13 @@ import { typeNotice } from '../../../types/notice/notice';
 interface NoticeCreateProps {
 	onClose: () => void;
 	editNotice?: typeNotice;
+	defaultCategory?: NoticeCategory;
+	disableCategory?: boolean;
 }
 
-export const NoticeCreate = ({ onClose, editNotice }: NoticeCreateProps) => {
+export const NoticeCreate = ({ onClose, editNotice, defaultCategory, disableCategory }: NoticeCreateProps) => {
 	const [formData, setFormData] = useState({
-		noticeCategory: NoticeCategory.FAQ,
+		noticeCategory: defaultCategory || NoticeCategory.FAQ,
 		noticeTitle: '',
 		noticeContent: '',
 	});
@@ -113,31 +115,33 @@ export const NoticeCreate = ({ onClose, editNotice }: NoticeCreateProps) => {
 				</Typography>
 
 				<Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
-					<FormControl sx={{ width: '30%' }} variant="outlined">
-						<InputLabel id="category-label">Category</InputLabel>
-						<Select
-							labelId="category-label"
-							name="noticeCategory"
-							value={formData.noticeCategory}
-							label="Category"
-							onChange={handleCategoryChange}
-							sx={{
-								'& .MuiSelect-select': {
-									padding: '14px',
-								},
-							}}
-						>
-							{Object.values(NoticeCategory).map((category) => (
-								<MenuItem key={category} value={category}>
-									{category}
-								</MenuItem>
-							))}
-						</Select>
-					</FormControl>
+					{!disableCategory && (
+						<FormControl sx={{ width: '30%' }} variant="outlined">
+							<InputLabel id="category-label">Category</InputLabel>
+							<Select
+								labelId="category-label"
+								name="noticeCategory"
+								value={formData.noticeCategory}
+								label="Category"
+								onChange={handleCategoryChange}
+								sx={{
+									'& .MuiSelect-select': {
+										padding: '14px',
+									},
+								}}
+							>
+								{Object.values(NoticeCategory).map((category) => (
+									<MenuItem key={category} value={category}>
+										{category}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					)}
 
 					<TextField
 						sx={{
-							width: '70%',
+							width: disableCategory ? '100%' : '70%',
 							'& .MuiOutlinedInput-root': {
 								'& input': {
 									padding: '14px',

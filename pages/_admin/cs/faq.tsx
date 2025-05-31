@@ -12,84 +12,152 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import TablePagination from '@mui/material/TablePagination';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { FaqArticlesPanelList } from '../../../libs/components/admin/cs/FaqList';
+import { FaqList } from '../../../libs/components/admin/cs/FaqList';
+import { NoticeCreate } from '../../../libs/components/admin/cs/NoticeCreate';
+import { useRouter } from 'next/router';
+import { useQuery } from '@apollo/client';
+import { GET_ALL_NOTICES } from '../../../apollo/user/query';
+import { NoticeStatus, NoticeCategory } from '../../../libs/enums/notice.enum';
+import { typeNotice } from '../../../libs/types/notice/notice';
 
-const FaqArticles: NextPage = (props: any) => {
-	const [anchorEl, setAnchorEl] = useState<[] | HTMLElement[]>([]);
+const AdminFaq: NextPage = () => {
+	const router = useRouter();
+	const [currentTab, setCurrentTab] = useState<string>('all');
+	const [searchCategory, setSearchCategory] = useState<string>('title');
+	const [searchInput, setSearchInput] = useState<string>('');
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(20);
+	const [showCreateForm, setShowCreateForm] = useState(false);
+	const [editingNotice, setEditingNotice] = useState<typeNotice | undefined>(undefined);
 
-	/** APOLLO REQUESTS **/
-	/** LIFECYCLES **/
-	/** HANDLERS **/
+	// Get total counts for tabs
+	const { data: noticesData } = useQuery(GET_ALL_NOTICES, {
+		variables: {
+			input: {
+				limit: 1,
+				noticeCategory: NoticeCategory.FAQ,
+			},
+		},
+	});
+
+	const getStatusCount = (status?: NoticeStatus) => {
+		if (!noticesData?.getAllNotices?.metaCounter) return 0;
+
+		if (!status) {
+			return noticesData.getAllNotices.metaCounter.reduce((acc: number, curr: any) => acc + curr.count, 0);
+		}
+
+		const statusCount = noticesData.getAllNotices.metaCounter.find((counter: any) => counter.status === status);
+		return statusCount ? statusCount.count : 0;
+	};
+
+	const handleTabChange = (tab: string) => {
+		setCurrentTab(tab);
+		setPage(0);
+	};
+
+	const handleSearchInput = (value: string) => {
+		setSearchInput(value);
+		setPage(0);
+	};
+
+	const handleChangePage = (event: unknown, newPage: number) => {
+		setPage(newPage);
+	};
+
+	const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setRowsPerPage(parseInt(event.target.value, 10));
+		setPage(0);
+	};
+
+	const handleEdit = (notice: typeNotice) => {
+		setEditingNotice(notice);
+		setShowCreateForm(true);
+	};
+
+	const handleCloseForm = () => {
+		setShowCreateForm(false);
+		setEditingNotice(undefined);
+	};
 
 	return (
-		// @ts-ignore
 		<Box component={'div'} className={'content'}>
 			<Box component={'div'} className={'title flex_space'}>
 				<Typography variant={'h2'}>FAQ Management</Typography>
-				<Button
-					className="btn_add"
-					variant={'contained'}
-					size={'medium'}
-					// onClick={() => router.push(`/_admin/cs/faq_create`)}
-				>
-					<AddRoundedIcon sx={{ mr: '8px' }} />
-					ADD
-				</Button>
+				{!showCreateForm && (
+					<Button className="btn_add" variant={'contained'} size={'medium'} onClick={() => setShowCreateForm(true)}>
+						<AddRoundedIcon sx={{ mr: '8px' }} />
+						ADD FAQ
+					</Button>
+				)}
 			</Box>
+
+			{showCreateForm && (
+				<NoticeCreate
+					onClose={handleCloseForm}
+					editNotice={editingNotice}
+					defaultCategory={NoticeCategory.FAQ}
+					disableCategory
+				/>
+			)}
+
 			<Box component={'div'} className={'table-wrap'}>
 				<Box component={'div'} sx={{ width: '100%', typography: 'body1' }}>
-					<TabContext value={'value'}>
+					<TabContext value={currentTab}>
 						<Box component={'div'}>
 							<List className={'tab-menu'}>
 								<ListItem
-									// onClick={(e) => handleTabChange(e, 'all')}
+									onClick={() => handleTabChange('all')}
 									value="all"
-									className={'all' === 'all' ? 'li on' : 'li'}
+									className={currentTab === 'all' ? 'li on' : 'li'}
 								>
-									All (0)
+									All ({getStatusCount()})
 								</ListItem>
 								<ListItem
-									// onClick={(e) => handleTabChange(e, 'active')}
+									onClick={() => handleTabChange('active')}
 									value="active"
-									className={'all' === 'all' ? 'li on' : 'li'}
+									className={currentTab === 'active' ? 'li on' : 'li'}
 								>
-									Active (0)
+									Active ({getStatusCount(NoticeStatus.ACTIVE)})
 								</ListItem>
 								<ListItem
-									// onClick={(e) => handleTabChange(e, 'blocked')}
-									value="blocked"
-									className={'all' === 'all' ? 'li on' : 'li'}
+									onClick={() => handleTabChange('hold')}
+									value="hold"
+									className={currentTab === 'hold' ? 'li on' : 'li'}
 								>
-									Blocked (0)
+									Hold ({getStatusCount(NoticeStatus.HOLD)})
 								</ListItem>
 								<ListItem
-									// onClick={(e) => handleTabChange(e, 'deleted')}
-									value="deleted"
-									className={'all' === 'all' ? 'li on' : 'li'}
+									onClick={() => handleTabChange('delete')}
+									value="delete"
+									className={currentTab === 'delete' ? 'li on' : 'li'}
 								>
-									Deleted (0)
+									Deleted ({getStatusCount(NoticeStatus.DELETE)})
 								</ListItem>
 							</List>
 							<Divider />
 							<Stack className={'search-area'} sx={{ m: '24px' }}>
-								<Select sx={{ width: '160px', mr: '20px' }} value={'searchCategory'}>
-									<MenuItem value={'mb_nick'}>mb_nick</MenuItem>
-									<MenuItem value={'mb_id'}>mb_id</MenuItem>
+								<Select
+									sx={{ width: '160px', mr: '20px' }}
+									value={searchCategory}
+									onChange={(e) => setSearchCategory(e.target.value)}
+								>
+									<MenuItem value={'title'}>Title</MenuItem>
+									<MenuItem value={'content'}>Content</MenuItem>
 								</Select>
 
 								<OutlinedInput
-									value={'searchInput'}
-									// onChange={(e) => handleInput(e.target.value)}
+									value={searchInput}
+									onChange={(e) => handleSearchInput(e.target.value)}
 									sx={{ width: '100%' }}
 									className={'search'}
-									placeholder="Search user name"
-									onKeyDown={(event) => {
-										// if (event.key == 'Enter') searchTargetHandler().then();
-									}}
+									placeholder={`Search FAQs by ${searchCategory}`}
 									endAdornment={
 										<>
-											{true && <CancelRoundedIcon onClick={() => {}} />}
-											<InputAdornment position="end" onClick={() => {}}>
+											{searchInput && (
+												<CancelRoundedIcon onClick={() => handleSearchInput('')} style={{ cursor: 'pointer' }} />
+											)}
+											<InputAdornment position="end">
 												<img src="/img/icons/search_icon.png" alt={'searchIcon'} />
 											</InputAdornment>
 										</>
@@ -98,24 +166,24 @@ const FaqArticles: NextPage = (props: any) => {
 							</Stack>
 							<Divider />
 						</Box>
-						<FaqArticlesPanelList
-							// dense={dense}
-							// membersData={membersData}
-							// searchMembers={searchMembers}
-							anchorEl={anchorEl}
-							// handleMenuIconClick={handleMenuIconClick}
-							// handleMenuIconClose={handleMenuIconClose}
-							// generateMentorTypeHandle={generateMentorTypeHandle}
+						<FaqList
+							dense={false}
+							searchInput={searchInput}
+							searchCategory={searchCategory}
+							currentTab={currentTab}
+							onEdit={handleEdit}
 						/>
 
 						<TablePagination
 							rowsPerPageOptions={[20, 40, 60]}
 							component="div"
-							count={4}
-							rowsPerPage={10}
-							page={1}
-							onPageChange={() => {}}
-							onRowsPerPageChange={() => {}}
+							count={
+								noticesData?.getAllNotices?.metaCounter?.reduce((acc: number, curr: any) => acc + curr.count, 0) || 0
+							}
+							rowsPerPage={rowsPerPage}
+							page={page}
+							onPageChange={handleChangePage}
+							onRowsPerPageChange={handleChangeRowsPerPage}
 						/>
 					</TabContext>
 				</Box>
@@ -124,4 +192,4 @@ const FaqArticles: NextPage = (props: any) => {
 	);
 };
 
-export default withAdminLayout(FaqArticles);
+export default withAdminLayout(AdminFaq);
