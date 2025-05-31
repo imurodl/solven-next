@@ -40,17 +40,6 @@ const AdminTerms: NextPage = () => {
 		},
 	});
 
-	const getStatusCount = (status?: NoticeStatus) => {
-		if (!noticesData?.getAllNotices?.metaCounter) return 0;
-
-		if (!status) {
-			return noticesData.getAllNotices.metaCounter.reduce((acc: number, curr: any) => acc + curr.count, 0);
-		}
-
-		const statusCount = noticesData.getAllNotices.metaCounter.find((counter: any) => counter.status === status);
-		return statusCount ? statusCount.count : 0;
-	};
-
 	const handleTabChange = (tab: string) => {
 		setCurrentTab(tab);
 		setPage(0);
@@ -111,28 +100,28 @@ const AdminTerms: NextPage = () => {
 									value="all"
 									className={currentTab === 'all' ? 'li on' : 'li'}
 								>
-									All ({getStatusCount()})
+									All
 								</ListItem>
 								<ListItem
 									onClick={() => handleTabChange('active')}
 									value="active"
 									className={currentTab === 'active' ? 'li on' : 'li'}
 								>
-									Active ({getStatusCount(NoticeStatus.ACTIVE)})
+									Active
 								</ListItem>
 								<ListItem
 									onClick={() => handleTabChange('hold')}
 									value="hold"
 									className={currentTab === 'hold' ? 'li on' : 'li'}
 								>
-									Hold ({getStatusCount(NoticeStatus.HOLD)})
+									Hold
 								</ListItem>
 								<ListItem
 									onClick={() => handleTabChange('delete')}
 									value="delete"
 									className={currentTab === 'delete' ? 'li on' : 'li'}
 								>
-									Deleted ({getStatusCount(NoticeStatus.DELETE)})
+									Deleted
 								</ListItem>
 							</List>
 							<Divider />

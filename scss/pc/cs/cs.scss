@@ -191,124 +191,13 @@
 					}
 				}
 
-				.faq-content {
-					.categories {
+				.faq-content,
+				.terms-content {
+					.wrap {
 						display: flex;
-						justify-content: center;
+						flex-direction: column;
 						gap: 12px;
 						margin-bottom: 40px;
-						flex-wrap: wrap;
-
-						.MuiChip-root {
-							padding: 20px 24px;
-							border-radius: 12px;
-							font-size: 15px;
-							font-weight: 600;
-							background: $background-white;
-							border: 1px solid $border-light;
-							transition: $transition-smooth;
-							box-shadow: $shadow-light;
-							color: $text-muted;
-
-							&:hover {
-								background: rgba($primary-color, 0.05);
-								color: $primary-color;
-								border-color: $primary-color;
-								box-shadow: $shadow-medium;
-								transform: translateY(-2px);
-							}
-
-							&.Mui-selected {
-								background: $primary-color;
-								color: $background-white;
-								border-color: $primary-color;
-								box-shadow: 0 8px 16px rgba($primary-color, 0.2);
-								transform: translateY(-2px);
-
-								.MuiChip-label {
-									color: $background-white;
-								}
-
-								&:hover {
-									background: $primary-dark;
-									box-shadow: 0 8px 16px rgba($primary-color, 0.3);
-								}
-							}
-
-							.MuiChip-label {
-								padding: 0;
-								color: inherit;
-
-								.MuiBox-root {
-									display: flex;
-									align-items: center;
-									gap: 8px;
-
-									span {
-										font-size: 18px; // Emoji size
-									}
-								}
-							}
-						}
-					}
-
-					.wrap {
-						.MuiAccordion-root {
-							border-radius: $border-radius-medium;
-							margin-bottom: 16px;
-							overflow: hidden;
-							box-shadow: none;
-							border: 1px solid $border-light;
-							transition: $transition-smooth;
-
-							&:before {
-								display: none;
-							}
-
-							&:hover {
-								border-color: rgba($primary-color, 0.2);
-							}
-
-							&.Mui-expanded {
-								margin: 16px 0;
-								box-shadow: $shadow-medium;
-							}
-
-							.MuiAccordionSummary-root {
-								padding: 24px;
-								background: $background-white;
-
-								&:hover {
-									background: rgba($primary-color, 0.02);
-								}
-
-								&.Mui-expanded {
-									background: rgba($primary-color, 0.02);
-								}
-
-								.MuiAccordionSummary-content {
-									margin: 0;
-									gap: 12px;
-
-									svg {
-										color: $primary-color;
-									}
-
-									.MuiTypography-root {
-										color: $text-color;
-										font-weight: 500;
-									}
-								}
-							}
-
-							.MuiAccordionDetails-root {
-								padding: 24px;
-								background: $background-white;
-								border-top: 1px solid $border-light;
-								color: $text-muted;
-								line-height: 1.6;
-							}
-						}
 					}
 				}
 			}

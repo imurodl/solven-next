@@ -6,9 +6,11 @@ import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import Notice from '../../libs/components/help/Notice';
 import Faq from '../../libs/components/help/Faq';
+import Terms from '../../libs/components/help/Terms';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import SupportIcon from '@mui/icons-material/Support';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import ArticleIcon from '@mui/icons-material/Article';
 import Link from 'next/link';
 
 export const getStaticProps = async ({ locale }: any) => ({
@@ -58,12 +60,17 @@ const CS: NextPage = (props: any) => {
 								<QuestionAnswerIcon />
 								FAQ
 							</div>
+							<div className={tab === 'terms' ? 'active' : ''} onClick={() => changeTabHandler('terms')}>
+								<ArticleIcon />
+								Terms & Conditions
+							</div>
 						</Box>
 					</Box>
 
 					<Box className={'cs-content'}>
 						{tab === 'notice' && <Notice />}
 						{tab === 'faq' && <Faq />}
+						{tab === 'terms' && <Terms />}
 					</Box>
 				</Stack>
 			</Stack>
