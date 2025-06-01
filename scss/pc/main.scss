@@ -10,8 +10,8 @@
 @import '/scss/pc/agent/agent';
 @import '/scss/pc/agent/detail.scss';
 @import '/scss/pc/mypage/mypage.scss';
-@import '/scss/pc/mypage/addNewProperty.scss';
-@import '/scss/pc/mypage/myProperties.scss';
+@import '/scss/pc/mypage/addNewCar.scss';
+@import '/scss/pc/mypage/myCars.scss';
 @import '/scss/pc/mypage/myFavorites.scss';
 @import '/scss/pc/mypage/mySaved.scss';
 @import '/scss/pc/mypage/myProfile.scss';
@@ -1530,7 +1530,7 @@ body::-webkit-scrollbar {
 							}
 							&.Mui-checked {
 								.MuiSvgIcon-root {
-									color: $text-color;
+									color: #1e40af;
 									border: none;
 									scale: 1.1;
 								}
