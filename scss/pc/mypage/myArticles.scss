@@ -1,58 +1,104 @@
 #pc-wrap {
 	#my-articles-page {
 		width: 100%;
-		height: auto;
+		display: flex;
+		flex-direction: column;
+		max-width: 1300px;
+		margin: 0 auto;
+
 		.main-title-box {
-			width: auto;
-			height: auto;
-			flex-direction: row;
-			justify-content: space-between;
+			width: 100%;
+			margin-bottom: 40px;
+
 			.right-box {
-				width: 315px;
 				.main-title {
-					color: #181a20;
-					font-family: $font;
-					font-size: 30px;
-					font-style: normal;
-					font-weight: 600;
-					line-height: normal;
-					letter-spacing: 0.6px;
-					text-transform: capitalize;
+					font-size: 36px;
+					font-weight: 700;
+					background: linear-gradient(135deg, #050b20 0%, #1e3a8a 100%);
+					background-clip: text;
+					-webkit-background-clip: text;
+					-webkit-text-fill-color: transparent;
+					position: relative;
+					display: inline-block;
+					margin-bottom: 16px;
 				}
+
 				.sub-title {
-					color: #181a20;
-					font-family: $font;
-					font-size: 14px;
-					font-style: normal;
+					color: #6b7280;
+					font-size: 16px;
 					font-weight: 400;
-					line-height: 26px;
+					line-height: 1.5;
 				}
 			}
 		}
+
 		.article-list-box {
 			width: 100%;
-			height: auto;
-			flex-direction: row;
-			flex-wrap: wrap;
-			gap: 25px;
-			margin-top: 55px;
-			margin-bottom: 87px;
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 24px;
+			margin-bottom: 48px;
+
+			.no-data {
+				grid-column: 1 / -1;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 16px;
+				padding: 48px;
+				background: #ffffff;
+				border-radius: 16px;
+				border: 1px solid #e5e7eb;
+				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+				img {
+					width: 48px;
+					height: 48px;
+					opacity: 0.5;
+				}
+
+				p {
+					color: #6b7280;
+					font-size: 16px;
+					font-weight: 500;
+				}
+			}
 		}
+
 		.pagination-conf {
 			width: 100%;
-			height: auto;
-			justify-content: center;
+			display: flex;
+			flex-direction: column;
 			align-items: center;
-			margin-top: 30px;
+			gap: 16px;
+
+			.pagination-box {
+				.MuiPagination-root {
+					.MuiPaginationItem-root {
+						color: #6b7280;
+						font-weight: 500;
+
+						&.Mui-selected {
+							background: #1e40af;
+							color: white;
+
+							&:hover {
+								background: #1e3a8a;
+							}
+						}
+
+						&:hover {
+							background: rgba(30, 64, 175, 0.1);
+						}
+					}
+				}
+			}
+
 			.total {
 				p {
-					color: #181a20;
+					color: #6b7280;
 					font-size: 14px;
-					text-align: center;
-					font-family: $font;
-					font-style: normal;
-					font-weight: 400;
-					line-height: 26px;
+					font-weight: 500;
 				}
 			}
 		}

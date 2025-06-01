@@ -210,87 +210,141 @@
 	}
 }
 .community-general-card-config {
-	position: relative;
-	height: auto;
-	gap: 20px;
-	border-radius: 12px;
+	width: 100% !important;
+	max-width: none;
+	background: $background-light;
+	border-radius: 16px;
+	overflow: hidden;
+	border: 1px solid $border-light;
+	transition: $transition-smooth;
 	cursor: pointer;
+	position: relative;
+
+	&:hover {
+		transform: translateY(-4px);
+		border-color: $primary-color;
+		box-shadow: $shadow-medium;
+
+		.image-box img {
+			transform: scale(1.05);
+		}
+
+		.desc-box .title {
+			color: $primary-color;
+		}
+	}
+
 	.image-box {
 		width: 100%;
-		height: 283px;
-		.card-img {
+		height: 200px;
+		overflow: hidden;
+
+		img {
 			width: 100%;
 			height: 100%;
-			border-radius: 12px;
+			object-fit: cover;
+			transition: transform 0.6s ease;
 		}
 	}
+
 	.desc-box {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
 		width: 100%;
-		height: 80px;
-		.title {
-			color: #717171;
-			font-family: $font;
-			font-size: 13px;
-			font-style: normal;
-			font-weight: 400;
-			line-height: normal;
-		}
+		padding: 20px;
+		background: $background-white;
+		min-height: 160px;
+		display: flex;
+		flex-direction: column;
 		.desc {
-			color: #181a20;
-			font-family: $font;
-			font-size: 15px;
-			font-style: normal;
-			font-weight: 600;
-			line-height: 26px;
-			text-transform: capitalize;
-		}
-		.buttons {
-			width: auto;
-			display: flex;
-			flex-direction: row;
-			justify-content: center;
-			align-items: center;
-			svg {
-				width: 24px;
-				height: 24px;
-				cursor: pointer;
+			font-size: 14px;
+			color: $text-muted;
+			margin-bottom: 6px;
+			cursor: pointer;
+			transition: $transition-smooth;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			max-width: 200px;
+
+			&:hover {
+				color: $primary-color;
 			}
+		}
+
+		.title {
+			font-size: 16px;
+			font-weight: 600;
+			color: $text-color;
+			margin-bottom: 12px;
+			line-height: 1.5;
+			display: -webkit-box;
+			line-clamp: 2;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			transition: $transition-smooth;
+			min-height: 48px;
+		}
+
+		.buttons {
+			display: flex;
+			align-items: center;
+			padding-top: 4px;
+			border-top: 1px solid $border-light;
+			margin-top: auto;
+			width: 100%;
+			justify-content: end;
+			flex-direction: row;
+			.MuiIconButton-root {
+				padding: 6px;
+				color: $text-muted;
+				transition: $transition-smooth;
+
+				&:hover {
+					background: rgba($primary-color, 0.1);
+					color: $primary-color;
+				}
+
+				&.liked {
+					color: $primary-color;
+				}
+			}
+
 			.view-cnt {
-				font-size: 13px;
+				font-size: 14px;
+				color: $text-muted;
+				margin-right: 8px;
+			}
+
+			.stat-group {
+				display: flex;
+				align-items: center;
 			}
 		}
 	}
+
 	.date-box {
 		position: absolute;
-		width: 70px;
-		height: 69.014px;
-		align-items: center;
-		justify-content: center;
-		top: 235px;
-		right: 20px;
+		top: 16px;
+		right: 16px;
+		background: rgba($primary-color, 0.1);
+		border: 1px solid rgba($primary-color, 0.2);
+		padding: 8px 12px;
 		border-radius: 12px;
-		background: #fff;
-		box-shadow: 0px 6px 15px 0px rgba(64, 79, 104, 0.05);
+		text-align: center;
+
 		.month {
-			color: #181a20;
-			text-align: center;
-			font-family: $font;
-			font-size: 13px;
-			font-style: normal;
-			font-weight: 400;
-			line-height: normal;
+			font-size: 12px;
+			color: $primary-color;
+			text-transform: uppercase;
+			margin-bottom: 2px;
+			font-weight: 500;
 		}
+
 		.day {
-			color: #181a20;
-			font-family: $font;
-			font-size: 20px;
-			font-style: normal;
+			font-size: 16px;
 			font-weight: 600;
-			line-height: normal;
+			color: $primary-color;
+			line-height: 1;
 		}
 	}
 }
