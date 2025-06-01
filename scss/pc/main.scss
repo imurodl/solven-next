@@ -1027,20 +1027,11 @@ body::-webkit-scrollbar {
 					justify-content: space-between;
 					align-items: center;
 					margin-bottom: 48px;
-					.title-box {
-						h2 {
-							font-weight: 500;
-							font-size: 32px;
-							line-height: 30px;
-							font-family: $font;
-							margin-bottom: 8px;
-						}
-						p {
-							font-weight: 400;
-							font-size: 16px;
-							line-height: 28px;
-							color: #fff;
-							font-family: $font;
+					a {
+						transition: $transition-smooth;
+						&:hover {
+							transform: scale(1.05);
+							transition: $transition-smooth;
 						}
 					}
 					.input-box {
@@ -1083,109 +1074,137 @@ body::-webkit-scrollbar {
 					justify-content: space-between;
 					gap: 48px;
 					padding-top: 32px;
-					border-top: 1px solid #333;
+					border-top: 1px solid rgba(255, 255, 255, 0.1);
 					flex-wrap: wrap;
+
 					.footer-column {
 						min-width: 150px;
+
 						.column-title {
 							font-weight: 700;
-							margin-bottom: 8px;
+							margin-bottom: 16px;
 							font-family: $font;
 							font-size: 17px;
 							color: #fff;
+							position: relative;
 						}
+
 						.footer-links {
 							display: flex;
 							flex-direction: column;
 							gap: 16px;
 							margin-top: 16px;
+
 							a {
 								cursor: pointer;
-								color: #fff;
-								font-size: 16px;
-								line-height: 28px;
+								color: rgba(255, 255, 255, 0.7);
+								font-size: 15px;
+								line-height: 1.6;
 								font-weight: 400;
 								font-family: $font;
 								text-decoration: none;
-								transition: $transition-fast;
+								transition: all 0.3s ease;
+								display: inline-block;
+
 								&:hover {
-									text-decoration: underline;
 									color: #fff;
+									transform: translateX(4px);
 								}
 							}
 						}
 					}
+
 					.app-section {
-						min-width: 220px;
 						.app-title {
 							font-weight: 700;
 							margin-bottom: 16px;
 							font-family: $font;
+							font-size: 17px;
 							color: #fff;
+							position: relative;
 						}
+
 						.app-buttons {
 							display: flex;
 							flex-direction: column;
 							gap: 12px;
+							margin-top: 24px;
+
 							.app-button {
 								display: flex;
 								align-items: center;
 								gap: 12px;
-								color: #fff;
-								border: 1px solid #fff;
+								padding: 12px 16px;
+								background: rgba(255, 255, 255, 0.05);
 								border-radius: 12px;
-								padding: 8px 16px;
-								cursor: pointer;
-								transition: $transition-fast;
-								text-decoration: none;
+								transition: all 0.3s ease;
+
 								&:hover {
-									background: #fff;
-									color: #000;
-									.app-icon {
-										color: #000;
-									}
+									background: rgba(255, 255, 255, 0.1);
+									transform: translateY(-2px);
 								}
+
 								.app-icon {
+									font-size: 24px;
 									color: #fff;
-									transition: $transition-fast;
 								}
+
 								.app-text {
 									display: flex;
 									flex-direction: column;
+
 									.store-type {
 										font-size: 12px;
-										opacity: 0.8;
+										color: rgba(255, 255, 255, 0.7);
 									}
+
 									.store-name {
-										font-weight: 700;
 										font-size: 14px;
+										font-weight: 600;
+										color: #fff;
 									}
 								}
 							}
 						}
+
 						.social-section {
 							margin-top: 32px;
+
 							.social-title {
 								font-weight: 600;
 								margin-bottom: 16px;
 								font-family: $font;
+								font-size: 15px;
 								color: #fff;
 							}
+
 							.social-icons {
 								display: flex;
-								gap: 8px;
+								gap: 16px;
+
 								.social-icon {
-									color: #fff;
-									padding: 8px;
-									border-radius: 8px;
-									cursor: pointer;
-									transition: $transition-fast;
-									&:hover {
-										background: rgba(255, 255, 255, 0.1);
-										transform: translateY(-2px);
-									}
+									width: 36px;
+									height: 36px;
+									display: flex;
+									align-items: center;
+									justify-content: center;
+									background: rgba(255, 255, 255, 0.05);
+									border-radius: 50%;
+									transition: all 0.3s ease;
+
 									svg {
-										font-size: 24px;
+										font-size: 18px;
+										color: rgba(255, 255, 255, 0.7);
+										transition: all 0.3s ease;
+									}
+
+									&:hover {
+										background: $primary-color;
+										transform: translateY(-3px);
+
+										svg {
+											color: #fff;
+										}
 									}
 								}
 							}

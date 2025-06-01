@@ -7,12 +7,44 @@ import AppleIcon from '@mui/icons-material/Apple';
 import AndroidIcon from '@mui/icons-material/Android';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
+import { useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
+
+interface FooterLink {
+	text: string;
+	href?: string;
+}
+
+interface FooterSection {
+	title: string;
+	links: FooterLink[];
+	langCodes?: string[];
+}
 
 const Footer = () => {
 	const device = useDeviceDetect();
 	const isMobile = device === 'mobile';
 	const router = useRouter();
 	const isFullWidthPage = router.pathname === '/mypage' || router.pathname.startsWith('/member');
+	const [lang, setLang] = useState<string | null>('en');
+
+	useEffect(() => {
+		if (localStorage.getItem('locale') === null) {
+			localStorage.setItem('locale', 'en');
+			setLang('en');
+		} else {
+			setLang(localStorage.getItem('locale'));
+		}
+	}, [router]);
+
+	const handleLanguageChange = useCallback(
+		async (langCode: string) => {
+			setLang(langCode);
+			localStorage.setItem('locale', langCode);
+			await router.push(router.asPath, router.asPath, { locale: langCode });
+		},
+		[router],
+	);
 
 	const socialIcons = [
 		<FacebookOutlinedIcon key="facebook" />,
@@ -21,22 +53,31 @@ const Footer = () => {
 		<TwitterIcon key="twitter" />,
 	];
 
-	const footerLinks = [
+	const footerLinks: FooterSection[] = [
 		{
 			title: 'Company',
-			links: ['Home', 'About Us', 'Blog', 'Services', 'FAQs', 'Terms', 'Contact Us'],
+			links: [
+				{ text: 'Home', href: '/' },
+				{ text: 'About Us', href: '/about' },
+				{ text: 'Listings', href: '/car' },
+				{ text: 'Agents', href: '/agent' },
+				{ text: 'Community', href: '/community?articleCategory=FREE' },
+				{ text: 'Help', href: '/help' },
+			],
 		},
 		{
 			title: 'Quick Links',
-			links: ['Get In Touch', 'Privacy Policy', 'Support', 'Help Center'],
+			links: [
+				{ text: 'Terms & Conditions', href: '/help?tab=terms' },
+				{ text: 'FAQ', href: '/help?tab=faq' },
+				{ text: 'Support', href: '/help' },
+				{ text: 'Contact Us', href: '/help' },
+			],
 		},
 		{
-			title: 'Brands',
-			links: ['Toyota', 'Hyundai', 'BMW', 'Kia', 'Tesla', 'BMW', 'Ford'],
-		},
-		{
-			title: 'Vehicle Types',
-			links: ['Sedan', 'SUV', 'Truck', 'EV', 'LARGE', 'Midsize'],
+			title: 'Languages',
+			links: [{ text: 'English' }, { text: 'Korean' }, { text: 'Russian' }],
+			langCodes: ['en', 'kr', 'ru'],
 		},
 	];
 
@@ -50,12 +91,11 @@ const Footer = () => {
 						padding: isFullWidthPage ? '0 40px' : '0',
 					}}
 				>
-					{/* Subscribe Section */}
+					{/* Logo Section */}
 					<div className="subscribe-section">
-						<div className="title-box">
-							<h2>Join Solven</h2>
-							<p>Receive pricing updates, shopping tips & more!</p>
-						</div>
+						<Link href="/">
+							<img src="/img/logo/solven.png" alt="Solven" style={{ height: '52px' }} />
+						</Link>
 
 						<div className="input-box">
 							<input type="email" placeholder="Your e-mail address" />
@@ -70,11 +110,24 @@ const Footer = () => {
 							<div key={idx} className="footer-column">
 								<h3 className="column-title">{section.title}</h3>
 								<div className="footer-links">
-									{section.links.map((link, i) => (
-										<a key={i} href="#">
-											{link}
-										</a>
-									))}
+									{section.title === 'Languages' && section.langCodes
+										? section.links.map((link, i) => (
+												<a
+													key={i}
+													href="#"
+													onClick={(e) => {
+														e.preventDefault();
+														handleLanguageChange(section.langCodes![i]);
+													}}
+												>
+													{link.text}
+												</a>
+										  ))
+										: section.links.map((link, i) => (
+												<Link key={i} href={link.href || '#'}>
+													{link.text}
+												</Link>
+										  ))}
 								</div>
 							</div>
 						))}
