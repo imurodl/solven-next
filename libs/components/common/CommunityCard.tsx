@@ -66,13 +66,13 @@ const CommunityCard = (props: CommunityCardProps) => {
 						<Typography className="title">{boardArticle?.articleTitle}</Typography>
 					</Stack>
 					<Stack className={'buttons'}>
-						<div className="stat-group">
+						<div className="stat-group" style={{ display: 'flex' }}>
 							<IconButton color={'default'}>
 								<RemoveRedEyeIcon />
 							</IconButton>
 							<Typography className="view-cnt">{boardArticle?.articleViews}</Typography>
 						</div>
-						<div className="stat-group">
+						<div className="stat-group" style={{ display: 'flex' }}>
 							<IconButton color={'default'} onClick={(e: any) => likeArticleHandler(e, user, boardArticle?._id)}>
 								{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
 									<FavoriteIcon color={'primary'} />
