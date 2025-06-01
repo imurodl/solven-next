@@ -5,314 +5,207 @@
 			height: auto;
 			display: flex;
 			flex-direction: column;
-			gap: 20px;
+			gap: 24px;
+			padding: 40px 0;
 			.main-title-box {
-				width: auto;
-				height: auto;
-				flex-direction: row;
+				width: 100%;
+				display: flex;
 				justify-content: space-between;
+				align-items: flex-start;
+				margin-bottom: 16px;
 				.right-box {
-					width: 315px;
 					.main-title {
-						color: #181a20;
-						font-family: $font;
-						font-size: 30px;
-						font-style: normal;
-						font-weight: 600;
-						line-height: normal;
-						letter-spacing: 0.6px;
-						text-transform: capitalize;
+						color: #050b20;
+						font-family: 'DM Sans', sans-serif;
+						font-size: 32px;
+						font-weight: 700;
+						line-height: 1.2;
+						margin-bottom: 8px;
 					}
 					.sub-title {
-						color: #181a20;
-						font-family: $font;
-						font-size: 14px;
-						font-style: normal;
-						font-weight: 400;
-						line-height: 26px;
+						color: #6b7280;
+						font-size: 16px;
 					}
 				}
 			}
-			.top-box {
-				width: 100%;
-				padding: 30px;
-				margin-top: 35px;
-				gap: 25px;
-				border-radius: 12px;
-				border: 1px solid #c4c4c4;
-				background: #fff;
-				box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
-				.photo-box {
-					gap: 23px;
-					.title {
-						color: #181a20;
-						font-family: $font;
-						font-size: 17px;
-						font-style: normal;
-						font-weight: 600;
-						line-height: normal;
-					}
-					.image-big-box {
-						flex-direction: row;
-						gap: 50px;
+			.profile-content {
+				display: flex;
+				gap: 32px;
+				flex-direction: row;
+				.profile-sidebar {
+					width: 320px;
+					flex-shrink: 0;
+					display: flex;
+					flex-direction: column;
+					gap: 24px;
+					background: #ffffff;
+					border-radius: 16px;
+					padding: 24px;
+					border: 1px solid #e5e7eb;
+					.photo-box {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						gap: 16px;
+						padding-bottom: 24px;
+						border-bottom: 1px solid #e5e7eb;
 						.image-box {
-							position: relative;
-							width: 194px;
-							height: 157px;
+							width: 160px;
+							height: 160px;
+							border-radius: 50%;
+							overflow: hidden;
+							border: 4px solid #1e40af;
 							img {
 								width: 100%;
 								height: 100%;
 								object-fit: cover;
-								border-radius: 15px;
-								object-fit: cover;
-							}
-							.delete-box {
-								position: absolute;
-								top: 10px;
-								left: 10px;
-								width: 36px;
-								height: 32px;
-								background-color: #ffffff;
-								align-items: center;
-								justify-content: center;
-								border-radius: 12px;
 							}
 						}
-						.upload-big-box {
-							align-self: flex-end;
-							gap: 22px;
-							.labeler {
-								display: flex;
-								width: 210.023px;
-								height: 40.135px;
-								justify-content: center;
-								align-items: center;
+						.upload-box {
+							width: 100%;
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+							gap: 8px;
+							.upload-button {
+								width: 80%;
+								background: #1e40af;
+								border-radius: 8px;
+								padding: 12px;
 								cursor: pointer;
-								border-radius: 12px;
-								border: 1px solid #181a20;
+								transition: all 0.2s;
+								&:hover {
+									background: #1e3a8a;
+								}
 								p {
-									color: #181a20;
-									font-family: $font;
-									font-size: 13px;
-									font-style: normal;
-									font-weight: 600;
-									line-height: normal;
+									color: white;
+									font-size: 14px;
+									font-weight: 500;
+									text-align: center;
 								}
 							}
-							.upload-text {
-								color: #181a20;
-								font-family: $font;
+							.upload-hint {
+								color: #6b7280;
 								font-size: 12px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: 26px;
+								text-align: center;
 							}
 						}
 					}
-				}
-				.small-input-box {
-					width: 100%;
-					height: auto;
-					flex-direction: row;
-					flex-wrap: wrap;
-					gap: 30px;
-					.input-box {
-						width: 48%;
-						gap: 10px;
-						.title {
-							color: #181a20;
-							font-family: $font;
-							font-size: 12px;
-							font-style: normal;
-							font-weight: 600;
-							line-height: normal;
-						}
-						input {
-							height: 55px;
-							outline: none;
-							padding: 0px 15px;
-							border-radius: 8px;
-							border: 1px solid #ddd;
-							::placeholder {
-								color: #717171;
-								font-family: $font;
-								font-size: 12px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: 26px;
-							}
-						}
-					}
-				}
-				.address-box {
-					gap: 10px;
-					.title {
-						color: #181a20;
-						font-family: $font;
-						font-size: 12px;
-						font-style: normal;
-						font-weight: 600;
-						line-height: normal;
-					}
-					input {
-						height: 55px;
-						outline: none;
-						padding: 0px 15px;
-						border-radius: 8px;
-						border: 1px solid #ddd;
-						::placeholder {
-							color: #717171;
-							font-family: $font;
-							font-size: 12px;
-							font-style: normal;
-							font-weight: 400;
-							line-height: 26px;
-						}
-					}
-				}
-				.about-me-box {
-					gap: 10px;
-					.title {
-						color: #181a20;
-						font-family: $font;
-						font-size: 12px;
-						font-style: normal;
-						font-weight: 600;
-						line-height: normal;
-					}
-					.about-textarea {
-						height: 170px;
-						padding: 20px 15px;
-						border-radius: 8px;
-						border: 1px solid #ddd;
-						color: #717171;
-						font-family: $font;
-						font-size: 12px;
-						font-style: normal;
-						font-weight: 400;
-						line-height: 26px;
-					}
-					.update-button {
+					.profile-stats {
 						display: flex;
-						width: 170px;
-						height: 38px;
-						justify-content: center;
-						align-items: center;
-						gap: 10px;
-						align-self: flex-end;
-						margin-top: 30px;
-						border-radius: 12px;
-						background-color: #000000;
-						p {
-							color: #fff;
-							font-family: $font;
-							font-size: 13px;
-							font-style: normal;
-							font-weight: 600;
-							line-height: normal;
-						}
-					}
-					button:disabled {
-						background: #181a2045;
-					}
-				}
-			}
-			.bottom-box {
-				width: 100%;
-				padding: 30px;
-				gap: 25px;
-				border-radius: 12px;
-				border: 1px solid #c4c4c4;
-				background: #fff;
-				box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
-				.top-inner-box {
-					gap: 20px;
-					.title {
-						color: #181a20;
-						font-family: $font;
-						font-size: 15px;
-						font-style: normal;
-						font-weight: 600;
-						line-height: normal;
-					}
-					.old-password-box {
-						gap: 10px;
-						.title {
-							color: #181a20;
-							font-family: $font;
-							font-size: 12px;
-							font-style: normal;
-							font-weight: 600;
-							line-height: normal;
-						}
-						input {
-							width: 50%;
-							height: 55px;
-							outline: none;
-							padding: 0px 15px;
-							border-radius: 8px;
-							border: 1px solid #ddd;
-							::placeholder {
-								color: #717171;
-								font-family: $font;
-								font-size: 12px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: 26px;
+						flex-direction: column;
+						gap: 16px;
+						.stat-item {
+							display: flex;
+							flex-direction: row;
+							align-items: center;
+							gap: 12px;
+							.icon {
+								width: 40px;
+								height: 40px;
+								border-radius: 8px;
+								background: #f4f5f5;
+								display: flex;
+								align-items: center;
+								justify-content: center;
+								svg {
+									color: #1e40af;
+									font-size: 20px;
+								}
+							}
+							.stat-content {
+								flex: 1;
+								.stat-label {
+									color: #6b7280;
+									font-size: 14px;
+									margin-bottom: 2px;
+								}
+								.stat-value {
+									color: #050b20;
+									font-size: 16px;
+									font-weight: 500;
+								}
 							}
 						}
 					}
 				}
-				.bottom-inner-box {
-					width: 100%;
-					flex-direction: row;
-					gap: 45px;
-					.new-password-box {
-						width: 100%;
-						gap: 10px;
-						.title {
-							color: #181a20;
-							font-family: $font;
-							font-size: 12px;
-							font-style: normal;
-							font-weight: 600;
-							line-height: normal;
-						}
-						input {
-							height: 55px;
-							outline: none;
-							padding: 0px 15px;
-							border-radius: 8px;
-							border: 1px solid #ddd;
-							::placeholder {
-								color: #717171;
-								font-family: $font;
-								font-size: 12px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: 26px;
-							}
-						}
-					}
-				}
-				.change-password {
+				.profile-main {
+					flex: 1;
 					display: flex;
-					width: 170px;
-					height: 38px;
-					justify-content: center;
-					align-items: center;
-					gap: 10px;
-					align-self: flex-end;
-					margin-top: 18px;
-					border-radius: 12px;
-					background-color: #000000;
-					p {
-						color: #fff;
-						font-family: $font;
-						font-size: 13px;
-						font-style: normal;
-						font-weight: 600;
-						line-height: normal;
+					flex-direction: column;
+					gap: 24px;
+					background: #ffffff;
+					border-radius: 16px;
+					padding: 24px;
+					border: 1px solid #e5e7eb;
+					.form-section {
+						.section-title {
+							color: #050b20;
+							font-size: 18px;
+							font-weight: 600;
+							margin-bottom: 16px;
+						}
+						.input-grid {
+							display: grid;
+							grid-template-columns: repeat(2, 1fr);
+							gap: 16px;
+							.input-group {
+								.input-label {
+									color: #6b7280;
+									font-size: 14px;
+									margin-bottom: 8px;
+								}
+								input,
+								textarea {
+									width: 100%;
+									padding: 12px;
+									border: 1px solid #d1d5db;
+									border-radius: 8px;
+									font-size: 14px;
+									color: #050b20;
+									transition: all 0.2s;
+									&:focus {
+										outline: none;
+										border-color: #1e40af;
+									}
+									&::placeholder {
+										color: #6b7280;
+									}
+								}
+								textarea {
+									min-height: 120px;
+									resize: vertical;
+								}
+							}
+						}
+					}
+					.form-actions {
+						margin-top: auto;
+						padding-top: 24px;
+						border-top: 1px solid #e5e7eb;
+						.update-button {
+							background: #1e40af;
+							color: white;
+							padding: 12px 24px;
+							border-radius: 8px;
+							font-weight: 500;
+							transition: all 0.2s;
+							&:hover {
+								background: #1e3a8a;
+							}
+							&:disabled {
+								background: #d1d5db;
+								cursor: not-allowed;
+							}
+							.button-content {
+								display: flex;
+								align-items: center;
+								gap: 8px;
+								svg {
+									font-size: 20px;
+								}
+							}
+						}
 					}
 				}
 			}
