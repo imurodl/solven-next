@@ -1,5 +1,6 @@
 import React from 'react';
 import { NextPage } from 'next';
+import Link from 'next/link';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import { Stack, Box } from '@mui/material';
@@ -11,138 +12,94 @@ const About: NextPage = () => {
 		return <div>ABOUT PAGE MOBILE</div>;
 	} else {
 		return (
-			<Stack className={'about-page'}>
-				<Stack className={'intro'}>
-					<Stack className={'container'}>
-						<Stack className={'left'}>
-							<strong>We're on a Mission to Change View of Real Estate Field.</strong>
-						</Stack>
-						<Stack className={'right'}>
+			<Stack className="about-page">
+				{/* Hero Section */}
+				<Stack className="hero-section">
+					<Stack className="container">
+						<Box className="content">
+							<h1>Revolutionizing The Way You Find Your Dream Car</h1>
 							<p>
-								It doesn’t matter how organized you are — a surplus of toys will always ensure your house is a mess
-								waiting to happen. Fortunately, getting kids on board with the idea of ditching their stuff is a lot
-								easier than it sounds.
-								<br />
-								<br />
-								Maecenas quis viverra metus, et efficitur ligula. Nam congue augue et ex congue, sed luctus lectus
-								congue. Integer convallis condimentum sem. Duis elementum tortor eget condimentum tempor. Praesent
-								sollicitudin lectus ut pharetra pulvinar.
+								We're passionate about connecting car enthusiasts with their perfect vehicles. Our platform combines
+								cutting-edge technology with personalized service to make car buying and selling a seamless experience.
 							</p>
-							<Stack className={'boxes'}>
-								<div className={'box'}>
-									<div>
-										<img src="/img/icons/garden.svg" alt="" />
-									</div>
-									<span>Modern Villa</span>
-									<p>Nullam sollicitudin blandit Nullam maximus.</p>
-								</div>
-								<div className={'box'}>
-									<div>
-										<img src="/img/icons/securePayment.svg" alt="" />
-									</div>
-									<span>Secure Payment</span>
-									<p>Nullam sollicitudin blandit Nullam maximus.</p>
-								</div>
-							</Stack>
-						</Stack>
-					</Stack>
-				</Stack>
-				<Stack className={'statistics'}>
-					<Stack className={'container'}>
-						<Stack className={'banner'}>
-							<img src="/img/banner/header1.svg" alt="" />
-						</Stack>
-						<Stack className={'info'}>
-							<Box component={'div'}>
-								<strong>4M</strong>
-								<p>Award Winning</p>
-							</Box>
-							<Box component={'div'}>
-								<strong>12K</strong>
-								<p>Property Ready</p>
-							</Box>
-							<Box component={'div'}>
-								<strong>20M</strong>
-								<p>Happy Customer</p>
-							</Box>
-						</Stack>
-					</Stack>
-				</Stack>
-				<Stack className={'agents'}>
-					<Stack className={'container'}>
-						<span className={'title'}>Our Exclusive Agetns</span>
-						<p className={'desc'}>Aliquam lacinia diam quis lacus euismod</p>
-						<Stack className={'wrap'}>
-							{/*{[1, 2, 3, 4, 5].map(() => {*/}
-							{/*	return <AgentCard />;*/}
-							{/*})}*/}
-						</Stack>
-					</Stack>
-				</Stack>
-				<Stack className={'options'}>
-					<img src="/img/banner/aboutBanner.svg" alt="" className={'about-banner'} />
-					<Stack className={'container'}>
-						<strong>Let’s find the right selling option for you</strong>
-						<Stack>
-							<div className={'icon-box'}>
-								<img src="/img/icons/security.svg" alt="" />
-							</div>
-							<div className={'text-box'}>
-								<span>Property Management</span>
-								<p>Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.</p>
-							</div>
-						</Stack>
-						<Stack>
-							<div className={'icon-box'}>
-								<img src="/img/icons/keywording.svg" alt="" />
-							</div>
-							<div className={'text_-box'}>
-								<span>Property Management</span>
-								<p>Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.</p>
-							</div>
-						</Stack>
-						<Stack>
-							<div className={'icon-box'}>
-								<img src="/img/icons/investment.svg" alt="" />
-							</div>
-							<div className={'text-box'}>
-								<span>Property Management</span>
-								<p>Nullam sollicitudin blandit eros eu pretium. Nullam maximus ultricies auctor.</p>
-							</div>
-						</Stack>
-						<Stack className={'btn'}>
-							Learn More
-							<img src="/img/icons/rightup.svg" alt="" />
-						</Stack>
-					</Stack>
-				</Stack>
-				<Stack className={'partners'}>
-					<Stack className={'container'}>
-						<span>Trusted bu the world's best</span>
-						<Stack className={'wrap'}>
-							<img src="/img/icons/brands/amazon.svg" alt="" />
-							<img src="/img/icons/brands/amd.svg" alt="" />
-							<img src="/img/icons/brands/cisco.svg" alt="" />
-							<img src="/img/icons/brands/dropcam.svg" alt="" />
-							<img src="/img/icons/brands/spotify.svg" alt="" />
-						</Stack>
-					</Stack>
-				</Stack>
-				<Stack className={'help'}>
-					<Stack className={'container'}>
-						<Box component={'div'} className={'left'}>
-							<strong>Need help? Talk to our expert.</strong>
-							<p>Talk to our experts or Browse through more properties.</p>
 						</Box>
-						<Box component={'div'} className={'right'}>
-							<div className={'white'}>
-								Contact Us
-								<img src="/img/icons/rightup.svg" alt="" />
+					</Stack>
+				</Stack>
+
+				{/* Stats Section */}
+				<Stack className="stats-section">
+					<Stack className="container">
+						<Box className="stat-grid">
+							<div className="stat-item">
+								<span className="number">15K+</span>
+								<span className="label">Cars Listed</span>
 							</div>
-							<div className={'black'}>
-								<img src="/img/icons/call.svg" alt="" />
-								920 851 9087
+							<div className="stat-item">
+								<span className="number">10K+</span>
+								<span className="label">Happy Customers</span>
 							</div>
+							<div className="stat-item">
+								<span className="number">500+</span>
+								<span className="label">Expert Dealers</span>
+							</div>
+							<div className="stat-item">
+								<span className="number">24/7</span>
+								<span className="label">Support</span>
+							</div>
+						</Box>
+					</Stack>
+				</Stack>
+
+				{/* Mission Section */}
+				<Stack className="mission-section">
+					<Stack className="container">
+						<Box className="content-grid">
+							<div className="image-side">
+								<img src="/img/about/mission.jpg" alt="Our Mission" />
+							</div>
+							<div className="text-side">
+								<h2>Our Mission</h2>
+								<p>
+									To provide a transparent, efficient, and enjoyable car buying and selling experience through
+									innovative technology and exceptional customer service.
+								</p>
+								<div className="features">
+									<div className="feature">
+										<div className="icon">🔍</div>
+										<div className="text">
+											<h3>Smart Search</h3>
+											<p>Advanced filters to find your perfect match</p>
+										</div>
+									</div>
+									<div className="feature">
+										<div className="icon">🛡️</div>
+										<div className="text">
+											<h3>Secure Transactions</h3>
+											<p>Safe and protected buying process</p>
+										</div>
+									</div>
+									<div className="feature">
+										<div className="icon">👥</div>
+										<div className="text">
+											<h3>Expert Support</h3>
+											<p>Professional guidance at every step</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</Box>
+					</Stack>
+				</Stack>
+
+				{/* CTA Section */}
+				<Stack className="cta-section">
+					<Stack className="container">
+						<Box className="cta-content">
+							<h2>Ready to Find Your Dream Car?</h2>
+							<p>Join thousands of satisfied customers who found their perfect match</p>
+							<Link href="/account/join">
+								<button className="cta-button">Get Started</button>
+							</Link>
 						</Box>
 					</Stack>
 				</Stack>
