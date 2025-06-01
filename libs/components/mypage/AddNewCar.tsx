@@ -47,36 +47,41 @@ const AddCar = ({ initialValues, ...props }: any) => {
 	} = useQuery(GET_CAR, {
 		fetchPolicy: 'network-only',
 		variables: {
-			input: {
-				carId: router.query.carId,
-			},
+			input: router.query.carId,
+		},
+		skip: !router.query.carId,
+		onError: (error) => {
+			console.error('Error fetching car:', error);
+			sweetErrorHandling(error).then();
 		},
 	});
 
 	/** LIFECYCLES **/
 	useEffect(() => {
-		setInsertCarData({
-			...insertCarData,
-			carTitle: getCarData?.getCar ? getCarData?.getCar?.carTitle : '',
-			carBrand: getCarData?.getCar ? getCarData?.getCar?.carBrand : '',
-			carModel: getCarData?.getCar ? getCarData?.getCar?.carModel : '',
-			carPrice: getCarData?.getCar ? getCarData?.getCar?.carPrice : 0,
-			carType: getCarData?.getCar ? getCarData?.getCar?.carType : '',
-			carLocation: getCarData?.getCar ? getCarData?.getCar?.carLocation : '',
-			carAddress: getCarData?.getCar ? getCarData?.getCar?.carAddress : '',
-			carFuelType: getCarData?.getCar ? getCarData?.getCar?.carFuelType : '',
-			carTransmission: getCarData?.getCar ? getCarData?.getCar?.carTransmission : '',
-			carBarter: getCarData?.getCar ? getCarData?.getCar?.carBarter : false,
-			carRent: getCarData?.getCar ? getCarData?.getCar?.carRent : false,
-			carOptions: getCarData?.getCar ? getCarData?.getCar?.carOptions : [],
-			carColor: getCarData?.getCar ? getCarData?.getCar?.carColor : '',
-			carMileage: getCarData?.getCar ? getCarData?.getCar?.carMileage : 0,
-			carSeats: getCarData?.getCar ? getCarData?.getCar?.carSeats : 0,
-			carDesc: getCarData?.getCar ? getCarData?.getCar?.carDesc : '',
-			carImages: getCarData?.getCar ? getCarData?.getCar?.carImages : [],
-			manufacturedAt: getCarData?.getCar ? getCarData?.getCar?.manufacturedAt : 0,
-		});
-	}, [getCarLoading, getCarData]);
+		if (getCarData?.getCar) {
+			console.log('Setting car data:', getCarData.getCar);
+			setInsertCarData({
+				carTitle: getCarData.getCar.carTitle || '',
+				carBrand: getCarData.getCar.carBrand || '',
+				carModel: getCarData.getCar.carModel || '',
+				carPrice: getCarData.getCar.carPrice || 0,
+				carType: getCarData.getCar.carType || '',
+				carLocation: getCarData.getCar.carLocation || '',
+				carAddress: getCarData.getCar.carAddress || '',
+				carFuelType: getCarData.getCar.carFuelType || '',
+				carTransmission: getCarData.getCar.carTransmission || '',
+				carBarter: getCarData.getCar.carBarter || false,
+				carRent: getCarData.getCar.carRent || false,
+				carOptions: getCarData.getCar.carOptions || [],
+				carColor: getCarData.getCar.carColor || '',
+				carMileage: getCarData.getCar.carMileage || 0,
+				carSeats: getCarData.getCar.carSeats || 0,
+				carDesc: getCarData.getCar.carDesc || '',
+				carImages: getCarData.getCar.carImages || [],
+				manufacturedAt: getCarData.getCar.manufacturedAt || 0,
+			});
+		}
+	}, [getCarData]);
 
 	/** HANDLERS **/
 	async function uploadImages() {
@@ -177,24 +182,53 @@ const AddCar = ({ initialValues, ...props }: any) => {
 
 	const updatePropertyHandler = useCallback(async () => {
 		try {
-			// @ts-ignore
-			insertCarData._id = getCarData?.getCar?._id;
+			if (!router.query.carId) {
+				throw new Error('Car ID is missing');
+			}
+
+			// Only include fields that are defined in CarUpdate interface
+			const updateData = {
+				_id: router.query.carId as string,
+				carType: insertCarData.carType,
+				carLocation: insertCarData.carLocation,
+				carAddress: insertCarData.carAddress,
+				carFuelType: insertCarData.carFuelType,
+				carColor: insertCarData.carColor,
+				carTransmission: insertCarData.carTransmission,
+				carOptions: insertCarData.carOptions,
+				carTitle: insertCarData.carTitle,
+				carPrice: insertCarData.carPrice,
+				carMileage: insertCarData.carMileage,
+				carSeats: insertCarData.carSeats,
+				carImages: insertCarData.carImages,
+				carDesc: insertCarData.carDesc,
+				carBarter: insertCarData.carBarter,
+				carRent: insertCarData.carRent,
+				manufacturedAt: insertCarData.manufacturedAt,
+			};
+
+			console.log('Updating car with data:', updateData);
+
 			const result = await updateCar({
 				variables: {
-					input: insertCarData,
+					input: updateData,
 				},
 			});
-			await sweetMixinSuccessAlert('This car listing has been updated successfully.');
-			await router.push({
-				pathname: '/mypage',
-				query: {
-					category: 'myProperties',
-				},
-			});
+
+			if (result.data?.updateCar) {
+				await sweetMixinSuccessAlert('This car listing has been updated successfully.');
+				await router.push({
+					pathname: '/mypage',
+					query: {
+						category: 'myProperties',
+					},
+				});
+			}
 		} catch (err: any) {
+			console.error('Error updating car:', err);
 			sweetErrorHandling(err).then();
 		}
-	}, [insertCarData, getCarData?.getCar?._id]);
+	}, [insertCarData, router.query.carId]);
 
 	if (user?.memberType !== 'AGENT') {
 		router.back();
@@ -666,7 +700,7 @@ const AddCar = ({ initialValues, ...props }: any) => {
 						</Stack>
 
 						<Stack className="buttons-row">
-							{router.query.propertyId ? (
+							{router.query.carId ? (
 								<Button className="next-button" disabled={doDisabledCheck()} onClick={updatePropertyHandler}>
 									<Typography className="next-button-text">Save</Typography>
 								</Button>

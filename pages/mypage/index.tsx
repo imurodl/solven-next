@@ -118,7 +118,7 @@ const MyPage: NextPage = (props: any) => {
 							</Stack>
 							<Stack className="main-config">
 								<Stack className={'list-config'}>
-									{category === 'addProperty' && <AddCar />}
+									{category === 'addCar' && <AddCar />}
 									{category === 'myProperties' && <MyCars />}
 									{category === 'myFavorites' && <MyFavorites />}
 									{category === 'recentlyVisited' && <RecentlyVisited />}
