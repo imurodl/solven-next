@@ -56,10 +56,10 @@ const CommunityCard = (props: CommunityCardProps) => {
 					<Stack width={'100%'}>
 						<Typography
 							className="desc"
-							onClick={(e: any) => {
-								e.stopPropagation();
-								goMemberPage(boardArticle?.memberData?._id as string);
-							}}
+							// onClick={(e: any) => {
+							// 	e.stopPropagation();
+							// 	goMemberPage(boardArticle?.memberData?._id as string);
+							// }}
 						>
 							{boardArticle?.memberData?.memberNick}
 						</Typography>

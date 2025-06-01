@@ -1021,13 +1021,7 @@ body::-webkit-scrollbar {
 				padding: 0 20px;
 			}
 			.footer-container {
-				max-width: 1300px;
 				margin: 0 auto;
-				width: 100%;
-				&.mypage {
-					max-width: 100%;
-					padding: 0 4rem;
-				}
 				.subscribe-section {
 					display: flex;
 					justify-content: space-between;

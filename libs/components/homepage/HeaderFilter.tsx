@@ -452,7 +452,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 									<input
 										value={searchFilter?.search?.text ?? ''}
 										type="text"
-										placeholder={'What are you looking for?'}
+										placeholder={'Search by name...'}
 										onChange={(e: any) => {
 											setSearchFilter({
 												...searchFilter,

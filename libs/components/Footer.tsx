@@ -12,6 +12,7 @@ const Footer = () => {
 	const device = useDeviceDetect();
 	const isMobile = device === 'mobile';
 	const router = useRouter();
+	const isFullWidthPage = router.pathname === '/mypage' || router.pathname.startsWith('/member');
 
 	const socialIcons = [
 		<FacebookOutlinedIcon key="facebook" />,
@@ -42,7 +43,13 @@ const Footer = () => {
 	return (
 		<footer className="footer">
 			<div className="footer-inner">
-				<div className={`footer-container ${router.pathname === '/mypage' || '/member?' ? 'mypage' : ''}`}>
+				<div
+					className={`footer-container`}
+					style={{
+						width: isFullWidthPage ? '100%' : '1300px',
+						padding: isFullWidthPage ? '0 40px' : '0',
+					}}
+				>
 					{/* Subscribe Section */}
 					<div className="subscribe-section">
 						<div className="title-box">

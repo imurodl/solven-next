@@ -39,6 +39,7 @@ const Top = () => {
 	const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
 	const [notificationAnchor, setNotificationAnchor] = React.useState<null | HTMLElement>(null);
 	const notificationOpen = Boolean(notificationAnchor);
+	const isFullWidthPage = router.pathname === '/mypage' || router.pathname.startsWith('/member');
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -229,16 +230,16 @@ const Top = () => {
 					<Stack
 						className="container"
 						style={{
-							width: router.pathname === '/mypage' || '/member?' ? '100%' : '1300px',
+							width: isFullWidthPage ? '100%' : '1300px',
 						}}
 					>
 						<Box component={'div'} className={'logo-box'}>
 							<Link href={'/'}>
 								<img
-									src="/img/logo/logoWhite.svg"
+									src="/img/logo/solven.png"
 									alt=""
 									style={{
-										marginLeft: router.pathname === '/mypage' || '/member?' ? '80px' : '0',
+										marginLeft: isFullWidthPage ? '80px' : '0',
 									}}
 								/>
 							</Link>
@@ -269,7 +270,7 @@ const Top = () => {
 							component={'div'}
 							className={'user-box'}
 							style={{
-								marginRight: router.pathname === '/mypage' || '/member?' ? '50px' : '0',
+								marginRight: isFullWidthPage ? '50px' : '0',
 							}}
 						>
 							{user?._id ? (
