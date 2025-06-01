@@ -61,30 +61,32 @@ const Chat = () => {
 	const user = useReactiveVar(userVar);
 	const socket = useReactiveVar(socketVar);
 
-	/** LIFECYCLES **/
-
 	useEffect(() => {
-		socket.onmessage = (msg) => {
+		if (!socket) return;
+
+		const handleMessage = (msg: any) => {
 			const data = JSON.parse(msg.data);
 			console.log('WebSocket message:', data);
 
 			switch (data.event) {
 				case 'info':
-					const newInfo: InfoPayload = data;
-					setOnlineUsers(newInfo.totalClients);
+					setOnlineUsers(data.totalClients);
 					break;
 				case 'getMessages':
-					const list: MessagePayload[] = data.list;
-					setMessagesList(list);
+					setMessagesList(data.list);
 					break;
 				case 'message':
-					const newMessage: MessagePayload = data;
-					messagesList.push(newMessage);
-					setMessagesList([...messagesList])
+					setMessagesList((prev) => [...prev, data]);
 					break;
 			}
 		};
-	}, [socket, messagesList]);
+
+		socket.onmessage = handleMessage;
+
+		return () => {
+			socket.onmessage = null;
+		};
+	}, [socket]);
 
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
@@ -97,32 +99,27 @@ const Chat = () => {
 		setOpenButton(false);
 	}, [router.pathname]);
 
-	/** HANDLERS **/
 	const handleOpenChat = () => {
-		setOpen((prevState) => !prevState);
+		setOpen((prev) => !prev);
 	};
 
-	const getInputMessageHandler = useCallback(
-		(e: any) => {
-			const text = e.target.value;
-			setMessageInput(text);
-		},
-		[messageInput],
-	);
+	const getInputMessageHandler = (e: any) => {
+		setMessageInput(e.target.value);
+	};
 
 	const getKeyHandler = (e: any) => {
-		try {
-			if (e.key == 'Enter') {
-				onClickHandler();
-			}
-		} catch (err: any) {
-			console.log(err);
+		if (e.key === 'Enter') {
+			onClickHandler();
 		}
 	};
 
 	const onClickHandler = () => {
-		if (!messageInput) sweetErrorAlert(Messages.error4);
-		else {
+		if (!messageInput) {
+			sweetErrorAlert(Messages.error4);
+			return;
+		}
+
+		if (socket && socket.readyState === WebSocket.OPEN) {
 			socket.send(JSON.stringify({ event: 'message', data: messageInput }));
 			setMessageInput('');
 		}
@@ -146,7 +143,7 @@ const Chat = () => {
 							<Box flexDirection={'row'} style={{ display: 'flex' }} sx={{ m: '10px 0px' }} component={'div'}>
 								<div className={'welcome'}>Welcome to Live chat!</div>
 							</Box>
-							{messagesList.map((ele: MessagePayload) => {
+							{messagesList.map((ele: MessagePayload, index: number) => {
 								const { text, memberData } = ele;
 								const memberImage = memberData?.memberImage
 									? `${REACT_APP_API_URL}/${memberData.memberImage}`
@@ -154,6 +151,7 @@ const Chat = () => {
 
 								return memberData?._id === user?._id ? (
 									<Box
+										key={`msg-${index}`}
 										component="div"
 										flexDirection="row"
 										style={{ display: 'flex' }}
@@ -164,7 +162,13 @@ const Chat = () => {
 										<div className="msg-right">{text}</div>
 									</Box>
 								) : (
-									<Box flexDirection="row" style={{ display: 'flex' }} sx={{ m: '10px 0px' }} component="div">
+									<Box
+										key={`msg-${index}`}
+										flexDirection="row"
+										style={{ display: 'flex' }}
+										sx={{ m: '10px 0px' }}
+										component="div"
+									>
 										<Avatar alt="profile" src={memberImage} />
 										<div className="msg-left">{text}</div>
 									</Box>
