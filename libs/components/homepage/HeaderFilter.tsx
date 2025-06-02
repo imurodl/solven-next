@@ -388,11 +388,11 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					</Stack>
 					<Stack className={'search-box-other'}>
 						<Box className={'advanced-filter'} onClick={() => advancedFilterHandler(true)}>
-							<span>Advanced Search</span>
+							<span>{t('Advanced Search')}</span>
 						</Box>
 						<Box className={'search-btn'} onClick={pushSearchHandler}>
 							<img src="/img/icons/search_white.svg" alt="" />
-							<p>Search Cars</p>
+							<p>{t('Search Cars')}</p>
 						</Box>
 					</Stack>
 

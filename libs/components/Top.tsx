@@ -226,7 +226,7 @@ const Top = () => {
 					<Typography> {t('Community')} </Typography>
 				</Link>
 				<Link href={'/help'}>
-					<Typography> Help </Typography>
+					<Typography> {t('Help')} </Typography>
 				</Link>
 			</Stack>
 		);
@@ -285,7 +285,7 @@ const Top = () => {
 									>
 										<MenuItem onClick={() => logOut()}>
 											<Logout fontSize="small" style={{ color: 'blue', marginRight: '10px' }} />
-											Logout
+											{t('Logout')}
 										</MenuItem>
 									</Menu>
 								</>
@@ -293,7 +293,7 @@ const Top = () => {
 								<Link href={'/account/join'}>
 									<div className={'join-box'}>
 										<PersonOutlineOutlinedIcon />
-										<span>Sign in</span>
+										<span>{t('Sign in')}</span>
 									</div>
 								</Link>
 							)}

@@ -9,6 +9,7 @@ import { useQuery } from '@apollo/client';
 import { BoardArticleCategory } from '../../enums/board-article.enum';
 import { T } from '../../types/common';
 import { ArrowForward } from '@mui/icons-material';
+import { useTranslation } from 'next-i18next';
 
 const CommunityBoards = () => {
 	const device = useDeviceDetect();
@@ -20,6 +21,7 @@ const CommunityBoards = () => {
 	const [newsArticles, setNewsArticles] = useState<BoardArticle[]>([]);
 	const [freeArticles, setFreeArticles] = useState<BoardArticle[]>([]);
 	const [recommendArticles, setRecommendArticles] = useState<BoardArticle[]>([]);
+	const { t, i18n } = useTranslation('common');
 
 	/** APOLLO REQUESTS **/
 	const {
@@ -66,66 +68,65 @@ const CommunityBoards = () => {
 
 	if (device === 'mobile') {
 		return <div>COMMUNITY BOARDS (MOBILE)</div>;
-	}
-
-	return (
-		<section className="community-board">
-			<div className="container">
-				<div className="info-box">
-					<div className="left">
-						<span>Blog Posts</span>
+	} else
+		return (
+			<section className="community-board">
+				<div className="container">
+					<div className="info-box">
+						<div className="left">
+							<span>(t{'Blog Posts'})</span>
+						</div>
+						<div className="right">
+							<Link href="/community" className="more-box">
+								<span>{t('View All Posts')}</span>
+								<img src="/img/icons/rightup.svg" alt="" />
+							</Link>
+						</div>
 					</div>
-					<div className="right">
-						<Link href="/community" className="more-box">
-							<span>View All Posts</span>
-							<img src="/img/icons/rightup.svg" alt="" />
-						</Link>
+					<div className="community-main">
+						<div className="community-section">
+							<div className="content-top">
+								<Link href="/community?articleCategory=NEWS">
+									<span>News</span>
+									<img src="/img/icons/arrowBig.svg" alt="View all news" />
+								</Link>
+							</div>
+							<div className="card-wrap">
+								{newsArticles.map((article, index) => (
+									<CommunityCard vertical={false} article={article} index={index} key={article?._id} />
+								))}
+							</div>
+						</div>
+						<div className="community-section">
+							<div className="content-top">
+								<Link href="/community?articleCategory=FREE">
+									<span>Free Board</span>
+									<img src="/img/icons/arrowBig.svg" alt="View all free posts" />
+								</Link>
+							</div>
+							<div className="card-wrap">
+								{freeArticles.map((article, index) => (
+									<CommunityCard vertical={false} article={article} index={index} key={article?._id} />
+								))}
+							</div>
+						</div>
+						<div className="community-section">
+							<div className="content-top">
+								<Link href="/community?articleCategory=RECOMMEND">
+									<span>Recommended</span>
+									<img src="/img/icons/arrowBig.svg" alt="View recommended posts" />
+								</Link>
+							</div>
+							<div className="card-wrap">
+								{recommendArticles.map((article, index) => (
+									<CommunityCard vertical={false} article={article} index={index} key={article?._id} />
+								))}
+							</div>
+						</div>
 					</div>
 				</div>
-				<div className="community-main">
-					<div className="community-section">
-						<div className="content-top">
-							<Link href="/community?articleCategory=NEWS">
-								<span>News</span>
-								<img src="/img/icons/arrowBig.svg" alt="View all news" />
-							</Link>
-						</div>
-						<div className="card-wrap">
-							{newsArticles.map((article, index) => (
-								<CommunityCard vertical={false} article={article} index={index} key={article?._id} />
-							))}
-						</div>
-					</div>
-					<div className="community-section">
-						<div className="content-top">
-							<Link href="/community?articleCategory=FREE">
-								<span>Free Board</span>
-								<img src="/img/icons/arrowBig.svg" alt="View all free posts" />
-							</Link>
-						</div>
-						<div className="card-wrap">
-							{freeArticles.map((article, index) => (
-								<CommunityCard vertical={false} article={article} index={index} key={article?._id} />
-							))}
-						</div>
-					</div>
-					<div className="community-section">
-						<div className="content-top">
-							<Link href="/community?articleCategory=RECOMMEND">
-								<span>Recommended</span>
-								<img src="/img/icons/arrowBig.svg" alt="View recommended posts" />
-							</Link>
-						</div>
-						<div className="card-wrap">
-							{recommendArticles.map((article, index) => (
-								<CommunityCard vertical={false} article={article} index={index} key={article?._id} />
-							))}
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-	);
+			</section>
+		);
 };
 
 export default CommunityBoards;

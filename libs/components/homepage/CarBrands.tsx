@@ -12,9 +12,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
+import { useTranslation } from 'next-i18next';
 
 const CarBrands: NextPage<{ initialInput?: CarsInquiry }> = ({ initialInput }) => {
 	const router = useRouter();
+	const { t, i18n } = useTranslation('common');
+
 	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(
 		initialInput || {
 			page: 1,
@@ -47,7 +50,7 @@ const CarBrands: NextPage<{ initialInput?: CarsInquiry }> = ({ initialInput }) =
 		<section className="car-brands-section">
 			<Stack className="car-brands-container">
 				<Stack className="info-box">
-					<h2 className="section-title">Explore Our Premium Brands</h2>
+					<h2 className="section-title">{t('Explore Our Premium Brands')}</h2>
 					<Box component={'div'} className={'right'}>
 						<Stack className={'pagination-box'} flexDirection={'row'} alignItems={'center'}>
 							<WestIcon className={'swiper-brand-prev'} />

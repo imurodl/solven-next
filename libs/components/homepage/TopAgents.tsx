@@ -17,6 +17,8 @@ import { GET_AGENTS } from '../../../apollo/user/query';
 import { LIKE_TARGET_MEMBER } from '../../../apollo/user/mutation';
 import { Messages } from '../../config';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
+import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
 
 interface TopAgentsProps {
 	initialInput: AgentsInquiry;
@@ -27,6 +29,7 @@ const TopAgents = (props: TopAgentsProps) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [topAgents, setTopAgents] = useState<Member[]>([]);
+	const { t, i18n } = useTranslation('common');
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetMember] = useMutation(LIKE_TARGET_MEMBER);
@@ -96,11 +99,13 @@ const TopAgents = (props: TopAgentsProps) => {
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Top Agents</span>
+							<span>{t('Top Agents')}</span>
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'more-box'}>
-								<span>View All Agents</span>
+								<Link href={'/agent'}>
+									<span>{t('View All Agents')}</span>
+								</Link>
 								<img src="/img/icons/rightup.svg" alt="" />
 							</div>
 						</Box>

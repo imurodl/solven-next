@@ -66,9 +66,9 @@ const withLayoutMain = (Component: any) => {
 						<Stack className={'header-main'}>
 							<Stack className={'container'}>
 								<Typography className={'header-main-subtitle'}>
-									Explore Local Car Listings — And Share Yours with Ease
+									{t('Explore Local Car Listings — And Share Yours with Ease')}
 								</Typography>
-								<Typography className={'header-main-title'}>Find Your Perfect Car</Typography>
+								<Typography className={'header-main-title'}>{t('Find Your Perfect Car')}</Typography>
 								<HeaderFilter />
 							</Stack>
 						</Stack>

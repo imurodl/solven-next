@@ -15,6 +15,7 @@ import type { T } from '../../types/common';
 import { LIKE_TARGET_CAR } from '../../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import { Message } from '../../enums/common.enum';
+import { useTranslation } from 'next-i18next';
 
 interface TrendCarsProps {
 	initialInput: CarsInquiry;
@@ -25,6 +26,7 @@ const TrendCars = (props: TrendCarsProps) => {
 	const device = useDeviceDetect();
 	const [trendCars, setTrendCars] = useState<Car[]>([]);
 	const [activeSort, setActiveSort] = useState(initialInput.sort);
+	const { t, i18n } = useTranslation('common');
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetCar] = useMutation(LIKE_TARGET_CAR);
@@ -118,7 +120,7 @@ const TrendCars = (props: TrendCarsProps) => {
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Featured Car Listings</span>
+							<span>{t('Featured Car Listings')}</span>
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'pagination-box'}>
@@ -134,19 +136,19 @@ const TrendCars = (props: TrendCarsProps) => {
 								onClick={() => carSearchChangeHandler('carViews')}
 								className={activeSort === 'carViews' ? 'active' : ''}
 							>
-								Popular Cars
+								{t('Popular Cars')}
 							</Typography>
 							<Typography
 								onClick={() => carSearchChangeHandler('carLikes')}
 								className={activeSort === 'carLikes' ? 'active' : ''}
 							>
-								Trending Cars
+								{t("Trending Cars")}
 							</Typography>
 							<Typography
 								onClick={() => carSearchChangeHandler('carRank')}
 								className={activeSort === 'carRank' ? 'active' : ''}
 							>
-								Top Cars
+								{t("Top Cars")}
 							</Typography>
 						</Stack>
 						<Divider color={'#e9e9e9'} width={'100%'} height={'1px'} />

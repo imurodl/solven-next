@@ -3,8 +3,6 @@ import { Stack, Box, Typography, Divider } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper';
-import WestIcon from '@mui/icons-material/West';
-import EastIcon from '@mui/icons-material/East';
 import PopularCarCard from './PopularCarCard';
 import { Car } from '../../types/car/car';
 import Link from 'next/link';
@@ -17,6 +15,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { LIKE_TARGET_CAR } from '../../../apollo/user/mutation';
 import { Message } from '../../enums/common.enum';
+import { useTranslation } from 'next-i18next';
 
 interface PopularCarsProps {
 	initialInput: CarsInquiry;
@@ -27,6 +26,7 @@ const PopularCars = (props: PopularCarsProps) => {
 	const device = useDeviceDetect();
 	const [popularCars, setPopularCars] = useState<Car[]>([]);
 	const [activeBrand, setActiveBrand] = useState(initialInput.search.brandList?.[0] || '');
+	const { t, i18n } = useTranslation('common');
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetCar] = useMutation(LIKE_TARGET_CAR);
@@ -123,12 +123,12 @@ const PopularCars = (props: PopularCarsProps) => {
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
 						<Box component={'div'} className={'left'}>
-							<span>Popular Car Listings</span>
+							<span>{t('Popular Car Listings')}</span>
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'more-box'}>
 								<Link href={'/car'}>
-									<span>See All Listings</span>
+									<span>{t('See All Listings')}</span>
 								</Link>
 								<img src="/img/icons/rightup.svg" alt="" />
 							</div>
@@ -140,45 +140,57 @@ const PopularCars = (props: PopularCarsProps) => {
 								onClick={() => carSearchChangeHandler('HYUNDAI')}
 								className={activeBrand === 'HYUNDAI' ? 'active' : ''}
 							>
-								Hyundai
+								{t('Hyundai')}
 							</Typography>
 							<Typography
 								onClick={() => carSearchChangeHandler('KIA')}
 								className={activeBrand === 'KIA' ? 'active' : ''}
 							>
-								KIA
+								{t('KIA')}
 							</Typography>
 							<Typography
 								onClick={() => carSearchChangeHandler('CHEVROLET')}
 								className={activeBrand === 'CHEVROLET' ? 'active' : ''}
 							>
-								Chevrolet
+								{t('Chevrolet')}
 							</Typography>
 						</Stack>
 						<Divider color={'#fff'} width={'100%'} height={'1px'} />
 					</Stack>
 					<Stack className={'card-box'}>
-						<Swiper
-							className={'popular-property-swiper'}
-							slidesPerView={'auto'}
-							spaceBetween={20}
-							modules={[Autoplay, Navigation, Pagination]}
-							navigation={{
-								nextEl: '.swiper-popular-next',
-								prevEl: '.swiper-popular-prev',
-							}}
-							pagination={{
-								el: '.swiper-popular-pagination',
-							}}
-						>
-							{popularCars.map((car: Car) => {
-								return (
-									<SwiperSlide key={car._id} className={'popular-property-slide'}>
-										<PopularCarCard car={car} likeCarHandler={likeCarHandler} />
-									</SwiperSlide>
-								);
-							})}
-						</Swiper>
+						{popularCars.length === 0 ? (
+							<Stack
+								component={'div'}
+								className={'empty-list'}
+								justifyContent={'center'}
+								alignItems={'center'}
+								height={'300px'}
+							>
+								Cars Empty
+							</Stack>
+						) : (
+							<Swiper
+								className={'popular-property-swiper'}
+								slidesPerView={'auto'}
+								spaceBetween={20}
+								modules={[Autoplay, Navigation, Pagination]}
+								navigation={{
+									nextEl: '.swiper-popular-next',
+									prevEl: '.swiper-popular-prev',
+								}}
+								pagination={{
+									el: '.swiper-popular-pagination',
+								}}
+							>
+								{popularCars.map((car: Car) => {
+									return (
+										<SwiperSlide key={car._id} className={'popular-property-slide'}>
+											<PopularCarCard car={car} likeCarHandler={likeCarHandler} />
+										</SwiperSlide>
+									);
+								})}
+							</Swiper>
+						)}
 					</Stack>
 					<Stack className={'pagination-box'}>
 						<ChevronLeftIcon className={'swiper-popular-prev'} />
@@ -198,7 +210,7 @@ PopularCars.defaultProps = {
 		sort: 'carViews',
 		direction: 'DESC',
 		search: {
-			brandList: ['HYUNDAI'],
+			// brandList: ['HYUNDAI'],
 		},
 	},
 };
