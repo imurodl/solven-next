@@ -345,7 +345,7 @@ const Top = () => {
 											className="img-flag"
 											src={'/img/flag/langkr.png'}
 											onClick={langChoice}
-											id="kor"
+											id="kr"
 											alt={'koreanFlag'}
 										/>
 										{t('Korean')}
