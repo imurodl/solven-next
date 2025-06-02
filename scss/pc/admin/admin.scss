@@ -310,7 +310,7 @@
 			border: 1px dashed #eee;
 		}
 		.btn-text {
-			color: #e92c28;
+			color: $primary-color;
 		}
 		.btn-window {
 			color: #757575;
@@ -343,8 +343,8 @@
 				}
 				li.on {
 					font-weight: 500;
-					color: #e92c28;
-					border-bottom: 2px solid #e92c28;
+					color: $primary-color;
+					border-bottom: 2px solid $primary-color;
 				}
 			}
 			&.check-table-wrap {
@@ -420,7 +420,7 @@
 			}
 			.flex-box {
 				button {
-					color: #e92c28;
+					color: $primary-color;
 					font-weight: 500;
 					margin-right: 8px;
 				}

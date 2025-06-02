@@ -427,6 +427,7 @@ body::-webkit-scrollbar {
 				font-weight: 700;
 				line-height: 1.2;
 				background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+				background-clip: text;
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
 				animation: fadeInUp 0.8s ease-out;

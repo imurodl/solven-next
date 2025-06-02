@@ -269,7 +269,6 @@ export const CarBrandCreate = ({ onClose, editBrand }: CarBrandCreateProps) => {
 						variant="contained"
 						onClick={editBrand ? handleUpdateBrand : handleCreateBrand}
 						sx={{
-							bgcolor: '#dc3545',
 							'&:hover': {
 								bgcolor: '#c82333',
 							},

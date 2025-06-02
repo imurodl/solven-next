@@ -187,7 +187,6 @@ export const NoticeCreate = ({ onClose, editNotice, defaultCategory, disableCate
 						type="submit"
 						variant="contained"
 						sx={{
-							bgcolor: '#dc3545',
 							'&:hover': {
 								bgcolor: '#c82333',
 							},
