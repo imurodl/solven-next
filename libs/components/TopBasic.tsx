@@ -263,7 +263,7 @@ const Top = () => {
 								</Link>
 							)}
 							<Link href={'/help'}>
-								<div className={router.pathname.startsWith('/help') ? 'active' : ''}>Help</div>
+								<div className={router.pathname.startsWith('/help') ? 'active' : ''}>{t('Help')}</div>
 							</Link>
 						</Box>
 						<Box
@@ -369,6 +369,16 @@ const Top = () => {
 											alt={'russiaFlag'}
 										/>
 										{t('Russian')}
+									</MenuItem>
+									<MenuItem disableRipple onClick={langChoice} id="uz">
+										<img
+											className="img-flag"
+											src={'/img/flag/languz.png'}
+											onClick={langChoice}
+											id="uz"
+											alt={'uzbFlag'}
+										/>
+										{t('Uzbek')}
 									</MenuItem>
 								</StyledMenu>
 							</div>

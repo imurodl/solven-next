@@ -50,7 +50,7 @@ const MyCars: NextPage = ({ initialInput, ...props }: any) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>NESTAR CARS MOBILE</div>;
+		return <div>SOLVEN CARS MOBILE</div>;
 	} else {
 		return (
 			<div id="member-properties-page">

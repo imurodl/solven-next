@@ -9,6 +9,7 @@ import useDeviceDetect from '../hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 
 interface FooterLink {
 	text: string;
@@ -22,11 +23,12 @@ interface FooterSection {
 }
 
 const Footer = () => {
+	const { t, i18n } = useTranslation('common');
+	const [lang, setLang] = useState<string | null>('en');
 	const device = useDeviceDetect();
 	const isMobile = device === 'mobile';
 	const router = useRouter();
 	const isFullWidthPage = router.pathname === '/mypage' || router.pathname.startsWith('/member');
-	const [lang, setLang] = useState<string | null>('en');
 
 	useEffect(() => {
 		if (localStorage.getItem('locale') === null) {
@@ -134,7 +136,7 @@ const Footer = () => {
 
 						{/* App Links & Social Icons */}
 						<div className="app-section">
-							<h3 className="app-title">Get the App</h3>
+							<h3 className="app-title">{t('Get the App')}</h3>
 							<div className="app-buttons">
 								<a href="#" className="app-button">
 									<AppleIcon className="app-icon" />

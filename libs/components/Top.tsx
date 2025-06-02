@@ -8,7 +8,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { alpha, styled } from '@mui/material/styles';
 import Menu, { MenuProps } from '@mui/material/Menu';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { CaretDown } from 'phosphor-react';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 import Link from 'next/link';
@@ -238,7 +237,7 @@ const Top = () => {
 					<Stack className={'container'}>
 						<Box component={'div'} className={'logo-box'}>
 							<Link href={'/'}>
-								<img src="/img/logo/solven.png" alt="" />
+								<img src="/img/logo/solven.png" alt="Solven logo" />
 							</Link>
 						</Box>
 						<Box component={'div'} className={'router-box'}>
@@ -260,7 +259,7 @@ const Top = () => {
 								</Link>
 							)}
 							<Link href={'/help'}>
-								<div className={router.pathname.startsWith('/help') ? 'active' : ''}>Help</div>
+								<div className={router.pathname.startsWith('/help') ? 'active' : ''}>{t('Help')}</div>
 							</Link>
 						</Box>
 						<Box component={'div'} className={'user-box'}>
@@ -346,7 +345,7 @@ const Top = () => {
 											className="img-flag"
 											src={'/img/flag/langkr.png'}
 											onClick={langChoice}
-											id="uz"
+											id="kor"
 											alt={'koreanFlag'}
 										/>
 										{t('Korean')}
@@ -360,6 +359,16 @@ const Top = () => {
 											alt={'russiaFlag'}
 										/>
 										{t('Russian')}
+									</MenuItem>
+									<MenuItem disableRipple onClick={langChoice} id="uz">
+										<img
+											className="img-flag"
+											src={'/img/flag/languz.png'}
+											onClick={langChoice}
+											id="uz"
+											alt={'uzbFlag'}
+										/>
+										{t('Uzbek')}
 									</MenuItem>
 								</StyledMenu>
 							</div>

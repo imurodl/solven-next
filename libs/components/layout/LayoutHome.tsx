@@ -13,11 +13,13 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import ScrollToTop from '../common/ScrollToTop';
+import { useTranslation } from 'next-i18next';
 
 const withLayoutMain = (Component: any) => {
 	return (props: any) => {
 		const device = useDeviceDetect();
 		const user = useReactiveVar(userVar);
+		const { t, i18n } = useTranslation('common');
 
 		/** LIFECYCLES **/
 		useEffect(() => {
@@ -31,8 +33,8 @@ const withLayoutMain = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
-						<meta name={'title'} content={`Nestar`} />
+						<title>Solven</title>
+						<meta name={'title'} content={`Solven`} />
 					</Head>
 					<Stack id="mobile-wrap">
 						<Stack id={'top'}>
@@ -53,8 +55,8 @@ const withLayoutMain = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
-						<meta name={'title'} content={`Nestar`} />
+						<title>Solven</title>
+						<meta name={'title'} content={`Solven`} />
 					</Head>
 					<Stack id="pc-wrap">
 						<Stack id={'top'}>

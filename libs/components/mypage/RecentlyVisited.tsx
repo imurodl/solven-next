@@ -38,7 +38,7 @@ const RecentlyVisited: NextPage = () => {
 	};
 
 	if (device === 'mobile') {
-		return <div>NESTAR MY CARS MOBILE</div>;
+		return <div>SOLVEN MY CARS MOBILE</div>;
 	} else {
 		return (
 			<div id="my-favorites-page">
