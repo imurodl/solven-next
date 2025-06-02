@@ -47,6 +47,11 @@ const AdminMenuList = () => {
 					icon: <UserCircleGear size={20} weight="fill" className="menu-icon" />,
 					url: '/_admin/cars',
 				},
+				{
+					title: 'Car Brands',
+					icon: <UserCircleGear size={20} weight="fill" className="menu-icon" />,
+					url: '/_admin/cars/brands',
+				},
 			],
 		},
 		{

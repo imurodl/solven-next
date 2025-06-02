@@ -722,3 +722,157 @@
 		}
 	}
 }
+
+#pc-wrap.admin {
+	#admin-car-brands-page {
+		padding: 32px;
+
+		.MuiTableContainer-root {
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+			border-radius: 8px;
+
+			.MuiTable-root {
+				.MuiTableHead-root {
+					.MuiTableRow-root {
+						background-color: #f8fafc;
+
+						.MuiTableCell-root {
+							font-weight: 600;
+							color: #1e293b;
+						}
+					}
+				}
+
+				.MuiTableBody-root {
+					.MuiTableRow-root {
+						&:hover {
+							background-color: #f8fafc;
+						}
+
+						.MuiTableCell-root {
+							color: #334155;
+
+							.MuiIconButton-root {
+								&:hover {
+									background-color: rgba(30, 64, 175, 0.1);
+								}
+
+								&.MuiIconButton-colorError {
+									&:hover {
+										background-color: rgba(239, 68, 68, 0.1);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.MuiDialog-paper {
+			.MuiDialogTitle-root {
+				font-size: 24px;
+				padding: 24px 24px 0;
+				font-weight: 500;
+			}
+
+			.MuiDialogContent-root {
+				padding: 24px;
+
+				.MuiStack-root {
+					gap: 32px;
+				}
+
+				.MuiTextField-root {
+					.MuiOutlinedInput-root {
+						background: white;
+					}
+				}
+
+				.image-upload-section {
+					display: flex;
+					flex-direction: column;
+					gap: 8px;
+
+					.section-title {
+						font-size: 16px;
+						color: #000;
+						font-weight: 400;
+					}
+
+					.upload-button {
+						display: inline-block;
+						color: #1e40af;
+						font-size: 16px;
+						cursor: pointer;
+						margin: 4px 0;
+						font-weight: 500;
+					}
+
+					.upload-hint {
+						color: #64748b;
+						font-size: 14px;
+						margin-top: 4px;
+					}
+				}
+
+				.models-input-section {
+					display: flex;
+					flex-direction: column;
+					gap: 8px;
+					border-radius: $border-radius-small;
+					height: 400px;
+					.section-title {
+						font-size: 16px;
+						color: #000;
+						font-weight: 400;
+					}
+
+					.custom-input {
+						width: 100%;
+						padding: 16px 14px;
+						border: 1px solid rgba(0, 0, 0, 0.23);
+						border-radius: 4px;
+						font-family: inherit;
+						font-size: 16px;
+						line-height: 1.5;
+						color: #334155;
+						transition: all 0.2s;
+						background: white;
+						resize: horizontal;
+						&:hover {
+							border-color: #1e40af;
+						}
+
+						&:focus {
+							outline: none;
+							border-color: #1e40af;
+							border-width: 2px;
+							padding: 15px 13px;
+						}
+					}
+				}
+			}
+
+			.MuiDialogActions-root {
+				padding: 16px 24px;
+				border-top: 1px solid #e2e8f0;
+
+				.MuiButton-root {
+					text-transform: none;
+					font-size: 16px;
+					padding: 8px 16px;
+					min-width: 100px;
+
+					&.MuiButton-contained {
+						background: #ef4444;
+
+						&:hover {
+							background: #dc2626;
+						}
+					}
+				}
+			}
+		}
+	}
+}
