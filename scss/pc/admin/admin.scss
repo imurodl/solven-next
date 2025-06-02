@@ -725,8 +725,10 @@
 
 #pc-wrap.admin {
 	#admin-car-brands-page {
-		padding: 32px;
-
+		h1 {
+			font-size: 28px;
+			font-weight: bold;
+		}
 		.MuiTableContainer-root {
 			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 			border-radius: 8px;
