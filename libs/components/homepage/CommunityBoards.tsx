@@ -74,7 +74,7 @@ const CommunityBoards = () => {
 				<div className="container">
 					<div className="info-box">
 						<div className="left">
-							<span>(t{'Blog Posts'})</span>
+							<span>{t('Blog Posts')}</span>
 						</div>
 						<div className="right">
 							<Link href="/community" className="more-box">

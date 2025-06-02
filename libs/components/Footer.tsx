@@ -57,29 +57,29 @@ const Footer = () => {
 
 	const footerLinks: FooterSection[] = [
 		{
-			title: 'Company',
+			title: t('Company'),
 			links: [
-				{ text: 'Home', href: '/' },
-				{ text: 'About Us', href: '/about' },
-				{ text: 'Listings', href: '/car' },
-				{ text: 'Agents', href: '/agent' },
-				{ text: 'Community', href: '/community?articleCategory=FREE' },
-				{ text: 'Help', href: '/help' },
+				{ text: t('Home'), href: '/' },
+				{ text: t('About Us'), href: '/about' },
+				{ text: t('Listings'), href: '/car' },
+				{ text: t('Agents'), href: '/agent' },
+				{ text: t('Community'), href: '/community?articleCategory=FREE' },
+				{ text: t('Help'), href: '/help' },
 			],
 		},
 		{
-			title: 'Quick Links',
+			title: t('Quick Links'),
 			links: [
-				{ text: 'Terms & Conditions', href: '/help?tab=terms' },
-				{ text: 'FAQ', href: '/help?tab=faq' },
-				{ text: 'Support', href: '/help' },
-				{ text: 'Contact Us', href: '/help' },
+				{ text: t('Terms & Conditions'), href: '/help?tab=terms' },
+				{ text: t('FAQ'), href: '/help?tab=faq' },
+				{ text: t('Support'), href: '/help' },
+				{ text: t('Contact Us'), href: '/help' },
 			],
 		},
 		{
-			title: 'Languages',
-			links: [{ text: 'English' }, { text: 'Korean' }, { text: 'Russian' }],
-			langCodes: ['en', 'kr', 'ru'],
+			title: t('Languages'),
+			links: [{ text: t('English') }, { text: t('Korean') }, { text: t('Russian') }, { text: t('Uzbek') }],
+			langCodes: ['en', 'kr', 'ru', 'uz'],
 		},
 	];
 
@@ -100,8 +100,8 @@ const Footer = () => {
 						</Link>
 
 						<div className="input-box">
-							<input type="email" placeholder="Your e-mail address" />
-							<button>Sign Up</button>
+							<input type="email" placeholder={t('Your e-mail address')} />
+							<button>{t('Sign Up')}</button>
 						</div>
 					</div>
 
@@ -141,21 +141,21 @@ const Footer = () => {
 								<a href="#" className="app-button">
 									<AppleIcon className="app-icon" />
 									<div className="app-text">
-										<span className="store-type">Download on the</span>
-										<span className="store-name">App Store</span>
+										<span className="store-type">{t('Download on the')}</span>
+										<span className="store-name">{t('App Store')}</span>
 									</div>
 								</a>
 								<a href="#" className="app-button">
 									<AndroidIcon className="app-icon" />
 									<div className="app-text">
-										<span className="store-type">Get it on</span>
-										<span className="store-name">Google Play</span>
+										<span className="store-type">{t('Get it on')}</span>
+										<span className="store-name">{t('Google Play')}</span>
 									</div>
 								</a>
 							</div>
 
 							<div className="social-section">
-								<h4 className="social-title">Connect With Us</h4>
+								<h4 className="social-title">{t('Connect With Us')}</h4>
 								<div className="social-icons">
 									{socialIcons.map((icon, i) => (
 										<a key={i} href="#" className="social-icon">
@@ -169,7 +169,7 @@ const Footer = () => {
 				</div>
 				<div className="footer-bottom">
 					<p>
-						© {new Date().getFullYear()} <a href="/">Solven</a>. All rights reserved.
+						© {new Date().getFullYear()} <a href="/">Solven</a>. {t('All rights reserved')}.
 					</p>
 				</div>
 			</div>
