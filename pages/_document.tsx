@@ -8,13 +8,18 @@ export default function Document() {
 				<link rel="icon" type="image/png" href="/img/logo/favicon.svg" />
 
 				{/* SEO */}
-				<meta name="keyword" content={'nestar, nestar.uz, devex mern, mern nestjs fullstack'} />
+				<meta
+					name="keyword"
+					content={
+						'solven, solven.uz, car marketplace, car dealership, buy cars korea, sell cars korea, car trading platform'
+					}
+				/>
 				<meta
 					name={'description'}
 					content={
-						'Buy and sell properties anywhere anytime in South Korea. Best Properties at Best prices on nestar.uz | ' +
-						'Покупайте и продавайте недвижимость в любой точке Южной Кореи в любое время. Лучшая недвижимость по лучшим ценам на nestar.uz | ' +
-						'대한민국 언제 어디서나 부동산을 사고팔 수 있습니다. Nestar.uz에서 최적의 가격으로 최고의 부동산을 만나보세요'
+						'Solven - Your premier destination for buying and selling cars in South Korea. Find new and used cars, compare prices, connect with dealers, and make informed decisions. The most trusted automotive marketplace platform in Korea | ' +
+						'솔벤 - 대한민국 최고의 자동차 거래 플랫폼. 새 차와 중고차를 찾고, 가격을 비교하고, 딜러와 연결하세요. 신뢰할 수 있는 자동차 마켓플레이스 | ' +
+						'Solven - Your trusted platform for automotive trading in Korea. Discover a wide selection of vehicles, from new releases to quality used cars, all in one place'
 					}
 				/>
 			</Head>
