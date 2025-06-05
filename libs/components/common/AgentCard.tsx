@@ -28,6 +28,9 @@ const AgentCard = (props: AgentCardProps) => {
 	const agentImage = agent?.memberImage
 		? `${process.env.REACT_APP_API_URL}/${agent?.memberImage}`
 		: '/img/profile/defaultUser.svg';
+	// @ts-ignore
+	const myFavorite = !!agent?.meLiked?.[0]?.myFavorite;
+	const likeCount = agent?.memberLikes ?? 0;
 
 	if (device === 'mobile') {
 		return (
@@ -92,8 +95,10 @@ const AgentCard = (props: AgentCardProps) => {
 							View
 						</Button>
 					</Link>
-					{/* Like Button with Count */}
+
+					{/* @ts-ignore */}
 					<Box
+						// @ts-ignore
 						sx={{
 							display: 'flex',
 							alignItems: 'center',
@@ -102,13 +107,13 @@ const AgentCard = (props: AgentCardProps) => {
 						}}
 						onClick={() => likeMemberHandler(user, agent?._id)}
 					>
-						{agent?.meLiked && agent?.meLiked[0]?.myFavorite ? (
+						{myFavorite ? (
 							<FavoriteIcon sx={{ color: 'red', fontSize: 24 }} />
 						) : (
 							<FavoriteBorderIcon sx={{ color: '#666', fontSize: 24 }} />
 						)}
 						<Typography variant="body2" sx={{ fontSize: '14px', color: '#666' }}>
-							{agent?.memberLikes}
+							{likeCount}
 						</Typography>
 					</Box>
 				</div>

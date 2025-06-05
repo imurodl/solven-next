@@ -155,7 +155,13 @@ const PopularCars = (props: PopularCarsProps) => {
 								{t('Chevrolet')}
 							</Typography>
 						</Stack>
-						<Divider color={'#fff'} width={'100%'} height={'1px'} />
+						<Divider
+							sx={{
+								color: '#fff',
+								width: '100%',
+								height: '1px',
+							}}
+						/>
 					</Stack>
 					<Stack className={'card-box'}>
 						{popularCars.length === 0 ? (
@@ -210,7 +216,7 @@ PopularCars.defaultProps = {
 		sort: 'carViews',
 		direction: 'DESC',
 		search: {
-			// brandList: ['HYUNDAI'],
+			brandList: ['HYUNDAI'],
 		},
 	},
 };

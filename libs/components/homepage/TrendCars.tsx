@@ -142,16 +142,22 @@ const TrendCars = (props: TrendCarsProps) => {
 								onClick={() => carSearchChangeHandler('carLikes')}
 								className={activeSort === 'carLikes' ? 'active' : ''}
 							>
-								{t("Trending Cars")}
+								{t('Trending Cars')}
 							</Typography>
 							<Typography
 								onClick={() => carSearchChangeHandler('carRank')}
 								className={activeSort === 'carRank' ? 'active' : ''}
 							>
-								{t("Top Cars")}
+								{t('Top Cars')}
 							</Typography>
 						</Stack>
-						<Divider color={'#e9e9e9'} width={'100%'} height={'1px'} />
+						<Divider
+							sx={{
+								color: '#e9e9e9',
+								width: '100%',
+								height: '1px',
+							}}
+						/>
 					</Stack>
 					<Stack className={'card-box'}>
 						{trendCars.length === 0 ? (

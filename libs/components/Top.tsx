@@ -205,7 +205,7 @@ const Top = () => {
 			<Stack className={'top'}>
 				<Link href={'/'}>
 					<Typography
-						variant="div"
+						variant="h5"
 						fontFamily="DM Sans"
 						fontWeight="500"
 						color="white"

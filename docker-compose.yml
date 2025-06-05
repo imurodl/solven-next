@@ -1,0 +1,30 @@
+services:
+  solven-next:
+    container_name: solven-next
+    restart: always
+    image: node:20.10.0
+    ports: 
+     - 4006:3006
+    environment: 
+     - PORT=3006
+
+    volumes:
+     - ./:/usr/src/solven-next
+    working_dir: /usr/src/solven-next
+
+    networks:
+     - client-network
+
+    # FOR_PRODUCTION
+    command: bash -c "yarn && yarn run build && yarn run start"
+
+networks:
+  client-network:
+    driver: bridge
+
+
+
+
+  # solven-next: localhost: 4006 => container: 3006
+  # solven-api: localhost: 4007 => container: 3007
+  # solven-batch: localhost: 4008 => container: 3008    
