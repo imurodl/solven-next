@@ -54,7 +54,7 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 
 			await likeTargetBoardArticle({
 				variables: {
-					input: id , 
+					input: id,
 				},
 			});
 
@@ -65,7 +65,7 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 			console.log('ERROR, likeBoArticleHandler:', err.message);
 			await sweetMixinErrorAlert(err.message);
 		}
-	}
+	};
 
 	if (device === 'mobile') {
 		return <>ARTICLE PAGE MOBILE</>;
@@ -110,7 +110,9 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 							/>
 						</Stack>
 						<Stack className="total">
-							<Typography>Total {totalCount ?? 0} article(s) available</Typography>
+							<Typography>
+								Total {totalCount ?? 0} article{totalCount > 0 ? 's' : ''} available
+							</Typography>
 						</Stack>
 					</Stack>
 				)}

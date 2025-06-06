@@ -563,7 +563,7 @@ const AddCar = ({ initialValues, ...props }: any) => {
 									</div>
 								</div>
 							))}
-							<div className="upload-box">
+							<div className="upload-box" onClick={() => inputRef.current?.click()}>
 								<input
 									type="file"
 									multiple
@@ -572,7 +572,7 @@ const AddCar = ({ initialValues, ...props }: any) => {
 									ref={inputRef}
 									style={{ display: 'none' }}
 								/>
-								<div className="text-box" onClick={() => inputRef.current?.click()}>
+								<div className="text-box">
 									<Typography className="drag-title">Upload Images</Typography>
 									<Typography className="drag-description">Click to browse or drag images here</Typography>
 								</div>

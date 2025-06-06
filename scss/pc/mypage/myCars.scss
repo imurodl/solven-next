@@ -67,9 +67,9 @@
 						display: flex;
 						justify-content: center;
 						align-items: center;
-						border-bottom: 2px solid #eb6753;
+						border-bottom: 2px solid $primary-color;
 						cursor: pointer;
-						color: #eb6753;
+						color: $primary-color;
 						font-family: $font;
 						font-size: 16px;
 						font-style: normal;
@@ -92,7 +92,7 @@
 					width: 100%;
 					height: auto;
 					flex-direction: row;
-					gap: 90px;
+					justify-content: space-between;
 					padding: 18px 15px 18px 33px;
 					border-radius: 12px;
 					background: #f6f6f6;
