@@ -509,7 +509,7 @@ body::-webkit-scrollbar {
 
 					.advanced-filter {
 						font-weight: 600;
-						color: $border-color;
+						// color: $border-color;
 						cursor: pointer;
 						padding: 14px 18px;
 						width: 200px;
@@ -544,12 +544,7 @@ body::-webkit-scrollbar {
 
 						&:hover {
 							background: $primary-dark;
-							transform: scale(1.1);
-
-							p,
-							img {
-								transform: scale(1.05);
-							}
+							transform: scale(1.05);
 						}
 
 						img {
