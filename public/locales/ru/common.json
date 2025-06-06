@@ -83,5 +83,40 @@
 		"INSERT_ALL_INPUTS": "Пожалуйста, заполните все поля"
 	},
 
-	"noData": "Нет данных"
+	"sortBy": "Сортировать по",
+	"newest": "Новые",
+	"oldest": "Старые",
+	"lowestPrice": "Низкая цена",
+	"highestPrice": "Высокая цена",
+	"noData": "Нет данных",
+	"carSearch": "Поиск автомобилей",
+	"breadcrumb": {
+		"home": "Главная",
+		"listings": "Список автомобилей",
+		"separator": "/"
+	},
+	"filter": {
+		"findYourCar": "Найти автомобиль",
+		"searchByName": "Поиск по названию...",
+		"location": "Местоположение",
+		"carType": "Тип автомобиля",
+		"brand": "Марка",
+		"selectBrand": "Выберите марку",
+		"model": "Модель",
+		"selectModel": "Выберите модель",
+		"price": "Цена",
+		"priceRange": "Ценовой диапазон",
+		"mileage": "Пробег",
+		"mileageRange": "Диапазон пробега",
+		"year": "Год",
+		"yearRange": "Диапазон годов",
+		"fuelType": "Тип топлива",
+		"transmission": "Коробка передач",
+		"color": "Цвет",
+		"options": "Опции",
+		"showMore": "Показать больше",
+		"showLess": "Показать меньше",
+		"from": "От",
+		"to": "До"
+	}
 }

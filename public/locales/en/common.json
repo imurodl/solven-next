@@ -83,5 +83,42 @@
 		"INSERT_ALL_INPUTS": "Please provide all inputs"
 	},
 
-	"noData": "No data available"
+	"noData": "No data available",
+
+	"sortBy": "Sort by",
+	"newest": "Newest",
+	"oldest": "Oldest",
+	"lowestPrice": "Lowest Price",
+	"highestPrice": "Highest Price",
+
+	"carSearch": "Car Search",
+	"breadcrumb": {
+		"home": "Home",
+		"listings": "Listings",
+		"separator": "/"
+	},
+	"filter": {
+		"findYourCar": "Find Your Car",
+		"searchByName": "Search by name...",
+		"location": "Location",
+		"carType": "Car Type",
+		"brand": "Brand",
+		"selectBrand": "Select a brand",
+		"model": "Model",
+		"selectModel": "Select a model",
+		"price": "Price",
+		"priceRange": "Price Range",
+		"mileage": "Mileage",
+		"mileageRange": "Mileage Range",
+		"year": "Year",
+		"yearRange": "Year Range",
+		"fuelType": "Fuel Type",
+		"transmission": "Transmission",
+		"color": "Color",
+		"options": "Options",
+		"showMore": "Show More",
+		"showLess": "Show Less",
+		"from": "From",
+		"to": "To"
+	}
 }

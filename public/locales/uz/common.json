@@ -83,5 +83,40 @@
 		"INSERT_ALL_INPUTS": "Iltimos, barcha maydonlarni to'ldiring"
 	},
 
-	"noData": "Ma'lumot mavjud emas"
+	"sortBy": "Saralash",
+	"newest": "Eng yangi",
+	"oldest": "Eng eski",
+	"lowestPrice": "Eng arzon",
+	"highestPrice": "Eng qimmat",
+	"noData": "Ma'lumot yo'q",
+	"carSearch": "Mashina qidirish",
+	"breadcrumb": {
+		"home": "Bosh sahifa",
+		"listings": "Mashinalar ro'yxati",
+		"separator": "/"
+	},
+	"filter": {
+		"findYourCar": "Mashina qidirish",
+		"searchByName": "Nom bo'yicha qidirish...",
+		"location": "Joylashuv",
+		"carType": "Mashina turi",
+		"brand": "Brend",
+		"selectBrand": "Brend tanlang",
+		"model": "Model",
+		"selectModel": "Model tanlang",
+		"price": "Narx",
+		"priceRange": "Narx oralig'i",
+		"mileage": "Yurgan masofasi",
+		"mileageRange": "Yurgan masofa oralig'i",
+		"year": "Yil",
+		"yearRange": "Yil oralig'i",
+		"fuelType": "Yoqilg'i turi",
+		"transmission": "Uzatish qutisi",
+		"color": "Rang",
+		"options": "Qo'shimcha jihozlar",
+		"showMore": "Ko'proq ko'rsatish",
+		"showLess": "Kamroq ko'rsatish",
+		"from": "Dan",
+		"to": "Gacha"
+	}
 }

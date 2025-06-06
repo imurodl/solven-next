@@ -83,5 +83,43 @@
 		"INSERT_ALL_INPUTS": "모든 입력 항목을 제공해주세요"
 	},
 
-	"noData": "데이터가 없습니다"
+	"noData": "데이터가 없습니다",
+
+	"sortBy": "정렬 기준",
+	"newest": "최신순",
+	"oldest": "오래된순",
+	"lowestPrice": "낮은 가격순",
+	"highestPrice": "높은 가격순",
+
+	"carSearch": "차량 검색",
+	"breadcrumb": {
+		"home": "홈",
+		"listings": "차량 목록",
+		"separator": "/"
+	},
+
+	"filter": {
+		"findYourCar": "차량 찾기",
+		"searchByName": "이름으로 검색...",
+		"location": "위치",
+		"carType": "차종",
+		"brand": "브랜드",
+		"selectBrand": "브랜드 선택",
+		"model": "모델",
+		"selectModel": "모델 선택",
+		"price": "가격",
+		"priceRange": "가격 범위",
+		"mileage": "주행거리",
+		"mileageRange": "주행거리 범위",
+		"year": "연식",
+		"yearRange": "연식 범위",
+		"fuelType": "연료 종류",
+		"transmission": "변속기",
+		"color": "색상",
+		"options": "옵션",
+		"showMore": "더 보기",
+		"showLess": "접기",
+		"from": "시작",
+		"to": "끝"
+	}
 }

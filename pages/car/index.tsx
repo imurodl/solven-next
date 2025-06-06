@@ -6,6 +6,7 @@ import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import Filter from '../../libs/components/car/Filter';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { CarsInquiry } from '../../libs/types/car/car.input';
 import { Car } from '../../libs/types/car/car';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -17,6 +18,7 @@ import { GET_CARS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { LIKE_TARGET_CAR } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import { useTranslation } from 'next-i18next';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -25,8 +27,13 @@ export const getStaticProps = async ({ locale }: any) => ({
 });
 
 const CarList: NextPage = ({ initialInput, ...props }: any) => {
+	const { t } = useTranslation();
 	const device = useDeviceDetect();
 	const router = useRouter();
+
+	// Store translated strings
+	const [filterSortKey, setFilterSortKey] = useState('newest');
+
 	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(
 		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
 	);
@@ -35,7 +42,6 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [sortingOpen, setSortingOpen] = useState(false);
-	const [filterSortName, setFilterSortName] = useState('Newest');
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetCar] = useMutation(LIKE_TARGET_CAR);
@@ -109,20 +115,20 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 	const sortingHandler = (e: React.MouseEvent<HTMLLIElement>) => {
 		switch (e.currentTarget.id) {
 			case 'new':
-				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: Direction.ASC });
-				setFilterSortName('Newest');
+				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: Direction.DESC });
+				setFilterSortKey('newest');
 				break;
 			case 'old':
-				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: Direction.DESC });
-				setFilterSortName('Oldest');
+				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: Direction.ASC });
+				setFilterSortKey('oldest');
 				break;
 			case 'lowest':
 				setSearchFilter({ ...searchFilter, sort: 'carPrice', direction: Direction.ASC });
-				setFilterSortName('Lowest Price');
+				setFilterSortKey('lowestPrice');
 				break;
 			case 'highest':
 				setSearchFilter({ ...searchFilter, sort: 'carPrice', direction: Direction.DESC });
-				setFilterSortName('Highest Price');
+				setFilterSortKey('highestPrice');
 				break;
 		}
 		setSortingOpen(false);
@@ -137,12 +143,17 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 				<div className="container">
 					<Stack className={`header-basic`}>
 						<Stack className={'container'}>
-							<strong>{props.title}</strong>
-							<span>{props.desc}</span>
+							<strong>{t('carSearch')}</strong>
+							<span>
+								<Link href="/" style={{ color: 'inherit', textDecoration: 'none' }}>
+									{t('breadcrumb.home')}
+								</Link>{' '}
+								{t('breadcrumb.separator')} {t('breadcrumb.listings')}
+							</span>
 						</Stack>
 					</Stack>
 					<Box component={'div'} className={'right'}>
-						<span>Sort by</span>
+						<span>{t('sortBy')}</span>
 						<div>
 							<Button
 								onClick={sortingClickHandler}
@@ -151,44 +162,44 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 									border: sortingOpen ? '2px solid #1e40af' : '2px solid #e9e9e9',
 								}}
 							>
-								{filterSortName}
+								{t(filterSortKey)}
 							</Button>
 							<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
 								<MenuItem
 									onClick={sortingHandler}
 									id={'new'}
 									disableRipple
-									data-selected={filterSortName === 'Newest'}
+									data-selected={filterSortKey === 'newest'}
 									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 								>
-									Newest
+									{t('newest')}
 								</MenuItem>
 								<MenuItem
 									onClick={sortingHandler}
 									id={'old'}
 									disableRipple
-									data-selected={filterSortName === 'Oldest'}
+									data-selected={filterSortKey === 'oldest'}
 									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 								>
-									Oldest
+									{t('oldest')}
 								</MenuItem>
 								<MenuItem
 									onClick={sortingHandler}
 									id={'lowest'}
 									disableRipple
-									data-selected={filterSortName === 'Lowest Price'}
+									data-selected={filterSortKey === 'lowestPrice'}
 									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 								>
-									Lowest Price
+									{t('lowestPrice')}
 								</MenuItem>
 								<MenuItem
 									onClick={sortingHandler}
 									id={'highest'}
 									disableRipple
-									data-selected={filterSortName === 'Highest Price'}
+									data-selected={filterSortKey === 'highestPrice'}
 									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 								>
-									Highest Price
+									{t('highestPrice')}
 								</MenuItem>
 							</Menu>
 						</div>
@@ -245,7 +256,7 @@ CarList.defaultProps = {
 		page: 1,
 		limit: 9,
 		sort: 'createdAt',
-		direction: 'ASC',
+		direction: 'DESC',
 		search: {
 			locationList: [],
 			typeList: [],

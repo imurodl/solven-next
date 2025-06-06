@@ -22,6 +22,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { GET_CAR_BRANDS_BY_USER } from '../../../apollo/user/query';
 import { useQuery } from '@apollo/client';
+import { useTranslation } from 'next-i18next';
 
 const MenuProps = {
 	PaperProps: {
@@ -38,6 +39,7 @@ interface FilterType {
 }
 
 const Filter = (props: FilterType) => {
+	const { t } = useTranslation();
 	const { searchFilter, setSearchFilter, initialInput } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
@@ -611,7 +613,7 @@ const Filter = (props: FilterType) => {
 			<div className="filter-main">
 				<div className="find-your-home">
 					<div className="title-main">
-						Find Your Car
+						{t('filter.findYourCar')}
 						<IconButton className="refresh-icon" onClick={clearAllHandler}>
 							<RefreshIcon />
 						</IconButton>
@@ -621,7 +623,7 @@ const Filter = (props: FilterType) => {
 						<input
 							type="text"
 							className="search-input"
-							placeholder="Search by name..."
+							placeholder={t('filter.searchByName')}
 							value={searchText}
 							onChange={(e) => {
 								setSearchText(e.target.value);
@@ -634,7 +636,7 @@ const Filter = (props: FilterType) => {
 						<img src="/img/icons/search.svg" alt="search" />
 					</div>
 
-					<div className="title">Location</div>
+					<div className="title">{t('filter.location')}</div>
 					<div className="filter-section">
 						{carLocation.map((location) => (
 							<div key={location} className="input-box">
@@ -649,7 +651,7 @@ const Filter = (props: FilterType) => {
 						))}
 					</div>
 
-					<div className="title">Car Type</div>
+					<div className="title">{t('filter.carType')}</div>
 					<div className="filter-section">
 						{carType.map((type) => (
 							<div key={type} className="input-box">
@@ -664,7 +666,7 @@ const Filter = (props: FilterType) => {
 						))}
 					</div>
 
-					<div className="title">Brand</div>
+					<div className="title">{t('filter.brand')}</div>
 					<div className="filter-section">
 						<FormControl fullWidth>
 							<Select
@@ -689,7 +691,7 @@ const Filter = (props: FilterType) => {
 								sx={{ '.MuiSelect-select': { height: 'auto' } }}
 							>
 								<MenuItem disabled value="">
-									Select a brand
+									{t('filter.selectBrand')}
 								</MenuItem>
 								{getCarBrandsData?.getCarBrandsByUser?.map((brand: any) => (
 									<MenuItem key={brand._id} value={brand.carBrandName}>
@@ -739,7 +741,7 @@ const Filter = (props: FilterType) => {
 						</>
 					)}
 
-					<div className="title">Fuel Type</div>
+					<div className="title">{t('filter.fuelType')}</div>
 					<div className="filter-section">
 						{carFuelTypes.map((type) => (
 							<div key={type} className="input-box">
@@ -769,7 +771,7 @@ const Filter = (props: FilterType) => {
 
 					{showMore && (
 						<>
-							<div className="title">Transmission</div>
+							<div className="title">{t('filter.transmission')}</div>
 							<div className="filter-section">
 								<div style={{ display: 'flex', gap: '20px' }}>
 									{carTransmissions.map((trans) => (
@@ -786,7 +788,7 @@ const Filter = (props: FilterType) => {
 								</div>
 							</div>
 
-							<div className="title">Year Range</div>
+							<div className="title">{t('filter.year')}</div>
 							<div className="filter-section">
 								<div className="range-group">
 									<FormControl>
@@ -841,7 +843,7 @@ const Filter = (props: FilterType) => {
 								</div>
 							</div>
 
-							<div className="title">Price Range</div>
+							<div className="title">{t('filter.price')}</div>
 							<div className="filter-section">
 								<div className="range-group">
 									<FormControl>
@@ -884,7 +886,7 @@ const Filter = (props: FilterType) => {
 								</div>
 							</div>
 
-							<div className="title">Mileage Range</div>
+							<div className="title">{t('filter.mileage')}</div>
 							<div className="filter-section">
 								<div className="range-group">
 									<FormControl>
@@ -941,7 +943,7 @@ const Filter = (props: FilterType) => {
 								</div>
 							</div>
 
-							<div className="title">Options</div>
+							<div className="title">{t('filter.options')}</div>
 							<div className="filter-section">
 								<div style={{ display: 'flex', gap: '20px' }}>
 									<div className="input-box">
