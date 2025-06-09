@@ -979,4 +979,137 @@
 			}
 		}
 	}
+
+	.cta-section {
+		position: relative;
+		width: 100%;
+		background-color: #050b20;
+
+		.cta-container {
+			padding: 32px 16px;
+			border-bottom-left-radius: 40px;
+			border-bottom-right-radius: 40px;
+			background-color: #fff;
+			overflow: hidden;
+
+			.MuiContainer-root {
+				padding: 0;
+			}
+
+			.cta-card {
+				padding: 24px;
+				border-radius: 16px;
+				position: relative;
+				overflow: hidden;
+				transition: all 0.3s ease;
+				border: 1px solid transparent;
+				margin-bottom: 12px;
+				max-width: 320px;
+				margin-left: auto;
+				margin-right: auto;
+
+				&.buy-card {
+					background: linear-gradient(135deg, #e9f2ff 0%, #f5f9ff 100%);
+
+					&:active {
+						border-color: $primary-color;
+						transform: translateY(-2px);
+						box-shadow: 0 10px 20px rgba(64, 95, 242, 0.1);
+
+						.hover-img {
+							transform: translateY(-4px);
+
+							svg {
+								filter: drop-shadow(0 4px 8px rgba(64, 95, 242, 0.2));
+							}
+						}
+					}
+
+					.cta-button {
+						background: $primary-color;
+						&:active {
+							background: darken($primary-color, 5%);
+						}
+					}
+				}
+
+				&.sell-card {
+					background: linear-gradient(135deg, #ffe9f3 0%, #fff5f9 100%);
+
+					&:active {
+						border-color: #ff5cf3;
+						transform: translateY(-2px);
+						box-shadow: 0 10px 20px rgba(255, 92, 243, 0.1);
+
+						.hover-img {
+							transform: translateY(-4px);
+
+							svg {
+								filter: drop-shadow(0 4px 8px rgba(255, 92, 243, 0.2));
+							}
+						}
+					}
+
+					.cta-button {
+						background: #000;
+						&:active {
+							background: #111;
+						}
+					}
+				}
+
+				.content-wrapper {
+					max-width: 72%;
+
+					.title {
+						font-size: 20px;
+						font-weight: 700;
+						line-height: 1.2;
+						margin-bottom: 8px;
+						color: #1a1a1a;
+					}
+
+					.description {
+						font-size: 13px;
+						line-height: 1.4;
+						color: #666;
+						margin-bottom: 16px;
+						opacity: 0.9;
+					}
+
+					.cta-button {
+						padding: 10px 20px;
+						border-radius: 8px;
+						font-size: 13px;
+						font-weight: 500;
+						color: #fff;
+						border: none;
+						cursor: pointer;
+						display: inline-flex;
+						align-items: center;
+						gap: 6px;
+						transition: all 0.3s ease;
+						text-decoration: none;
+						box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+						svg {
+							width: 11px;
+							height: 11px;
+						}
+					}
+				}
+
+				.hover-img {
+					position: absolute;
+					right: 20px;
+					bottom: 20px;
+
+					svg {
+						width: 70px;
+						height: 70px;
+					}
+				}
+			}
+		}
+	}
 }
