@@ -41,8 +41,26 @@ const withLayoutMain = (Component: any) => {
 							<Top />
 						</Stack>
 
+						<Stack className={'header-main'}>
+							<Stack className={'container'}>
+								<Typography className={'header-main-title'}>{t('Find Your Perfect Car')}</Typography>
+								<HeaderFilter />
+							</Stack>
+						</Stack>
+
 						<Stack id={'main'}>
-							<Component {...props} />
+							<p
+								style={{
+									width: '100%',
+									height: '100px',
+									display: 'flex',
+									alignItems: 'center',
+									justifyContent: 'center',
+								}}
+							>
+								HomePage main content will be here
+							</p>
+							{/* <Component {...props} /> */}
 						</Stack>
 
 						<Stack id={'footer'}>

@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { alpha, styled } from '@mui/material/styles';
 import Menu, { MenuProps } from '@mui/material/Menu';
-import { CaretDown } from 'phosphor-react';
+import { CaretDown, List, X } from 'phosphor-react';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 import Link from 'next/link';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
@@ -37,6 +37,7 @@ const Top = () => {
 	const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
 	const [notificationAnchor, setNotificationAnchor] = React.useState<null | HTMLElement>(null);
 	const notificationOpen = Boolean(notificationAnchor);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -202,32 +203,111 @@ const Top = () => {
 
 	if (device == 'mobile') {
 		return (
-			<Stack className={'top'}>
-				<Link href={'/'}>
-					<Typography
-						variant="h5"
-						fontFamily="DM Sans"
-						fontWeight="500"
-						color="white"
-						fontSize={15}
-						lineHeight="27.8px"
-						sx={{ width: '46px', height: '20px' }}
-					>
-						{t('Home')}
-					</Typography>
-				</Link>
-				<Link href={'/car'}>
-					<Typography>{t('Listings')}</Typography>
-				</Link>
-				<Link href={'/agent'}>
-					<Typography> {t('Agents')} </Typography>
-				</Link>
-				<Link href={'/community?articleCategory=FREE'}>
-					<Typography> {t('Community')} </Typography>
-				</Link>
-				<Link href={'/help'}>
-					<Typography> {t('Help')} </Typography>
-				</Link>
+			<Stack className={'navbar'}>
+				<Stack className={`navbar-main ${colorChange ? 'transparent' : ''}`}>
+					<Stack className={'container'}>
+						<Box component={'div'} className={'logo-box'}>
+							<Link href={'/'}>
+								<img src="/img/logo/solven.png" alt="Solven logo" />
+							</Link>
+						</Box>
+						<Box component={'div'} className={'right-section'}>
+							{user?._id ? (
+								<>
+									<IconButton onClick={handleNotificationClick} size="small">
+										<Badge color="error" variant="dot" invisible={!hasUnreadNotifications}>
+											<NotificationsOutlinedIcon className={'notification-icon'} />
+										</Badge>
+									</IconButton>
+									<NotificationModal
+										anchorEl={notificationAnchor}
+										open={notificationOpen}
+										onClose={handleNotificationClose}
+										onUnreadCountChange={handleUnreadCountChange}
+									/>
+									<div className={'user-box'}>
+										<div className={'login-user'}>
+											<img
+												src={
+													user?.memberImage
+														? `${REACT_APP_API_URL}/${user.memberImage}`
+														: '/img/profile/defaultUser.svg'
+												}
+												alt="User"
+											/>
+										</div>
+									</div>
+								</>
+							) : (
+								<button className={'sign-in-btn'} onClick={() => router.push('/auth/signin')}>
+									{t('Sign In')}
+								</button>
+							)}
+							<button className={'menu-btn'} onClick={() => setIsMenuOpen(true)}>
+								<List size={24} />
+							</button>
+						</Box>
+					</Stack>
+				</Stack>
+
+				{/* Mobile Menu */}
+				<div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+					<div className={'menu-header'}>
+						<button className={'close-btn'} onClick={() => setIsMenuOpen(false)}>
+							<X size={24} />
+						</button>
+					</div>
+					<div className={'menu-content'}>
+						<div className={'menu-section'}>
+							<div className={'menu-items'}>
+								<Link href={'/'}>
+									<div className={`menu-item ${router.pathname === '/' ? 'active' : ''}`}>
+										<span>{t('Home')}</span>
+									</div>
+								</Link>
+								<Link href={'/car'}>
+									<div className={`menu-item ${router.pathname.startsWith('/car') ? 'active' : ''}`}>
+										<span>{t('Listings')}</span>
+									</div>
+								</Link>
+								<Link href={'/agent'}>
+									<div className={`menu-item ${router.pathname.startsWith('/agent') ? 'active' : ''}`}>
+										<span>{t('Agents')}</span>
+									</div>
+								</Link>
+								<Link href={'/community?articleCategory=FREE'}>
+									<div className={`menu-item ${router.pathname.startsWith('/community') ? 'active' : ''}`}>
+										<span>{t('Community')}</span>
+									</div>
+								</Link>
+								{user?._id && (
+									<Link href={'/mypage'}>
+										<div className={`menu-item ${router.pathname.startsWith('/mypage') ? 'active' : ''}`}>
+											<span>{t('My Page')}</span>
+										</div>
+									</Link>
+								)}
+								<Link href={'/help'}>
+									<div className={`menu-item ${router.pathname.startsWith('/help') ? 'active' : ''}`}>
+										<span>{t('Help')}</span>
+									</div>
+								</Link>
+							</div>
+						</div>
+						<div className={'language-section'}>
+							<button className={'btn-lang'} onClick={langClick}>
+								<div className={'flag'}>
+									<img src={lang ? `/img/flag/lang${lang}.png` : '/img/flag/langen.png'} alt={'Language'} />
+									<span>{t(lang ? lang.toUpperCase() : 'EN')}</span>
+								</div>
+								<CaretDown size={16} />
+							</button>
+						</div>
+					</div>
+				</div>
+
+				{/* Overlay */}
+				<div className={`menu-overlay ${isMenuOpen ? 'open' : ''}`} onClick={() => setIsMenuOpen(false)} />
 			</Stack>
 		);
 	} else {

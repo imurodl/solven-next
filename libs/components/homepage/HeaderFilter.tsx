@@ -367,7 +367,264 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>HEADER FILTER MOBILE</div>;
+		return (
+			<>
+				<Stack className={'search-box'}>
+					<Stack className={'select-box'}>
+						<Box component={'div'} className={`box ${openLocation ? 'on' : ''}`} onClick={locationStateChangeHandler}>
+							<span>{searchFilter?.search?.locationList ? searchFilter?.search?.locationList[0] : t('Location')} </span>
+							<ExpandMoreIcon />
+						</Box>
+						<Box className={`box ${openType ? 'on' : ''}`} onClick={typeStateChangeHandler}>
+							<span> {searchFilter?.search?.brandList?.[0] || t('Brand')} </span>
+							<ExpandMoreIcon />
+						</Box>
+						<Box className={`box ${openRooms ? 'on' : ''}`} onClick={roomStateChangeHandler}>
+							<span>{searchFilter?.search?.modelList ? searchFilter?.search?.modelList[0] : t('Model')}</span>
+							<ExpandMoreIcon />
+						</Box>
+					</Stack>
+					<Stack className={'search-box-other'}>
+						<Box className={'search-btn'} onClick={pushSearchHandler}>
+							<img src="/img/icons/search_white.svg" alt="" />
+							<p>{t('Search Cars')}</p>
+						</Box>
+					</Stack>
+
+					{/*MENU */}
+					<div className={`filter-location ${openLocation ? 'on' : ''}`} ref={locationRef}>
+						{carLocation.map((location: string) => {
+							return (
+								<div onClick={() => propertyLocationSelectHandler(location)} key={location}>
+									<img src={`img/banner/cities/${location}.webp`} alt="" />
+									<span>{location}</span>
+								</div>
+							);
+						})}
+					</div>
+
+					<div className={`filter-type ${openType ? 'on' : ''}`} ref={typeRef}>
+						{carBrands.map((carBrand: CarBrand) => {
+							return (
+								<div onClick={() => propertyTypeSelectHandler(carBrand.carBrandName)} key={carBrand._id}>
+									<img src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`} alt={carBrand.carBrandName} />
+									<span>{carBrand.carBrandName}</span>
+								</div>
+							);
+						})}
+					</div>
+
+					<div className={`filter-rooms ${openRooms ? 'on' : ''}`} ref={roomsRef}>
+						{(() => {
+							const selectedBrand = carBrands.find((b) => b.carBrandName === searchFilter.search.brandList?.[0]);
+							const availableModels = selectedBrand?.carBrandModels || [];
+
+							return availableModels.map((model: string) => (
+								<span onClick={() => propertyRoomSelectHandler(model)} key={model}>
+									{model}
+								</span>
+							));
+						})()}
+					</div>
+				</Stack>
+
+				{/* ADVANCED FILTER MODAL */}
+				<Modal
+					open={openAdvancedFilter}
+					onClose={() => advancedFilterHandler(false)}
+					aria-labelledby="modal-modal-title"
+					aria-describedby="modal-modal-description"
+				>
+					{/* @ts-ignore */}
+					<Box sx={style}>
+						<Box className={'advanced-filter-modal'}>
+							<div className={'close'} onClick={() => advancedFilterHandler(false)}>
+								<CloseIcon />
+							</div>
+							<div className={'top'}>
+								<div className={'search-input-box'}>
+									<img src="/img/icons/search.svg" alt="" />
+									<input
+										value={searchFilter?.search?.text ?? ''}
+										type="text"
+										placeholder={'Search by name...'}
+										onChange={(e: any) => {
+											setSearchFilter({
+												...searchFilter,
+												search: { ...searchFilter.search, text: e.target.value },
+											});
+										}}
+									/>
+								</div>
+							</div>
+							<Divider />
+							<div className={'middle'}>
+								<div className={'row-box'}>
+									<div className={'box'}>
+										<span>Car Type</span>
+										{carType.map((type: string) => (
+											<Stack
+												className={'input-box'}
+												key={type}
+												flexDirection={'row'}
+												width={'100%'}
+												alignItems={'center'}
+												gap={'4px'}
+											>
+												<label style={{ cursor: 'pointer' }} htmlFor={type}>
+													<Typography className="property-type">{type}</Typography>
+												</label>
+												<Checkbox
+													id={type}
+													className="property-checkbox"
+													color="default"
+													value={type}
+													onChange={carTypeSelectHandler}
+													checked={(searchFilter?.search?.typeList || []).includes(type as CarType)}
+												/>
+											</Stack>
+										))}
+									</div>
+									<div className={'box'}>
+										<span>Car Fuel Type</span>
+										{carFuelType.map((type: string) => (
+											<Stack className={'input-box'} key={type} flexDirection={'row'}>
+												<label style={{ cursor: 'pointer' }} htmlFor={type}>
+													<Typography className="property-type">{type}</Typography>
+												</label>
+												<Checkbox
+													id={type}
+													className="property-checkbox"
+													color="default"
+													value={type}
+													onChange={carFuelTypeSelectHandler}
+													checked={(searchFilter?.search?.fuelTypeList || []).includes(type as CarFuelType)}
+												/>
+											</Stack>
+										))}
+									</div>
+								</div>
+								<div className="row-box">
+									<div className={'box'}>
+										<span>options</span>
+										<div className={'inside'}>
+											<FormControl>
+												<Select
+													value={optionCheck}
+													onChange={propertyOptionSelectHandler}
+													displayEmpty
+													inputProps={{ 'aria-label': 'Without label' }}
+												>
+													<MenuItem value={'all'}>All Options</MenuItem>
+													<MenuItem value={'carBarter'}>Barter</MenuItem>
+													<MenuItem value={'carRent'}>Rent</MenuItem>
+												</Select>
+											</FormControl>
+										</div>
+									</div>
+								</div>
+								<div className={'row-box'}>
+									<div className={'box'}>
+										<span>Year Built</span>
+										<div className={'inside space-between align-center'}>
+											<FormControl sx={{ width: '122px' }}>
+												<Select
+													value={yearCheck.start.toString()}
+													onChange={yearStartChangeHandler}
+													displayEmpty
+													inputProps={{ 'aria-label': 'Without label' }}
+													MenuProps={MenuProps}
+												>
+													{carYears?.slice(0)?.map((year: number) => (
+														<MenuItem value={year} disabled={yearCheck.end <= year} key={year}>
+															{year}
+														</MenuItem>
+													))}
+												</Select>
+											</FormControl>
+											<div className={'minus-line'}></div>
+											<FormControl sx={{ width: '122px' }}>
+												<Select
+													value={yearCheck.end.toString()}
+													onChange={yearEndChangeHandler}
+													displayEmpty
+													inputProps={{ 'aria-label': 'Without label' }}
+													MenuProps={MenuProps}
+												>
+													{carYears
+														?.slice(0)
+														.reverse()
+														.map((year: number) => (
+															<MenuItem value={year} disabled={yearCheck.start >= year} key={year}>
+																{year}
+															</MenuItem>
+														))}
+												</Select>
+											</FormControl>
+										</div>
+									</div>
+									<div className={'box'}>
+										<span>mileage range</span>
+										<div className={'inside space-between align-center'}>
+											<FormControl sx={{ width: '122px' }}>
+												<Select
+													value={searchFilter?.search?.mileageRange?.start}
+													onChange={(e: any) => mileageHandler(e, 'start')}
+													inputProps={{ 'aria-label': 'Mileage Start' }}
+													MenuProps={MenuProps}
+												>
+													{carMileage.map((mileage: number) => (
+														<MenuItem
+															value={mileage}
+															disabled={(searchFilter?.search?.mileageRange?.end || 0) < mileage}
+															key={mileage}
+														>
+															{mileage}
+														</MenuItem>
+													))}
+												</Select>
+											</FormControl>
+											<div className={'minus-line'}></div>
+											<FormControl sx={{ width: '122px' }}>
+												<Select
+													value={searchFilter?.search?.mileageRange?.end}
+													onChange={(e: any) => mileageHandler(e, 'end')}
+													inputProps={{ 'aria-label': 'Mileage End' }}
+													MenuProps={MenuProps}
+												>
+													{carMileage.map((mileage: number) => (
+														<MenuItem
+															value={mileage}
+															disabled={(searchFilter?.search?.mileageRange?.start || 0) > mileage}
+															key={mileage}
+														>
+															{mileage}
+														</MenuItem>
+													))}
+												</Select>
+											</FormControl>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div className={'bottom'}>
+								<div onClick={resetFilterHandler}>
+									<img src="/img/icons/reset.svg" alt="" />
+									<span>Reset All filters</span>
+								</div>
+								<Button
+									startIcon={<img src={'/img/icons/search.svg'} />}
+									className={'search-btn'}
+									onClick={pushSearchHandler}
+								>
+									Search
+								</Button>
+							</div>
+						</Box>
+					</Box>
+				</Modal>
+			</>
+		);
 	} else {
 		return (
 			<>

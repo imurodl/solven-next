@@ -46,12 +46,6 @@ const CarCard = (props: CarCardType) => {
           >
             <img src={imagePath || "/placeholder.svg"} alt="" />
           </Link>
-          {car && car?.carRank > topCarRank && (
-            <Box component={"div"} className={"top-badge"}>
-              <img src="/img/icons/electricity.svg" alt="" />
-              <Typography>TOP</Typography>
-            </Box>
-          )}
         </Stack>
         <Stack className="bottom">
           <Stack className="name-address">

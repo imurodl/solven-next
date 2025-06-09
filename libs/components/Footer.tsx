@@ -83,98 +83,164 @@ const Footer = () => {
 		},
 	];
 
-	return (
-		<footer className="footer">
-			<div className="footer-inner">
-				<div
-					className={`footer-container`}
-					style={{
-						width: isFullWidthPage ? '100%' : '1300px',
-						padding: isFullWidthPage ? '0 40px' : '0',
-					}}
-				>
-					{/* Logo Section */}
-					<div className="subscribe-section">
-						<Link href="/">
-							<img src="/img/logo/solven.png" alt="Solven" style={{ height: '52px' }} />
-						</Link>
+	if (device == 'mobile') {
+		return (
+			<>
+				<footer className="footer">
+					<div className="footer-inner">
+						<div className={`footer-container`}>
+							{/* Logo Section */}
+							<div className="subscribe-section">
+								<Link href="/">
+									<img src="/img/logo/solven.png" alt="Solven" style={{ height: '52px' }} />
+								</Link>
 
-						<div className="input-box">
-							<input type="email" placeholder={t('Your e-mail address')} />
-							<button>{t('Sign Up')}</button>
-						</div>
-					</div>
-
-					{/* Footer Links + App & Social */}
-					<div className="footer-content">
-						{/* Link Columns */}
-						{footerLinks.map((section, idx) => (
-							<div key={idx} className="footer-column">
-								<h3 className="column-title">{section.title}</h3>
-								<div className="footer-links">
-									{section.title === 'Languages' && section.langCodes
-										? section.links.map((link, i) => (
-												<a
-													key={i}
-													href="#"
-													onClick={(e) => {
-														e.preventDefault();
-														handleLanguageChange(section.langCodes![i]);
-													}}
-												>
-													{link.text}
-												</a>
-										  ))
-										: section.links.map((link, i) => (
-												<Link key={i} href={link.href || '#'}>
-													{link.text}
-												</Link>
-										  ))}
+								<div className="input-box">
+									<input type="email" placeholder={t('Your e-mail address')} />
+									<button>{t('Sign Up')}</button>
 								</div>
 							</div>
-						))}
 
-						{/* App Links & Social Icons */}
-						<div className="app-section">
-							<h3 className="app-title">{t('Get the App')}</h3>
-							<div className="app-buttons">
-								<a href="#" className="app-button">
-									<AppleIcon className="app-icon" />
-									<div className="app-text">
-										<span className="store-type">{t('Download on the')}</span>
-										<span className="store-name">{t('App Store')}</span>
+							{/* Footer Links + Social */}
+							<div className="footer-content">
+								{/* Link Columns */}
+								{footerLinks.map((section, idx) => (
+									<div key={idx} className="footer-column">
+										<h3 className="column-title">{section.title}</h3>
+										<div className="footer-links">
+											{section.title === 'Languages' && section.langCodes
+												? section.links.map((link, i) => (
+														<a
+															key={i}
+															href="#"
+															onClick={(e) => {
+																e.preventDefault();
+																handleLanguageChange(section.langCodes![i]);
+															}}
+														>
+															{link.text}
+														</a>
+												  ))
+												: section.links.map((link, i) => (
+														<Link key={i} href={link.href || '#'}>
+															{link.text}
+														</Link>
+												  ))}
+										</div>
 									</div>
-								</a>
-								<a href="#" className="app-button">
-									<AndroidIcon className="app-icon" />
-									<div className="app-text">
-										<span className="store-type">{t('Get it on')}</span>
-										<span className="store-name">{t('Google Play')}</span>
+								))}
+
+								{/* Social Icons */}
+								<div className="app-section">
+									<h4 className="social-title">{t('Connect With Us')}</h4>
+									<div className="social-icons">
+										{socialIcons.map((icon, i) => (
+											<a key={i} href="#" className="social-icon">
+												{icon}
+											</a>
+										))}
 									</div>
-								</a>
+								</div>
+							</div>
+						</div>
+						<div className="footer-bottom">
+							<p>
+								© {new Date().getFullYear()} <a href="/">Solven</a>. {t('All rights reserved')}.
+							</p>
+						</div>
+					</div>
+				</footer>
+			</>
+		);
+	} else
+		return (
+			<>
+				<footer className="footer">
+					<div className="footer-inner">
+						<div className={`footer-container`}>
+							{/* Logo Section */}
+							<div className="subscribe-section">
+								<Link href="/">
+									<img src="/img/logo/solven.png" alt="Solven" style={{ height: '52px' }} />
+								</Link>
+
+								<div className="input-box">
+									<input type="email" placeholder={t('Your e-mail address')} />
+									<button>{t('Sign Up')}</button>
+								</div>
 							</div>
 
-							<div className="social-section">
-								<h4 className="social-title">{t('Connect With Us')}</h4>
-								<div className="social-icons">
-									{socialIcons.map((icon, i) => (
-										<a key={i} href="#" className="social-icon">
-											{icon}
+							{/* Footer Links + App & Social */}
+							<div className="footer-content">
+								{/* Link Columns */}
+								{footerLinks.map((section, idx) => (
+									<div key={idx} className="footer-column">
+										<h3 className="column-title">{section.title}</h3>
+										<div className="footer-links">
+											{section.title === 'Languages' && section.langCodes
+												? section.links.map((link, i) => (
+														<a
+															key={i}
+															href="#"
+															onClick={(e) => {
+																e.preventDefault();
+																handleLanguageChange(section.langCodes![i]);
+															}}
+														>
+															{link.text}
+														</a>
+												  ))
+												: section.links.map((link, i) => (
+														<Link key={i} href={link.href || '#'}>
+															{link.text}
+														</Link>
+												  ))}
+										</div>
+									</div>
+								))}
+
+								{/* App Links & Social Icons */}
+								<div className="app-section">
+									<h3 className="app-title">{t('Get the App')}</h3>
+									<div className="app-buttons">
+										<a href="#" className="app-button">
+											<AppleIcon className="app-icon" />
+											<div className="app-text">
+												<span className="store-type">{t('Download on the')}</span>
+												<span className="store-name">{t('App Store')}</span>
+											</div>
 										</a>
-									))}
+										<a href="#" className="app-button">
+											<AndroidIcon className="app-icon" />
+											<div className="app-text">
+												<span className="store-type">{t('Get it on')}</span>
+												<span className="store-name">{t('Google Play')}</span>
+											</div>
+										</a>
+									</div>
+
+									<div className="social-section">
+										<h4 className="social-title">{t('Connect With Us')}</h4>
+										<div className="social-icons">
+											{socialIcons.map((icon, i) => (
+												<a key={i} href="#" className="social-icon">
+													{icon}
+												</a>
+											))}
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
+						<div className="footer-bottom">
+							<p>
+								© {new Date().getFullYear()} <a href="/">Solven</a>. {t('All rights reserved')}.
+							</p>
+						</div>
 					</div>
-				</div>
-				<div className="footer-bottom">
-					<p>
-						© {new Date().getFullYear()} <a href="/">Solven</a>. {t('All rights reserved')}.
-					</p>
-				</div>
-			</div>
-		</footer>
-	);
+				</footer>
+			</>
+		);
 };
 
 export default Footer;

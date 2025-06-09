@@ -48,15 +48,6 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${car?.carImages[0]})` }}
 					onClick={() => pushDetailHandler(car._id)}
 				>
-					{car && car?.carRank >= topCarRank ? (
-						<div className={'status'}>
-							<img src="/img/icons/electricity.svg" alt="" />
-							<span>top</span>
-						</div>
-					) : (
-						''
-					)}
-
 					<div className={'price'}>${car.carPrice}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>
@@ -100,15 +91,6 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${car?.carImages[0]})` }}
 					onClick={() => pushDetailHandler(car._id)}
 				>
-					{car && car?.carRank >= topCarRank ? (
-						<div className={'status'}>
-							<img src="/img/icons/electricity.svg" alt="" />
-							<span>top</span>
-						</div>
-					) : (
-						''
-					)}
-
 					<div className={'price'}>${car.carPrice}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>
