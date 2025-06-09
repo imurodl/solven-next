@@ -36,6 +36,9 @@ const Home: NextPage = () => {
 		return (
 			<Stack className="home-page">
 				<div data-aos="fade-up">
+					<CarBrands />
+				</div>
+				<div data-aos="fade-up">
 					<TrendCars />
 				</div>
 				<div data-aos="fade-up">
@@ -43,6 +46,12 @@ const Home: NextPage = () => {
 				</div>
 				<div data-aos="fade-up">
 					<TopAgents />
+				</div>
+				<div data-aos="fade-up">
+					<CommunityBoards />
+				</div>
+				<div data-aos="fade-up">
+					<CtaSection />
 				</div>
 			</Stack>
 		);

@@ -13,10 +13,12 @@ import { Autoplay, Navigation, Pagination } from 'swiper';
 import WestIcon from '@mui/icons-material/West';
 import EastIcon from '@mui/icons-material/East';
 import { useTranslation } from 'next-i18next';
+import useDeviceDetect from '../../hooks/useDeviceDetect';
 
 const CarBrands: NextPage<{ initialInput?: CarsInquiry }> = ({ initialInput }) => {
 	const router = useRouter();
 	const { t, i18n } = useTranslation('common');
+	const device = useDeviceDetect();
 
 	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(
 		initialInput || {
@@ -46,56 +48,101 @@ const CarBrands: NextPage<{ initialInput?: CarsInquiry }> = ({ initialInput }) =
 		});
 	};
 
-	return (
-		<section className="car-brands-section">
-			<Stack className="car-brands-container">
-				<Stack className="info-box">
-					<h2 className="section-title">{t('Explore Our Premium Brands')}</h2>
-					<Box component={'div'} className={'right'}>
-						<Stack className={'pagination-box'} flexDirection={'row'} alignItems={'center'}>
-							<WestIcon className={'swiper-brand-prev'} />
-							<div className={'swiper-brand-pagination'}></div>
-							<EastIcon className={'swiper-brand-next'} />
+	if (device == 'mobile') {
+		return (
+			<>
+				<section className="car-brands-section">
+					<Stack className="car-brands-container">
+						<h2 className="section-title">{t('Explore Our Premium Brands')}</h2>
+						<Stack className="card-box">
+							<Swiper
+								slidesPerView={3}
+								spaceBetween={12}
+								modules={[Autoplay, Navigation, Pagination]}
+								pagination={{
+									el: '.swiper-brand-pagination',
+									clickable: true,
+								}}
+								className="swiper-container"
+							>
+								{getCarBrandsData?.getCarBrandsByUser?.slice(0, 8).map((carBrand: CarBrand) => {
+									return (
+										<SwiperSlide key={carBrand._id} className="brand-slide">
+											<Stack onClick={() => pushBrandHandler(carBrand.carBrandName)} className="brand-item">
+												<img
+													alt={carBrand.carBrandName}
+													src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`}
+													width={100}
+													height={60}
+													style={{ objectFit: 'contain' }}
+												/>
+												<Typography component="span" className="brand-name">
+													{carBrand.carBrandName}
+												</Typography>
+											</Stack>
+										</SwiperSlide>
+									);
+								})}
+								<div className="swiper-brand-pagination"></div>
+							</Swiper>
 						</Stack>
-					</Box>
-				</Stack>
-				<Stack className="card-box">
-					<Swiper
-						slidesPerView={6}
-						spaceBetween={10}
-						modules={[Autoplay, Navigation, Pagination]}
-						navigation={{
-							nextEl: '.swiper-brand-next',
-							prevEl: '.swiper-brand-prev',
-						}}
-						pagination={{
-							el: '.swiper-brand-pagination',
-						}}
-						className="swiper-container"
-					>
-						{getCarBrandsData?.getCarBrandsByUser?.slice(0, 8).map((carBrand: CarBrand) => {
-							return (
-								<SwiperSlide key={carBrand._id} className="brand-slide">
-									<Stack onClick={() => pushBrandHandler(carBrand.carBrandName)} className="brand-item">
-										<img
-											alt={carBrand.carBrandName}
-											src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`}
-											width={100}
-											height={60}
-											style={{ objectFit: 'contain' }}
-										/>
-										<Typography component="span" className="brand-name">
-											{carBrand.carBrandName}
-										</Typography>
-									</Stack>
-								</SwiperSlide>
-							);
-						})}
-					</Swiper>
-				</Stack>
-			</Stack>
-		</section>
-	);
+					</Stack>
+				</section>
+			</>
+		);
+	} else
+		return (
+			<>
+				<section className="car-brands-section">
+					<Stack className="car-brands-container">
+						<Stack className="info-box">
+							<h2 className="section-title">{t('Explore Our Premium Brands')}</h2>
+							<Box component={'div'} className={'right'}>
+								<Stack className={'pagination-box'} flexDirection={'row'} alignItems={'center'}>
+									<WestIcon className={'swiper-brand-prev'} />
+									<div className={'swiper-brand-pagination'}></div>
+									<EastIcon className={'swiper-brand-next'} />
+								</Stack>
+							</Box>
+						</Stack>
+						<Stack className="card-box">
+							<Swiper
+								slidesPerView={6}
+								spaceBetween={10}
+								modules={[Autoplay, Navigation, Pagination]}
+								navigation={{
+									nextEl: '.swiper-brand-next',
+									prevEl: '.swiper-brand-prev',
+								}}
+								pagination={{
+									el: '.swiper-brand-pagination',
+								}}
+								className="swiper-container"
+							>
+								{getCarBrandsData?.getCarBrandsByUser?.slice(0, 8).map((carBrand: CarBrand) => {
+									return (
+										<SwiperSlide key={carBrand._id} className="brand-slide">
+											<Stack onClick={() => pushBrandHandler(carBrand.carBrandName)} className="brand-item">
+												<img
+													alt={carBrand.carBrandName}
+													src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`}
+													width={100}
+													height={60}
+													style={{ objectFit: 'contain' }}
+												/>
+												<Typography component="span" className="brand-name">
+													{carBrand.carBrandName}
+												</Typography>
+											</Stack>
+										</SwiperSlide>
+									);
+								})}
+							</Swiper>
+						</Stack>
+					</Stack>
+				</section>
+			</>
+		);
 };
 
 CarBrands.defaultProps = {

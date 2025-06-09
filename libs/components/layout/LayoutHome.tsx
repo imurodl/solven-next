@@ -49,18 +49,7 @@ const withLayoutMain = (Component: any) => {
 						</Stack>
 
 						<Stack id={'main'}>
-							<p
-								style={{
-									width: '100%',
-									height: '100px',
-									display: 'flex',
-									alignItems: 'center',
-									justifyContent: 'center',
-								}}
-							>
-								HomePage main content will be here
-							</p>
-							{/* <Component {...props} /> */}
+							<Component {...props} />
 						</Stack>
 
 						<Stack id={'footer'}>

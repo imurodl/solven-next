@@ -67,7 +67,7 @@ const CommunityBoards = () => {
 	});
 
 	if (device === 'mobile') {
-		return <div>COMMUNITY BOARDS (MOBILE)</div>;
+		return <div>COMMUNITY BOARDS MOBILE</div>;
 	} else
 		return (
 			<section className="community-board">

@@ -1,228 +1,81 @@
-#mobile-wrap {
-	.home-page {
+.home-page {
+	.car-brands-section {
+		margin-top: -40px;
+		padding: 40px 16px;
+		background-color: $background-light;
+		border-top-left-radius: 40px;
+		border-top-right-radius: 40px;
 		position: relative;
-		width: 100%;
-		height: auto;
-		background: #fff;
-		padding: 0 16px;
+		z-index: 1;
+		overflow: hidden;
 
-		.info-box {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: 20px;
-			width: 100%;
-			flex-direction: row;
-			padding: 0 16px;
-
-			.left {
-				display: flex;
-				flex-direction: column;
-
-				span {
-					font-size: 24px;
-					font-weight: 700;
-					margin-bottom: 8px;
-					background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
-					background-clip: text;
-					-webkit-background-clip: text;
-					-webkit-text-fill-color: transparent;
-					text-transform: capitalize;
-
-					&.white {
-						color: #ffffff;
-						-webkit-text-fill-color: #ffffff;
-						background: none;
-					}
-				}
-
-				p {
-					color: #181a20;
-					font-family: $font;
-					font-size: 13px;
-					font-style: normal;
-					font-weight: 400;
-					line-height: 22px;
-
-					&.white {
-						color: #ffffff;
-					}
-				}
+		.car-brands-container {
+			.section-title {
+				font-size: 24px;
+				font-weight: 700;
+				margin-bottom: 24px;
+				text-align: center;
+				background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+				background-clip: text;
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
 			}
 
-			.right {
-				display: flex;
-				flex-direction: row;
-				align-items: flex-end;
+			.card-box {
+				.swiper-container {
+					width: 100%;
+					height: auto;
+					padding: 4px;
+				}
 
-				.pagination-box {
+				.brand-slide {
 					display: flex;
-					flex-direction: row;
+					justify-content: center;
 					align-items: center;
 
-					.swiper-pagination-bullet.swiper-pagination-bullet-active {
-						background: #000000;
-					}
-
-					.swiper-brand-prev,
-					.swiper-brand-next,
-					.swiper-trend-next,
-					.swiper-trend-prev,
-					.swiper-top-next,
-					.swiper-top-prev {
+					.brand-item {
+						width: 100%;
+						padding: 20px 16px;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: center;
 						cursor: pointer;
-						color: $text-color;
+						border-radius: 12px;
+						background-color: #fff;
+						box-shadow: $shadow-light;
 						transition: $transition-smooth;
+						border: 1px solid $border-light;
 
 						&:hover {
-							color: $primary-color;
-							transform: scale(1.1);
-						}
-					}
-
-					.swiper-trend-pagination,
-					.swiper-top-pagination,
-					.swiper-brand-pagination {
-						width: 80px;
-						height: 8px;
-						border-radius: 4px;
-						display: flex;
-						align-items: center;
-						justify-content: center;
-					}
-				}
-
-				.more-box {
-					display: flex;
-					flex-direction: row;
-					cursor: pointer;
-					align-items: center;
-
-					span {
-						color: #181a20;
-						font-family: $font;
-						font-size: 14px;
-						font-style: normal;
-						font-weight: 600;
-						line-height: normal;
-						text-transform: capitalize;
-					}
-
-					img {
-						margin-left: 8px;
-						width: 14px;
-						height: 14px;
-					}
-				}
-
-				.btn-box {
-					display: flex;
-					flex-direction: row;
-
-					button {
-						border-radius: 6px;
-						background: rgba(255, 255, 255, 0.07);
-						color: #ffffff;
-						font-family: $font;
-						font-size: 13px;
-						font-style: normal;
-						font-weight: 500;
-						line-height: 24px;
-						text-transform: capitalize;
-						padding: 8px 16px;
-
-						&:first-child {
-							margin-right: 12px;
-						}
-
-						&.active {
-							border: 1px solid #181a20;
-							background: #fff;
-							color: #181a20;
-						}
-					}
-				}
-			}
-		}
-
-		.car-brands-section {
-			margin-top: -40px;
-			padding: 40px 0;
-			background-color: $background-light;
-			border-top-left-radius: 40px;
-			border-top-right-radius: 40px;
-			position: relative;
-			z-index: 1;
-			overflow: hidden;
-
-			.car-brands-container {
-				padding: 0 16px;
-
-				.info-box {
-					.section-title {
-						font-size: 24px;
-						font-weight: 700;
-						margin-bottom: 8px;
-						background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
-						background-clip: text;
-						-webkit-background-clip: text;
-						-webkit-text-fill-color: transparent;
-					}
-				}
-
-				.card-box {
-					.swiper-container {
-						width: 100%;
-						height: auto;
-					}
-
-					.brand-slide {
-						display: flex;
-						justify-content: center;
-						align-items: center;
-
-						.brand-item {
-							width: 160px;
-							padding: 24px 20px;
-							display: flex;
-							flex-direction: column;
-							align-items: center;
-							justify-content: center;
-							cursor: pointer;
-							border-radius: 12px;
-							background-color: #fff;
-							box-shadow: $shadow-light;
+							box-shadow: $shadow-medium;
 							transition: $transition-smooth;
-							border: 1px solid $border-light;
+							border-color: $primary-color;
 
-							&:hover {
-								box-shadow: $shadow-medium;
-								transition: $transition-smooth;
-								border-color: $primary-color;
-
-								.brand-name {
-									color: $primary-color;
-								}
-
-								img {
-									transition: $transition-smooth;
-									transform: scale(1.1);
-								}
+							.brand-name {
+								color: $primary-color;
 							}
 
 							img {
-								object-fit: contain;
-								scale: 1;
-								margin-bottom: 16px;
-								max-width: 100px;
+								transition: $transition-smooth;
+								transform: scale(1.1);
 							}
+						}
 
-							.brand-name {
-								font-size: 14px;
-								color: $text-color;
-								font-weight: 600;
-								text-align: center;
-							}
+						img {
+							height: 40px;
+							width: auto;
+							object-fit: contain;
+							margin-bottom: 12px;
+							transition: $transition-smooth;
+						}
+
+						.brand-name {
+							font-size: 14px;
+							color: $text-color;
+							font-weight: 600;
+							transition: $transition-fast;
+							text-align: center;
 						}
 					}
 				}

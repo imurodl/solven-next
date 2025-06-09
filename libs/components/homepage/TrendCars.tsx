@@ -82,38 +82,7 @@ const TrendCars = (props: TrendCarsProps) => {
 	if (!trendCars) return null;
 
 	if (device === 'mobile') {
-		return (
-			<Stack className={'trend-cars'}>
-				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<span>Trending Cars</span>
-					</Stack>
-					<Stack className={'card-box'}>
-						{trendCars.length === 0 ? (
-							<Box component={'div'} className={'empty-list'}>
-								Trends Empty
-							</Box>
-						) : (
-							<Swiper
-								className={'trend-car-swiper'}
-								slidesPerView={'auto'}
-								centeredSlides={true}
-								spaceBetween={15}
-								modules={[Autoplay]}
-							>
-								{trendCars.map((car: Car) => {
-									return (
-										<SwiperSlide key={car._id} className={'trend-car-slide'}>
-											<TrendCarCard car={car} likeCarHandler={likeCarHandler} />
-										</SwiperSlide>
-									);
-								})}
-							</Swiper>
-						)}
-					</Stack>
-				</Stack>
-			</Stack>
-		);
+		return <div>Trend cars mobile</div>;
 	} else {
 		return (
 			<Stack className={'trend-cars'}>

@@ -91,32 +91,7 @@ const PopularCars = (props: PopularCarsProps) => {
 	if (!popularCars) return null;
 
 	if (device === 'mobile') {
-		return (
-			<Stack className={'popular-cars'}>
-				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<span>Popular cars</span>
-					</Stack>
-					<Stack className={'card-box'}>
-						<Swiper
-							className={'popular-property-swiper'}
-							slidesPerView={'auto'}
-							centeredSlides={true}
-							spaceBetween={25}
-							modules={[Autoplay]}
-						>
-							{popularCars.map((car: Car) => {
-								return (
-									<SwiperSlide key={car._id} className={'popular-property-slide'}>
-										<PopularCarCard car={car} likeCarHandler={likeCarHandler} />
-									</SwiperSlide>
-								);
-							})}
-						</Swiper>
-					</Stack>
-				</Stack>
-			</Stack>
-		);
+		return <div>popular cars mobile</div>;
 	} else {
 		return (
 			<Stack className={'popular-cars'}>

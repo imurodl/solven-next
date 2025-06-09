@@ -1,6 +1,7 @@
 /** IMPORTS **/
 @import '/scss/variables.scss';
 @import '/scss/mobile/general.scss';
+@import '/scss/mobile/homepage.scss';
 
 // Mixins
 @mixin flex-center {
@@ -1568,7 +1569,7 @@ body {
 	.header-main {
 		position: relative;
 		width: 100vw;
-		height: 80vh;
+		height: 66vh;
 		background-image: url('/img/banner/banner-homepage1.jpg');
 		background-size: cover;
 		background-position: center;
@@ -1594,7 +1595,6 @@ body {
 		.container {
 			position: relative;
 			width: 100%;
-			margin-top: 20px;
 			flex-direction: column;
 			align-items: center;
 			z-index: 2;
