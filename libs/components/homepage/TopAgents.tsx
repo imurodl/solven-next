@@ -67,7 +67,37 @@ const TopAgents = (props: TopAgentsProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>top agents mobile</div>;
+		return (
+			<Stack className={'top-agents'}>
+				<Stack className={'container'}>
+					<Stack className={'info-box'}>
+						<Box component={'div'} className={'left'}>
+							<h2>{t('Top Agents')}</h2>
+						</Box>
+					</Stack>
+					<Box component={'div'} className={'card-wrapper'}>
+						<Swiper
+							className={'top-agents-swiper'}
+							slidesPerView={2}
+							spaceBetween={12}
+							modules={[Autoplay, Navigation, Pagination]}
+							navigation={{
+								nextEl: '.swiper-agents-next',
+								prevEl: '.swiper-agents-prev',
+							}}
+						>
+							{topAgents.map((agent: Member) => {
+								return (
+									<SwiperSlide className={'top-agents-slide'} key={agent?._id}>
+										<TopAgentCard agent={agent} key={agent?._id} likeMemberHandler={likeMemberHandler} />
+									</SwiperSlide>
+								);
+							})}
+						</Swiper>
+					</Box>
+				</Stack>
+			</Stack>
+		);
 	} else {
 		return (
 			<Stack className={'top-agents'}>

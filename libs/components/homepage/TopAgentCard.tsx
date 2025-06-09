@@ -42,46 +42,86 @@ const TopAgentCard = (props: TopAgentProps) => {
 	if (device === 'mobile') {
 		return (
 			<Stack className="top-agent-card">
-				<div className="agent-header">
-					<img src={agentImage || '/placeholder.svg'} alt={agent?.memberNick} />
-					<div className="agent-info">
-						<div className="name-section">
-							<PersonIcon />
-							<strong>{agent?.memberNick}</strong>
-						</div>
-						<div className="phone-section">
-							<PhoneIcon />
-							<span>{agent?.memberPhone || 'No contact info'}</span>
+				<Link
+					href={{
+						pathname: '/agent/detail',
+						query: { agentId: agent?._id },
+					}}
+				>
+					<div className="agent-header">
+						<img src={agentImage || '/placeholder.svg'} alt={agent?.memberNick} />
+						<div className="agent-info">
+							<div className="name-section">
+								<PersonIcon />
+								<strong>{agent?.memberNick}</strong>
+							</div>
+							<div className="phone-section">
+								<PhoneIcon />
+								<span>{agent?.memberPhone || 'No contact info'}</span>
+							</div>
 						</div>
 					</div>
-				</div>
+				</Link>
 
 				<div className="agent-stats">
-					<Tooltip title="Cars Listed" arrow>
+					<Stack gap={'5px'}>
 						<div className="stat-item">
 							<DirectionsCarIcon />
-							<span>{agent?.memberCars || 0}</span>
+							<span>{agent?.memberCars}</span>
 						</div>
-					</Tooltip>
-					<Tooltip title="Followers" arrow>
+						<Typography component={'p'}>Listings</Typography>
+					</Stack>
+					<Stack gap={'5px'}>
 						<div className="stat-item">
 							<PeopleIcon />
-							<span>{agent?.memberFollowers || 0}</span>
+							<span>{agent?.memberFollowers}</span>
 						</div>
-					</Tooltip>
-					<Tooltip title="Likes Received" arrow>
+						<Typography component={'p'}>Followers</Typography>
+					</Stack>
+					<Stack gap={'5px'}>
 						<div className="stat-item">
-							<FavoriteIcon />
-							<span>{agent?.memberLikes || 0}</span>
+							<PeopleIcon />
+							<span>{agent?.memberFollowings}</span>
 						</div>
-					</Tooltip>
+						<Typography component={'p'}>Followings</Typography>
+					</Stack>
 				</div>
 
 				<div className="agent-description">
 					<p>{agent?.memberDesc || 'No description available'}</p>
 				</div>
 
-				<div className="agent-actions"></div>
+				<div className="agent-actions">
+					<Link
+						href={{
+							pathname: '/agent/detail',
+							query: { agentId: agent?._id },
+						}}
+					>
+						<Button startIcon={<ArrowOutwardIcon />} className={'view-btn'}>
+							View
+						</Button>
+					</Link>
+					{/* Like Button with Count */}
+					<Box
+						sx={{
+							display: 'flex',
+							alignItems: 'center',
+							gap: 1,
+							cursor: 'pointer',
+						}}
+						onClick={() => likeMemberHandler(user, agent?._id)}
+					>
+						{agent?.meLiked && agent?.meLiked[0]?.myFavorite ? (
+							<FavoriteIcon sx={{ color: 'red', fontSize: 14 }} />
+						) : (
+							<FavoriteBorderIcon sx={{ color: '#666', fontSize: 14 }} />
+						)}
+						<Typography variant="body2" sx={{ fontSize: '14px', color: '#666' }}>
+							{agent?.memberLikes}
+						</Typography>
+					</Box>
+				</div>
 			</Stack>
 		);
 	} else {
@@ -173,5 +213,3 @@ const TopAgentCard = (props: TopAgentProps) => {
 };
 
 export default TopAgentCard;
-
-
