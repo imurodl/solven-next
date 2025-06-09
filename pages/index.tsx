@@ -35,24 +35,12 @@ const Home: NextPage = () => {
 	if (device === 'mobile') {
 		return (
 			<Stack className="home-page">
-				<div data-aos="fade-up">
-					<CarBrands />
-				</div>
-				<div data-aos="fade-up">
-					<TrendCars />
-				</div>
-				<div data-aos="fade-up">
-					<PopularCars />
-				</div>
-				<div data-aos="fade-up">
-					<TopAgents />
-				</div>
-				<div data-aos="fade-up">
-					<CommunityBoards />
-				</div>
-				<div data-aos="fade-up">
-					<CtaSection />
-				</div>
+				<CarBrands />
+				<TrendCars />
+				<PopularCars />
+				<TopAgents />
+				<CommunityBoards />
+				<CtaSection />
 			</Stack>
 		);
 	} else {

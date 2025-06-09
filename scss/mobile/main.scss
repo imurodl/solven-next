@@ -63,14 +63,6 @@ body {
 	display: flex;
 	flex-direction: column;
 
-	// .top {
-	// 	height: 100px;
-	// 	display: flex;
-	// 	flex-direction: row;
-	// 	justify-content: space-around;
-	// 	align-items: center;
-	// }
-
 	.info-box {
 		width: 100%;
 		display: flex;
@@ -994,7 +986,7 @@ body {
 		.filter-type,
 		.filter-rooms {
 			position: absolute;
-			top: calc(100% + 12px);
+			top: -10px;
 			left: 16px;
 			right: 16px;
 			padding: 16px;
@@ -1006,6 +998,9 @@ body {
 			transform: translateY(-10px);
 			transition: all 0.3s ease;
 			z-index: 10;
+			height: 400px;
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
 
 			&.on {
 				visibility: visible;
@@ -1053,7 +1048,6 @@ body {
 			display: flex;
 			flex-direction: column;
 			gap: 8px;
-
 			span {
 				padding: 12px;
 				color: $text-color;
