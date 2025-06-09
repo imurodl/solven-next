@@ -91,7 +91,82 @@ const PopularCars = (props: PopularCarsProps) => {
 	if (!popularCars) return null;
 
 	if (device === 'mobile') {
-		return <div>popular cars mobile</div>;
+		return (
+			<Stack className={'popular-cars'}>
+				<Stack className={'container'}>
+					<Stack className={'info-box'}>
+						<Box component={'div'} className={'left'}>
+							<h2>{t('Popular Car Listings')}</h2>
+						</Box>
+					</Stack>
+					<Stack className="car-filter-box">
+						<Stack className="car-filter-boxes">
+							<Typography
+								onClick={() => carSearchChangeHandler('HYUNDAI')}
+								className={activeBrand === 'HYUNDAI' ? 'active' : ''}
+							>
+								{t('Hyundai')}
+							</Typography>
+							<Typography
+								onClick={() => carSearchChangeHandler('KIA')}
+								className={activeBrand === 'KIA' ? 'active' : ''}
+							>
+								{t('KIA')}
+							</Typography>
+							<Typography
+								onClick={() => carSearchChangeHandler('CHEVROLET')}
+								className={activeBrand === 'CHEVROLET' ? 'active' : ''}
+							>
+								{t('Chevrolet')}
+							</Typography>
+						</Stack>
+						<Divider
+							sx={{
+								color: '#fff',
+								width: '100%',
+								height: '1px',
+							}}
+						/>
+					</Stack>
+					<Stack className={'card-box'}>
+						{popularCars.length === 0 ? (
+							<Stack
+								component={'div'}
+								className={'empty-list'}
+								justifyContent={'center'}
+								alignItems={'center'}
+								height={'300px'}
+							>
+								Cars Empty
+							</Stack>
+						) : (
+							<Swiper
+								className={'popular-car-swiper'}
+								slidesPerView={1}
+								spaceBetween={16}
+								modules={[Autoplay, Navigation, Pagination]}
+								navigation={{
+									nextEl: '.swiper-popular-next',
+									prevEl: '.swiper-popular-prev',
+								}}
+								pagination={{
+									el: '.swiper-popular-pagination',
+									clickable: true,
+								}}
+							>
+								{popularCars.map((car: Car) => {
+									return (
+										<SwiperSlide key={car._id} className={'popular-property-slide'}>
+											<PopularCarCard car={car} likeCarHandler={likeCarHandler} />
+										</SwiperSlide>
+									);
+								})}
+							</Swiper>
+						)}
+					</Stack>
+				</Stack>
+			</Stack>
+		);
 	} else {
 		return (
 			<Stack className={'popular-cars'}>
@@ -151,9 +226,9 @@ const PopularCars = (props: PopularCarsProps) => {
 							</Stack>
 						) : (
 							<Swiper
-								className={'popular-property-swiper'}
-								slidesPerView={'auto'}
-								spaceBetween={20}
+								className={'popular-car-swiper'}
+								slidesPerView={1}
+								spaceBetween={16}
 								modules={[Autoplay, Navigation, Pagination]}
 								navigation={{
 									nextEl: '.swiper-popular-next',
@@ -161,6 +236,7 @@ const PopularCars = (props: PopularCarsProps) => {
 								}}
 								pagination={{
 									el: '.swiper-popular-pagination',
+									clickable: true,
 								}}
 							>
 								{popularCars.map((car: Car) => {

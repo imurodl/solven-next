@@ -41,7 +41,7 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 
 	if (device === 'mobile') {
 		return (
-			<Stack className="popular-card-box">
+			<Stack className="popular-card-box" direction="row">
 				<Box
 					component={'div'}
 					className={'card-img'}
@@ -54,29 +54,70 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 					<strong className={'title'} onClick={() => pushDetailHandler(car._id)}>
 						{car.carTitle}
 					</strong>
-					<p className={'desc'}>{car.carAddress}</p>
-					<div className={'options'}>
-						<div>
-							<img src="/img/icons/bed.svg" alt="" />
-							<span>{car?.carMileage} mileage</span>
-						</div>
-						<div>
-							<img src="/img/icons/room.svg" alt="" />
-							<span>{car?.carSeats} seats</span>
-						</div>
-						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{car?.carBrand} brand</span>
-						</div>
+					<p className={'car-desc'}>{car.carDesc?.slice(0, 50) || ''}...</p>
+
+					<div className={'car-specs'}>
+						<Tooltip title={'Manufactured Year'} placement="top" arrow>
+							<div className={'spec-item'}>
+								<CalendarTodayIcon className={'spec-icon'} />
+								<span>{car?.manufacturedAt}</span>
+							</div>
+						</Tooltip>
+						<Tooltip title={'Car Mileage'} placement="top" arrow>
+							<div className={'spec-item'}>
+								<SpeedIcon className={'spec-icon'} />
+								<span>{car?.carMileage?.toLocaleString()}</span>
+							</div>
+						</Tooltip>
+						<Tooltip title={'Car Fuel Type'} placement="top" arrow>
+							<div className={'spec-item'}>
+								<LocalGasStationIcon className={'spec-icon'} />
+								<span>{car?.carFuelType}</span>
+							</div>
+						</Tooltip>
+						<Tooltip title={'Car Transmission'} placement="top" arrow>
+							<div className={'spec-item'}>
+								<SettingsIcon className={'spec-icon'} />
+								<span>{car?.carTransmission}</span>
+							</div>
+						</Tooltip>
 					</div>
-					<Divider sx={{ mt: '15px', mb: '17px' }} />
-					<div className={'bott'}>
-						<p>{car?.carRent ? 'rent' : 'sale'}</p>
+
+					<div className={'bottom-section'}>
 						<div className="view-like-box">
-							<IconButton color={'default'}>
-								<RemoveRedEyeIcon />
-							</IconButton>
-							<Typography className="view-cnt">{car?.carViews}</Typography>
+							<Box
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									cursor: 'pointer',
+								}}
+							>
+								<IconButton color={'default'}>
+									<RemoveRedEyeIcon />
+								</IconButton>
+								<Typography className="view-cnt">{car?.carViews}</Typography>
+							</Box>
+							<Box
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									cursor: 'pointer',
+									gap: '4px',
+								}}
+								onClick={(e: any) => {
+									e.stopPropagation();
+									likeCarHandler(user, car?._id);
+								}}
+							>
+								{isLiked ? (
+									<FavoriteIcon sx={{ color: 'red', fontSize: 24 }} />
+								) : (
+									<FavoriteBorderIcon sx={{ color: '#666', fontSize: 24 }} />
+								)}
+								<Typography variant="body2" sx={{ fontSize: '14px', color: '#666' }}>
+									{car.carLikes}
+								</Typography>
+							</Box>
 						</div>
 					</div>
 				</Box>
