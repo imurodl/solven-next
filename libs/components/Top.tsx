@@ -226,20 +226,35 @@ const Top = () => {
 										onUnreadCountChange={handleUnreadCountChange}
 									/>
 									<div className={'user-box'}>
-										<div className={'login-user'}>
+										<div className={'login-user'} onClick={(event: any) => setLogoutAnchor(event.currentTarget)}>
 											<img
 												src={
 													user?.memberImage
-														? `${REACT_APP_API_URL}/${user.memberImage}`
+														? `${REACT_APP_API_URL}/${user?.memberImage}`
 														: '/img/profile/defaultUser.svg'
 												}
-												alt="User"
+												alt=""
 											/>
 										</div>
+
+										<Menu
+											id="basic-menu"
+											anchorEl={logoutAnchor}
+											open={logoutOpen}
+											onClose={() => {
+												setLogoutAnchor(null);
+											}}
+											sx={{ mt: '5px' }}
+										>
+											<MenuItem onClick={() => logOut()}>
+												<Logout fontSize="small" style={{ color: 'blue', marginRight: '10px' }} />
+												{t('Logout')}
+											</MenuItem>
+										</Menu>
 									</div>
 								</>
 							) : (
-								<button className={'sign-in-btn'} onClick={() => router.push('/auth/signin')}>
+								<button className={'sign-in-btn'} onClick={() => router.push('/account/join')}>
 									{t('Sign In')}
 								</button>
 							)}
@@ -434,19 +449,6 @@ const Top = () => {
 								>
 									<Box component={'div'} className={'flag'}>
 										<img src={lang ? `/img/flag/lang${lang}.png` : '/img/flag/langen.png'} alt={'Language'} />
-										<span>
-											{t(
-												lang === 'en'
-													? 'English'
-													: lang === 'kr'
-													? 'Korean'
-													: lang === 'ru'
-													? 'Russian'
-													: lang === 'uz'
-													? 'Uzbek'
-													: 'English',
-											)}
-										</span>
 									</Box>
 								</Button>
 

@@ -157,7 +157,13 @@ const Footer = () => {
 			<>
 				<footer className="footer">
 					<div className="footer-inner">
-						<div className={`footer-container`}>
+						<div
+							className={`footer-container`}
+							style={{
+								width: isFullWidthPage ? '100%' : '1300px',
+								padding: isFullWidthPage ? '0 40px' : '0',
+							}}
+						>
 							{/* Logo Section */}
 							<div className="subscribe-section">
 								<Link href="/">

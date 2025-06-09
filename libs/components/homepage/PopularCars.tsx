@@ -227,8 +227,8 @@ const PopularCars = (props: PopularCarsProps) => {
 						) : (
 							<Swiper
 								className={'popular-car-swiper'}
-								slidesPerView={1}
-								spaceBetween={16}
+								slidesPerView={2}
+								spaceBetween={20}
 								modules={[Autoplay, Navigation, Pagination]}
 								navigation={{
 									nextEl: '.swiper-popular-next',

@@ -647,6 +647,38 @@ body {
 							color: #fff;
 						}
 					}
+
+					.notification-icon {
+						color: white;
+						font-size: 20px;
+						padding: 6px;
+						border-radius: 8px;
+						transition: all 0.3s ease;
+						cursor: pointer;
+						min-width: 36px;
+						min-height: 36px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+
+						&:hover {
+							background: rgba(255, 255, 255, 0.1);
+							transform: translateY(-1px);
+						}
+					}
+
+					.user-box {
+						.login-user {
+							img {
+								width: 42px;
+								height: 42px;
+								border-radius: 50%;
+								object-fit: cover;
+								border: 2px solid transparent;
+								transition: all 0.3s ease;
+							}
+						}
+					}
 				}
 			}
 		}
