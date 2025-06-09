@@ -82,7 +82,72 @@ const TrendCars = (props: TrendCarsProps) => {
 	if (!trendCars) return null;
 
 	if (device === 'mobile') {
-		return <div>Trend cars mobile</div>;
+		return (
+			<Stack className={'trend-cars'}>
+				<Stack className={'container'}>
+					<Stack className={'info-box'}>
+						<Box component={'div'} className={'left'}>
+							<span>{t('Featured Car Listings')}</span>
+						</Box>
+					</Stack>
+					<Stack className="car-filter-box">
+						<Stack className="car-filter-boxes">
+							<Typography
+								onClick={() => carSearchChangeHandler('carViews')}
+								className={activeSort === 'carViews' ? 'active' : ''}
+							>
+								{t('Popular Cars')}
+							</Typography>
+							<Typography
+								onClick={() => carSearchChangeHandler('carLikes')}
+								className={activeSort === 'carLikes' ? 'active' : ''}
+							>
+								{t('Trending Cars')}
+							</Typography>
+							<Typography
+								onClick={() => carSearchChangeHandler('carRank')}
+								className={activeSort === 'carRank' ? 'active' : ''}
+							>
+								{t('Top Cars')}
+							</Typography>
+						</Stack>
+						<Divider
+							sx={{
+								color: '#e9e9e9',
+								width: '100%',
+								height: '1px',
+							}}
+						/>
+					</Stack>
+					<Stack className={'card-box'}>
+						{trendCars.length === 0 ? (
+							<Box component={'div'} className={'empty-list'}>
+								Trends Empty
+							</Box>
+						) : (
+							<Swiper
+								className={'trend-car-swiper'}
+								slidesPerView={1.6}
+								spaceBetween={12}
+								modules={[Autoplay, Navigation, Pagination]}
+								pagination={{
+									el: '.swiper-trend-pagination',
+									clickable: true,
+								}}
+							>
+								{trendCars.map((car: Car) => {
+									return (
+										<SwiperSlide key={car._id} className={'trend-car-slide'}>
+											<TrendCarCard car={car} likeCarHandler={likeCarHandler} />
+										</SwiperSlide>
+									);
+								})}
+							</Swiper>
+						)}
+					</Stack>
+				</Stack>
+			</Stack>
+		);
 	} else {
 		return (
 			<Stack className={'trend-cars'}>

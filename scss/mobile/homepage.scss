@@ -82,4 +82,323 @@
 			}
 		}
 	}
+
+	.trend-cars {
+		padding: 40px 16px;
+		width: 100%;
+		background: $background-white;
+
+		.container {
+			.info-box {
+				margin-bottom: 24px;
+
+				span {
+					color: $text-color;
+					font-size: 24px;
+					font-weight: 600;
+				}
+			}
+
+			.car-filter-box {
+				margin-bottom: 20px;
+
+				.car-filter-boxes {
+					display: flex;
+					flex-direction: row;
+					gap: 20px;
+					padding-bottom: 12px;
+					overflow-x: auto;
+					-webkit-overflow-scrolling: touch;
+
+					p {
+						color: $text-color;
+						font-size: 15px;
+						font-weight: 500;
+						position: relative;
+						cursor: pointer;
+						white-space: nowrap;
+
+						&::before {
+							content: '';
+							position: absolute;
+							width: 0;
+							height: 2px;
+							bottom: -12px;
+							left: 0;
+							background-color: $primary-color;
+							transition: width 0.3s ease;
+						}
+
+						&.active::before {
+							width: 100%;
+						}
+
+						&:hover::before {
+							width: 100%;
+						}
+					}
+				}
+			}
+
+			.card-box {
+				.trend-car-swiper {
+					width: 100%;
+					height: auto;
+					padding: 4px;
+					margin: 0 -4px;
+
+					.trend-car-slide {
+						width: auto;
+
+						.trend-card-box {
+							width: 100%;
+							border-radius: 16px;
+							box-shadow: $shadow-light;
+							border: 1px solid $border-light;
+							background: $background-white;
+							overflow: hidden;
+
+							.card-img {
+								position: relative;
+								width: 100%;
+								height: 180px;
+								background-size: cover;
+								background-position: center;
+
+								div {
+									position: absolute;
+									left: 12px;
+									bottom: 12px;
+									padding: 8px 16px;
+									background: rgba(255, 255, 255, 0.9);
+									border-radius: 10px;
+									font-size: 15px;
+									font-weight: 600;
+								}
+							}
+
+							.info {
+								padding: 16px;
+
+								.title {
+									font-size: 15px;
+									font-weight: 600;
+									margin-bottom: 8px;
+									white-space: nowrap;
+									overflow: hidden;
+									text-overflow: ellipsis;
+								}
+
+								.desc {
+									font-size: 14px;
+									color: $text-muted;
+									margin-bottom: 16px;
+									white-space: nowrap;
+									overflow: hidden;
+									text-overflow: ellipsis;
+								}
+
+								.options {
+									display: flex;
+									justify-content: space-between;
+									margin-bottom: 16px;
+
+									div {
+										display: flex;
+										align-items: center;
+										gap: 8px;
+
+										img {
+											width: 18px;
+											height: 18px;
+										}
+
+										span {
+											font-size: 14px;
+											color: $text-color;
+										}
+									}
+								}
+
+								.bott {
+									display: flex;
+									justify-content: space-between;
+									align-items: center;
+
+									p {
+										font-size: 14px;
+										color: $text-color;
+									}
+
+									.view-like-box {
+										display: flex;
+										align-items: center;
+										gap: 8px;
+
+										.view-cnt {
+											font-size: 14px;
+											color: $text-muted;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.trend-car-card {
+			width: 100%;
+			border-radius: 12px;
+			box-shadow: $shadow-light;
+			border: 1px solid $border-light;
+			background: $background-white;
+			overflow: hidden;
+
+			.car-image-section {
+				position: relative;
+				width: 100%;
+				height: 180px;
+				overflow: hidden;
+
+				.car-image {
+					width: 100%;
+					height: 100%;
+					background-size: cover;
+					background-position: center;
+					cursor: pointer;
+				}
+
+				.price-badge {
+					position: absolute;
+					bottom: 12px;
+					left: 12px;
+					background: rgba(0, 0, 0, 0.7);
+					color: #fff;
+					padding: 6px 12px;
+					border-radius: 8px;
+					font-size: 14px;
+					font-weight: 600;
+				}
+
+				.views-count {
+					position: absolute;
+					top: 12px;
+					right: 12px;
+					background: rgba(0, 0, 0, 0.7);
+					color: #fff;
+					padding: 4px 8px;
+					border-radius: 16px;
+					display: flex;
+					align-items: center;
+					gap: 4px;
+					font-size: 12px;
+
+					.views-icon {
+						font-size: 16px;
+					}
+				}
+			}
+
+			.car-content {
+				padding: 16px !important;
+
+				.car-title-wrapper {
+					margin-bottom: 8px;
+
+					.car-title {
+						font-size: 15px;
+						font-weight: 600;
+						color: $text-color;
+						cursor: pointer;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+					}
+				}
+
+				.car-description {
+					font-size: 13px;
+					color: $text-muted;
+					margin-bottom: 12px;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+
+				.car-features {
+					display: flex;
+					justify-content: space-between;
+					margin-bottom: 16px;
+					padding-bottom: 16px;
+					border-bottom: 1px solid $border-light;
+
+					.feature-item {
+						display: flex;
+						align-items: center;
+						flex-direction: column;
+						gap: 6px;
+
+						.feature-icon {
+							font-size: 16px;
+							color: $text-muted;
+						}
+
+						.feature-text {
+							font-size: 11px;
+							color: $text-color;
+						}
+					}
+				}
+
+				.car-footer {
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+
+					.status-section {
+						display: flex;
+						align-items: center;
+						gap: 4px;
+
+						.status-text {
+							font-size: 13px;
+							color: $text-muted;
+
+							&.active {
+								color: $primary-color;
+							}
+						}
+
+						.status-divider {
+							color: $text-muted;
+							margin: 0 2px;
+						}
+					}
+
+					.like-section {
+						display: flex;
+						align-items: center;
+						gap: 4px;
+						cursor: pointer;
+
+						.like-icon {
+							font-size: 18px;
+							color: $text-muted;
+
+							&.liked {
+								color: $primary-color;
+							}
+						}
+
+						.like-count {
+							font-size: 13px;
+							color: $text-muted;
+						}
+					}
+				}
+			}
+		}
+	}
 }
