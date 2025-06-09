@@ -95,7 +95,7 @@ const withLayoutBasic = (Component: any) => {
 						</Stack>
 
 						<Stack id={'main'}>
-							<Component {...props} />
+							<Component {...props} title={memoizedValues.title} desc={memoizedValues.desc} />
 						</Stack>
 
 						<Stack id={'footer'}>
