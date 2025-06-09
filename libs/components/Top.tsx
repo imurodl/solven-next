@@ -298,13 +298,45 @@ const Top = () => {
 							<button className={'btn-lang'} onClick={langClick}>
 								<div className={'flag'}>
 									<img src={lang ? `/img/flag/lang${lang}.png` : '/img/flag/langen.png'} alt={'Language'} />
-									<span>{t(lang ? lang.toUpperCase() : 'EN')}</span>
+									<span>
+										{t(
+											lang === 'en'
+												? 'English'
+												: lang === 'kr'
+												? 'Korean'
+												: lang === 'ru'
+												? 'Russian'
+												: lang === 'uz'
+												? 'Uzbek'
+												: 'English',
+										)}
+									</span>
 								</div>
 								<CaretDown size={16} />
 							</button>
 						</div>
 					</div>
 				</div>
+
+				{/* Language Menu */}
+				<StyledMenu anchorEl={anchorEl2} open={drop} onClose={langClose}>
+					<MenuItem disableRipple onClick={langChoice} id="en">
+						<img className="img-flag" src={'/img/flag/langen.png'} alt={'usaFlag'} />
+						{t('English')}
+					</MenuItem>
+					<MenuItem disableRipple onClick={langChoice} id="kr">
+						<img className="img-flag" src={'/img/flag/langkr.png'} alt={'koreanFlag'} />
+						{t('Korean')}
+					</MenuItem>
+					<MenuItem disableRipple onClick={langChoice} id="ru">
+						<img className="img-flag" src={'/img/flag/langru.png'} alt={'russiaFlag'} />
+						{t('Russian')}
+					</MenuItem>
+					<MenuItem disableRipple onClick={langChoice} id="uz">
+						<img className="img-flag" src={'/img/flag/languz.png'} alt={'uzbFlag'} />
+						{t('Uzbek')}
+					</MenuItem>
+				</StyledMenu>
 
 				{/* Overlay */}
 				<div className={`menu-overlay ${isMenuOpen ? 'open' : ''}`} onClick={() => setIsMenuOpen(false)} />
@@ -401,11 +433,20 @@ const Top = () => {
 									endIcon={<CaretDown size={14} color="#616161" weight="fill" />}
 								>
 									<Box component={'div'} className={'flag'}>
-										{lang !== null ? (
-											<img src={`/img/flag/lang${lang}.png`} alt={'usaFlag'} />
-										) : (
-											<img src={`/img/flag/langen.png`} alt={'usaFlag'} />
-										)}
+										<img src={lang ? `/img/flag/lang${lang}.png` : '/img/flag/langen.png'} alt={'Language'} />
+										<span>
+											{t(
+												lang === 'en'
+													? 'English'
+													: lang === 'kr'
+													? 'Korean'
+													: lang === 'ru'
+													? 'Russian'
+													: lang === 'uz'
+													? 'Uzbek'
+													: 'English',
+											)}
+										</span>
 									</Box>
 								</Button>
 
