@@ -728,7 +728,7 @@
 						.agent-info {
 							flex: 1;
 							min-width: 0;
-
+							align-self: center;
 							.name-section {
 								display: flex;
 								align-items: center;
@@ -838,6 +838,140 @@
 
 							svg {
 								font-size: 14px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	.community-board {
+		padding: 40px 16px;
+		width: 100%;
+		background: $background-light;
+
+		.container {
+			.info-box {
+				.left {
+					h2 {
+						font-family: $font;
+						font-size: 24px;
+						font-weight: 700;
+						margin-bottom: 24px;
+						text-align: center;
+						background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+						background-clip: text;
+						-webkit-background-clip: text;
+						-webkit-text-fill-color: transparent;
+					}
+				}
+			}
+
+			.community-main {
+				display: flex;
+				flex-direction: column;
+				gap: 24px;
+
+				.community-section {
+					.content-top {
+						margin-bottom: 16px;
+
+						a {
+							display: flex;
+							align-items: center;
+							justify-content: space-between;
+							text-decoration: none;
+							padding: 0 4px;
+
+							span {
+								font-size: 18px;
+								font-weight: 600;
+								color: $text-color;
+							}
+
+							img {
+								width: 16px;
+								height: 16px;
+							}
+						}
+					}
+
+					.card-wrap {
+						display: flex;
+						flex-direction: column;
+						gap: 12px;
+
+						.community-card {
+							background: #fff;
+							border-radius: 12px;
+							overflow: hidden;
+							display: flex;
+							text-decoration: none;
+							border: 1px solid $border-light;
+							box-shadow: $shadow-light;
+
+							&.horizontal {
+								flex-direction: row;
+								height: 100px;
+
+								.card-media {
+									width: 100px;
+									min-width: 100px;
+									height: 100px;
+
+									img {
+										width: 100%;
+										height: 100%;
+										object-fit: cover;
+									}
+								}
+
+								.card-content {
+									padding: 12px;
+									flex: 1;
+									display: flex;
+									flex-direction: column;
+									justify-content: space-between;
+									min-width: 0;
+
+									.article-title {
+										font-size: 14px;
+										font-weight: 600;
+										color: $text-color;
+										margin-bottom: 8px;
+										display: -webkit-box;
+										-webkit-line-clamp: 2;
+										-webkit-box-orient: vertical;
+										overflow: hidden;
+										line-height: 1.4;
+									}
+
+									.card-footer {
+										display: flex;
+										justify-content: space-between;
+										align-items: center;
+										margin-top: auto;
+
+										.meta-info {
+											display: flex;
+											align-items: center;
+											gap: 4px;
+											color: $text-muted;
+											font-size: 12px;
+
+											.views-icon {
+												width: 14px;
+												height: 14px;
+												color: $text-muted;
+											}
+
+											.date {
+												color: $text-muted;
+											}
+										}
+									}
+								}
 							}
 						}
 					}

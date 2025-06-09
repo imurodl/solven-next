@@ -30,11 +30,11 @@ const CommunityBoards = () => {
 		error: getNewsArticlesError,
 		refetch: getNewsArticlesRefetch,
 	} = useQuery(GET_BOARD_ARTICLES, {
-		fetchPolicy: 'network-only',
+		fetchPolicy: 'cache-and-network',
 		variables: { input: { ...searchCommunity, limit: 3, search: { articleCategory: BoardArticleCategory.NEWS } } },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			setNewsArticles(data?.getBoardArticles?.list);
+			setNewsArticles(data?.getBoardArticles?.list || []);
 		},
 	});
 
@@ -44,11 +44,11 @@ const CommunityBoards = () => {
 		error: getFreeArticlesError,
 		refetch: getFreeArticlesRefetch,
 	} = useQuery(GET_BOARD_ARTICLES, {
-		fetchPolicy: 'network-only',
+		fetchPolicy: 'cache-and-network',
 		variables: { input: { ...searchCommunity, limit: 3, search: { articleCategory: BoardArticleCategory.FREE } } },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			setFreeArticles(data?.getBoardArticles?.list);
+			setFreeArticles(data?.getBoardArticles?.list || []);
 		},
 	});
 
@@ -58,16 +58,57 @@ const CommunityBoards = () => {
 		error: getRecommendArticlesError,
 		refetch: getRecommendArticlesRefetch,
 	} = useQuery(GET_BOARD_ARTICLES, {
-		fetchPolicy: 'network-only',
+		fetchPolicy: 'cache-and-network',
 		variables: { input: { ...searchCommunity, limit: 3, search: { articleCategory: BoardArticleCategory.RECOMMEND } } },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			setRecommendArticles(data?.getBoardArticles?.list);
+			setRecommendArticles(data?.getBoardArticles?.list || []);
 		},
 	});
 
+	// Prepare placeholder arrays for loading state
+	const loadingArray = Array(2).fill({ _id: 'loading' });
+
 	if (device === 'mobile') {
-		return <div>COMMUNITY BOARDS MOBILE</div>;
+		return (
+			<section className="community-board">
+				<div className="container">
+					<div className="info-box">
+						<div className="left">
+							<h2>{t('Blog Posts')}</h2>
+						</div>
+					</div>
+					<div className="community-main">
+						<div className="community-section">
+							<div className="content-top">
+								<Link href="/community?articleCategory=NEWS">
+									<span>News</span>
+									<img src="/img/icons/arrowBig.svg" alt="View all news" />
+								</Link>
+							</div>
+							<div className="card-wrap">
+								{(getNewsArticlesLoading ? loadingArray : newsArticles.slice(0, 2)).map((article, index) => (
+									<CommunityCard vertical={false} article={article} index={index} key={article?._id} />
+								))}
+							</div>
+						</div>
+						<div className="community-section">
+							<div className="content-top">
+								<Link href="/community?articleCategory=RECOMMEND">
+									<span>Recommended</span>
+									<img src="/img/icons/arrowBig.svg" alt="View recommended posts" />
+								</Link>
+							</div>
+							<div className="card-wrap">
+								{(getRecommendArticlesLoading ? loadingArray : recommendArticles.slice(0, 2)).map((article, index) => (
+									<CommunityCard vertical={false} article={article} index={index} key={article?._id} />
+								))}
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		);
 	} else
 		return (
 			<section className="community-board">
@@ -92,7 +133,7 @@ const CommunityBoards = () => {
 								</Link>
 							</div>
 							<div className="card-wrap">
-								{newsArticles.map((article, index) => (
+								{(getNewsArticlesLoading ? loadingArray : newsArticles).map((article, index) => (
 									<CommunityCard vertical={false} article={article} index={index} key={article?._id} />
 								))}
 							</div>
@@ -105,7 +146,7 @@ const CommunityBoards = () => {
 								</Link>
 							</div>
 							<div className="card-wrap">
-								{freeArticles.map((article, index) => (
+								{(getFreeArticlesLoading ? loadingArray : freeArticles).map((article, index) => (
 									<CommunityCard vertical={false} article={article} index={index} key={article?._id} />
 								))}
 							</div>
@@ -118,7 +159,7 @@ const CommunityBoards = () => {
 								</Link>
 							</div>
 							<div className="card-wrap">
-								{recommendArticles.map((article, index) => (
+								{(getRecommendArticlesLoading ? loadingArray : recommendArticles).map((article, index) => (
 									<CommunityCard vertical={false} article={article} index={index} key={article?._id} />
 								))}
 							</div>
