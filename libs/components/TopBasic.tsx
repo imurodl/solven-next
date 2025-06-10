@@ -8,8 +8,6 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { alpha, styled } from '@mui/material/styles';
 import Menu, { MenuProps } from '@mui/material/Menu';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { CaretDown } from 'phosphor-react';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 import Link from 'next/link';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
@@ -20,6 +18,7 @@ import { REACT_APP_API_URL } from '../config';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import NotificationModal from './common/NotificationModal';
 import { IconButton, Badge } from '@mui/material';
+import { CaretDown, List, X } from 'phosphor-react';
 
 const Top = () => {
 	const device = useDeviceDetect();
@@ -40,6 +39,7 @@ const Top = () => {
 	const [notificationAnchor, setNotificationAnchor] = React.useState<null | HTMLElement>(null);
 	const notificationOpen = Boolean(notificationAnchor);
 	const isFullWidthPage = router.pathname === '/mypage' || router.pathname.startsWith('/member');
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -205,22 +205,158 @@ const Top = () => {
 
 	if (device == 'mobile') {
 		return (
-			<Stack className={'top'}>
-				<Link href={'/'}>
-					<div>{t('Home')}</div>
-				</Link>
-				<Link href={'/car'}>
-					<div>{t('Listings')}</div>
-				</Link>
-				<Link href={'/agent'}>
-					<div> {t('Agents')} </div>
-				</Link>
-				<Link href={'/community?articleCategory=FREE'}>
-					<div> {t('Community')} </div>
-				</Link>
-				<Link href={'/help'}>
-					<div> {t('Help')} </div>
-				</Link>
+			<Stack className={'navbar'}>
+				<Stack className={'navbar-basic'}>
+					<Stack className={'container'}>
+						<Box component={'div'} className={'logo-box'}>
+							<Link href={'/'}>
+								<img src="/img/logo/solven.png" alt="Solven logo" />
+							</Link>
+						</Box>
+						<Box component={'div'} className={'right-section'}>
+							{user?._id ? (
+								<>
+									<IconButton onClick={handleNotificationClick} size="small">
+										<Badge color="error" variant="dot" invisible={!hasUnreadNotifications}>
+											<NotificationsOutlinedIcon className={'notification-icon'} />
+										</Badge>
+									</IconButton>
+									<NotificationModal
+										anchorEl={notificationAnchor}
+										open={notificationOpen}
+										onClose={handleNotificationClose}
+										onUnreadCountChange={handleUnreadCountChange}
+									/>
+									<div className={'user-box'}>
+										<div className={'login-user'} onClick={(event: any) => setLogoutAnchor(event.currentTarget)}>
+											<img
+												src={
+													user?.memberImage
+														? `${REACT_APP_API_URL}/${user?.memberImage}`
+														: '/img/profile/defaultUser.svg'
+												}
+												alt=""
+											/>
+										</div>
+
+										<Menu
+											id="basic-menu"
+											anchorEl={logoutAnchor}
+											open={logoutOpen}
+											onClose={() => {
+												setLogoutAnchor(null);
+											}}
+											sx={{ mt: '5px' }}
+										>
+											<MenuItem onClick={() => logOut()}>
+												<Logout fontSize="small" style={{ color: 'blue', marginRight: '10px' }} />
+												{t('Logout')}
+											</MenuItem>
+										</Menu>
+									</div>
+								</>
+							) : (
+								<button className={'sign-in-btn'} onClick={() => router.push('/account/join')}>
+									{t('Sign In')}
+								</button>
+							)}
+							<button className={'menu-btn'} onClick={() => setIsMenuOpen(true)}>
+								<List size={24} />
+							</button>
+						</Box>
+					</Stack>
+				</Stack>
+
+				{/* Mobile Menu */}
+				<div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+					<div className={'menu-header'}>
+						<button className={'close-btn'} onClick={() => setIsMenuOpen(false)}>
+							<X size={24} />
+						</button>
+					</div>
+					<div className={'menu-content'}>
+						<div className={'menu-section'}>
+							<div className={'menu-items'}>
+								<Link href={'/'}>
+									<div className={`menu-item ${router.pathname === '/' ? 'active' : ''}`}>
+										<span>{t('Home')}</span>
+									</div>
+								</Link>
+								<Link href={'/car'}>
+									<div className={`menu-item ${router.pathname.startsWith('/car') ? 'active' : ''}`}>
+										<span>{t('Listings')}</span>
+									</div>
+								</Link>
+								<Link href={'/agent'}>
+									<div className={`menu-item ${router.pathname.startsWith('/agent') ? 'active' : ''}`}>
+										<span>{t('Agents')}</span>
+									</div>
+								</Link>
+								<Link href={'/community?articleCategory=FREE'}>
+									<div className={`menu-item ${router.pathname.startsWith('/community') ? 'active' : ''}`}>
+										<span>{t('Community')}</span>
+									</div>
+								</Link>
+								{user?._id && (
+									<Link href={'/mypage'}>
+										<div className={`menu-item ${router.pathname.startsWith('/mypage') ? 'active' : ''}`}>
+											<span>{t('My Page')}</span>
+										</div>
+									</Link>
+								)}
+								<Link href={'/help'}>
+									<div className={`menu-item ${router.pathname.startsWith('/help') ? 'active' : ''}`}>
+										<span>{t('Help')}</span>
+									</div>
+								</Link>
+							</div>
+						</div>
+						<div className={'language-section'}>
+							<button className={'btn-lang'} onClick={langClick}>
+								<div className={'flag'}>
+									<img src={lang ? `/img/flag/lang${lang}.png` : '/img/flag/langen.png'} alt={'Language'} />
+									<span>
+										{t(
+											lang === 'en'
+												? 'English'
+												: lang === 'kr'
+												? 'Korean'
+												: lang === 'ru'
+												? 'Russian'
+												: lang === 'uz'
+												? 'Uzbek'
+												: 'English',
+										)}
+									</span>
+								</div>
+								<CaretDown size={16} />
+							</button>
+						</div>
+					</div>
+				</div>
+
+				{/* Language Menu */}
+				<StyledMenu anchorEl={anchorEl2} open={drop} onClose={langClose}>
+					<MenuItem disableRipple onClick={langChoice} id="en">
+						<img className="img-flag" src={'/img/flag/langen.png'} alt={'usaFlag'} />
+						{t('English')}
+					</MenuItem>
+					<MenuItem disableRipple onClick={langChoice} id="kr">
+						<img className="img-flag" src={'/img/flag/langkr.png'} alt={'koreanFlag'} />
+						{t('Korean')}
+					</MenuItem>
+					<MenuItem disableRipple onClick={langChoice} id="ru">
+						<img className="img-flag" src={'/img/flag/langru.png'} alt={'russiaFlag'} />
+						{t('Russian')}
+					</MenuItem>
+					<MenuItem disableRipple onClick={langChoice} id="uz">
+						<img className="img-flag" src={'/img/flag/languz.png'} alt={'uzbFlag'} />
+						{t('Uzbek')}
+					</MenuItem>
+				</StyledMenu>
+
+				{/* Overlay */}
+				<div className={`menu-overlay ${isMenuOpen ? 'open' : ''}`} onClick={() => setIsMenuOpen(false)} />
 			</Stack>
 		);
 	} else {

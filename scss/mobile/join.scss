@@ -1,0 +1,244 @@
+#mobile-wrap {
+	background: #050b20;
+	.join-page {
+		position: relative;
+		// min-height: calc(100vh - 60px);
+		height: auto;
+		background: $background-light;
+		width: 100%;
+		border-radius: 40px;
+		.container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 40px 16px;
+
+			.main {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				border-radius: 16px;
+				background: $background-white;
+				box-shadow: $shadow-light;
+				overflow: hidden;
+				border: 1px solid $border-light;
+				padding: 32px 20px;
+
+				.info {
+					margin-bottom: 32px;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					text-align: center;
+
+					span {
+						font-family: $font;
+						font-size: 24px;
+						font-weight: 700;
+						background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+						background-clip: text;
+						-webkit-background-clip: text;
+						-webkit-text-fill-color: transparent;
+						text-transform: capitalize;
+						margin-bottom: 8px;
+					}
+
+					p {
+						color: $text-muted;
+						font-size: 14px;
+						line-height: 1.5;
+						padding: 0 20px;
+					}
+				}
+
+				.input-wrap {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					gap: 16px;
+
+					.input-box {
+						display: flex;
+						flex-direction: column;
+						gap: 6px;
+
+						span {
+							font-size: 13px;
+							font-weight: 600;
+							color: $text-color;
+							margin-left: 4px;
+						}
+
+						input {
+							padding: 0 16px;
+							height: 44px;
+							border-radius: 10px;
+							border: 1px solid $border-light;
+							background: $background-light;
+							font-size: 14px;
+							color: $text-color;
+							transition: $transition-smooth;
+
+							&:hover {
+								border-color: rgba($primary-color, 0.3);
+								background: darken($background-light, 1%);
+							}
+
+							&:focus {
+								outline: none;
+								border-color: $primary-color;
+								background: $background-white;
+								box-shadow: 0 0 0 4px rgba($primary-color, 0.1);
+							}
+
+							&::placeholder {
+								color: $text-muted;
+							}
+						}
+					}
+				}
+
+				.register {
+					margin-top: 24px;
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					gap: 20px;
+
+					.type-option {
+						display: flex;
+						flex-direction: column;
+						gap: 10px;
+
+						span.text {
+							font-size: 13px;
+							font-weight: 600;
+							color: $text-color;
+						}
+
+						div {
+							display: flex;
+							gap: 10px;
+
+							.type-button {
+								flex: 1;
+								padding: 10px;
+								font-size: 13px;
+								font-weight: 600;
+								color: $text-muted;
+								background: $background-light;
+								border: 2px solid transparent;
+								border-radius: 10px;
+								cursor: pointer;
+								transition: $transition-smooth;
+								display: flex;
+								align-items: center;
+								justify-content: center;
+								gap: 6px;
+
+								&::before {
+									content: '';
+									width: 16px;
+									height: 16px;
+									border: 2px solid $border-color;
+									border-radius: 50%;
+									transition: $transition-smooth;
+								}
+
+								&:hover {
+									background: darken($background-light, 2%);
+									border-color: rgba($primary-color, 0.3);
+
+									&::before {
+										border-color: rgba($primary-color, 0.5);
+									}
+								}
+
+								&.active {
+									color: $primary-color;
+									background: rgba($primary-color, 0.08);
+									border-color: $primary-color;
+
+									&::before {
+										border-color: $primary-color;
+										background: $primary-color;
+										box-shadow: inset 0 0 0 4px white;
+									}
+								}
+							}
+						}
+					}
+
+					.remember-info {
+						width: 100%;
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+
+						.MuiFormControlLabel-root {
+							margin: 0;
+
+							.MuiCheckbox-root {
+								padding: 6px;
+							}
+
+							.MuiTypography-root {
+								font-size: 13px;
+								color: $text-muted;
+							}
+						}
+					}
+
+					.MuiButton-root {
+						height: 44px;
+						border-radius: 10px;
+						font-size: 14px;
+						font-weight: 600;
+						background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 10%) 100%);
+						box-shadow: $shadow-light;
+						transition: $transition-smooth;
+						color: #fff;
+						&:hover {
+							box-shadow: $shadow-medium;
+							background: linear-gradient(135deg, darken($primary-color, 5%) 0%, darken($primary-color, 15%) 100%);
+							color: #fff;
+						}
+
+						img {
+							width: 16px;
+							height: 16px;
+							margin-left: 4px;
+						}
+
+						&.Mui-disabled {
+							background: $border-light;
+							color: $text-muted;
+						}
+					}
+				}
+
+				.ask-info {
+					margin-top: 24px;
+					text-align: center;
+
+					p {
+						font-size: 13px;
+						color: $text-muted;
+
+						b {
+							color: $primary-color;
+							font-weight: 600;
+							margin-left: 4px;
+							cursor: pointer;
+							transition: $transition-fast;
+
+							&:hover {
+								color: darken($primary-color, 10%);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

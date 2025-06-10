@@ -91,7 +91,7 @@ const withLayoutBasic = (Component: any) => {
 					</Head>
 					<Stack id="mobile-wrap">
 						<Stack id={'top'}>
-							<Top />
+							<TopBasic />
 						</Stack>
 
 						<Stack id={'main'}>

@@ -535,6 +535,7 @@
 								color: $text-muted;
 								margin-bottom: 10px;
 								display: -webkit-box;
+								line-clamp: 2;
 								-webkit-line-clamp: 2;
 								-webkit-box-orient: vertical;
 								overflow: hidden;
@@ -818,6 +819,7 @@
 								font-size: 12px;
 								line-height: 1.4;
 								display: -webkit-box;
+								line-clamp: 2;
 								-webkit-line-clamp: 2;
 								-webkit-box-orient: vertical;
 								overflow: hidden;
@@ -942,6 +944,7 @@
 											color: $text-color;
 											margin-bottom: 8px;
 											display: -webkit-box;
+											line-clamp: 2;
 											-webkit-line-clamp: 2;
 											-webkit-box-orient: vertical;
 											overflow: hidden;

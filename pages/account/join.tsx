@@ -66,7 +66,136 @@ const Join: NextPage = (props: any) => {
 	console.log('+input: ', input);
 
 	if (device === 'mobile') {
-		return <div>LOGIN MOBILE</div>;
+		return (
+			<Stack className={'join-page'}>
+				<Stack className={'container'}>
+					<Stack className={'main'}>
+						<Box className={'info'}>
+							<span>{t(loginView ? 'Login' : 'Sign Up')}</span>
+							<p>
+								{t(
+									loginView
+										? 'Login in with this account across the following sites.'
+										: 'Sign up with this account across the following sites.',
+								)}
+							</p>
+						</Box>
+						<Box className={'input-wrap'}>
+							<div className={'input-box'}>
+								<span>{t('Nickname')}</span>
+								<input
+									type="text"
+									placeholder={t('Enter Nickname')}
+									onChange={(e) => handleInput('nick', e.target.value)}
+									required={true}
+									onKeyDown={(event) => {
+										if (event.key == 'Enter' && loginView) doLogin();
+										if (event.key == 'Enter' && !loginView) doSignUp();
+									}}
+								/>
+							</div>
+							<div className={'input-box'}>
+								<span>{t('Password')}</span>
+								<input
+									type="password"
+									placeholder={t('Enter Password')}
+									onChange={(e) => handleInput('password', e.target.value)}
+									required={true}
+									onKeyDown={(event) => {
+										if (event.key == 'Enter' && loginView) doLogin();
+										if (event.key == 'Enter' && !loginView) doSignUp();
+									}}
+								/>
+							</div>
+							{!loginView && (
+								<div className={'input-box'}>
+									<span>{t('Phone')}</span>
+									<input
+										type="text"
+										placeholder={t('Enter Phone')}
+										onChange={(e) => handleInput('phone', e.target.value)}
+										required={true}
+										onKeyDown={(event) => {
+											if (event.key == 'Enter') doSignUp();
+										}}
+									/>
+								</div>
+							)}
+						</Box>
+						<Box className={'register'}>
+							{!loginView && (
+								<div className={'type-option'}>
+									<span className={'text'}>{t('I want to be registered as:')}</span>
+									<div>
+										<button
+											type="button"
+											className={`type-button ${input?.type === 'USER' ? 'active' : ''}`}
+											onClick={() => handleInput('type', 'USER')}
+										>
+											{t('User')}
+										</button>
+										<button
+											type="button"
+											className={`type-button ${input?.type === 'AGENT' ? 'active' : ''}`}
+											onClick={() => handleInput('type', 'AGENT')}
+										>
+											{t('Agent')}
+										</button>
+									</div>
+								</div>
+							)}
+
+							{loginView && (
+								<div className={'remember-info'}>
+									<FormGroup>
+										<FormControlLabel control={<Checkbox defaultChecked size="small" />} label={t('Remember me')} />
+									</FormGroup>
+								</div>
+							)}
+
+							{loginView ? (
+								<Button
+									variant="contained"
+									endIcon={<img src="/img/icons/rightup.svg" alt="" />}
+									disabled={input.nick == '' || input.password == ''}
+									onClick={doLogin}
+								>
+									{t('LOGIN')}
+								</Button>
+							) : (
+								<Button
+									variant="contained"
+									disabled={input.nick == '' || input.password == '' || input.phone == '' || input.type == ''}
+									onClick={doSignUp}
+									endIcon={<img src="/img/icons/rightup.svg" alt="" />}
+								>
+									{t('SIGNUP')}
+								</Button>
+							)}
+						</Box>
+						<Box className={'ask-info'}>
+							{loginView ? (
+								<p>
+									{t('Not registered yet?')}
+									<b
+										onClick={() => {
+											viewChangeHandler(false);
+										}}
+									>
+										{t('SIGNUP')}
+									</b>
+								</p>
+							) : (
+								<p>
+									{t('Have account?')}
+									<b onClick={() => viewChangeHandler(true)}> {t('LOGIN')}</b>
+								</p>
+							)}
+						</Box>
+					</Stack>
+				</Stack>
+			</Stack>
+		);
 	} else {
 		return (
 			<Stack className={'join-page'}>
