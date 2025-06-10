@@ -698,6 +698,7 @@
 
 				.right-config {
 					width: 318px;
+					min-height: 374px;
 					height: fit-content;
 					padding: 32px;
 					background: $background-white;
@@ -715,6 +716,7 @@
 
 						.seller-profile {
 							display: flex;
+							flex-direction: row;
 							gap: 16px;
 							margin-bottom: 24px;
 

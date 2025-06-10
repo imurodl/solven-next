@@ -824,8 +824,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 								<Stack className="cards-box">
 									<Swiper
 										className="similar-cars-swiper"
-										slidesPerView={1.6}
-										spaceBetween={12}
+										slidesPerView={4}
+										spaceBetween={16}
 										modules={[Navigation, Pagination]}
 										navigation={{
 											nextEl: '.swiper-similar-next',
