@@ -14,6 +14,7 @@ const About: NextPage = () => {
 				{/* Hero Section */}
 				<Stack className="hero-section">
 					<Stack className="container">
+						{/* @ts-ignore */}
 						<Box className="content">
 							<h1>Revolutionizing The Way You Find Your Dream Car</h1>
 							<p>
