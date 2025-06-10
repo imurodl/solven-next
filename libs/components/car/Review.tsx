@@ -29,7 +29,22 @@ const Review = (props: ReviewProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>REVIEW MOBILE</div>;
+		return (
+			<Stack className="review-item">
+				<Stack className="review-header">
+					<img src={imagePath} alt="" className="reviewer-image" />
+					<Stack className="reviewer-info">
+						<Typography className="reviewer-name" onClick={() => goMemberPage(comment?.memberData?._id as string)}>
+							{comment.memberData?.memberNick}
+						</Typography>
+						<Typography className="review-date">
+							<Moment format={'DD MMMM, YYYY'}>{comment.createdAt}</Moment>
+						</Typography>
+					</Stack>
+				</Stack>
+				<Typography className="review-content">{comment.commentContent}</Typography>
+			</Stack>
+		);
 	} else {
 		return (
 			<Stack className="review-item">

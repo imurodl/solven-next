@@ -1,350 +1,353 @@
-.property-big-card-box {
-	position: relative;
-	width: 310px;
-	height: auto;
-	background: #fff;
-	border-radius: 12px;
-	border: 1px solid $border-light;
-	box-shadow: $shadow-light;
-	transition: all 0.3s ease;
-	overflow: hidden;
+#pc-wrap {
+	.property-big-card-box {
+		margin-top: 5px;
+		position: relative;
+		width: 310px;
+		height: auto;
+		background: #fff;
+		border-radius: 12px;
+		border: 1px solid $border-light;
+		box-shadow: $shadow-light;
+		transition: all 0.3s ease;
+		overflow: hidden;
 
-	&:hover {
-		box-shadow: $shadow-medium;
-		border-color: rgba($primary-color, 0.2);
-		transform: translateY(-4px);
+		&:hover {
+			box-shadow: $shadow-medium;
+			border-color: rgba($primary-color, 0.2);
+			transform: translateY(-4px);
+
+			.card-img {
+				&::after {
+					opacity: 0.4;
+				}
+			}
+		}
 
 		.card-img {
-			&::after {
-				opacity: 0.4;
-			}
-		}
-	}
-
-	.card-img {
-		position: relative;
-		width: 100%;
-		height: 220px;
-		background-size: cover;
-		background-position: center;
-		cursor: pointer;
-
-		&::after {
-			content: '';
-			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
-			opacity: 0.3;
-			transition: opacity 0.3s ease;
-		}
-
-		div.status {
-			position: absolute;
-			padding: 6px 12px;
-			left: 12px;
-			top: 12px;
-			display: flex;
-			align-items: center;
-			border-radius: 6px;
-			background: $primary-color;
-			z-index: 1;
-
-			svg {
-				color: #fff;
-			}
-
-			span {
-				margin-left: 4px;
-				color: #fff;
-				font-family: $font;
-				font-size: 11px;
-				font-weight: 600;
-				text-transform: uppercase;
-			}
-		}
-
-		div.price {
-			position: absolute;
-			padding: 8px 12px;
-			left: 12px;
-			bottom: 12px;
-			border-radius: 8px;
-			background: #fff;
-			color: $text-color;
-			font-family: $font;
-			font-size: 15px;
-			font-weight: 600;
-			z-index: 1;
-			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-		}
-	}
-
-	.info {
-		padding: 16px;
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-		background: #fff;
-
-		.title {
-			color: $text-color;
-			font-family: $font;
-			font-size: 16px;
-			font-weight: 600;
-			line-height: 1.4;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			display: -webkit-box;
-			line-clamp: 2;
-			-webkit-line-clamp: 2;
-			-webkit-box-orient: vertical;
-			min-height: 44px;
+			position: relative;
+			width: 100%;
+			height: 220px;
+			background-size: cover;
+			background-position: center;
 			cursor: pointer;
-			transition: color 0.3s ease;
 
-			&:hover {
+			&::after {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+				opacity: 0.3;
+				transition: opacity 0.3s ease;
+			}
+
+			div.status {
+				position: absolute;
+				padding: 6px 12px;
+				left: 12px;
+				top: 12px;
+				display: flex;
+				align-items: center;
+				border-radius: 6px;
+				background: $primary-color;
+				z-index: 1;
+
+				svg {
+					color: #fff;
+				}
+
+				span {
+					margin-left: 4px;
+					color: #fff;
+					font-family: $font;
+					font-size: 11px;
+					font-weight: 600;
+					text-transform: uppercase;
+				}
+			}
+
+			div.price {
+				position: absolute;
+				padding: 8px 12px;
+				left: 12px;
+				bottom: 12px;
+				border-radius: 8px;
+				background: #fff;
+				color: $text-color;
+				font-family: $font;
+				font-size: 15px;
+				font-weight: 600;
+				z-index: 1;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			}
+		}
+
+		.info {
+			padding: 16px;
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+			background: #fff;
+
+			.title {
+				color: $text-color;
+				font-family: $font;
+				font-size: 16px;
+				font-weight: 600;
+				line-height: 1.4;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				line-clamp: 2;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				min-height: 44px;
+				cursor: pointer;
+				transition: color 0.3s ease;
+
+				&:hover {
+					color: $primary-color;
+				}
+			}
+
+			.desc {
+				color: $text-muted;
+				font-family: $font;
+				font-size: 13px;
+				font-weight: 400;
+				line-height: 1.5;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+
+			.options {
+				display: flex;
+				justify-content: space-between;
+				padding: 20px 0;
+				border-top: 1px solid $border-light;
+				border-bottom: 1px solid $border-light;
+
+				div {
+					display: flex;
+					align-items: center;
+					gap: 6px;
+
+					svg {
+						width: 16px;
+						height: 16px;
+						color: $text-muted;
+					}
+
+					span {
+						color: $text-color;
+						font-family: $font;
+						font-size: 13px;
+						font-weight: 500;
+					}
+				}
+			}
+
+			.bott {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+
+				div {
+					width: 65px;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					justify-content: space-between;
+
+					p {
+						color: #181a20;
+						font-family: $font;
+						font-size: 13px;
+						font-style: normal;
+						font-weight: 500;
+						line-height: normal;
+						text-transform: capitalize;
+					}
+
+					span {
+						margin-left: 6px;
+						color: rgba(143, 143, 143, 0.54);
+						font-family: $font;
+						font-size: 15px;
+						font-style: normal;
+						font-weight: 500;
+						line-height: normal;
+						text-transform: capitalize;
+					}
+				}
+
+				.buttons-box {
+					width: auto;
+					height: auto;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					cursor: pointer;
+					button {
+						box-sizing: border-box;
+						transition: transform 0.2s ease;
+						&:hover {
+							color: rgba($primary-color, 0.8);
+							transform: scale(1.1);
+						}
+					}
+
+					.view-cnt {
+						color: #666;
+						font-size: 15px;
+						min-width: 12px;
+						display: flex;
+						align-items: center;
+					}
+				}
+			}
+		}
+	}
+	.community-general-card-config {
+		width: 100% !important;
+		max-width: none;
+		background: $background-light;
+		border-radius: 16px;
+		overflow: hidden;
+		border: 1px solid $border-light;
+		transition: $transition-smooth;
+		cursor: pointer;
+		position: relative;
+
+		&:hover {
+			transform: translateY(-4px);
+			border-color: $primary-color;
+			box-shadow: $shadow-medium;
+
+			.image-box img {
+				transform: scale(1.05);
+			}
+
+			.desc-box .title {
 				color: $primary-color;
 			}
 		}
 
-		.desc {
-			color: $text-muted;
-			font-family: $font;
-			font-size: 13px;
-			font-weight: 400;
-			line-height: 1.5;
+		.image-box {
+			width: 100%;
+			height: 200px;
 			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
 
-		.options {
-			display: flex;
-			justify-content: space-between;
-			padding: 20px 0;
-			border-top: 1px solid $border-light;
-			border-bottom: 1px solid $border-light;
-
-			div {
-				display: flex;
-				align-items: center;
-				gap: 6px;
-
-				svg {
-					width: 16px;
-					height: 16px;
-					color: $text-muted;
-				}
-
-				span {
-					color: $text-color;
-					font-family: $font;
-					font-size: 13px;
-					font-weight: 500;
-				}
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transition: transform 0.6s ease;
 			}
 		}
 
-		.bott {
+		.desc-box {
+			width: 100%;
+			padding: 20px;
+			background: $background-white;
+			min-height: 160px;
 			display: flex;
-			justify-content: space-between;
-			align-items: center;
-
-			div {
-				width: 65px;
-				display: flex;
-				flex-direction: row;
-				align-items: center;
-				justify-content: space-between;
-
-				p {
-					color: #181a20;
-					font-family: $font;
-					font-size: 13px;
-					font-style: normal;
-					font-weight: 500;
-					line-height: normal;
-					text-transform: capitalize;
-				}
-
-				span {
-					margin-left: 6px;
-					color: rgba(143, 143, 143, 0.54);
-					font-family: $font;
-					font-size: 15px;
-					font-style: normal;
-					font-weight: 500;
-					line-height: normal;
-					text-transform: capitalize;
-				}
-			}
-
-			.buttons-box {
-				width: auto;
-				height: auto;
-				display: flex;
-				flex-direction: row;
-				align-items: center;
+			flex-direction: column;
+			.desc {
+				font-size: 14px;
+				color: $text-muted;
+				margin-bottom: 6px;
 				cursor: pointer;
-				button {
-					box-sizing: border-box;
-					transition: transform 0.2s ease;
+				transition: $transition-smooth;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				max-width: 200px;
+
+				&:hover {
+					color: $primary-color;
+				}
+			}
+
+			.title {
+				font-size: 16px;
+				font-weight: 600;
+				color: $text-color;
+				margin-bottom: 12px;
+				line-height: 1.5;
+				display: -webkit-box;
+				line-clamp: 2;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				transition: $transition-smooth;
+				min-height: 48px;
+			}
+
+			.buttons {
+				display: flex;
+				align-items: center;
+				padding-top: 4px;
+				border-top: 1px solid $border-light;
+				margin-top: auto;
+				width: 100%;
+				justify-content: end;
+				flex-direction: row;
+				.MuiIconButton-root {
+					padding: 6px;
+					color: $text-muted;
+					transition: $transition-smooth;
+
 					&:hover {
-						color: rgba($primary-color, 0.8);
-						transform: scale(1.1);
+						background: rgba($primary-color, 0.1);
+						color: $primary-color;
+					}
+
+					&.liked {
+						color: $primary-color;
 					}
 				}
 
 				.view-cnt {
-					color: #666;
-					font-size: 15px;
-					min-width: 24px;
+					font-size: 14px;
+					color: $text-muted;
+					margin-right: 8px;
+				}
+
+				.stat-group {
 					display: flex;
 					align-items: center;
 				}
 			}
 		}
-	}
-}
-.community-general-card-config {
-	width: 100% !important;
-	max-width: none;
-	background: $background-light;
-	border-radius: 16px;
-	overflow: hidden;
-	border: 1px solid $border-light;
-	transition: $transition-smooth;
-	cursor: pointer;
-	position: relative;
 
-	&:hover {
-		transform: translateY(-4px);
-		border-color: $primary-color;
-		box-shadow: $shadow-medium;
+		.date-box {
+			position: absolute;
+			top: 16px;
+			right: 16px;
+			background: rgba($primary-color, 0.1);
+			border: 1px solid rgba($primary-color, 0.2);
+			padding: 8px 12px;
+			border-radius: 12px;
+			text-align: center;
 
-		.image-box img {
-			transform: scale(1.05);
-		}
-
-		.desc-box .title {
-			color: $primary-color;
-		}
-	}
-
-	.image-box {
-		width: 100%;
-		height: 200px;
-		overflow: hidden;
-
-		img {
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-			transition: transform 0.6s ease;
-		}
-	}
-
-	.desc-box {
-		width: 100%;
-		padding: 20px;
-		background: $background-white;
-		min-height: 160px;
-		display: flex;
-		flex-direction: column;
-		.desc {
-			font-size: 14px;
-			color: $text-muted;
-			margin-bottom: 6px;
-			cursor: pointer;
-			transition: $transition-smooth;
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			max-width: 200px;
-
-			&:hover {
+			.month {
+				font-size: 12px;
 				color: $primary-color;
-			}
-		}
-
-		.title {
-			font-size: 16px;
-			font-weight: 600;
-			color: $text-color;
-			margin-bottom: 12px;
-			line-height: 1.5;
-			display: -webkit-box;
-			line-clamp: 2;
-			-webkit-line-clamp: 2;
-			-webkit-box-orient: vertical;
-			overflow: hidden;
-			transition: $transition-smooth;
-			min-height: 48px;
-		}
-
-		.buttons {
-			display: flex;
-			align-items: center;
-			padding-top: 4px;
-			border-top: 1px solid $border-light;
-			margin-top: auto;
-			width: 100%;
-			justify-content: end;
-			flex-direction: row;
-			.MuiIconButton-root {
-				padding: 6px;
-				color: $text-muted;
-				transition: $transition-smooth;
-
-				&:hover {
-					background: rgba($primary-color, 0.1);
-					color: $primary-color;
-				}
-
-				&.liked {
-					color: $primary-color;
-				}
+				text-transform: uppercase;
+				margin-bottom: 2px;
+				font-weight: 500;
 			}
 
-			.view-cnt {
-				font-size: 14px;
-				color: $text-muted;
-				margin-right: 8px;
+			.day {
+				font-size: 16px;
+				font-weight: 600;
+				color: $primary-color;
+				line-height: 1;
 			}
-
-			.stat-group {
-				display: flex;
-				align-items: center;
-			}
-		}
-	}
-
-	.date-box {
-		position: absolute;
-		top: 16px;
-		right: 16px;
-		background: rgba($primary-color, 0.1);
-		border: 1px solid rgba($primary-color, 0.2);
-		padding: 8px 12px;
-		border-radius: 12px;
-		text-align: center;
-
-		.month {
-			font-size: 12px;
-			color: $primary-color;
-			text-transform: uppercase;
-			margin-bottom: 2px;
-			font-weight: 500;
-		}
-
-		.day {
-			font-size: 16px;
-			font-weight: 600;
-			color: $primary-color;
-			line-height: 1;
 		}
 	}
 }

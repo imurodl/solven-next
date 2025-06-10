@@ -828,7 +828,7 @@
 						display: flex;
 						align-items: center;
 						gap: 16px;
-
+						flex-direction: row;
 						svg {
 							cursor: pointer;
 							color: $text-muted;
@@ -853,8 +853,7 @@
 						}
 
 						.similar-cars-slide {
-							width: 411px;
-							margin-right: 24px;
+							width: 310px;
 						}
 					}
 				}

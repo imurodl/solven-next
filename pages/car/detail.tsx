@@ -283,7 +283,290 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	}
 
 	if (device === 'mobile') {
-		return <div>CAR LISTING DETAIL PAGE</div>;
+		return (
+			<div id="car-detail-page">
+				<div className="container">
+					<Stack className="car-detail-config">
+						<Stack className="car-info-config">
+							<Stack className="images-container">
+								<Stack className="main-image-info-container">
+									<Box className="main-image-box">
+										<img
+											src={`${REACT_APP_API_URL}/${slideImage || getCarData?.getCar?.carImages?.[0]}`}
+											alt={getCarData?.getCar?.carTitle}
+										/>
+									</Box>
+
+									<Stack className="car-info-box">
+										<Stack className="content-wrapper">
+											<Typography className="title-main">{getCarData?.getCar?.carTitle}</Typography>
+											<Typography className="listed-date">
+												Listed {moment().diff(getCarData?.getCar?.createdAt, 'days')} days ago
+											</Typography>
+
+											<Stack className="main-info-row">
+												<Stack className="info-item">
+													<AttachMoneyIcon />
+													<Stack>
+														<Typography className="info-value">
+															${formatterStr(getCarData?.getCar?.carPrice)}
+														</Typography>
+													</Stack>
+												</Stack>
+												<Stack className="info-item">
+													<CalendarTodayIcon />
+													<Stack>
+														<Typography className="info-value">{getCarData?.getCar?.manufacturedAt}</Typography>
+													</Stack>
+												</Stack>
+												<Stack className="info-item">
+													<SpeedIcon />
+													<Stack>
+														<Typography className="info-value">{getCarData?.getCar?.carMileage} km</Typography>
+													</Stack>
+												</Stack>
+											</Stack>
+
+											<Stack className="description-section">
+												<Typography className="section-title">Description</Typography>
+												<Typography className="description-text">
+													{getCarData?.getCar?.carDesc || 'No description available.'}
+												</Typography>
+											</Stack>
+
+											<Stack className="address-section">
+												<Typography className="section-title">Location</Typography>
+												<Typography className="address-text">
+													{getCarData?.getCar?.carAddress || getCarData?.getCar?.carLocation || 'Address not available'}
+												</Typography>
+											</Stack>
+										</Stack>
+
+										<Stack className="action-buttons">
+											<Button className="view-btn" startIcon={<RemoveRedEyeIcon />}>
+												{getCarData?.getCar?.carViews}
+											</Button>
+											<Button
+												className="like-btn"
+												startIcon={
+													getCarData?.getCar?.meLiked && getCarData?.getCar?.meLiked[0]?.myFavorite ? (
+														<FavoriteIcon className="liked" />
+													) : (
+														<FavoriteBorderIcon />
+													)
+												}
+												onClick={() => getCarData?.getCar?._id && likeCarHandler(user, getCarData.getCar._id)}
+											>
+												{getCarData?.getCar?.carLikes}
+											</Button>
+										</Stack>
+									</Stack>
+								</Stack>
+
+								<Stack className="thumbnail-list">
+									{getCarData?.getCar?.carImages?.map((image: string, index: number) => (
+										<Box
+											key={index}
+											className={`thumbnail-item ${slideImage === image ? 'active' : ''}`}
+											onClick={() => changeImageHandler(image)}
+										>
+											<img
+												src={`${REACT_APP_API_URL}/${image}`}
+												alt={`${getCarData?.getCar?.carTitle} - Image ${index + 1}`}
+											/>
+										</Box>
+									))}
+								</Stack>
+							</Stack>
+						</Stack>
+						<Stack className="car-specs-config">
+							<Stack className="left-config">
+								<Stack className="specs-grid">
+									<Stack className="spec-item">
+										<Stack className="icon-box">
+											<DirectionsCarIcon />
+										</Stack>
+										<Stack className="spec-content">
+											<Typography className="spec-label">Car Type</Typography>
+											<Typography className="spec-value">{getCarData?.getCar?.carType}</Typography>
+										</Stack>
+									</Stack>
+									<Stack className="spec-item">
+										<Stack className="icon-box">
+											<SpeedIcon />
+										</Stack>
+										<Stack className="spec-content">
+											<Typography className="spec-label">Mileage</Typography>
+											<Typography className="spec-value">{getCarData?.getCar?.carMileage} km</Typography>
+										</Stack>
+									</Stack>
+									<Stack className="spec-item">
+										<Stack className="icon-box">
+											<LocalGasStationIcon />
+										</Stack>
+										<Stack className="spec-content">
+											<Typography className="spec-label">Fuel Type</Typography>
+											<Typography className="spec-value">{getCarData?.getCar?.carFuelType}</Typography>
+										</Stack>
+									</Stack>
+									<Stack className="spec-item">
+										<Stack className="icon-box">
+											<ColorLensIcon />
+										</Stack>
+										<Stack className="spec-content">
+											<Typography className="spec-label">Color</Typography>
+											<Typography className="spec-value">{getCarData?.getCar?.carColor}</Typography>
+										</Stack>
+									</Stack>
+									<Stack className="spec-item">
+										<Stack className="icon-box">
+											<AirlineSeatReclineNormalIcon />
+										</Stack>
+										<Stack className="spec-content">
+											<Typography className="spec-label">Seats</Typography>
+											<Typography className="spec-value">{getCarData?.getCar?.carSeats} seats</Typography>
+										</Stack>
+									</Stack>
+									<Stack className="spec-item">
+										<Stack className="icon-box">
+											<SettingsIcon />
+										</Stack>
+										<Stack className="spec-content">
+											<Typography className="spec-label">Transmission</Typography>
+											<Typography className="spec-value">{getCarData?.getCar?.carTransmission}</Typography>
+										</Stack>
+									</Stack>
+								</Stack>
+								<Stack className="car-features">
+									<Typography className="section-title">Car Features</Typography>
+									<Stack className="features-grid">
+										{carFeaturesList.map((feature) => {
+											const isAvailable = getCarData?.getCar?.carOptions?.includes(feature.id);
+											const IconComponent = feature.icon;
+											return (
+												<Stack className={`feature-item ${isAvailable ? 'available' : 'unavailable'}`} key={feature.id}>
+													<IconComponent className="feature-icon" />
+													<Typography className="feature-text">{feature.label}</Typography>
+												</Stack>
+											);
+										})}
+									</Stack>
+								</Stack>
+								{/* Comments section */}
+								{carComments?.length > 0 && (
+									<Stack className="reviews-config">
+										<Typography className="section-title">Reviews ({commentTotal})</Typography>
+										<Stack className="review-list">
+											{carComments?.map((comment: Comment) => (
+												<Review comment={comment} key={comment?._id} />
+											))}
+											<Box className="pagination-box">
+												<MuiPagination
+													page={commentInquiry.page}
+													count={Math.ceil(commentTotal / commentInquiry.limit)}
+													onChange={commentPaginationChangeHandler}
+													shape="circular"
+													color="primary"
+												/>
+											</Box>
+										</Stack>
+									</Stack>
+								)}
+								<Stack className="leave-review-config">
+									<Typography className="section-title">Leave A Review</Typography>
+									<textarea
+										placeholder="Write your review here..."
+										onChange={({ target: { value } }: any) => {
+											setInsertCommentData({ ...insertCommentData, commentContent: value });
+										}}
+										value={insertCommentData.commentContent}
+									></textarea>
+									<Button
+										className="submit-review-btn"
+										variant="contained"
+										onClick={createCommentHandler}
+										disabled={!insertCommentData.commentContent.trim()}
+									>
+										Submit Review
+									</Button>
+								</Stack>
+							</Stack>
+							<Stack className="right-config">
+								<Stack className="seller-info">
+									<Typography className="section-title">Seller Information</Typography>
+									<Stack className="seller-profile">
+										<img
+											className="profile-image"
+											src={
+												sellerInfo?.memberImage
+													? `${REACT_APP_API_URL}/${sellerInfo.memberImage}`
+													: '/img/profile/defaultUser.svg'
+											}
+											alt="Seller"
+										/>
+										<Stack className="profile-details">
+											<Link href={`/member?memberId=${sellerInfo?._id}`}>
+												<Typography className="seller-name">{sellerInfo?.memberNick}</Typography>
+											</Link>
+											<Typography className="seller-type">Verified Seller</Typography>
+											<Stack className="seller-rating">
+												<Rating value={4.5} readOnly precision={0.5} size="small" />
+												<Typography className="rating-count">(32 reviews)</Typography>
+											</Stack>
+										</Stack>
+									</Stack>
+									<Stack className="contact-buttons">
+										<Button className="contact-button primary" startIcon={<PhoneIcon />}>
+											{sellerInfo?.memberPhone}
+										</Button>
+										<Button className="contact-button secondary" startIcon={<EmailIcon />}>
+											Send Message
+										</Button>
+									</Stack>
+								</Stack>
+							</Stack>
+						</Stack>
+						{/* Similar Cars Section */}
+						{getCarsData?.getCars?.list?.length > 0 && (
+							<Stack className="similar-cars-config">
+								<Stack className="title-pagination-box">
+									<Stack className="title-box">
+										<Typography className="section-title">Similar Cars</Typography>
+										<Typography className="section-subtitle">Other cars you might be interested in</Typography>
+									</Stack>
+									<Stack className="pagination-box">
+										<WestIcon className="swiper-similar-prev" />
+										<div className="swiper-similar-pagination"></div>
+										<EastIcon className="swiper-similar-next" />
+									</Stack>
+								</Stack>
+								<Stack className="cards-box">
+									<Swiper
+										className="similar-cars-swiper"
+										slidesPerView={4}
+										spaceBetween={16}
+										modules={[Navigation, Pagination]}
+										navigation={{
+											nextEl: '.swiper-similar-next',
+											prevEl: '.swiper-similar-prev',
+										}}
+										pagination={{
+											el: '.swiper-similar-pagination',
+										}}
+									>
+										{getCarsData?.getCars?.list?.map((car: Car) => (
+											<SwiperSlide className="similar-cars-slide" key={car._id}>
+												<CarBigCard car={car} likeCarHandler={likeCarHandler} />
+											</SwiperSlide>
+										))}
+									</Swiper>
+								</Stack>
+							</Stack>
+						)}
+					</Stack>
+				</div>
+			</div>
+		);
 	} else {
 		return (
 			<div id="car-detail-page">
@@ -545,8 +828,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 								<Stack className="cards-box">
 									<Swiper
 										className="similar-cars-swiper"
-										slidesPerView={'auto'}
-										spaceBetween={24}
+										slidesPerView={4}
+										spaceBetween={16}
 										modules={[Navigation, Pagination]}
 										navigation={{
 											nextEl: '.swiper-similar-next',

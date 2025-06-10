@@ -5,7 +5,9 @@
 @import '/scss/mobile/join.scss';
 @import '/scss/mobile/about.scss';
 @import '/scss/mobile/error.scss';
-@import '/scss/mobile/car.scss';
+
+@import '/scss/mobile/car/car.scss';
+@import '/scss/mobile/car/detail.scss';
 
 // Mixins
 @mixin flex-center {
