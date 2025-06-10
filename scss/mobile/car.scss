@@ -1,0 +1,693 @@
+#mobile-wrap {
+	background: #050b20;
+	#property-list-page {
+		position: relative;
+		background: #f8f9fc;
+		border-radius: 40px;
+		padding-bottom: 40px;
+		min-height: calc(100vh - 60px);
+
+		.container {
+			display: flex;
+			flex-direction: column;
+			padding: 0 16px;
+
+			.header-basic {
+				padding: 40px 0 20px;
+				text-align: center;
+
+				.container {
+					align-items: center;
+					padding: 0;
+
+					strong {
+						font-size: 24px;
+						font-weight: 700;
+						background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+						background-clip: text;
+						-webkit-background-clip: text;
+						-webkit-text-fill-color: transparent;
+						position: relative;
+						display: inline-block;
+						margin-bottom: 8px;
+					}
+
+					span {
+						color: $text-muted;
+						font-size: 14px;
+						line-height: 1.5;
+					}
+				}
+			}
+
+			.right {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: center;
+				z-index: 2;
+				padding: 0 0 16px;
+				gap: 10px;
+				span {
+					color: #818181;
+					font-family: $font;
+					font-size: 14px;
+					font-weight: 400;
+					line-height: 1.5;
+				}
+
+				button {
+					width: 140px;
+					height: 40px;
+					padding: 8px 16px;
+					justify-content: space-between;
+					align-items: center;
+					border-radius: $border-radius-small;
+					border: 1px solid #e9e9e9;
+					font-size: 14px;
+
+					&:hover {
+						background: none;
+					}
+				}
+			}
+
+			.property-page {
+				position: relative;
+				width: 100%;
+				flex-direction: column;
+				gap: 20px;
+				padding: 0;
+
+				.filter-config {
+					width: 100%;
+					height: auto;
+
+					.filter-main {
+						width: 100%;
+						padding: 20px;
+						border-radius: 12px;
+						background: $background-white;
+						box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+						border: 1px solid $border-light;
+
+						.find-your-home {
+							position: relative;
+							width: 100%;
+							margin-bottom: 20px;
+
+							.property-location {
+								font-size: 13px;
+								font-weight: 500;
+								color: $text-color;
+								line-height: 1.5;
+
+								p {
+									font-family: $font;
+								}
+							}
+
+							.title-main {
+								width: 100%;
+								color: $text-color;
+								font-family: $font;
+								font-size: 18px;
+								font-weight: 700;
+								line-height: 1.4;
+								margin-bottom: 12px;
+								padding-bottom: 10px;
+								border-bottom: 1px solid $border-light;
+								display: flex;
+								justify-content: space-between;
+								align-items: center;
+
+								.refresh-icon {
+									width: 28px;
+									height: 28px;
+									border-radius: 6px;
+									display: flex;
+									align-items: center;
+									justify-content: center;
+									background: $background-light;
+
+									svg {
+										font-size: 16px;
+										color: $text-muted;
+									}
+
+									&:active {
+										background: rgba($primary-color, 0.1);
+										svg {
+											color: $primary-color;
+										}
+									}
+								}
+							}
+
+							.title {
+								font-size: 13px;
+								font-weight: 600;
+								margin-bottom: 10px;
+							}
+
+							.input-box {
+								padding: 6px 10px;
+								border-radius: 6px;
+
+								.property-checkbox {
+									&.MuiCheckbox-root {
+										padding: 0;
+										margin-right: 8px;
+
+										.MuiSvgIcon-root {
+											font-size: 18px;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				.property-list {
+					width: 100%;
+
+					.loading-box {
+						display: grid;
+						grid-template-columns: 1fr;
+						gap: 16px;
+						padding: 0;
+
+						.loading-card {
+							height: 280px;
+							background: $background-white;
+							border-radius: 12px;
+							animation: pulse 1.5s infinite;
+						}
+					}
+
+					.card-list {
+						display: grid;
+						grid-template-columns: 1fr;
+						gap: 16px;
+						padding: 0;
+
+						.card-config {
+							width: 100%;
+							height: 160px;
+							border-radius: 12px;
+							background: $background-white;
+							box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+							border: 1px solid $border-light;
+							overflow: hidden;
+							transition: all 0.3s ease;
+							display: flex;
+							flex-direction: row;
+
+							&:hover {
+								box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+								transform: translateY(-2px);
+								border: 1px solid $primary-color;
+								.car-titlee {
+									color: $primary-color;
+								}
+							}
+
+							.top {
+								position: relative;
+								width: 140px;
+								min-width: 140px;
+								height: 160px;
+								overflow: hidden;
+
+								.image-link {
+									height: 160px;
+									img {
+										width: 100%;
+										height: 100%;
+										object-fit: cover;
+										transition: all 0.3s ease;
+
+										&:hover {
+											transform: scale(1.05);
+										}
+									}
+								}
+							}
+
+							.bottom {
+								padding: 10px;
+								flex: 1;
+								display: flex;
+								flex-direction: column;
+								justify-content: space-between;
+								overflow: hidden;
+								.name-address {
+									margin-bottom: 6px;
+
+									.name {
+										margin-bottom: 2px;
+
+										a {
+											text-decoration: none;
+
+											p {
+												color: $text-color;
+												font-size: 13px;
+												font-weight: 600;
+												line-height: 1.3;
+												display: -webkit-box;
+												-webkit-line-clamp: 1;
+												-webkit-box-orient: vertical;
+												overflow: hidden;
+												transition: color 0.2s ease;
+
+												&:hover {
+													color: $primary-color;
+												}
+											}
+										}
+									}
+
+									.address {
+										p {
+											color: $text-muted;
+											font-size: 11px;
+											line-height: 1.4;
+											display: -webkit-box;
+											-webkit-line-clamp: 1;
+											-webkit-box-orient: vertical;
+											overflow: hidden;
+										}
+									}
+								}
+
+								.options {
+									display: grid;
+									grid-template-columns: repeat(3, 1fr);
+									gap: 4px;
+									margin-bottom: 6px;
+
+									.option {
+										flex-direction: column;
+										align-items: center;
+										gap: 3px;
+										padding: 4px;
+										border-radius: 4px;
+										background: $background-light;
+										.option-icon {
+											font-size: 13px;
+											color: $text-muted;
+										}
+										p {
+											color: $text-color;
+											font-size: 9px;
+											font-weight: 500;
+											white-space: nowrap;
+											overflow: hidden;
+											text-overflow: ellipsis;
+										}
+									}
+								}
+								.type-buttons {
+									display: flex;
+									justify-content: space-between;
+									align-items: center;
+									flex-direction: row;
+
+									.price {
+										p {
+											color: $primary-color;
+											font-size: 15px;
+											font-weight: 700;
+										}
+									}
+
+									.buttons {
+										flex-direction: row;
+										align-items: center;
+										gap: 1px;
+
+										.MuiIconButton-root {
+											padding: 3px;
+
+											svg {
+												font-size: 15px;
+											}
+										}
+
+										.view-cnt {
+											color: $text-muted;
+											font-size: 11px;
+											font-weight: 500;
+											min-width: 18px;
+										}
+									}
+								}
+							}
+						}
+					}
+
+					.pagination {
+						margin-top: 32px;
+						display: flex;
+						justify-content: center;
+
+						.MuiPagination-root {
+							.MuiPagination-ul {
+								gap: 4px;
+								display: flex;
+								flex-direction: row;
+								align-items: center;
+								justify-content: center;
+
+								.MuiPaginationItem-root {
+									font-size: 14px;
+									min-width: 32px;
+									height: 32px;
+									border-radius: 8px;
+
+									&.Mui-selected {
+										background: $primary-color;
+										color: #fff;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.actions {
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: space-between;
+				gap: 10px;
+				padding: 0 0 16px;
+
+				.filter-btn {
+					height: 40px;
+					padding: 8px 16px;
+					border-radius: $border-radius-small;
+					border: 1px solid #e9e9e9;
+					font-size: 14px;
+					color: $text-color;
+					background: $background-white;
+					text-transform: none;
+
+					&:hover {
+						background: $background-light;
+					}
+
+					.MuiSvgIcon-root {
+						font-size: 18px;
+						color: $text-muted;
+					}
+				}
+
+				.sort-box {
+					display: flex;
+					align-items: center;
+					gap: 10px;
+
+					span {
+						color: #818181;
+						font-family: $font;
+						font-size: 14px;
+						font-weight: 400;
+						line-height: 1.5;
+					}
+
+					button {
+						width: 140px;
+						height: 40px;
+						padding: 8px 16px;
+						justify-content: space-between;
+						align-items: center;
+						border-radius: $border-radius-small;
+						border: 1px solid #e9e9e9;
+						font-size: 14px;
+						text-transform: none;
+						color: $text-color;
+
+						&:hover {
+							background: none;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.MuiDialog-root.filter-modal {
+	.MuiDialog-container {
+		.MuiPaper-root {
+			margin: 0;
+			max-width: none;
+			width: 100%;
+			height: 100%;
+			max-height: none;
+			border-radius: 0;
+			background: $background-light;
+
+			.MuiDialogTitle-root.modal-header {
+				padding: 16px;
+				background: $background-white;
+				box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+				position: sticky;
+				top: 0;
+				z-index: 10;
+
+				.MuiStack-root {
+					.MuiTypography-h6 {
+						font-size: 18px;
+						font-weight: 600;
+						color: $text-color;
+					}
+
+					.MuiIconButton-root {
+						margin-right: 8px;
+						width: 32px;
+						height: 32px;
+						color: $text-muted;
+
+						&:active {
+							background: rgba($primary-color, 0.1);
+							svg {
+								color: $primary-color;
+							}
+						}
+					}
+				}
+			}
+
+			.MuiDialogContent-root.modal-content {
+				padding: 16px;
+				background: $background-light;
+
+				.filter-main {
+					background: $background-white;
+					border-radius: 12px;
+					padding: 16px;
+					box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+
+					.find-your-home {
+						.title-main {
+							font-size: 16px;
+							margin-bottom: 16px;
+							padding-bottom: 12px;
+							border-bottom: 1px solid $border-light;
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+
+							.refresh-icon {
+								width: 32px;
+								height: 32px;
+								border-radius: 8px;
+								display: flex;
+								align-items: center;
+								justify-content: center;
+								background: $background-light;
+
+								svg {
+									font-size: 18px;
+									color: $text-muted;
+								}
+
+								&:active {
+									background: rgba($primary-color, 0.1);
+									svg {
+										color: $primary-color;
+									}
+								}
+							}
+						}
+
+						.input-box-search {
+							position: relative;
+							margin-bottom: 20px;
+
+							input {
+								width: 100%;
+								height: 48px;
+								padding: 0 16px 0 44px;
+								border-radius: 10px;
+								border: 1px solid $border-light;
+								background: $background-light;
+								font-size: 14px;
+								color: $text-color;
+								transition: all 0.2s ease;
+								&:focus {
+									border-color: $primary-color;
+									background: $background-white;
+									box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+								}
+								&::placeholder {
+									color: $text-muted;
+								}
+							}
+
+							img {
+								position: absolute;
+								left: 16px;
+								top: 50%;
+								transform: translateY(-50%);
+								width: 16px;
+								height: 16px;
+								opacity: 0.5;
+							}
+						}
+
+						.filter-section {
+							margin-bottom: 20px;
+
+							.title {
+								font-size: 13px;
+								font-weight: 600;
+								color: $text-muted;
+								margin-bottom: 12px;
+								text-transform: uppercase;
+								letter-spacing: 0.5px;
+							}
+							.css-rut3jd-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-rut3jd-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.css-rut3jd-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+								display: flex;
+								align-items: center;
+							}
+							.options-grid {
+								display: grid;
+								grid-template-columns: repeat(2, 1fr);
+								gap: 8px;
+
+								.input-box {
+									display: flex;
+									align-items: center;
+									padding: 10px;
+									border-radius: 8px;
+									background: $background-light;
+									transition: all 0.2s ease;
+
+									&:active {
+										background: rgba($primary-color, 0.05);
+									}
+
+									label {
+										flex: 1;
+										font-size: 13px;
+										color: $text-color;
+										margin-left: 8px;
+									}
+
+									.MuiCheckbox-root {
+										padding: 0;
+
+										&.Mui-checked {
+											color: $primary-color;
+										}
+
+										.MuiSvgIcon-root {
+											font-size: 20px;
+										}
+									}
+								}
+							}
+
+							.range-group {
+								display: flex;
+								align-items: center;
+								gap: 8px;
+
+								.MuiFormControl-root {
+									flex: 1;
+
+									.MuiInputBase-root {
+										height: 48px;
+										padding: 0 16px;
+										font-size: 14px;
+										background: $background-light;
+										border: 1px solid $border-light;
+										border-radius: 8px;
+										transition: all 0.2s ease;
+
+										&:active {
+											border-color: $primary-color;
+											background: $background-white;
+											box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+										}
+									}
+
+									.MuiOutlinedInput-notchedOutline {
+										border: none;
+									}
+								}
+
+								.range-separator {
+									width: 12px;
+									height: 1px;
+									background: $border-color;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.MuiDialogActions-root.modal-footer {
+				padding: 16px;
+				background: $background-white;
+				box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+				position: sticky;
+				bottom: 0;
+
+				.MuiButton-root {
+					width: 100%;
+					height: 48px;
+					font-size: 15px;
+					font-weight: 600;
+					text-transform: none;
+					border-radius: 12px;
+					background: $primary-color;
+					color: $background-white;
+
+					&:active {
+						background: darken($primary-color, 5%);
+					}
+				}
+			}
+		}
+	}
+}
+
+@keyframes pulse {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+	100% {
+		opacity: 1;
+	}
+}

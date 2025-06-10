@@ -1,6 +1,7 @@
 /** IMPORTS **/
 @import 'variables.scss';
 @import 'reset.scss';
+@import 'mobile/main.scss';
 
 .css-16cg59e-MuiTypography-root {
 	font-family: $font;
@@ -68,6 +69,19 @@ hr {
 	.container {
 		position: relative;
 		width: 1300px;
+		margin: 0 auto;
+		display: flex;
+	}
+}
+
+/** VERSION: MOBILE **/
+#mobile-wrap {
+	width: 100%;
+	height: 100%;
+
+	.container {
+		position: relative;
+		width: 100%;
 		margin: 0 auto;
 		display: flex;
 	}

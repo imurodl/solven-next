@@ -1,6 +1,19 @@
 import React, { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { NextPage } from 'next';
-import { Box, Button, Menu, MenuItem, Pagination, Stack, Typography } from '@mui/material';
+import {
+	Box,
+	Button,
+	Menu,
+	MenuItem,
+	Pagination,
+	Stack,
+	Typography,
+	Dialog,
+	DialogTitle,
+	DialogContent,
+	DialogActions,
+	IconButton,
+} from '@mui/material';
 import CarCard from '../../libs/components/car/CarCard';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
@@ -19,6 +32,8 @@ import { T } from '../../libs/types/common';
 import { LIKE_TARGET_CAR } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import { useTranslation } from 'next-i18next';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import CloseIcon from '@mui/icons-material/Close';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -42,6 +57,7 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [sortingOpen, setSortingOpen] = useState(false);
+	const [filterModalOpen, setFilterModalOpen] = useState(false);
 
 	/** APOLLO REQUESTS **/
 	const [likeTargetCar] = useMutation(LIKE_TARGET_CAR);
@@ -136,7 +152,128 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 	};
 
 	if (device === 'mobile') {
-		return <h1>CAR LISTINGS MOBILE</h1>;
+		return (
+			<div id="property-list-page" style={{ position: 'relative' }}>
+				<div className="container">
+					<Stack className={`header-basic`}>
+						<Stack className={'container'}>
+							<strong>{t('carSearch')}</strong>
+							<span>
+								<Link href="/" style={{ color: 'inherit', textDecoration: 'none' }}>
+									{t('breadcrumb.home')}
+								</Link>{' '}
+								{t('breadcrumb.separator')} {t('breadcrumb.listings')}
+							</span>
+						</Stack>
+					</Stack>
+					<Box component={'div'} className={'actions'}>
+						<Button className="filter-btn" onClick={() => setFilterModalOpen(true)} startIcon={<FilterListIcon />}>
+							Filter
+						</Button>
+						<div className="sort-box">
+							<span>{t('sortBy')}</span>
+							<Button
+								onClick={sortingClickHandler}
+								endIcon={sortingOpen ? <KeyboardArrowUpRoundedIcon /> : <KeyboardArrowDownRoundedIcon />}
+								style={{
+									border: sortingOpen ? '2px solid #1e40af' : '2px solid #e9e9e9',
+								}}
+							>
+								{t(filterSortKey)}
+							</Button>
+							<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'new'}
+									disableRipple
+									data-selected={filterSortKey === 'newest'}
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									{t('newest')}
+								</MenuItem>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'old'}
+									disableRipple
+									data-selected={filterSortKey === 'oldest'}
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									{t('oldest')}
+								</MenuItem>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'lowest'}
+									disableRipple
+									data-selected={filterSortKey === 'lowestPrice'}
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									{t('lowestPrice')}
+								</MenuItem>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'highest'}
+									disableRipple
+									data-selected={filterSortKey === 'highestPrice'}
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									{t('highestPrice')}
+								</MenuItem>
+							</Menu>
+						</div>
+					</Box>
+					<Stack className={'property-page'}>
+						<Stack className={'property-list'}>
+							{getCarsLoading ? (
+								<Stack className={'loading-box'}>
+									{[1, 2, 3, 4].map((item) => (
+										<Stack key={item} className={'loading-card'} />
+									))}
+								</Stack>
+							) : (
+								<>
+									<Stack className={'card-list'}>
+										{cars?.map((car: any) => (
+											<CarCard key={car._id} car={car} likeCarHandler={likeCarHandler} />
+										))}
+									</Stack>
+									{total > 0 && (
+										<Stack className={'pagination'}>
+											<Pagination
+												count={Math.ceil(total / 12)}
+												page={currentPage}
+												onChange={handlePaginationChange}
+												color="primary"
+												shape="rounded"
+											/>
+										</Stack>
+									)}
+								</>
+							)}
+						</Stack>
+					</Stack>
+				</div>
+
+				{/* Filter Modal */}
+				<Dialog fullScreen open={filterModalOpen} onClose={() => setFilterModalOpen(false)} className="filter-modal">
+					<DialogTitle className="modal-header">
+						<Stack direction="row" alignItems="center" justifyContent="space-between">
+							<Typography variant="h6">Filter</Typography>
+							<IconButton edge="end" onClick={() => setFilterModalOpen(false)}>
+								<CloseIcon />
+							</IconButton>
+						</Stack>
+					</DialogTitle>
+					<DialogContent className="modal-content">
+						<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
+					</DialogContent>
+					<DialogActions className="modal-footer">
+						<Button onClick={() => setFilterModalOpen(false)} variant="contained" fullWidth>
+							{t('showResults')} ({total})
+						</Button>
+					</DialogActions>
+				</Dialog>
+			</div>
+		);
 	} else {
 		return (
 			<div id="property-list-page" style={{ position: 'relative' }}>
