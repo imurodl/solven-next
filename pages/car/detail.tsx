@@ -296,6 +296,20 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											alt={getCarData?.getCar?.carTitle}
 										/>
 									</Box>
+									<Stack className="thumbnail-list">
+										{getCarData?.getCar?.carImages?.map((image: string, index: number) => (
+											<Box
+												key={index}
+												className={`thumbnail-item ${slideImage === image ? 'active' : ''}`}
+												onClick={() => changeImageHandler(image)}
+											>
+												<img
+													src={`${REACT_APP_API_URL}/${image}`}
+													alt={`${getCarData?.getCar?.carTitle} - Image ${index + 1}`}
+												/>
+											</Box>
+										))}
+									</Stack>
 
 									<Stack className="car-info-box">
 										<Stack className="content-wrapper">
@@ -361,21 +375,6 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 											</Button>
 										</Stack>
 									</Stack>
-								</Stack>
-
-								<Stack className="thumbnail-list">
-									{getCarData?.getCar?.carImages?.map((image: string, index: number) => (
-										<Box
-											key={index}
-											className={`thumbnail-item ${slideImage === image ? 'active' : ''}`}
-											onClick={() => changeImageHandler(image)}
-										>
-											<img
-												src={`${REACT_APP_API_URL}/${image}`}
-												alt={`${getCarData?.getCar?.carTitle} - Image ${index + 1}`}
-											/>
-										</Box>
-									))}
 								</Stack>
 							</Stack>
 						</Stack>
@@ -452,6 +451,42 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										})}
 									</Stack>
 								</Stack>
+
+								<Stack className="right-config">
+									<Stack className="seller-info">
+										<Typography className="section-title">Seller Information</Typography>
+										<Stack className="seller-profile">
+											<img
+												className="profile-image"
+												src={
+													sellerInfo?.memberImage
+														? `${REACT_APP_API_URL}/${sellerInfo.memberImage}`
+														: '/img/profile/defaultUser.svg'
+												}
+												alt="Seller"
+											/>
+											<Stack className="profile-details">
+												<Link href={`/member?memberId=${sellerInfo?._id}`}>
+													<Typography className="seller-name">{sellerInfo?.memberNick}</Typography>
+												</Link>
+												<Typography className="seller-type">Verified Seller</Typography>
+												<Stack className="seller-rating">
+													<Rating value={4.5} readOnly precision={0.5} size="small" />
+													<Typography className="rating-count">(32 reviews)</Typography>
+												</Stack>
+											</Stack>
+										</Stack>
+										<Stack className="contact-buttons">
+											<Button className="contact-button primary" startIcon={<PhoneIcon />}>
+												{sellerInfo?.memberPhone}
+											</Button>
+											<Button className="contact-button secondary" startIcon={<EmailIcon />}>
+												Send Message
+											</Button>
+										</Stack>
+									</Stack>
+								</Stack>
+
 								{/* Comments section */}
 								{carComments?.length > 0 && (
 									<Stack className="reviews-config">
@@ -491,40 +526,6 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 									</Button>
 								</Stack>
 							</Stack>
-							<Stack className="right-config">
-								<Stack className="seller-info">
-									<Typography className="section-title">Seller Information</Typography>
-									<Stack className="seller-profile">
-										<img
-											className="profile-image"
-											src={
-												sellerInfo?.memberImage
-													? `${REACT_APP_API_URL}/${sellerInfo.memberImage}`
-													: '/img/profile/defaultUser.svg'
-											}
-											alt="Seller"
-										/>
-										<Stack className="profile-details">
-											<Link href={`/member?memberId=${sellerInfo?._id}`}>
-												<Typography className="seller-name">{sellerInfo?.memberNick}</Typography>
-											</Link>
-											<Typography className="seller-type">Verified Seller</Typography>
-											<Stack className="seller-rating">
-												<Rating value={4.5} readOnly precision={0.5} size="small" />
-												<Typography className="rating-count">(32 reviews)</Typography>
-											</Stack>
-										</Stack>
-									</Stack>
-									<Stack className="contact-buttons">
-										<Button className="contact-button primary" startIcon={<PhoneIcon />}>
-											{sellerInfo?.memberPhone}
-										</Button>
-										<Button className="contact-button secondary" startIcon={<EmailIcon />}>
-											Send Message
-										</Button>
-									</Stack>
-								</Stack>
-							</Stack>
 						</Stack>
 						{/* Similar Cars Section */}
 						{getCarsData?.getCars?.list?.length > 0 && (
@@ -534,17 +535,12 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 										<Typography className="section-title">Similar Cars</Typography>
 										<Typography className="section-subtitle">Other cars you might be interested in</Typography>
 									</Stack>
-									<Stack className="pagination-box">
-										<WestIcon className="swiper-similar-prev" />
-										<div className="swiper-similar-pagination"></div>
-										<EastIcon className="swiper-similar-next" />
-									</Stack>
 								</Stack>
 								<Stack className="cards-box">
 									<Swiper
 										className="similar-cars-swiper"
-										slidesPerView={4}
-										spaceBetween={16}
+										slidesPerView={1.6}
+										spaceBetween={12}
 										modules={[Navigation, Pagination]}
 										navigation={{
 											nextEl: '.swiper-similar-next',
@@ -828,8 +824,8 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 								<Stack className="cards-box">
 									<Swiper
 										className="similar-cars-swiper"
-										slidesPerView={4}
-										spaceBetween={16}
+										slidesPerView={1.6}
+										spaceBetween={12}
 										modules={[Navigation, Pagination]}
 										navigation={{
 											nextEl: '.swiper-similar-next',
