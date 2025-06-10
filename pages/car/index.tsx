@@ -209,12 +209,12 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 							{/* @ts-ignore */}
 							<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
 						</Stack>
-						<Stack className="main-config" mb={'76px'}>
+						<Stack className="main-config">
 							<Stack className={'list-config'}>
 								{cars?.length === 0 ? (
 									<div className={'no-data'}>
 										<img src="/img/icons/icoAlert.svg" alt="" />
-										<p>No Properties found!</p>
+										<p>No Cars found!</p>
 									</div>
 								) : (
 									cars.map((car: Car) => {
