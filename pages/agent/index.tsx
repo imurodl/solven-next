@@ -66,6 +66,14 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 		setCurrentPage(searchFilter.page === undefined ? 1 : searchFilter.page);
 	}, []);
 
+	useEffect(() => {
+		if (router.query.input) {
+			const input_obj = JSON.parse(router?.query?.input as string);
+			setSearchFilter(input_obj);
+			setCurrentPage(input_obj.page === undefined ? 1 : input_obj.page);
+		}
+	}, [router.query.input]);
+
 	/** HANDLERS **/
 	const sortingClickHandler = (e: MouseEvent<HTMLElement>) => {
 		setAnchorEl(e.currentTarget);
@@ -101,11 +109,14 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 	};
 
 	const paginationChangeHandler = async (event: ChangeEvent<unknown>, value: number) => {
-		searchFilter.page = value;
-		await router.push(`/agent?input=${JSON.stringify(searchFilter)}`, `/agent?input=${JSON.stringify(searchFilter)}`, {
-			scroll: false,
-		});
-		setCurrentPage(value);
+		const updatedFilter = { ...searchFilter, page: value };
+		await router.push(
+			`/agent?input=${JSON.stringify(updatedFilter)}`,
+			`/agent?input=${JSON.stringify(updatedFilter)}`,
+			{
+				scroll: false,
+			},
+		);
 	};
 
 	const likeMemberHandler = async (user: any, id: string) => {
@@ -320,7 +331,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 AgentList.defaultProps = {
 	initialInput: {
 		page: 1,
-		limit: 10,
+		limit: 8,
 		sort: 'createdAt',
 		direction: 'DESC',
 		search: {},

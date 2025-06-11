@@ -331,11 +331,11 @@
 
 			.pagination-config {
 				display: flex;
-				justify-content: space-between;
+				height: auto;
+				gap: 20px;
 				align-items: center;
 				margin-top: 40px;
 				padding: 0 24px;
-
 				.pagination-box {
 					.MuiPagination-root {
 						.MuiPaginationItem-root {

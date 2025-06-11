@@ -107,7 +107,6 @@
 				position: relative;
 				margin: 30px 0px;
 				width: 100%;
-				min-height: 500px;
 				height: auto;
 				display: flex;
 				flex-direction: row;
@@ -260,13 +259,22 @@
 				flex-direction: column;
 				align-items: center;
 				span {
-					margin-top: 30px;
+					margin-top: 20px;
 					color: #181a20;
 					font-family: $font;
-					font-size: 14px;
+					font-size: 18px;
 					font-style: normal;
 					font-weight: 400;
 					line-height: 26px; /* 185.714% */
+				}
+				.MuiPagination-root {
+					.MuiPaginationItem-root {
+						border-radius: 50%;
+						&.Mui-selected {
+							background: $primary-color;
+							color: #fff;
+						}
+					}
 				}
 			}
 		}

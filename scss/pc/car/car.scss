@@ -595,19 +595,28 @@
 					}
 					.pagination-config {
 						width: 442px;
-						height: 86px;
+						height: auto;
 						align-items: center;
 						gap: 20px;
 						.pagination-box {
 							width: 100%;
 							align-items: center;
+							.MuiPagination-root {
+								.MuiPaginationItem-root {
+									border-radius: 50%;
+									&.Mui-selected {
+										background: $primary-color;
+										color: #fff;
+									}
+								}
+							}
 						}
 						.total-result {
 							p {
 								color: #181a20;
 								text-align: center;
 								font-family: $font;
-								font-size: 24px;
+								font-size: 20px;
 								font-style: normal;
 								font-weight: 275;
 								line-height: 26px;
