@@ -105,7 +105,114 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 	};
 
 	if (device === 'mobile') {
-		return <h1>COMMUNITY PAGE MOBILE</h1>;
+		return (
+			<div id="community-list-page">
+				<div className="container">
+					<Stack className="header-basic">
+						<Stack className="container">
+							<strong>Community</strong>
+							<span>Home / Community</span>
+						</Stack>
+					</Stack>
+
+					<TabContext value={searchCommunity.search.articleCategory}>
+						<Stack className="main-box">
+							<Stack className="left-config">
+								<Stack className="image-info">
+									<img src="/img/logo/solvenBackWhite.png" alt="" />
+									<Stack className="community-name">
+										<Typography className="name">Community Articles</Typography>
+									</Stack>
+								</Stack>
+
+								<Stack className="categories">
+									{[
+										{ value: 'FREE', label: 'Free Board' },
+										{ value: 'RECOMMEND', label: 'Recommendation' },
+										{ value: 'NEWS', label: 'News' },
+										{ value: 'HUMOR', label: 'Humor' },
+									].map((category) => (
+										<Button
+											key={category.value}
+											className={`category-btn ${
+												searchCommunity.search.articleCategory === category.value ? 'active' : ''
+											}`}
+											onClick={(e: any) => tabChangeHandler(e, category.value)}
+										>
+											{category.label}
+										</Button>
+									))}
+								</Stack>
+							</Stack>
+
+							<Stack className="right-config">
+								<Stack className="panel-config">
+									<Stack className="title-box">
+										<Stack className="left">
+											<Typography className="title">{searchCommunity.search.articleCategory} BOARD</Typography>
+											<Typography className="sub-title">
+												Express your opinions freely here without content restrictions
+											</Typography>
+										</Stack>
+										<Button
+											onClick={() =>
+												router.push({
+													pathname: '/mypage',
+													query: {
+														category: 'writeArticle',
+													},
+												})
+											}
+											className="right"
+										>
+											Write Article
+										</Button>
+									</Stack>
+
+									<TabPanel value={searchCommunity.search.articleCategory}>
+										<Stack className="list-box">
+											{totalCount ? (
+												boardArticles?.map((boardArticle: BoardArticle) => (
+													<CommunityCard
+														boardArticle={boardArticle}
+														key={boardArticle?._id}
+														likeArticleHandler={likeArticleHandler}
+													/>
+												))
+											) : (
+												<Stack className="no-data">
+													<img src="/img/icons/icoAlert.svg" alt="" />
+													<p>No articles found!</p>
+												</Stack>
+											)}
+										</Stack>
+									</TabPanel>
+								</Stack>
+							</Stack>
+						</Stack>
+					</TabContext>
+
+					{totalCount > 0 && (
+						<Stack className="pagination-config">
+							<Stack className="pagination-box">
+								<Pagination
+									count={Math.ceil(totalCount / searchCommunity.limit)}
+									page={searchCommunity.page}
+									onChange={paginationHandler}
+									color="primary"
+									size="small"
+								/>
+							</Stack>
+							<Stack className="total-result">
+								<Typography>
+									Total {totalCount} article{totalCount > 1 ? 's' : ''} available
+								</Typography>
+							</Stack>
+						</Stack>
+					)}
+				</div>
+			</div>
+		);
 	} else {
 		return (
 			<div id="community-list-page">

@@ -45,7 +45,53 @@ const CommunityCard = (props: CommunityCardProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>COMMUNITY CARD MOBILE</div>;
+		return (
+			<Stack className="community-general-card-config" onClick={(e: any) => chooseArticleHandler(e, boardArticle)}>
+				<Stack className="image-box">
+					<img src={imagePath} alt="" className="card-img" />
+				</Stack>
+				<Stack className="desc-box" sx={{ marginTop: '-20px' }}>
+					<Stack width={'100%'}>
+						<Typography
+							className="desc"
+							// onClick={(e: any) => {
+							// 	e.stopPropagation();
+							// 	goMemberPage(boardArticle?.memberData?._id as string);
+							// }}
+						>
+							{boardArticle?.memberData?.memberNick}
+						</Typography>
+						<Typography className="title">{boardArticle?.articleTitle}</Typography>
+					</Stack>
+					<Stack className={'buttons'}>
+						<div className="stat-group" style={{ display: 'flex' }}>
+							<IconButton color={'default'}>
+								<RemoveRedEyeIcon />
+							</IconButton>
+							<Typography className="view-cnt">{boardArticle?.articleViews}</Typography>
+						</div>
+						<div className="stat-group" style={{ display: 'flex' }}>
+							<IconButton color={'default'} onClick={(e: any) => likeArticleHandler(e, user, boardArticle?._id)}>
+								{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
+									<FavoriteIcon color={'primary'} />
+								) : (
+									<FavoriteBorderIcon />
+								)}
+							</IconButton>
+							<Typography className="view-cnt">{boardArticle?.articleLikes}</Typography>
+						</div>
+					</Stack>
+				</Stack>
+				<Stack className="date-box">
+					<Moment className="month" format={'MMMM'}>
+						{boardArticle?.createdAt}
+					</Moment>
+					<Typography className="day">
+						<Moment format={'DD'}>{boardArticle?.createdAt}</Moment>
+					</Typography>
+				</Stack>
+			</Stack>
+		);
 	} else {
 		return (
 			<Stack className="community-general-card-config" onClick={(e: any) => chooseArticleHandler(e, boardArticle)}>
