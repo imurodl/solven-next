@@ -38,7 +38,9 @@ const Faq = () => {
 			<Stack className={'faq-content'}>
 				<Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 4 }}>
 					<Typography variant="h4" component="h1" className={'title'} sx={{ mb: 0 }}>
-						Frequently Asked Questions
+						Frequently Asked
+						<br />
+						Questions
 					</Typography>
 					<Typography variant="body2" color="text.secondary" sx={{ flex: 1 }}>
 						Find answers to common questions about our services
