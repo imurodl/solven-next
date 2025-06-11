@@ -26,22 +26,31 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 
 	/** LIFECYCLES **/
 	useEffect(() => {
-		setUpdateData({
-			...updateData,
-			memberNick: user.memberNick,
-			memberPhone: user.memberPhone,
-			memberAddress: user.memberAddress,
-			memberImage: user.memberImage,
-			memberFullName: user.memberFullName || '',
-			memberDesc: user.memberDesc || '',
-		});
+		if (user) {
+			setUpdateData({
+				...updateData,
+				memberNick: user.memberNick || '',
+				memberPhone: user.memberPhone || '',
+				memberAddress: user.memberAddress || '',
+				memberImage: user.memberImage || '',
+				memberFullName: user.memberFullName || '',
+				memberDesc: user.memberDesc || '',
+			});
+		}
 	}, [user]);
 
 	/** HANDLERS **/
+	const handleInputChange = (field: keyof MemberUpdate, value: string) => {
+		setUpdateData((prev) => ({
+			...prev,
+			[field]: value,
+		}));
+	};
+
 	const uploadImage = async (e: any) => {
 		try {
 			const image = e.target.files[0];
-			console.log('+image:', image);
+			if (!image) return;
 
 			const formData = new FormData();
 			formData.append(
@@ -73,10 +82,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 			});
 
 			const responseImage = response.data.data.imageUploader;
-			console.log('+responseImage: ', responseImage);
-			updateData.memberImage = responseImage;
-			setUpdateData({ ...updateData });
-
+			handleInputChange('memberImage', responseImage);
 			return `${REACT_APP_API_URL}/${responseImage}`;
 		} catch (err) {
 			console.log('Error, uploadImage:', err);
@@ -86,11 +92,35 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 	const updatePropertyHandler = useCallback(async () => {
 		try {
 			if (!user._id) throw new Error(Messages.error2);
-			updateData._id = user._id;
+			if (!updateData.memberNick?.trim() || !updateData.memberPhone?.trim()) {
+				throw new Error('Username and phone are required');
+			}
+
+			// Create base input with required fields
+			const input: any = {
+				_id: user._id,
+				memberNick: updateData.memberNick.trim(),
+				memberPhone: updateData.memberPhone.trim(),
+			};
+
+			// Only add optional fields if they have values
+			if (updateData.memberFullName?.trim()) {
+				input.memberFullName = updateData.memberFullName.trim();
+			}
+			if (updateData.memberAddress?.trim()) {
+				input.memberAddress = updateData.memberAddress.trim();
+			}
+			if (updateData.memberDesc?.trim()) {
+				input.memberDesc = updateData.memberDesc.trim();
+			}
+			if (updateData.memberImage) {
+				input.memberImage = updateData.memberImage;
+			}
+
+			console.log('Sending update with:', input);
+
 			const result = await updateMember({
-				variables: {
-					input: updateData,
-				},
+				variables: { input },
 			});
 
 			// @ts-ignore
@@ -101,19 +131,10 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
 		}
-	}, [updateData]);
+	}, [updateData, user._id]);
 
 	const doDisabledCheck = () => {
-		if (
-			updateData.memberNick === '' ||
-			updateData.memberPhone === '' ||
-			updateData.memberAddress === '' ||
-			updateData.memberImage === '' ||
-			updateData.memberFullName === '' ||
-			updateData.memberDesc === ''
-		) {
-			return true;
-		}
+		return !updateData.memberNick?.trim() || !updateData.memberPhone?.trim();
 	};
 
 	if (device === 'mobile') {
@@ -196,8 +217,8 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 									<input
 										type="text"
 										placeholder="Your username"
-										value={updateData.memberNick}
-										onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberNick: value })}
+										value={updateData.memberNick || ''}
+										onChange={({ target: { value } }) => handleInputChange('memberNick', value)}
 									/>
 								</Stack>
 								<Stack className="input-group">
@@ -205,8 +226,8 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 									<input
 										type="text"
 										placeholder="Your full name"
-										value={updateData.memberFullName}
-										onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberFullName: value })}
+										value={updateData.memberFullName || ''}
+										onChange={({ target: { value } }) => handleInputChange('memberFullName', value)}
 									/>
 								</Stack>
 								<Stack className="input-group">
@@ -214,8 +235,8 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 									<input
 										type="text"
 										placeholder="Your Phone"
-										value={updateData.memberPhone}
-										onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberPhone: value })}
+										value={updateData.memberPhone || ''}
+										onChange={({ target: { value } }) => handleInputChange('memberPhone', value)}
 									/>
 								</Stack>
 								<Stack className="input-group">
@@ -223,8 +244,8 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 									<input
 										type="text"
 										placeholder="Your address"
-										value={updateData.memberAddress}
-										onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberAddress: value })}
+										value={updateData.memberAddress || ''}
+										onChange={({ target: { value } }) => handleInputChange('memberAddress', value)}
 									/>
 								</Stack>
 							</Stack>
@@ -261,7 +282,6 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 
 MyProfile.defaultProps = {
 	initialValues: {
-		_id: '',
 		memberImage: '',
 		memberNick: '',
 		memberPhone: '',
