@@ -40,12 +40,6 @@ const CarBigCard = (props: CarBigCardProps) => {
 					onClick={() => goCarDetailPage(car?._id)}
 					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${car?.carImages?.[0]})` }}
 				>
-					{car && car?.carRank >= topCarRank && (
-						<div className={'status'}>
-							<DirectionsCarIcon />
-							<span>top</span>
-						</div>
-					)}
 					<div className={'price'}>${formatterStr(car?.carPrice)}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>
@@ -128,12 +122,6 @@ const CarBigCard = (props: CarBigCardProps) => {
 					onClick={() => goCarDetailPage(car?._id)}
 					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${car?.carImages?.[0]})` }}
 				>
-					{car && car?.carRank >= topCarRank && (
-						<div className={'status'}>
-							<DirectionsCarIcon />
-							<span>top</span>
-						</div>
-					)}
 					<div className={'price'}>${formatterStr(car?.carPrice)}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>

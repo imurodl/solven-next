@@ -5,19 +5,14 @@ import useDeviceDetect from '../../hooks/useDeviceDetect';
 import type { Car } from '../../types/car/car';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { REACT_APP_API_URL, topCarRank } from '../../config';
+import { REACT_APP_API_URL } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import SpeedIcon from '@mui/icons-material/Speed';
 import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import SettingsIcon from '@mui/icons-material/Settings';
-import EventSeatIcon from '@mui/icons-material/EventSeat';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
-import CarRentalIcon from '@mui/icons-material/CarRental';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 interface PopularCarCardProps {
@@ -73,12 +68,6 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 							<div className={'spec-item'}>
 								<LocalGasStationIcon className={'spec-icon'} />
 								<span>{car?.carFuelType}</span>
-							</div>
-						</Tooltip>
-						<Tooltip title={'Car Transmission'} placement="top" arrow>
-							<div className={'spec-item'}>
-								<SettingsIcon className={'spec-icon'} />
-								<span>{car?.carTransmission}</span>
 							</div>
 						</Tooltip>
 					</div>

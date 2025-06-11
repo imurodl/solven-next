@@ -207,7 +207,7 @@
 								.main-info-row {
 									flex-direction: row;
 									flex-wrap: wrap;
-									gap: 16px;
+									gap: 20px;
 
 									.info-item {
 										flex-direction: row;
@@ -215,8 +215,8 @@
 										gap: 8px;
 
 										svg {
-											color: $text-muted;
-											font-size: 20px;
+											color: $primary-color;
+											font-size: 22px;
 										}
 
 										.info-value {
