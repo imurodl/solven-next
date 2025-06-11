@@ -25,10 +25,6 @@ const Faq = () => {
 		setExpanded(newExpanded ? panel : false);
 	};
 
-	if (device === 'mobile') {
-		return <div>FAQ MOBILE</div>;
-	}
-
 	if (loading) {
 		return (
 			<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
@@ -37,72 +33,140 @@ const Faq = () => {
 		);
 	}
 
-	return (
-		<Stack className={'faq-content'}>
-			<Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 4 }}>
-				<Typography variant="h4" component="h1" className={'title'} sx={{ mb: 0 }}>
-					Frequently Asked Questions
-				</Typography>
-				<Typography variant="body2" color="text.secondary" sx={{ flex: 1 }}>
-					Find answers to common questions about our services
-				</Typography>
-			</Box>
+	if (device === 'mobile') {
+		return (
+			<Stack className={'faq-content'}>
+				<Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 4 }}>
+					<Typography variant="h4" component="h1" className={'title'} sx={{ mb: 0 }}>
+						Frequently Asked Questions
+					</Typography>
+					<Typography variant="body2" color="text.secondary" sx={{ flex: 1 }}>
+						Find answers to common questions about our services
+					</Typography>
+				</Box>
 
-			<Box className={'wrap'}>
-				{faqData?.getAllNotices?.list
-					.slice()
-					.reverse()
-					.map((faq: any, index: number) => (
-						<Accordion
-							key={faq._id}
-							expanded={expanded === `panel${index + 1}`}
-							onChange={handleChange(`panel${index + 1}`)}
-							sx={{
-								'&.MuiAccordion-root': {
-									borderRadius: '12px',
-									mb: 2,
-									overflow: 'hidden',
-									border: '1px solid #E2E8F0',
-									'&:before': {
-										display: 'none',
-									},
-									'&.Mui-expanded': {
-										margin: '8px 0',
-									},
-								},
-							}}
-						>
-							<AccordionSummary
-								expandIcon={<ExpandMoreIcon />}
+				<Box className={'wrap'}>
+					{faqData?.getAllNotices?.list
+						.slice()
+						.reverse()
+						.map((faq: any, index: number) => (
+							<Accordion
+								key={faq._id}
+								expanded={expanded === `panel${index + 1}`}
+								onChange={handleChange(`panel${index + 1}`)}
 								sx={{
-									backgroundColor: '#ffffff',
-									'&:hover': {
-										backgroundColor: '#F8FAFC',
-									},
-									'&.Mui-expanded': {
-										backgroundColor: '#F8FAFC',
+									'&.MuiAccordion-root': {
+										borderRadius: '12px',
+										mb: 2,
+										overflow: 'hidden',
+										border: '1px solid #E2E8F0',
+										'&:before': {
+											display: 'none',
+										},
+										'&.Mui-expanded': {
+											margin: '8px 0',
+										},
 									},
 								}}
 							>
-								<Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-									<HelpOutlineIcon sx={{ color: '#3B82F6' }} />
-									<Typography sx={{ color: '#1E293B', fontWeight: 500 }}>{faq.noticeTitle}</Typography>
-								</Box>
-							</AccordionSummary>
-							<AccordionDetails
+								<AccordionSummary
+									expandIcon={<ExpandMoreIcon />}
+									sx={{
+										backgroundColor: '#ffffff',
+										'&:hover': {
+											backgroundColor: '#F8FAFC',
+										},
+										'&.Mui-expanded': {
+											backgroundColor: '#F8FAFC',
+										},
+									}}
+								>
+									<Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+										<HelpOutlineIcon sx={{ color: '#3B82F6' }} />
+										<Typography sx={{ color: '#1E293B', fontWeight: 500 }}>{faq.noticeTitle}</Typography>
+									</Box>
+								</AccordionSummary>
+								<AccordionDetails
+									sx={{
+										backgroundColor: '#ffffff',
+										borderTop: '1px solid #E2E8F0',
+										p: 3,
+									}}
+								>
+									<Typography sx={{ color: '#64748B', lineHeight: 1.6 }}>{faq.noticeContent}</Typography>
+								</AccordionDetails>
+							</Accordion>
+						))}
+				</Box>
+			</Stack>
+		);
+	} else
+		return (
+			<Stack className={'faq-content'}>
+				<Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 4 }}>
+					<Typography variant="h4" component="h1" className={'title'} sx={{ mb: 0 }}>
+						Frequently Asked Questions
+					</Typography>
+					<Typography variant="body2" color="text.secondary" sx={{ flex: 1 }}>
+						Find answers to common questions about our services
+					</Typography>
+				</Box>
+
+				<Box className={'wrap'}>
+					{faqData?.getAllNotices?.list
+						.slice()
+						.reverse()
+						.map((faq: any, index: number) => (
+							<Accordion
+								key={faq._id}
+								expanded={expanded === `panel${index + 1}`}
+								onChange={handleChange(`panel${index + 1}`)}
 								sx={{
-									backgroundColor: '#ffffff',
-									borderTop: '1px solid #E2E8F0',
-									p: 3,
+									'&.MuiAccordion-root': {
+										borderRadius: '12px',
+										mb: 2,
+										overflow: 'hidden',
+										border: '1px solid #E2E8F0',
+										'&:before': {
+											display: 'none',
+										},
+										'&.Mui-expanded': {
+											margin: '8px 0',
+										},
+									},
 								}}
 							>
-								<Typography sx={{ color: '#64748B', lineHeight: 1.6 }}>{faq.noticeContent}</Typography>
-							</AccordionDetails>
-						</Accordion>
-					))}
-			</Box>
-		</Stack>
-	);
+								<AccordionSummary
+									expandIcon={<ExpandMoreIcon />}
+									sx={{
+										backgroundColor: '#ffffff',
+										'&:hover': {
+											backgroundColor: '#F8FAFC',
+										},
+										'&.Mui-expanded': {
+											backgroundColor: '#F8FAFC',
+										},
+									}}
+								>
+									<Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+										<HelpOutlineIcon sx={{ color: '#3B82F6' }} />
+										<Typography sx={{ color: '#1E293B', fontWeight: 500 }}>{faq.noticeTitle}</Typography>
+									</Box>
+								</AccordionSummary>
+								<AccordionDetails
+									sx={{
+										backgroundColor: '#ffffff',
+										borderTop: '1px solid #E2E8F0',
+										p: 3,
+									}}
+								>
+									<Typography sx={{ color: '#64748B', lineHeight: 1.6 }}>{faq.noticeContent}</Typography>
+								</AccordionDetails>
+							</Accordion>
+						))}
+				</Box>
+			</Stack>
+		);
 };
 
 export default Faq;

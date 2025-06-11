@@ -36,46 +36,81 @@ const CS: NextPage = (props: any) => {
 	};
 
 	if (device === 'mobile') {
-		return <h1>CS PAGE MOBILE</h1>;
-	}
+		return (
+			<div id="mobile-wrap">
+				<Stack className={'cs-page'}>
+					<Stack className={'container'}>
+						<Box className={'cs-main-info'}>
+							<Box className={'info'}>
+								<Typography component="span">Customer Support</Typography>
+								<Typography component="p">
+									<Link href="/">Home</Link> / Help
+								</Typography>
+							</Box>
 
-	return (
-		<div id="pc-wrap">
-			<Stack className={'cs-page'}>
-				<Stack className={'container'}>
-					<Box className={'cs-main-info'}>
-						<Box className={'info'}>
-							<Typography component="span">Customer Support</Typography>
-							<Typography component="p">
-								<Link href="/">Home</Link> / Help
-							</Typography>
+							<Box className={'btns'}>
+								<div className={tab === 'notice' ? 'active' : ''} onClick={() => changeTabHandler('notice')}>
+									<SupportIcon />
+									Notices & Updates
+								</div>
+								<div className={tab === 'faq' ? 'active' : ''} onClick={() => changeTabHandler('faq')}>
+									<QuestionAnswerIcon />
+									FAQ
+								</div>
+								<div className={tab === 'terms' ? 'active' : ''} onClick={() => changeTabHandler('terms')}>
+									<ArticleIcon />
+									Terms & Conditions
+								</div>
+							</Box>
 						</Box>
 
-						<Box className={'btns'}>
-							<div className={tab === 'notice' ? 'active' : ''} onClick={() => changeTabHandler('notice')}>
-								<SupportIcon />
-								Notices & Updates
-							</div>
-							<div className={tab === 'faq' ? 'active' : ''} onClick={() => changeTabHandler('faq')}>
-								<QuestionAnswerIcon />
-								FAQ
-							</div>
-							<div className={tab === 'terms' ? 'active' : ''} onClick={() => changeTabHandler('terms')}>
-								<ArticleIcon />
-								Terms & Conditions
-							</div>
+						<Box className={'cs-content'}>
+							{tab === 'notice' && <Notice />}
+							{tab === 'faq' && <Faq />}
+							{tab === 'terms' && <Terms />}
 						</Box>
-					</Box>
-
-					<Box className={'cs-content'}>
-						{tab === 'notice' && <Notice />}
-						{tab === 'faq' && <Faq />}
-						{tab === 'terms' && <Terms />}
-					</Box>
+					</Stack>
 				</Stack>
-			</Stack>
-		</div>
-	);
+			</div>
+		);
+	} else
+		return (
+			<div id="pc-wrap">
+				<Stack className={'cs-page'}>
+					<Stack className={'container'}>
+						<Box className={'cs-main-info'}>
+							<Box className={'info'}>
+								<Typography component="span">Customer Support</Typography>
+								<Typography component="p">
+									<Link href="/">Home</Link> / Help
+								</Typography>
+							</Box>
+
+							<Box className={'btns'}>
+								<div className={tab === 'notice' ? 'active' : ''} onClick={() => changeTabHandler('notice')}>
+									<SupportIcon />
+									Notices & Updates
+								</div>
+								<div className={tab === 'faq' ? 'active' : ''} onClick={() => changeTabHandler('faq')}>
+									<QuestionAnswerIcon />
+									FAQ
+								</div>
+								<div className={tab === 'terms' ? 'active' : ''} onClick={() => changeTabHandler('terms')}>
+									<ArticleIcon />
+									Terms & Conditions
+								</div>
+							</Box>
+						</Box>
+
+						<Box className={'cs-content'}>
+							{tab === 'notice' && <Notice />}
+							{tab === 'faq' && <Faq />}
+							{tab === 'terms' && <Terms />}
+						</Box>
+					</Stack>
+				</Stack>
+			</div>
+		);
 };
 
 export default withLayoutBasic(CS);
