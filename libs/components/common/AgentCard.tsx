@@ -97,23 +97,29 @@ const AgentCard = (props: AgentCardProps) => {
 					</Link>
 
 					{/* @ts-ignore */}
+					<Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
+						<IconButton color={'default'}>
+							<RemoveRedEyeIcon />
+						</IconButton>
+						<Typography className="view-cnt">{agent?.memberViews}</Typography>
+					</Box>
+
+					{/* Like Button with Count */}
 					<Box
-						// @ts-ignore
 						sx={{
 							display: 'flex',
 							alignItems: 'center',
-							gap: 1,
 							cursor: 'pointer',
 						}}
 						onClick={() => likeMemberHandler(user, agent?._id)}
 					>
-						{myFavorite ? (
-							<FavoriteIcon sx={{ color: 'red', fontSize: 24 }} />
+						{agent?.meLiked && agent?.meLiked[0]?.myFavorite ? (
+							<FavoriteIcon className={'like-cnt'} sx={{ color: 'red', fontSize: 20 }} />
 						) : (
-							<FavoriteBorderIcon sx={{ color: '#666', fontSize: 24 }} />
+							<FavoriteBorderIcon className={'like-cnt'} sx={{ color: '#666', fontSize: 20 }} />
 						)}
 						<Typography variant="body2" sx={{ fontSize: '14px', color: '#666' }}>
-							{likeCount}
+							{agent?.memberLikes}
 						</Typography>
 					</Box>
 				</div>
