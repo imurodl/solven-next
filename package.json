@@ -8,7 +8,8 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"changelog": "standard-version --skip.tag"
+		"changelog": "standard-version --skip.tag",
+		"postbuild": "next-sitemap"
 	},
 	"dependencies": {
 		"@apollo/client": "^3.5.10",
@@ -49,6 +50,8 @@
 		"next": "14.2.0",
 		"next-i18next": "^14.0.3",
 		"next-images": "^1.8.4",
+		"next-seo": "^6.8.0",
+		"next-sitemap": "^4.2.3",
 		"notistack": "^2.0.5",
 		"nouislider-react": "^3.4.1",
 		"numeral": "^2.0.6",
