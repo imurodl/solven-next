@@ -7,7 +7,9 @@ services:
      - 4006:3006
     environment: 
      - PORT=3006
-
+     - REACT_APP_API_URL=https://solven.uz/api
+     - REACT_APP_API_GRAPHQL_URL=https://solven.uz/api/graphql
+     - REACT_APP_API_WS=wss://solven.uz/ws/
     volumes:
      - ./:/usr/src/solven-next
     working_dir: /usr/src/solven-next
