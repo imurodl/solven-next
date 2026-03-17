@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://solven.uz
+
+# Sitemaps
+Sitemap: https://solven.uz/sitemap.xml
