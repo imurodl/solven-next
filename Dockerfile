@@ -1,0 +1,21 @@
+FROM node:20.10.0-slim
+
+WORKDIR /usr/src/solven-next
+
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+COPY . .
+
+ARG REACT_APP_API_URL
+ARG REACT_APP_API_GRAPHQL_URL
+ARG REACT_APP_API_WS
+
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
+ENV REACT_APP_API_GRAPHQL_URL=$REACT_APP_API_GRAPHQL_URL
+ENV REACT_APP_API_WS=$REACT_APP_API_WS
+
+RUN yarn build
+
+EXPOSE 3006
+CMD ["yarn", "start", "-p", "3006"]

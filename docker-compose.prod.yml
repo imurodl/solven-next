@@ -1,0 +1,21 @@
+services:
+  solven-next:
+    container_name: solven-next
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: https://solven.uz/api
+        REACT_APP_API_GRAPHQL_URL: https://solven.uz/api/graphql
+        REACT_APP_API_WS: wss://solven.uz/ws/
+    ports:
+      - 4006:3006
+    environment:
+      - PORT=3006
+    networks:
+      - client-network
+
+networks:
+  client-network:
+    driver: bridge
