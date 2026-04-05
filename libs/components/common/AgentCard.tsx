@@ -28,8 +28,7 @@ const AgentCard = (props: AgentCardProps) => {
 	const agentImage = agent?.memberImage
 		? `${process.env.REACT_APP_API_URL}/${agent?.memberImage}`
 		: '/img/profile/defaultUser.svg';
-	// @ts-ignore
-	const myFavorite = !!agent?.meLiked?.[0]?.myFavorite;
+	const myFavorite = !!(agent as any)?.meLiked?.[0]?.myFavorite;
 	const likeCount = agent?.memberLikes ?? 0;
 
 	if (device === 'mobile') {

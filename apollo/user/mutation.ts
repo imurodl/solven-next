@@ -29,6 +29,7 @@ export const SIGN_UP = gql`
 			createdAt
 			updatedAt
 			accessToken
+			refreshToken
 		}
 	}
 `;
@@ -57,7 +58,43 @@ export const LOGIN = gql`
 			createdAt
 			updatedAt
 			accessToken
+			refreshToken
 		}
+	}
+`;
+
+export const REFRESH_TOKEN = gql`
+	mutation RefreshToken($refreshToken: String!) {
+		refreshToken(refreshToken: $refreshToken) {
+			_id
+			memberType
+			memberStatus
+			memberAuthType
+			memberPhone
+			memberNick
+			memberFullName
+			memberImage
+			memberAddress
+			memberDesc
+			memberWarnings
+			memberBlocks
+			memberCars
+			memberRank
+			memberPoints
+			memberLikes
+			memberViews
+			deletedAt
+			createdAt
+			updatedAt
+			accessToken
+			refreshToken
+		}
+	}
+`;
+
+export const LOGOUT = gql`
+	mutation Logout {
+		logout
 	}
 `;
 

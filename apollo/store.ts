@@ -24,5 +24,4 @@ export const userVar = makeVar<CustomJwtPayload>({
 	memberBlocks: 0,
 });
 
-// @ts-ignore
-export const socketVar = makeVar<WebSocket>();
+export const socketVar = makeVar<WebSocket | null>(null);

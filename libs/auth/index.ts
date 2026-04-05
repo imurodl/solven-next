@@ -3,16 +3,64 @@ import { initializeApollo } from '../../apollo/client';
 import { userVar } from '../../apollo/store';
 import { CustomJwtPayload } from '../types/customJwtPayload';
 import { sweetMixinErrorAlert } from '../sweetAlert';
-import { LOGIN, SIGN_UP } from '../../apollo/user/mutation';
+import { LOGIN, SIGN_UP, REFRESH_TOKEN } from '../../apollo/user/mutation';
 
-export function getJwtToken(): any {
+export function getJwtToken(): string {
 	if (typeof window !== 'undefined') {
 		return localStorage.getItem('accessToken') ?? '';
 	}
+	return '';
 }
 
 export function setJwtToken(token: string) {
 	localStorage.setItem('accessToken', token);
+}
+
+export function getRefreshToken(): string {
+	if (typeof window !== 'undefined') {
+		return localStorage.getItem('refreshToken') ?? '';
+	}
+	return '';
+}
+
+export function setRefreshToken(token: string) {
+	localStorage.setItem('refreshToken', token);
+}
+
+export function isTokenExpired(token: string): boolean {
+	if (!token) return true;
+	try {
+		const claims = decodeJWT<CustomJwtPayload>(token);
+		if (!claims.exp) return true;
+		return claims.exp * 1000 < Date.now();
+	} catch {
+		return true;
+	}
+}
+
+export async function refreshTokens(): Promise<string | null> {
+	const refreshToken = getRefreshToken();
+	if (!refreshToken) return null;
+
+	try {
+		const apolloClient = await initializeApollo();
+		const result = await apolloClient.mutate({
+			mutation: REFRESH_TOKEN,
+			variables: { refreshToken },
+			fetchPolicy: 'network-only',
+		});
+
+		const member = result?.data?.refreshToken;
+		if (member?.accessToken) {
+			setJwtToken(member.accessToken);
+			if (member.refreshToken) setRefreshToken(member.refreshToken);
+			updateUserInfo(member.accessToken);
+			return member.accessToken;
+		}
+	} catch {
+		logOut();
+	}
+	return null;
 }
 
 export const logIn = async (nick: string, password: string): Promise<void> => {
@@ -23,10 +71,8 @@ export const logIn = async (nick: string, password: string): Promise<void> => {
 			updateStorage({ jwtToken });
 			updateUserInfo(jwtToken);
 		}
-	} catch (err) {
-		console.warn('login err', err);
+	} catch {
 		logOut();
-		// throw new Error('Login Err');
 	}
 };
 
@@ -46,12 +92,11 @@ const requestJwtToken = async ({
 			fetchPolicy: 'network-only',
 		});
 
-		console.log('---------- login ----------');
-		const { accessToken } = result?.data?.login;
+		const { accessToken, refreshToken } = result?.data?.login;
+		if (refreshToken) setRefreshToken(refreshToken);
 
 		return { jwtToken: accessToken };
 	} catch (err: any) {
-		console.log('request token err', err.graphQLErrors);
 		switch (err.graphQLErrors[0].message) {
 			case 'Definer: login and password do not match':
 				await sweetMixinErrorAlert('Please check your password again');
@@ -72,10 +117,8 @@ export const signUp = async (nick: string, password: string, phone: string, type
 			updateStorage({ jwtToken });
 			updateUserInfo(jwtToken);
 		}
-	} catch (err) {
-		console.warn('login err', err);
+	} catch {
 		logOut();
-		// throw new Error('Login Err');
 	}
 };
 
@@ -101,12 +144,11 @@ const requestSignUpJwtToken = async ({
 			fetchPolicy: 'network-only',
 		});
 
-		console.log('---------- login ----------');
-		const { accessToken } = result?.data?.signup;
+		const { accessToken, refreshToken } = result?.data?.signup;
+		if (refreshToken) setRefreshToken(refreshToken);
 
 		return { jwtToken: accessToken };
 	} catch (err: any) {
-		console.log('request token err', err.graphQLErrors);
 		switch (err.graphQLErrors[0].message) {
 			case 'Definer: login and password do not match':
 				await sweetMixinErrorAlert('Please check your password again');
@@ -119,12 +161,12 @@ const requestSignUpJwtToken = async ({
 	}
 };
 
-export const updateStorage = ({ jwtToken }: { jwtToken: any }) => {
+export const updateStorage = ({ jwtToken }: { jwtToken: string }) => {
 	setJwtToken(jwtToken);
 	window.localStorage.setItem('login', Date.now().toString());
 };
 
-export const updateUserInfo = (jwtToken: any) => {
+export const updateUserInfo = (jwtToken: string) => {
 	if (!jwtToken) return false;
 
 	const claims = decodeJWT<CustomJwtPayload>(jwtToken);
@@ -161,6 +203,7 @@ export const logOut = () => {
 
 const deleteStorage = () => {
 	localStorage.removeItem('accessToken');
+	localStorage.removeItem('refreshToken');
 	window.localStorage.setItem('logout', Date.now().toString());
 };
 
