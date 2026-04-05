@@ -1,38 +1,100 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Solven
+
+Frontend for [solven.uz](https://solven.uz) — a car marketplace platform for buying and selling cars in Uzbekistan.
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 14 (Pages Router) + TypeScript 5.9 |
+| UI | Material UI 5 + SCSS |
+| Data | Apollo Client (GraphQL) + WebSocket subscriptions |
+| i18n | next-i18next (EN, KR, RU, UZ) |
+| Auth | JWT with automatic token refresh |
+| Deploy | Docker + GitHub Actions CI/CD |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 20+
+- Yarn
+- Running [solven API](https://github.com/imurodl/solven) backend
+
+### Setup
 
 ```bash
-npm run dev
-# or
+# Clone
+git clone https://github.com/imurodl/solven-next.git
+cd solven-next
+
+# Install dependencies
+yarn install
+
+# Configure environment
+cp .env.example .env.local
+# Edit with your API URLs
+
+# Run development server
 yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Docker
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+# Development
+docker compose up -d
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+# Production
+docker compose -f docker-compose.prod.yml build
+docker compose -f docker-compose.prod.yml up -d
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Features
 
-## Learn More
+### For Users
+- Browse and search cars with advanced filters (brand, location, type, fuel, price range, mileage)
+- Like and save favorite cars
+- Follow agents/dealers
+- Community discussion boards
+- Real-time chat and notifications
+- Multi-language support (English, Korean, Russian, Uzbek)
 
-To learn more about Next.js, take a look at the following resources:
+### For Agents
+- List and manage car inventory
+- Profile with reputation and rankings
+- Track views and engagement
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Admin Panel
+- Manage users, cars, and community content
+- Customer support (notices, FAQ, inquiries)
+- Car brand management
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+pages/          -> Next.js routes (car, agent, community, mypage, _admin)
+libs/
+  components/   -> React components by feature
+  auth/         -> JWT login/signup/refresh helpers
+  types/        -> TypeScript interfaces
+  enums/        -> Shared enums
+apollo/         -> GraphQL client, queries, mutations, reactive state
+scss/           -> Styles split by device (pc/ and mobile/)
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Auto-deploys via GitHub Actions on push to `develop`:
+
+1. CI checks (build + lint)
+2. SSH to VPS
+3. Docker build + restart
+
+Live at: [solven.uz](https://solven.uz)
+
+## License
+
+ITC
