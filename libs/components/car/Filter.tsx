@@ -40,6 +40,7 @@ const Filter = (props: FilterType) => {
 	const [carTransmissions, setCarTransmissions] = useState<CarTransmission[]>(Object.values(CarTransmission));
 	const [carColors, setCarColors] = useState<CarColor[]>(Object.values(CarColor));
 	const [carListingOptions, setCarListingOptions] = useState<CarOptions[]>(Object.values(CarOptions));
+	const [filterKey, setFilterKey] = useState(0);
 
 	/** APOLLO REQUESTS **/
 	const {
@@ -443,6 +444,7 @@ const Filter = (props: FilterType) => {
 		};
 
 		setSearchFilter(clearedFilter);
+		setFilterKey((prev) => prev + 1);
 		await router.push(`/car?input=${JSON.stringify(clearedFilter)}`, undefined, { scroll: false });
 	};
 
@@ -453,11 +455,10 @@ const Filter = (props: FilterType) => {
 
 	if (device === 'mobile') {
 		return (
-			<div className="filter-main">
+			<div className="filter-main" key={filterKey}>
 				<div className="find-your-home">
 					<div className="title-main">
 						{t('filter.findYourCar')}
-						{/* TODO: when refresh icon clicked checkbox ui is not changing but logic and chechbox state is correctly handling, fix it later */}
 						<IconButton className="refresh-icon" onClick={clearAllHandler}>
 							<RefreshIcon />
 						</IconButton>
@@ -826,7 +827,7 @@ const Filter = (props: FilterType) => {
 	} else {
 		return (
 			<div className="filter-config">
-				<div className="filter-main">
+				<div className="filter-main" key={filterKey}>
 					<div className="find-your-home">
 						<div className="title-main">
 							{t('filter.findYourCar')}

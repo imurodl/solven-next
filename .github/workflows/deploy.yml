@@ -23,7 +23,6 @@ jobs:
 
       - name: Lint
         run: yarn lint
-        continue-on-error: true
 
   deploy:
     needs: check
