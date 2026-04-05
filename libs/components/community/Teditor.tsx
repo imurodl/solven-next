@@ -157,8 +157,7 @@ const TuiEditor = () => {
 				placeholder={'Type here'}
 				previewStyle={'vertical'}
 				height={'640px'}
-				// @ts-ignore
-				initialEditType={'WYSIWYG'}
+				initialEditType={'wysiwyg'}
 				toolbarItems={[
 					['heading', 'bold', 'italic', 'strike'],
 					['image', 'table', 'link'],

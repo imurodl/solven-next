@@ -141,7 +141,6 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 		return (
 			<Stack className={'agent-list-page'}>
 				<Stack className={'container'}>
-					{/* @ts-ignore */}
 					<Box className={'agent-main-info'}>
 						<Box className={'info'}>
 							<Typography component="span">Agents</Typography>

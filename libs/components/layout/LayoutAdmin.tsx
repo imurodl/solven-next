@@ -75,7 +75,7 @@ const withAdminLayout = (Component: ComponentType) => {
 					</Drawer>
 
 					<Box component={'div'} id="bunker" sx={{ flexGrow: 1 }}>
-						{/*@ts-ignore*/}
+						{/* @ts-expect-error admin components receive extra props */}
 						<Component {...props} setSnackbar={setSnackbar} setTitle={setTitle} />
 					</Box>
 				</Box>

@@ -109,8 +109,8 @@ interface EnhancedTableProps {
 	rowCount: number;
 }
 
-function EnhancedTableHead(props: EnhancedTableProps) {
-	const { onSelectAllClick } = props;
+function EnhancedTableHead(props?: Partial<EnhancedTableProps>) {
+	const { onSelectAllClick } = props ?? {};
 
 	return (
 		<TableHead>
@@ -144,7 +144,6 @@ export const MemberPanelList = (props: MemberPanelListType) => {
 		<Stack>
 			<TableContainer>
 				<Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={'medium'}>
-					{/*@ts-ignore*/}
 					<EnhancedTableHead />
 					<TableBody>
 						{members.length === 0 && (

@@ -95,7 +95,6 @@ const AgentCard = (props: AgentCardProps) => {
 						</Button>
 					</Link>
 
-					{/* @ts-ignore */}
 					<Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
 						<IconButton color={'default'}>
 							<RemoveRedEyeIcon />

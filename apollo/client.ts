@@ -48,7 +48,7 @@ class LoggingWebSocket {
 		this.socket.onerror = () => {};
 	}
 
-	public send(data: string | ArrayBuffer | SharedArrayBuffer | Blob | ArrayBufferView) {
+	public send(data: Parameters<WebSocket['send']>[0]) {
 		this.socket.send(data);
 	}
 

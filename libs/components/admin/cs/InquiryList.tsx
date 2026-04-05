@@ -78,8 +78,8 @@ interface EnhancedTableProps {
 	rowCount: number;
 }
 
-function EnhancedTableHead(props: EnhancedTableProps) {
-	const { onSelectAllClick } = props;
+function EnhancedTableHead(props?: Partial<EnhancedTableProps>) {
+	const { onSelectAllClick } = props ?? {};
 
 	return (
 		<TableHead>
@@ -128,7 +128,6 @@ export const InquiryList = (props: InquiryPanelListType) => {
 		<Stack>
 			<TableContainer>
 				<Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={dense ? 'small' : 'medium'}>
-					{/*@ts-ignore*/}
 					<EnhancedTableHead />
 					<TableBody>
 						{[1, 2, 3, 4, 5].map((ele: any, index: number) => {

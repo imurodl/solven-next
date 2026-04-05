@@ -290,7 +290,6 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 						<Stack className="car-info-config">
 							<Stack className="images-container">
 								<Stack className="main-image-info-container">
-									{/* @ts-ignore */}
 									<Box className="main-image-box">
 										<img
 											src={`${REACT_APP_API_URL}/${slideImage || getCarData?.getCar?.carImages?.[0]}`}

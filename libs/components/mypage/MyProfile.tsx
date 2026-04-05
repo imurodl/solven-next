@@ -123,7 +123,6 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 				variables: { input },
 			});
 
-			// @ts-ignore
 			const jwtToken = result.data.updateMember?.accessToken;
 			await updateStorage({ jwtToken });
 			updateUserInfo(result.data.updateMember?.accessToken);

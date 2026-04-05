@@ -218,9 +218,7 @@ const NotificationModal = ({
 				},
 			}}
 		>
-			{/* @ts-ignore */}
 			<Box
-				// @ts-ignore
 				sx={{
 					p: 2,
 					borderBottom: '1px solid rgba(0, 0, 0, 0.1)',

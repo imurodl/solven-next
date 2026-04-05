@@ -13,7 +13,6 @@ const CtaSection = () => {
 
 	if (device == 'mobile') {
 		return (
-			// @ts-ignore
 			<Box className="cta-section">
 				<Box className="cta-container">
 					<Container>

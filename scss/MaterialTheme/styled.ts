@@ -1,10 +1,19 @@
 import { styled, alpha, Theme } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
-import MuiAppBar from '@mui/material/AppBar';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import TextField from '@mui/material/TextField';
-import MuiDrawer from '@mui/material/Drawer';
+import MuiDrawer, { DrawerProps as MuiDrawerProps } from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import Switch, { SwitchProps } from '@mui/material/Switch';
+
+interface AdminAppBarProps extends MuiAppBarProps {
+	open?: boolean;
+	drawerwidth?: number;
+}
+
+interface AdminDrawerProps extends MuiDrawerProps {
+	drawerwidth?: number;
+}
 
 export const RippleBadge = styled(Badge)(({ theme }) => ({
 	'& .MuiBadge-badge': {
@@ -144,8 +153,7 @@ const closedMixin = (theme: Theme) => ({
 
 export const AdminAppBar = styled(MuiAppBar, {
 	shouldForwardProp: (prop) => prop !== 'open',
-	// @ts-ignore
-})(({ theme, open, drawerwidth }) => ({
+})<AdminAppBarProps>(({ theme, open, drawerwidth }: any) => ({
 	zIndex: theme.zIndex.drawer + 1,
 	transition: theme.transitions.create(['width', 'margin'], {
 		easing: theme.transitions.easing.sharp,
@@ -161,9 +169,8 @@ export const AdminAppBar = styled(MuiAppBar, {
 	}),
 }));
 
-export const AdminDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-	// @ts-ignore
-	({ theme, open, drawerwidth }) => ({
+export const AdminDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })<AdminDrawerProps>(
+	({ theme, open, drawerwidth }: any) => ({
 		width: drawerwidth + 'px',
 		flexShrink: 0,
 		whiteSpace: 'nowrap',

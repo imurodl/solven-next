@@ -101,7 +101,7 @@ interface EnhancedTableProps {
 	rowCount: number;
 }
 
-function EnhancedTableHead(props: EnhancedTableProps) {
+function EnhancedTableHead(props?: Partial<EnhancedTableProps>) {
 	return (
 		<TableHead>
 			<TableRow>
@@ -136,7 +136,6 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 		<Stack>
 			<TableContainer>
 				<Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={'medium'}>
-					{/*@ts-ignore*/}
 					<EnhancedTableHead />
 					<TableBody>
 						{articles.length === 0 && (

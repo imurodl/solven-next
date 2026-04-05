@@ -343,7 +343,6 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 					</Box>
 					<Stack className={'property-page'}>
 						<Stack className={'filter-config'}>
-							{/* @ts-ignore */}
 							<Filter searchFilter={searchFilter} setSearchFilter={setSearchFilter} initialInput={initialInput} />
 						</Stack>
 						<Stack className="main-config">

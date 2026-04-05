@@ -290,8 +290,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					...searchFilter,
 					search: {
 						...searchFilter.search,
-						// @ts-ignore
-						mileageRange: { ...searchFilter.search.mileageRange, start: value },
+						mileageRange: { start: value, end: searchFilter.search.mileageRange?.end ?? 500000 },
 					},
 				});
 			} else {
@@ -299,8 +298,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					...searchFilter,
 					search: {
 						...searchFilter.search,
-						// @ts-ignore
-						mileageRange: { ...searchFilter.search.mileageRange, end: value },
+						mileageRange: { start: searchFilter.search.mileageRange?.start ?? 0, end: value },
 					},
 				});
 			}
@@ -435,7 +433,6 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					aria-labelledby="modal-modal-title"
 					aria-describedby="modal-modal-description"
 				>
-					{/* @ts-ignore */}
 					<Box sx={style}>
 						<Box className={'advanced-filter-modal'}>
 							<div className={'close'} onClick={() => advancedFilterHandler(false)}>
@@ -697,7 +694,6 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					aria-labelledby="modal-modal-title"
 					aria-describedby="modal-modal-description"
 				>
-					{/* @ts-ignore */}
 					<Box sx={style}>
 						<Box className={'advanced-filter-modal'}>
 							<div className={'close'} onClick={() => advancedFilterHandler(false)}>
