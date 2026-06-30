@@ -32,7 +32,6 @@ import { T } from '../../libs/types/common';
 import { Direction, Message } from '../../libs/enums/common.enum';
 import { CREATE_COMMENT, LIKE_TARGET_CAR } from '../../apollo/user/mutation';
 import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
-import { create } from 'domain';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
@@ -91,7 +90,7 @@ export const getServerSideProps = async ({ locale, query }: any) => {
 	return { props: { ...translations, initialCar } };
 };
 
-const PropertyDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
+const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -909,7 +908,7 @@ const PropertyDetail: NextPage = ({ initialComment, initialCar, ...props }: any)
 	}
 };
 
-PropertyDetail.defaultProps = {
+CarDetail.defaultProps = {
 	initialComment: {
 		page: 1,
 		limit: 5,
@@ -921,4 +920,4 @@ PropertyDetail.defaultProps = {
 	},
 };
 
-export default withLayoutBasic(PropertyDetail);
+export default withLayoutBasic(CarDetail);

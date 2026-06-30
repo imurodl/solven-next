@@ -137,7 +137,6 @@ const AdminProperties: NextPage = ({ initialInquiry, ...props }: any) => {
 
 	const updateCarHandler = async (updateData: CarUpdate) => {
 		try {
-			console.log('+updateData: ', updateData);
 			await updateCarByAdmin({
 				variables: {
 					input: updateData,

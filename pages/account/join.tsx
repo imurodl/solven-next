@@ -44,7 +44,6 @@ const Join: NextPage = (props: any) => {
 	}, []);
 
 	const doLogin = useCallback(async () => {
-		console.warn(input);
 		try {
 			await logIn(input.nick, input.password);
 			window.location.href = router.query.referrer?.toString() ?? '/';
@@ -54,7 +53,6 @@ const Join: NextPage = (props: any) => {
 	}, [input]);
 
 	const doSignUp = useCallback(async () => {
-		console.warn(input);
 		try {
 			await signUp(input.nick, input.password, input.phone, input.type);
 			await router.push(`${router.query.referrer ?? '/'}`);
@@ -62,8 +60,6 @@ const Join: NextPage = (props: any) => {
 			await sweetMixinErrorAlert(err.message);
 		}
 	}, [input]);
-
-	console.log('+input: ', input);
 
 	if (device === 'mobile') {
 		return (

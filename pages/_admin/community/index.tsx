@@ -151,8 +151,6 @@ const AdminCommunity: NextPage = ({ initialInquiry, ...props }: any) => {
 		}
 	};
 
-	console.log('+communityInquiry', communityInquiry);
-	console.log('+articles', articles);
 
 	return (
 		<Box component={'div'} className={'content'}>

@@ -88,10 +88,6 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 		setCurrentPage(searchFilter.page === undefined ? 1 : searchFilter.page);
 	}, [router]);
 
-	useEffect(() => {
-		console.log('searchFilter:', searchFilter);
-	}, [searchFilter]);
-
 	/** HANDLERS **/
 
 	const likeCarHandler = async (user: T, id: string) => {

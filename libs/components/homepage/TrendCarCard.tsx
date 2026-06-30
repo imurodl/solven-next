@@ -28,7 +28,6 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 
 	/** HANDLERS **/
 	const pushDetailHandler = async (carId: string) => {
-		console.log('ID', carId);
 		await router.push({ pathname: '/car/detail', query: { id: carId } });
 	};
 

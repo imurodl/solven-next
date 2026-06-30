@@ -215,7 +215,6 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					});
 				}
 
-				console.log('carTypeSelectHandler:', e.target.value);
 			} catch (err: any) {
 				console.log('ERROR, carTypeSelectHandler:', err);
 			}
@@ -243,7 +242,6 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					});
 				}
 
-				console.log('carFuelTypeSelectHandler:', e.target.value);
 			} catch (err: any) {
 				console.log('ERROR, carFuelTypeSelectHandler:', err);
 			}
