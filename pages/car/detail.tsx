@@ -24,6 +24,7 @@ import { Pagination as MuiPagination } from '@mui/material';
 import Link from 'next/link';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import SEO from '../../libs/components/SEO';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { GET_COMMENTS, GET_CARS, GET_CAR } from '../../apollo/user/query';
@@ -66,13 +67,31 @@ import { Member } from '../../libs/types/member/member';
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
-export const getStaticProps = async ({ locale }: any) => ({
-	props: {
-		...(await serverSideTranslations(locale, ['common'])),
-	},
-});
+export const getServerSideProps = async ({ locale, query }: any) => {
+	const translations = await serverSideTranslations(locale, ['common']);
+	let initialCar = null;
+	const id = query?.id;
+	if (id) {
+		try {
+			const GRAPHQL_URL = process.env.REACT_APP_API_GRAPHQL_URL || 'https://api.solven.uz/graphql';
+			const res = await fetch(GRAPHQL_URL, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					query: `query GetCar($input: String!) { getCar(carId: $input) { _id carTitle carDesc carPrice carImages carBrand carModel carType carFuelType carMileage carColor manufacturedAt } }`,
+					variables: { input: id },
+				}),
+			});
+			const json = await res.json();
+			initialCar = json?.data?.getCar ?? null;
+		} catch {
+			initialCar = null;
+		}
+	}
+	return { props: { ...translations, initialCar } };
+};
 
-const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
+const PropertyDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -264,6 +283,42 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 		{ id: CarOptions.BLIND_SPOT_WARNING, icon: RemoveRedEyeIcon, label: 'Blind Spot Warning' },
 	];
 
+	const carForSeo = getCarData?.getCar || initialCar;
+	const seoImage = carForSeo?.carImages?.[0] ? `${REACT_APP_API_URL}/${carForSeo.carImages[0]}` : undefined;
+	const seoTags = carForSeo ? (
+		<SEO
+			canonical={`/car/detail?id=${carForSeo._id}`}
+			title={carForSeo.carTitle}
+			description={
+				carForSeo.carDesc
+					? String(carForSeo.carDesc).slice(0, 160)
+					: `${carForSeo.carTitle} for sale on Solven — $${formatterStr(carForSeo.carPrice)}. Browse cars in Korea.`
+			}
+			image={seoImage}
+			type="product"
+			jsonLd={{
+				'@context': 'https://schema.org',
+				'@type': 'Car',
+				name: carForSeo.carTitle,
+				brand: { '@type': 'Brand', name: carForSeo.carBrand },
+				model: carForSeo.carModel,
+				...(carForSeo.manufacturedAt ? { vehicleModelDate: String(carForSeo.manufacturedAt) } : {}),
+				...(carForSeo.carMileage != null
+					? { mileageFromOdometer: { '@type': 'QuantitativeValue', value: carForSeo.carMileage, unitCode: 'SMI' } }
+					: {}),
+				...(carForSeo.carColor ? { color: carForSeo.carColor } : {}),
+				...(carForSeo.carFuelType ? { fuelType: carForSeo.carFuelType } : {}),
+				...(seoImage ? { image: seoImage } : {}),
+				offers: {
+					'@type': 'Offer',
+					price: carForSeo.carPrice,
+					priceCurrency: 'USD',
+					availability: 'https://schema.org/InStock',
+				},
+			}}
+		/>
+	) : null;
+
 	if (getCarsLoading) {
 		return (
 			<Stack
@@ -277,6 +332,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 					background: '#f4f5f5',
 				}}
 			>
+				{seoTags}
 				<CircularProgress size={'6rem'} />
 			</Stack>
 		);
@@ -285,6 +341,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	if (device === 'mobile') {
 		return (
 			<div id="car-detail-page">
+				{seoTags}
 				<div className="container">
 					<Stack className="car-detail-config">
 						<Stack className="car-info-config">
@@ -566,6 +623,7 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 	} else {
 		return (
 			<div id="car-detail-page">
+				{seoTags}
 				<div className="container">
 					<Stack className="car-detail-config">
 						<Stack className="car-info-config">

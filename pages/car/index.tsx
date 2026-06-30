@@ -17,6 +17,7 @@ import {
 import CarCard from '../../libs/components/car/CarCard';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import SEO from '../../libs/components/SEO';
 import Filter from '../../libs/components/car/Filter';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -154,6 +155,10 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 	if (device === 'mobile') {
 		return (
 			<div id="property-list-page" style={{ position: 'relative' }}>
+				<SEO
+					title="Browse Cars for Sale"
+					description="Search new and used cars for sale in Korea on Solven. Filter by brand, location, price, fuel type and more."
+				/>
 				<div className="container">
 					<Stack className={`header-basic`}>
 						<Stack className={'container'}>
@@ -277,6 +282,10 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 	} else {
 		return (
 			<div id="property-list-page" style={{ position: 'relative' }}>
+				<SEO
+					title="Browse Cars for Sale"
+					description="Search new and used cars for sale in Korea on Solven. Filter by brand, location, price, fuel type and more."
+				/>
 				<div className="container">
 					<Stack className={`header-basic`}>
 						<Stack className={'container'}>

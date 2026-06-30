@@ -31,6 +31,7 @@ import { CommentGroup, CommentStatus } from '../../libs/enums/comment.enum';
 import { T } from '../../libs/types/common';
 import EditIcon from '@mui/icons-material/Edit';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import SEO from '../../libs/components/SEO';
 import { BoardArticle } from '../../libs/types/board-article/board-article';
 import { CREATE_COMMENT, LIKE_TARGET_BOARD_ARTICLE, UPDATE_COMMENT } from '../../apollo/user/mutation';
 import { GET_BOARD_ARTICLE, GET_COMMENTS } from '../../apollo/user/query';
@@ -44,13 +45,31 @@ import {
 import { CommentUpdate } from '../../libs/types/comment/comment.update';
 const ToastViewerComponent = dynamic(() => import('../../libs/components/community/TViewer'), { ssr: false });
 
-export const getStaticProps = async ({ locale }: any) => ({
-	props: {
-		...(await serverSideTranslations(locale, ['common'])),
-	},
-});
+export const getServerSideProps = async ({ locale, query }: any) => {
+	const translations = await serverSideTranslations(locale, ['common']);
+	let initialArticle = null;
+	const id = query?.id;
+	if (id) {
+		try {
+			const GRAPHQL_URL = process.env.REACT_APP_API_GRAPHQL_URL || 'https://api.solven.uz/graphql';
+			const res = await fetch(GRAPHQL_URL, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					query: `query GetBoardArticle($input: String!) { getBoardArticle(articleId: $input) { _id articleTitle articleContent articleImage articleCategory } }`,
+					variables: { input: id },
+				}),
+			});
+			const json = await res.json();
+			initialArticle = json?.data?.getBoardArticle ?? null;
+		} catch {
+			initialArticle = null;
+		}
+	}
+	return { props: { ...translations, initialArticle } };
+};
 
-const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
+const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const { query } = router;
@@ -256,6 +275,29 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 	} else {
 		return (
 			<div id="community-detail-page">
+				{(() => {
+					const art = boardArticle || initialArticle;
+					if (!art) return null;
+					const img = art.articleImage ? `${process.env.REACT_APP_API_URL}/${art.articleImage}` : undefined;
+					const plain = art.articleContent ? String(art.articleContent).replace(/<[^>]*>/g, ' ').trim() : '';
+					return (
+						<SEO
+							canonical={`/community/detail?id=${art._id}`}
+							title={art.articleTitle}
+							description={plain ? plain.slice(0, 160) : `Read "${art.articleTitle}" on the Solven community.`}
+							image={img}
+							type="article"
+							jsonLd={{
+								'@context': 'https://schema.org',
+								'@type': 'Article',
+								headline: art.articleTitle,
+								...(img ? { image: img } : {}),
+								articleSection: art.articleCategory,
+								url: `https://solven.uz/community/detail?id=${art._id}`,
+							}}
+						/>
+					);
+				})()}
 				<div className="container">
 					<Stack className="main-box">
 						<Stack className="left-config">

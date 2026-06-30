@@ -18,17 +18,36 @@ import { Comment } from '../../libs/types/comment/comment';
 import { CommentGroup } from '../../libs/enums/comment.enum';
 import { Messages, REACT_APP_API_URL } from '../../libs/config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import SEO from '../../libs/components/SEO';
 import { CREATE_COMMENT, LIKE_TARGET_CAR } from '../../apollo/user/mutation';
 import { GET_COMMENTS, GET_MEMBER, GET_CARS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 
-export const getStaticProps = async ({ locale }: any) => ({
-	props: {
-		...(await serverSideTranslations(locale, ['common'])),
-	},
-});
+export const getServerSideProps = async ({ locale, query }: any) => {
+	const translations = await serverSideTranslations(locale, ['common']);
+	let initialAgent = null;
+	const id = query?.agentId;
+	if (id) {
+		try {
+			const GRAPHQL_URL = process.env.REACT_APP_API_GRAPHQL_URL || 'https://api.solven.uz/graphql';
+			const res = await fetch(GRAPHQL_URL, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					query: `query GetMember($input: String!) { getMember(memberId: $input) { _id memberNick memberFullName memberImage memberDesc } }`,
+					variables: { input: id },
+				}),
+			});
+			const json = await res.json();
+			initialAgent = json?.data?.getMember ?? null;
+		} catch {
+			initialAgent = null;
+		}
+	}
+	return { props: { ...translations, initialAgent } };
+};
 
-const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) => {
+const AgentDetail: NextPage = ({ initialInput, initialComment, initialAgent, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -177,6 +196,28 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 	} else {
 		return (
 			<Stack className={'agent-detail-page'}>
+				{(() => {
+					const a = agent || initialAgent;
+					if (!a) return null;
+					const name = a.memberFullName || a.memberNick;
+					const img = a.memberImage ? `${REACT_APP_API_URL}/${a.memberImage}` : undefined;
+					return (
+						<SEO
+							canonical={`/agent/detail?agentId=${a._id}`}
+							title={`${name} — Car Agent`}
+							description={a.memberDesc ? String(a.memberDesc).slice(0, 160) : `View ${name}'s car listings and reviews on Solven.`}
+							image={img}
+							type="profile"
+							jsonLd={{
+								'@context': 'https://schema.org',
+								'@type': 'Person',
+								name,
+								...(img ? { image: img } : {}),
+								url: `https://solven.uz/agent/detail?agentId=${a._id}`,
+							}}
+						/>
+					);
+				})()}
 				<Stack className={'container'}>
 					<Stack className={'agent-info'}>
 						<img

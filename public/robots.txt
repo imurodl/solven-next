@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /_admin/
+Disallow: /mypage/
+Disallow: /account/
+
+Sitemap: https://solven.uz/sitemap.xml

@@ -24,12 +24,9 @@
 		"@mui/styles": "^5.5.3",
 		"@mui/x-date-pickers-pro": "^5.0.0-beta.0",
 		"@pmndrs/branding": "0.0.8",
-		"@react-three/drei": "9.58.5",
-		"@react-three/fiber": "8.12.0",
 		"@toast-ui/editor-plugin-color-syntax": "^3.0.3",
 		"@toast-ui/editor-plugin-table-merged-cell": "^3.0.2",
 		"@toast-ui/react-editor": "^3.1.7",
-		"@types/three": "0.150.0",
 		"animate.css": "^4.1.1",
 		"aos": "^2.3.4",
 		"apollo-link-token-refresh": "^0.4.0",
@@ -68,7 +65,6 @@
 		"subscriptions-transport-ws": "^0.9.19",
 		"sweetalert2": "^11.7.27",
 		"swiper": "^8.3.1",
-		"three": "0.150.1",
 		"valtio": "1.10.3"
 	},
 	"devDependencies": {

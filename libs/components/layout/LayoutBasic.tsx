@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import Head from 'next/head';
 import Top from '../Top';
 import Footer from '../Footer';
 import { Stack } from '@mui/material';
@@ -85,10 +84,6 @@ const withLayoutBasic = (Component: any) => {
 		if (device == 'mobile') {
 			return (
 				<>
-					<Head>
-						<title>Solven</title>
-						<meta name={'title'} content={`Solven`} />
-					</Head>
 					<Stack id="mobile-wrap">
 						<Stack id={'top'}>
 							<TopBasic />
@@ -107,10 +102,6 @@ const withLayoutBasic = (Component: any) => {
 		} else {
 			return (
 				<>
-					<Head>
-						<title>Solven</title>
-						<meta name={'title'} content={`Solven`} />
-					</Head>
 					<Stack id="pc-wrap">
 						<Stack id={'top'}>
 							<TopBasic />

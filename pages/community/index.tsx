@@ -6,6 +6,7 @@ import { Stack, Tab, Typography, Button, Pagination } from '@mui/material';
 import CommunityCard from '../../libs/components/common/CommunityCard';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import SEO from '../../libs/components/SEO';
 import { BoardArticle } from '../../libs/types/board-article/board-article';
 import { T } from '../../libs/types/common';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -107,6 +108,10 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 	if (device === 'mobile') {
 		return (
 			<div id="community-list-page">
+				<SEO
+					title="Community"
+					description="Join the Solven community — car news, buying advice, reviews and discussions for car buyers and sellers in Korea."
+				/>
 				<div className="container">
 					<Stack className="header-basic">
 						<Stack className="container">
@@ -216,6 +221,10 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 	} else {
 		return (
 			<div id="community-list-page">
+				<SEO
+					title="Community"
+					description="Join the Solven community — car news, buying advice, reviews and discussions for car buyers and sellers in Korea."
+				/>
 				<div className="container">
 					<Stack className={`header-basic`}>
 						<Stack className={'container'}>
