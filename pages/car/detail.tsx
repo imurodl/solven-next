@@ -44,7 +44,6 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
-import { Rating } from '@mui/material';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AcUnitIcon from '@mui/icons-material/AcUnit';
@@ -62,6 +61,7 @@ import TireRepairIcon from '@mui/icons-material/Build';
 import UsbIcon from '@mui/icons-material/Usb';
 import BatteryChargingFullIcon from '@mui/icons-material/BatteryChargingFull';
 import { CarFuelType, CarLocation, CarType, CarOptions } from '../../libs/enums/car.enum';
+import { MemberType } from '../../libs/enums/member.enum';
 import { Member } from '../../libs/types/member/member';
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
@@ -525,10 +525,13 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 												<Link href={`/member?memberId=${sellerInfo?._id}`}>
 													<Typography className="seller-name">{sellerInfo?.memberNick}</Typography>
 												</Link>
-												<Typography className="seller-type">Verified Seller</Typography>
+												<Typography className="seller-type">
+													{sellerInfo?.memberType === MemberType.AGENT ? 'Verified Agent' : 'Private Seller'}
+												</Typography>
 												<Stack className="seller-rating">
-													<Rating value={4.5} readOnly precision={0.5} size="small" />
-													<Typography className="rating-count">(32 reviews)</Typography>
+													<Typography className="rating-count">
+														{sellerInfo?.memberCars ?? 0} listings · {sellerInfo?.memberLikes ?? 0} likes
+													</Typography>
 												</Stack>
 											</Stack>
 										</Stack>
@@ -846,10 +849,13 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 											<Link href={`/member?memberId=${sellerInfo?._id}`}>
 												<Typography className="seller-name">{sellerInfo?.memberNick}</Typography>
 											</Link>
-											<Typography className="seller-type">Verified Seller</Typography>
+											<Typography className="seller-type">
+													{sellerInfo?.memberType === MemberType.AGENT ? 'Verified Agent' : 'Private Seller'}
+												</Typography>
 											<Stack className="seller-rating">
-												<Rating value={4.5} readOnly precision={0.5} size="small" />
-												<Typography className="rating-count">(32 reviews)</Typography>
+												<Typography className="rating-count">
+													{sellerInfo?.memberCars ?? 0} listings · {sellerInfo?.memberLikes ?? 0} likes
+												</Typography>
 											</Stack>
 										</Stack>
 									</Stack>
