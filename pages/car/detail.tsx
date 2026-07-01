@@ -22,6 +22,7 @@ import { Comment } from '../../libs/types/comment/comment';
 import { CommentGroup } from '../../libs/enums/comment.enum';
 import { Pagination as MuiPagination } from '@mui/material';
 import Link from 'next/link';
+import Image from 'next/image';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import SEO from '../../libs/components/SEO';
@@ -347,9 +348,12 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 							<Stack className="images-container">
 								<Stack className="main-image-info-container">
 									<Box className="main-image-box">
-										<img
+										<Image
 											src={`${REACT_APP_API_URL}/${slideImage || getCarData?.getCar?.carImages?.[0]}`}
-											alt={getCarData?.getCar?.carTitle}
+											alt={getCarData?.getCar?.carTitle || 'Car'}
+											width={1200}
+											height={900}
+											sizes="(max-width: 768px) 100vw, 700px"
 										/>
 									</Box>
 									<Stack className="thumbnail-list">
@@ -359,10 +363,13 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 												className={`thumbnail-item ${slideImage === image ? 'active' : ''}`}
 												onClick={() => changeImageHandler(image)}
 											>
-												<img
-													src={`${REACT_APP_API_URL}/${image}`}
-													alt={`${getCarData?.getCar?.carTitle} - Image ${index + 1}`}
-												/>
+												<Image
+												src={`${REACT_APP_API_URL}/${image}`}
+												alt={`${getCarData?.getCar?.carTitle} - Image ${index + 1}`}
+												width={200}
+												height={200}
+												sizes="120px"
+											/>
 											</Box>
 										))}
 									</Stack>
@@ -512,15 +519,17 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 									<Stack className="seller-info">
 										<Typography className="section-title">Seller Information</Typography>
 										<Stack className="seller-profile">
-											<img
-												className="profile-image"
-												src={
-													sellerInfo?.memberImage
-														? `${REACT_APP_API_URL}/${sellerInfo.memberImage}`
-														: '/img/profile/defaultUser.svg'
-												}
-												alt="Seller"
-											/>
+											<Image
+											className="profile-image"
+											src={
+												sellerInfo?.memberImage
+													? `${REACT_APP_API_URL}/${sellerInfo.memberImage}`
+													: '/img/profile/defaultUser.svg'
+											}
+											alt="Seller"
+											width={80}
+											height={80}
+										/>
 											<Stack className="profile-details">
 												<Link href={`/member?memberId=${sellerInfo?._id}`}>
 													<Typography className="seller-name">{sellerInfo?.memberNick}</Typography>
@@ -632,9 +641,12 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 							<Stack className="images-container">
 								<Stack className="main-image-info-container">
 									<Box className="main-image-box">
-										<img
+										<Image
 											src={`${REACT_APP_API_URL}/${slideImage || getCarData?.getCar?.carImages?.[0]}`}
-											alt={getCarData?.getCar?.carTitle}
+											alt={getCarData?.getCar?.carTitle || 'Car'}
+											width={1200}
+											height={900}
+											sizes="(max-width: 768px) 100vw, 700px"
 										/>
 									</Box>
 
@@ -711,9 +723,12 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 											className={`thumbnail-item ${slideImage === image ? 'active' : ''}`}
 											onClick={() => changeImageHandler(image)}
 										>
-											<img
+											<Image
 												src={`${REACT_APP_API_URL}/${image}`}
 												alt={`${getCarData?.getCar?.carTitle} - Image ${index + 1}`}
+												width={200}
+												height={200}
+												sizes="120px"
 											/>
 										</Box>
 									))}
@@ -836,7 +851,7 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 								<Stack className="seller-info">
 									<Typography className="section-title">Seller Information</Typography>
 									<Stack className="seller-profile">
-										<img
+										<Image
 											className="profile-image"
 											src={
 												sellerInfo?.memberImage
@@ -844,6 +859,8 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 													: '/img/profile/defaultUser.svg'
 											}
 											alt="Seller"
+											width={80}
+											height={80}
 										/>
 										<Stack className="profile-details">
 											<Link href={`/member?memberId=${sellerInfo?._id}`}>

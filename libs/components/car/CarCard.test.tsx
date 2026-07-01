@@ -6,6 +6,11 @@ jest.mock('next/link', () => ({
 	default: ({ children }: any) => children,
 }));
 
+jest.mock('next/image', () => ({
+	__esModule: true,
+	default: ({ src, alt }: any) => <img src={typeof src === 'string' ? src : ''} alt={alt} />,
+}));
+
 const baseCar: any = {
 	_id: 'car-1',
 	carTitle: 'Test Coupe',

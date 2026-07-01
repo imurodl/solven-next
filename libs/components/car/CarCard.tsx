@@ -9,6 +9,7 @@ import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import SettingsIcon from '@mui/icons-material/Settings';
 import type { Car } from '../../types/car/car';
 import Link from 'next/link';
+import Image from 'next/image';
 import { formatterStr } from '../../utils';
 import { REACT_APP_API_URL, topCarRank } from '../../config';
 import { useReactiveVar } from '@apollo/client';
@@ -43,7 +44,13 @@ const CarCard = (props: CarCardType) => {
 						}}
 						className="image-link"
 					>
-						<img src={imagePath || '/placeholder.svg'} alt="" />
+						<Image
+								src={imagePath || '/placeholder.svg'}
+								alt=""
+								width={800}
+								height={600}
+								sizes="(max-width: 768px) 100vw, 300px"
+							/>
 					</Link>
 				</Stack>
 				<Stack className="bottom">
@@ -108,7 +115,13 @@ const CarCard = (props: CarCardType) => {
 							query: { id: car?._id },
 						}}
 					>
-						<img src={imagePath || '/placeholder.svg'} alt="" />
+						<Image
+								src={imagePath || '/placeholder.svg'}
+								alt=""
+								width={800}
+								height={600}
+								sizes="(max-width: 768px) 100vw, 300px"
+							/>
 					</Link>
 				</Stack>
 				<Stack className="bottom">
