@@ -5,7 +5,12 @@ import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import { Stack, Box } from '@mui/material';
 
-const About: NextPage = () => {
+interface AboutProps {
+	carsCount: string;
+	agentsCount: string;
+}
+
+const About: NextPage<AboutProps> = ({ carsCount, agentsCount }) => {
 	const device = useDeviceDetect();
 
 	if (device === 'mobile') {
@@ -29,16 +34,16 @@ const About: NextPage = () => {
 					<Stack className="container">
 						<Box className="stat-grid">
 							<div className="stat-item">
-								<span className="number">15K+</span>
+								<span className="number">{carsCount}</span>
 								<span className="label">Cars Listed</span>
 							</div>
 							<div className="stat-item">
-								<span className="number">10K+</span>
-								<span className="label">Happy Customers</span>
+								<span className="number">{agentsCount}</span>
+								<span className="label">Expert Dealers</span>
 							</div>
 							<div className="stat-item">
-								<span className="number">500+</span>
-								<span className="label">Expert Dealers</span>
+								<span className="number">4</span>
+								<span className="label">Languages</span>
 							</div>
 							<div className="stat-item">
 								<span className="number">24/7</span>
@@ -124,16 +129,16 @@ const About: NextPage = () => {
 					<Stack className="container">
 						<Box className="stat-grid">
 							<div className="stat-item">
-								<span className="number">15K+</span>
+								<span className="number">{carsCount}</span>
 								<span className="label">Cars Listed</span>
 							</div>
 							<div className="stat-item">
-								<span className="number">10K+</span>
-								<span className="label">Happy Customers</span>
+								<span className="number">{agentsCount}</span>
+								<span className="label">Expert Dealers</span>
 							</div>
 							<div className="stat-item">
-								<span className="number">500+</span>
-								<span className="label">Expert Dealers</span>
+								<span className="number">4</span>
+								<span className="label">Languages</span>
 							</div>
 							<div className="stat-item">
 								<span className="number">24/7</span>
@@ -199,6 +204,30 @@ const About: NextPage = () => {
 			</Stack>
 		);
 	}
+};
+
+export const getServerSideProps = async () => {
+	const endpoint = process.env.REACT_APP_API_GRAPHQL_URL || 'https://api.solven.uz/graphql';
+	const query = `query {
+		getCars(input: { page: 1, limit: 1, sort: "createdAt", direction: DESC, search: {} }) { metaCounter { total } }
+		getAgents(input: { page: 1, limit: 1, sort: "memberRank", direction: DESC, search: {} }) { metaCounter { total } }
+	}`;
+	// Fail-open: real stats when reachable, honest fallbacks otherwise — never break the page.
+	let carsCount = '—';
+	let agentsCount = '—';
+	try {
+		const res = await fetch(endpoint, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ query }),
+		});
+		const json = await res.json();
+		carsCount = `${json?.data?.getCars?.metaCounter?.[0]?.total ?? '—'}`;
+		agentsCount = `${json?.data?.getAgents?.metaCounter?.[0]?.total ?? '—'}`;
+	} catch {
+		// keep fallbacks
+	}
+	return { props: { carsCount, agentsCount } };
 };
 
 export default withLayoutBasic(About);
