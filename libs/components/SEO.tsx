@@ -9,6 +9,23 @@ const DEFAULT_DESCRIPTION =
 	'Solven is a trusted car marketplace in South Korea. Browse new and used cars, compare prices, connect with verified agents, and find your perfect car.';
 const DEFAULT_IMAGE = `${SITE_URL}/img/logo/solven.png`;
 
+/**
+ * Builds an absolute canonical URL from a path. Drops the bulky `input` filter
+ * param (so list pages canonicalize to a clean URL) while keeping meaningful
+ * identifiers like `id` / `agentId` / `articleCategory`.
+ */
+export const buildCanonicalUrl = (source: string): string => {
+	const [pathOnly, queryString] = (source || '/').split('#')[0].split('?');
+	let canonicalPath = pathOnly;
+	if (queryString) {
+		const params = new URLSearchParams(queryString);
+		params.delete('input');
+		const kept = params.toString();
+		canonicalPath = kept ? `${pathOnly}?${kept}` : pathOnly;
+	}
+	return `${SITE_URL}${canonicalPath === '/' ? '' : canonicalPath}`;
+};
+
 interface SEOProps {
 	title?: string;
 	description?: string;
@@ -21,17 +38,7 @@ interface SEOProps {
 
 const SEO = ({ title, description, image, type = 'website', noindex = false, jsonLd, canonical }: SEOProps) => {
 	const router = useRouter();
-	const [pathOnly, queryString] = (canonical || router.asPath || '/').split('#')[0].split('?');
-	// Keep meaningful identifiers (id, agentId, articleCategory) in the canonical URL,
-	// but drop the bulky `input` filter JSON so list pages canonicalize to a clean URL.
-	let canonicalPath = pathOnly;
-	if (queryString) {
-		const params = new URLSearchParams(queryString);
-		params.delete('input');
-		const kept = params.toString();
-		canonicalPath = kept ? `${pathOnly}?${kept}` : pathOnly;
-	}
-	const url = `${SITE_URL}${canonicalPath === '/' ? '' : canonicalPath}`;
+	const url = buildCanonicalUrl(canonical || router.asPath || '/');
 	const fullTitle = title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE;
 	const desc = description || DEFAULT_DESCRIPTION;
 	const img = image || DEFAULT_IMAGE;

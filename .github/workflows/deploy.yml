@@ -24,6 +24,9 @@ jobs:
       - name: Lint
         run: yarn lint
 
+      - name: Test
+        run: yarn test
+
   deploy:
     needs: check
     runs-on: ubuntu-latest
