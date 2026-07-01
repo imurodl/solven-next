@@ -33,7 +33,7 @@ const Review = (props: ReviewProps) => {
 		return (
 			<Stack className="review-item">
 				<Stack className="review-header">
-					<Image src={imagePath} alt="" className="reviewer-image" width={800} height={600} />
+					<Image src={imagePath} alt={comment?.memberData?.memberNick || 'Reviewer'} className="reviewer-image" width={800} height={600} />
 					<Stack className="reviewer-info">
 						<Typography className="reviewer-name" onClick={() => goMemberPage(comment?.memberData?._id as string)}>
 							{comment.memberData?.memberNick}
@@ -50,7 +50,7 @@ const Review = (props: ReviewProps) => {
 		return (
 			<Stack className="review-item">
 				<Stack className="review-header">
-					<Image src={imagePath} alt="" className="reviewer-image" width={800} height={600} />
+					<Image src={imagePath} alt={comment?.memberData?.memberNick || 'Reviewer'} className="reviewer-image" width={800} height={600} />
 					<Stack className="reviewer-info">
 						<Typography className="reviewer-name" onClick={() => goMemberPage(comment?.memberData?._id as string)}>
 							{comment.memberData?.memberNick}

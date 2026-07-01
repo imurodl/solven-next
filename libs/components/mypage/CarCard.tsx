@@ -57,7 +57,7 @@ export const CarCard = (props: CarCardProps) => {
 		return (
 			<Stack className="property-card-box">
 				<Stack className="image-box" onClick={() => pushCarDetail(car?._id)}>
-					<Image src={`${process.env.REACT_APP_API_URL}/${car.carImages[0]}`} alt="" width={800} height={600} />
+					<Image src={`${process.env.REACT_APP_API_URL}/${car.carImages[0]}`} alt={car.carTitle || 'Car listing'} width={800} height={600} />
 				</Stack>
 				<Stack className="information-box" onClick={() => pushCarDetail(car?._id)}>
 					<Typography className="name">{car.carTitle}</Typography>

@@ -44,7 +44,7 @@ const ReviewCard = (props: ReviewCardProps) => {
 					<Stack direction="row" spacing={1.5} alignItems="center">
 						<Image
 							src={imagePath}
-							alt=""
+									alt={comment?.memberData?.memberNick || 'Reviewer'}
 							style={{
 								width: '44px',
 								height: '44px',

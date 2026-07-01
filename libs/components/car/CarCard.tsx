@@ -46,7 +46,7 @@ const CarCard = (props: CarCardType) => {
 					>
 						<Image
 								src={imagePath || '/placeholder.svg'}
-								alt=""
+								alt={car?.carTitle || 'Car listing'}
 								width={800}
 								height={600}
 								sizes="(max-width: 768px) 100vw, 300px"
@@ -117,7 +117,7 @@ const CarCard = (props: CarCardType) => {
 					>
 						<Image
 								src={imagePath || '/placeholder.svg'}
-								alt=""
+								alt={car?.carTitle || 'Car listing'}
 								width={800}
 								height={600}
 								sizes="(max-width: 768px) 100vw, 300px"

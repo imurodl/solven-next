@@ -49,7 +49,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 		return (
 			<Stack className="community-general-card-config" onClick={(e: any) => chooseArticleHandler(e, boardArticle)}>
 				<Stack className="image-box">
-					<Image src={imagePath} alt="" className="card-img" width={800} height={600} />
+					<Image src={imagePath} alt={boardArticle?.articleTitle || 'Article'} className="card-img" width={800} height={600} />
 				</Stack>
 				<Stack className="desc-box" sx={{ marginTop: '-20px' }}>
 					<Stack width={'100%'}>
@@ -97,7 +97,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 		return (
 			<Stack className="community-general-card-config" onClick={(e: any) => chooseArticleHandler(e, boardArticle)}>
 				<Stack className="image-box">
-					<Image src={imagePath} alt="" className="card-img" width={800} height={600} />
+					<Image src={imagePath} alt={boardArticle?.articleTitle || 'Article'} className="card-img" width={800} height={600} />
 				</Stack>
 				<Stack className="desc-box" sx={{ marginTop: '-20px' }}>
 					<Stack width={'100%'}>
