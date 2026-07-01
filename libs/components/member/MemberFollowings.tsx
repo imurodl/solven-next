@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Box, Button, Pagination, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useRouter } from 'next/router';
@@ -94,7 +95,7 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 							<Stack className="follows-card-box" key={follower._id}>
 								<Stack className={'info'} onClick={() => redirectToMemberPageHandler(follower?.followingData?._id)}>
 									<Stack className="image-box">
-										<img src={imagePath} alt="" />
+										<Image src={imagePath} alt="" width={800} height={600} />
 									</Stack>
 									<Stack className="information-box">
 										<Typography className="name">{follower?.followingData?.memberNick}</Typography>

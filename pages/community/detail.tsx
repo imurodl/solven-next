@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
@@ -366,11 +367,13 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 										<Stack className="content">
 											<Typography className="content-data">{boardArticle?.articleTitle}</Typography>
 											<Stack className="member-info">
-												<img
+												<Image
 													src={memberImage}
 													alt=""
 													className="member-img"
 													onClick={() => goMemberPage(boardArticle?.memberData?._id)}
+													width={800}
+													height={600}
 												/>
 												<Typography className="member-nick" onClick={() => goMemberPage(boardArticle?.memberData?._id)}>
 													{boardArticle?.memberData?.memberNick}
@@ -428,10 +431,12 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 												<Stack className="review-item" key={commentData?._id}>
 													<Stack className="review-header">
 														<Stack className="user-info">
-															<img
+															<Image
 																src={getCommentMemberImage(commentData?.memberData?.memberImage)}
 																alt=""
 																onClick={() => goMemberPage(commentData?.memberData?._id)}
+																width={800}
+																height={600}
 															/>
 															<Stack className="info">
 																<Typography className="name" onClick={() => goMemberPage(commentData?.memberData?._id)}>

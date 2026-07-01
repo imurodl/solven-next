@@ -11,6 +11,7 @@ import Menu, { MenuProps } from '@mui/material/Menu';
 import { CaretDown, List, X } from 'phosphor-react';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 import Link from 'next/link';
+import Image from 'next/image';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import { useReactiveVar } from '@apollo/client';
 import { userVar, socketVar } from '../../apollo/store';
@@ -227,13 +228,15 @@ const Top = () => {
 									/>
 									<div className={'user-box'}>
 										<div className={'login-user'} onClick={(event: any) => setLogoutAnchor(event.currentTarget)}>
-											<img
+											<Image
 												src={
 													user?.memberImage
 														? `${REACT_APP_API_URL}/${user?.memberImage}`
 														: '/img/profile/defaultUser.svg'
 												}
 												alt=""
+												width={800}
+												height={600}
 											/>
 										</div>
 
@@ -393,11 +396,13 @@ const Top = () => {
 							{user?._id ? (
 								<>
 									<div className={'login-user'} onClick={(event: any) => setLogoutAnchor(event.currentTarget)}>
-										<img
+										<Image
 											src={
 												user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'
 											}
 											alt=""
+											width={800}
+											height={600}
 										/>
 									</div>
 

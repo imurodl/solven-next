@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { NextPage } from 'next';
 import { Button, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
@@ -152,13 +153,15 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 					<Stack className="profile-sidebar">
 						<Stack className="photo-box">
 							<div className="image-box">
-								<img
+								<Image
 									src={
 										updateData?.memberImage
 											? `${REACT_APP_API_URL}/${updateData?.memberImage}`
 											: `/img/profile/defaultUser.svg`
 									}
 									alt=""
+									width={800}
+									height={600}
 								/>
 							</div>
 							<div className="upload-box">

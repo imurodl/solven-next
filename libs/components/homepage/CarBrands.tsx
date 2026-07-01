@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { GET_CAR_BRANDS_BY_USER } from '../../../apollo/user/query';
 import { useQuery } from '@apollo/client';
 import { CarBrand } from '../../types/car/car-brand';
@@ -69,7 +70,7 @@ const CarBrands: NextPage<{ initialInput?: CarsInquiry }> = ({ initialInput }) =
 									return (
 										<SwiperSlide key={carBrand._id} className="brand-slide">
 											<Stack onClick={() => pushBrandHandler(carBrand.carBrandName)} className="brand-item">
-												<img
+												<Image
 													alt={carBrand.carBrandName}
 													src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`}
 													width={100}
@@ -123,7 +124,7 @@ const CarBrands: NextPage<{ initialInput?: CarsInquiry }> = ({ initialInput }) =
 									return (
 										<SwiperSlide key={carBrand._id} className="brand-slide">
 											<Stack onClick={() => pushBrandHandler(carBrand.carBrandName)} className="brand-item">
-												<img
+												<Image
 													alt={carBrand.carBrandName}
 													src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`}
 													width={100}

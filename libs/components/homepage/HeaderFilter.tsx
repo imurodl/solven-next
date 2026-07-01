@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import { Stack, Box, Modal, Divider, Button, Typography, Checkbox } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -403,7 +404,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						{carBrands.map((carBrand: CarBrand) => {
 							return (
 								<div onClick={() => propertyTypeSelectHandler(carBrand.carBrandName)} key={carBrand._id}>
-									<img src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`} alt={carBrand.carBrandName} />
+									<Image src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`} alt={carBrand.carBrandName} width={800} height={600} />
 									<span>{carBrand.carBrandName}</span>
 								</div>
 							);
@@ -664,7 +665,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						{carBrands.map((carBrand: CarBrand) => {
 							return (
 								<div onClick={() => propertyTypeSelectHandler(carBrand.carBrandName)} key={carBrand._id}>
-									<img src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`} alt={carBrand.carBrandName} />
+									<Image src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`} alt={carBrand.carBrandName} width={800} height={600} />
 									<span>{carBrand.carBrandName}</span>
 								</div>
 							);

@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
+import Image from 'next/image';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
@@ -220,10 +221,12 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, initialAgent, ...
 				})()}
 				<Stack className={'container'}>
 					<Stack className={'agent-info'}>
-						<img
+						<Image
 							src={agent?.memberImage ? `${REACT_APP_API_URL}/${agent?.memberImage}` : '/img/profile/defaultUser.svg'}
 							alt=""
 							onClick={() => redirectToMemberPageHandler(agent?._id as string)}
+							width={800}
+							height={600}
 						/>
 						<Box component={'div'} className={'info'} onClick={() => redirectToMemberPageHandler(agent?._id as string)}>
 							<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>

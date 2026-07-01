@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Comment } from '../../types/comment/comment';
@@ -32,7 +33,7 @@ const Review = (props: ReviewProps) => {
 		return (
 			<Stack className="review-item">
 				<Stack className="review-header">
-					<img src={imagePath} alt="" className="reviewer-image" />
+					<Image src={imagePath} alt="" className="reviewer-image" width={800} height={600} />
 					<Stack className="reviewer-info">
 						<Typography className="reviewer-name" onClick={() => goMemberPage(comment?.memberData?._id as string)}>
 							{comment.memberData?.memberNick}
@@ -49,7 +50,7 @@ const Review = (props: ReviewProps) => {
 		return (
 			<Stack className="review-item">
 				<Stack className="review-header">
-					<img src={imagePath} alt="" className="reviewer-image" />
+					<Image src={imagePath} alt="" className="reviewer-image" width={800} height={600} />
 					<Stack className="reviewer-info">
 						<Typography className="reviewer-name" onClick={() => goMemberPage(comment?.memberData?._id as string)}>
 							{comment.memberData?.memberNick}

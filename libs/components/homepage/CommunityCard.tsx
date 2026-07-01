@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Box, Skeleton } from '@mui/material';
 import Moment from 'react-moment';
@@ -44,7 +45,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 				className={`community-card horizontal`}
 			>
 				<div className="card-media">
-					<img src={articleImage} alt={article?.articleTitle} />
+					<Image src={articleImage} alt={article?.articleTitle} width={800} height={600} />
 				</div>
 				<div className="card-content">
 					<h3 className="article-title">{article.articleTitle}</h3>
@@ -86,7 +87,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 				className={`community-card horizontal`}
 			>
 				<div className="card-media">
-					<img src={articleImage} alt={article?.articleTitle} />
+					<Image src={articleImage} alt={article?.articleTitle} width={800} height={600} />
 				</div>
 				<div className="card-content">
 					<h3 className="article-title">{article.articleTitle}</h3>

@@ -1,4 +1,5 @@
 import { Menu, MenuItem, Stack, Typography } from '@mui/material';
+import Image from 'next/image';
 import React, { useState } from 'react';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import IconButton from '@mui/material/IconButton';
@@ -56,7 +57,7 @@ export const CarCard = (props: CarCardProps) => {
 		return (
 			<Stack className="property-card-box">
 				<Stack className="image-box" onClick={() => pushCarDetail(car?._id)}>
-					<img src={`${process.env.REACT_APP_API_URL}/${car.carImages[0]}`} alt="" />
+					<Image src={`${process.env.REACT_APP_API_URL}/${car.carImages[0]}`} alt="" width={800} height={600} />
 				</Stack>
 				<Stack className="information-box" onClick={() => pushCarDetail(car?._id)}>
 					<Typography className="name">{car.carTitle}</Typography>

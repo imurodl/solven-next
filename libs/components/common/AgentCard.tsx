@@ -14,6 +14,7 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import Link from 'next/link';
+import Image from 'next/image';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 interface AgentCardProps {
@@ -41,7 +42,7 @@ const AgentCard = (props: AgentCardProps) => {
 					}}
 				>
 					<div className="agent-header">
-						<img src={agentImage || '/placeholder.svg'} alt={agent?.memberNick} />
+						<Image src={agentImage || '/placeholder.svg'} alt={agent?.memberNick} width={800} height={600} />
 						<div className="agent-info">
 							<div className="name-section">
 								<PersonIcon />
@@ -133,7 +134,7 @@ const AgentCard = (props: AgentCardProps) => {
 					}}
 				>
 					<div className="agent-header">
-						<img src={agentImage || '/placeholder.svg'} alt={agent?.memberNick} />
+						<Image src={agentImage || '/placeholder.svg'} alt={agent?.memberNick} width={800} height={600} />
 						<div className="agent-info">
 							<div className="name-section">
 								<PersonIcon />

@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Stack, Box, Typography } from '@mui/material';
 import { Comment } from '../../types/comment/comment';
@@ -41,7 +42,7 @@ const ReviewCard = (props: ReviewCardProps) => {
 			>
 				<Stack className={'info'} direction="row" justifyContent="space-between" alignItems="flex-start" spacing={1.5}>
 					<Stack direction="row" spacing={1.5} alignItems="center">
-						<img
+						<Image
 							src={imagePath}
 							alt=""
 							style={{
@@ -57,6 +58,8 @@ const ReviewCard = (props: ReviewCardProps) => {
 							onMouseOut={(e) => {
 								e.currentTarget.style.transform = 'scale(1)';
 							}}
+							width={800}
+							height={600}
 						/>
 						<Stack spacing={0.5}>
 							<Typography
