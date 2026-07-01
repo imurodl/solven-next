@@ -1,4 +1,5 @@
-#pc-wrap {
+#pc-wrap,
+#mobile-wrap {
 	background: #050b20;
 	.agent-detail-page {
 		position: relative;
@@ -6,6 +7,21 @@
 		border-radius: 80px;
 		padding: 80px 0;
 		min-height: auto;
+
+		@media (max-width: 768px) {
+			border-radius: 30px;
+			padding: 40px 16px !important;
+
+			.container {
+				gap: 16px !important;
+			}
+
+			.agent-info {
+				.info strong {
+					font-size: 20px !important;
+				}
+			}
+		}
 
 		.container {
 			display: flex;

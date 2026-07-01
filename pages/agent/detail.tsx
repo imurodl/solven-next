@@ -192,10 +192,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, initialAgent, ...
 		}
 	};
 
-	if (device === 'mobile') {
-		return <div>AGENT DETAIL PAGE MOBILE</div>;
-	} else {
-		return (
+	return (
 			<Stack className={'agent-detail-page'}>
 				{(() => {
 					const a = agent || initialAgent;
@@ -334,7 +331,6 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, initialAgent, ...
 				</Stack>
 			</Stack>
 		);
-	}
 };
 
 AgentDetail.defaultProps = {

@@ -1,7 +1,29 @@
-#pc-wrap {
+#pc-wrap,
+#mobile-wrap {
 	background: #050b20;
 	#my-page {
 		padding-bottom: 40px;
+
+		@media (max-width: 768px) {
+			.container .my-page {
+				flex-direction: column !important;
+
+				.back-frame {
+					flex-direction: column !important;
+
+					.left-config {
+						width: 100% !important;
+						min-height: auto !important;
+					}
+
+					.main-config {
+						width: 100% !important;
+						padding: 16px !important;
+					}
+				}
+			}
+		}
+
 		.container {
 			display: flex;
 			flex-direction: column;

@@ -271,10 +271,7 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 		setSearchFilter({ ...searchFilter, page: value });
 	};
 
-	if (device === 'mobile') {
-		return <div>COMMUNITY DETAIL PAGE MOBILE</div>;
-	} else {
-		return (
+	return (
 			<div id="community-detail-page">
 				{(() => {
 					const art = boardArticle || initialArticle;
@@ -531,7 +528,6 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 				</Backdrop>
 			</div>
 		);
-	}
 };
 CommunityDetail.defaultProps = {
 	initialInput: {
