@@ -72,7 +72,15 @@ const CommunityCard = (props: CommunityCardProps) => {
 							<Typography className="view-cnt">{boardArticle?.articleViews}</Typography>
 						</div>
 						<div className="stat-group" style={{ display: 'flex' }}>
-							<IconButton color={'default'} onClick={(e: any) => likeArticleHandler(e, user, boardArticle?._id)}>
+							<IconButton
+								color={'default'}
+								aria-label={
+									boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite
+										? 'Remove from favorites'
+										: 'Add to favorites'
+								}
+								onClick={(e: any) => likeArticleHandler(e, user, boardArticle?._id)}
+							>
 								{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
 									<FavoriteIcon color={'primary'} />
 								) : (
@@ -120,7 +128,15 @@ const CommunityCard = (props: CommunityCardProps) => {
 							<Typography className="view-cnt">{boardArticle?.articleViews}</Typography>
 						</div>
 						<div className="stat-group" style={{ display: 'flex' }}>
-							<IconButton color={'default'} onClick={(e: any) => likeArticleHandler(e, user, boardArticle?._id)}>
+							<IconButton
+								color={'default'}
+								aria-label={
+									boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite
+										? 'Remove from favorites'
+										: 'Add to favorites'
+								}
+								onClick={(e: any) => likeArticleHandler(e, user, boardArticle?._id)}
+							>
 								{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
 									<FavoriteIcon color={'primary'} />
 								) : (

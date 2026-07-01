@@ -95,7 +95,11 @@ const CarCard = (props: CarCardType) => {
 									<RemoveRedEyeIcon />
 								</IconButton>
 								<Typography className="view-cnt">{car?.carViews}</Typography>
-								<IconButton color={'default'} onClick={() => likeCarHandler(user, car?._id)}>
+								<IconButton
+									color={'default'}
+									aria-label={isLiked ? 'Remove from favorites' : 'Add to favorites'}
+									onClick={() => likeCarHandler(user, car?._id)}
+								>
 									{isLiked ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
 								</IconButton>
 								<Typography className="view-cnt">{car?.carLikes}</Typography>
@@ -166,7 +170,11 @@ const CarCard = (props: CarCardType) => {
 									<RemoveRedEyeIcon />
 								</IconButton>
 								<Typography className="view-cnt">{car?.carViews}</Typography>
-								<IconButton color={'default'} onClick={() => likeCarHandler(user, car?._id)}>
+								<IconButton
+									color={'default'}
+									aria-label={isLiked ? 'Remove from favorites' : 'Add to favorites'}
+									onClick={() => likeCarHandler(user, car?._id)}
+								>
 									{isLiked ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
 								</IconButton>
 								<Typography className="view-cnt">{car?.carLikes}</Typography>
