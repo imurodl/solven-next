@@ -19,7 +19,26 @@ const ReviewCard = (props: ReviewCardProps) => {
 		: '/img/profile/defaultUser.svg';
 
 	if (device === 'mobile') {
-		return <div>REVIEW CARD</div>;
+		return (
+			<Box component={'div'} className={'review-card-mobile'}>
+				<Stack className={'head'}>
+					<Image
+						src={imagePath}
+						alt={comment?.memberData?.memberNick || 'Reviewer'}
+						className={'reviewer-img'}
+						width={800}
+						height={600}
+					/>
+					<Stack className={'reviewer-info'}>
+						<Typography className={'reviewer-name'}>{comment?.memberData?.memberNick}</Typography>
+						<Typography className={'review-date'}>
+							<Moment format={'DD MMMM YYYY'}>{comment.createdAt}</Moment>
+						</Typography>
+					</Stack>
+				</Stack>
+				<Typography className={'review-content'}>{comment.commentContent}</Typography>
+			</Box>
+		);
 	} else {
 		return (
 			<Box

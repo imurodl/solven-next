@@ -192,30 +192,131 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, initialAgent, ...
 		}
 	};
 
+	const seo = (() => {
+		const a = agent || initialAgent;
+		if (!a) return null;
+		const name = a.memberFullName || a.memberNick;
+		const img = a.memberImage ? `${REACT_APP_API_URL}/${a.memberImage}` : undefined;
+		return (
+			<SEO
+				canonical={`/agent/detail?agentId=${a._id}`}
+				title={`${name} — Car Agent`}
+				description={a.memberDesc ? String(a.memberDesc).slice(0, 160) : `View ${name}'s car listings and reviews on Solven.`}
+				image={img}
+				type="profile"
+				jsonLd={{
+					'@context': 'https://schema.org',
+					'@type': 'Person',
+					name,
+					...(img ? { image: img } : {}),
+					url: `https://solven.uz/agent/detail?agentId=${a._id}`,
+				}}
+			/>
+		);
+	})();
+
+	if (device === 'mobile') {
+		return (
+			<Stack id={'agent-detail-mobile'}>
+				{seo}
+				<Stack className={'agent-header'}>
+					<Image
+						src={agent?.memberImage ? `${REACT_APP_API_URL}/${agent?.memberImage}` : '/img/profile/defaultUser.svg'}
+						alt={''}
+						className={'agent-img'}
+						onClick={() => redirectToMemberPageHandler(agent?._id as string)}
+						width={800}
+						height={600}
+					/>
+					<Stack className={'agent-info'} onClick={() => redirectToMemberPageHandler(agent?._id as string)}>
+						<Typography className={'name'}>{agent?.memberFullName ?? agent?.memberNick}</Typography>
+						<Box component={'div'} className={'phone'}>
+							<img src="/img/icons/call.svg" alt="" />
+							<span>{agent?.memberPhone}</span>
+						</Box>
+					</Stack>
+				</Stack>
+				<Stack className={'cars-section'}>
+					<Typography className={'section-title'}>Listings</Typography>
+					<Stack className={'cards-stack'}>
+						{agentCars.map((car: Car) => {
+							return <CarBigCard car={car} key={car?._id} likeCarHandler={likeCarHandler} />;
+						})}
+					</Stack>
+					{carTotal ? (
+						<Stack className={'pagination-config'}>
+							<Pagination
+								page={searchFilter.page}
+								count={Math.ceil(carTotal / searchFilter.limit) || 1}
+								onChange={carPaginationChangeHandler}
+								shape="circular"
+								color="primary"
+							/>
+							<span className={'total-result'}>
+								Total {carTotal} car{carTotal > 1 ? 's' : ''} available
+							</span>
+						</Stack>
+					) : (
+						<Stack className={'no-data'}>
+							<img src="/img/icons/icoAlert.svg" alt="" />
+							<p>No listings found!</p>
+						</Stack>
+					)}
+				</Stack>
+				<Stack className={'review-section'}>
+					<Stack className={'main-intro'}>
+						<Typography className={'section-title'}>Reviews</Typography>
+						<Typography className={'section-subtitle'}>we are glad to see you again</Typography>
+					</Stack>
+					{commentTotal !== 0 && (
+						<Stack className={'review-wrap'}>
+							<Box component={'div'} className={'title-box'}>
+								<StarIcon />
+								<span>
+									{commentTotal} review{commentTotal > 1 ? 's' : ''}
+								</span>
+							</Box>
+							{agentComments?.map((comment: Comment) => {
+								return <ReviewCard comment={comment} key={comment?._id} />;
+							})}
+							<Box component={'div'} className={'pagination-box'}>
+								<Pagination
+									page={commentInquiry.page}
+									count={Math.ceil(commentTotal / commentInquiry.limit) || 1}
+									onChange={commentPaginationChangeHandler}
+									shape="circular"
+									color="primary"
+								/>
+							</Box>
+						</Stack>
+					)}
+					<Stack className={'leave-review-config'}>
+						<Typography className={'main-title'}>Leave A Review</Typography>
+						<Typography className={'review-title'}>Review</Typography>
+						<textarea
+							onChange={({ target: { value } }: any) => {
+								setInsertCommentData({ ...insertCommentData, commentContent: value });
+							}}
+							value={insertCommentData.commentContent}
+						></textarea>
+						<Box className={'submit-btn'} component={'div'}>
+							<Button
+								className={'submit-review'}
+								disabled={insertCommentData.commentContent === '' || user?._id === ''}
+								onClick={createCommentHandler}
+							>
+								<Typography className={'title'}>Submit Review</Typography>
+							</Button>
+						</Box>
+					</Stack>
+				</Stack>
+			</Stack>
+		);
+	}
+
 	return (
 			<Stack className={'agent-detail-page'}>
-				{(() => {
-					const a = agent || initialAgent;
-					if (!a) return null;
-					const name = a.memberFullName || a.memberNick;
-					const img = a.memberImage ? `${REACT_APP_API_URL}/${a.memberImage}` : undefined;
-					return (
-						<SEO
-							canonical={`/agent/detail?agentId=${a._id}`}
-							title={`${name} — Car Agent`}
-							description={a.memberDesc ? String(a.memberDesc).slice(0, 160) : `View ${name}'s car listings and reviews on Solven.`}
-							image={img}
-							type="profile"
-							jsonLd={{
-								'@context': 'https://schema.org',
-								'@type': 'Person',
-								name,
-								...(img ? { image: img } : {}),
-								url: `https://solven.uz/agent/detail?agentId=${a._id}`,
-							}}
-						/>
-					);
-				})()}
+				{seo}
 				<Stack className={'container'}>
 					<Stack className={'agent-info'}>
 						<Image
