@@ -271,6 +271,183 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 		setSearchFilter({ ...searchFilter, page: value });
 	};
 
+	if (device === 'mobile') {
+		const art = boardArticle || initialArticle;
+		const seoImg = art?.articleImage ? `${process.env.REACT_APP_API_URL}/${art.articleImage}` : undefined;
+		const seoPlain = art?.articleContent ? String(art.articleContent).replace(/<[^>]*>/g, ' ').trim() : '';
+		const meLiked = boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite;
+		return (
+			<div id="community-detail-mobile">
+				{art && (
+					<SEO
+						canonical={`/community/detail?id=${art._id}`}
+						title={art.articleTitle}
+						description={seoPlain ? seoPlain.slice(0, 160) : `Read "${art.articleTitle}" on the Solven community.`}
+						image={seoImg}
+						type="article"
+						jsonLd={{
+							'@context': 'https://schema.org',
+							'@type': 'Article',
+							headline: art.articleTitle,
+							...(seoImg ? { image: seoImg } : {}),
+							articleSection: art.articleCategory,
+							url: `https://solven.uz/community/detail?id=${art._id}`,
+						}}
+					/>
+				)}
+
+				<Stack className="article-header">
+					<Typography className="category">{articleCategory} BOARD</Typography>
+					<Typography className="title">{boardArticle?.articleTitle}</Typography>
+					<Stack className="author-row">
+						<Image
+							src={memberImage}
+							alt=""
+							className="avatar"
+							onClick={() => goMemberPage(boardArticle?.memberData?._id)}
+							width={800}
+							height={600}
+						/>
+						<Stack className="author-meta">
+							<Typography className="nick" onClick={() => goMemberPage(boardArticle?.memberData?._id)}>
+								{boardArticle?.memberData?.memberNick}
+							</Typography>
+							<Moment className={'date'} format={'DD.MM.YY HH:mm'}>
+								{boardArticle?.createdAt}
+							</Moment>
+						</Stack>
+					</Stack>
+					<Stack className="stats-row">
+						<Stack className="stat">
+							{meLiked ? (
+								<ThumbUpAltIcon onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
+							) : (
+								<ThumbUpOffAltIcon onClick={() => likeBoArticleHandler(user, boardArticle!._id)} />
+							)}
+							<Typography className="text">{boardArticle?.articleLikes}</Typography>
+						</Stack>
+						<Stack className="stat">
+							<VisibilityIcon />
+							<Typography className="text">{boardArticle?.articleViews}</Typography>
+						</Stack>
+						<Stack className="stat">
+							{total > 0 ? <ChatIcon /> : <ChatBubbleOutlineRoundedIcon />}
+							<Typography className="text">{boardArticle?.articleComments}</Typography>
+						</Stack>
+					</Stack>
+				</Stack>
+
+				<Stack className="article-body">
+					<ToastViewerComponent markdown={boardArticle?.articleContent} className={'ytb_play'} />
+				</Stack>
+
+				<Stack className="comments-section">
+					<Typography className="section-title">Comments ({total})</Typography>
+
+					{comments?.length > 0 && (
+						<Stack className="comment-list">
+							{comments?.map((commentData) => (
+								<Stack className="comment-item" key={commentData?._id}>
+									<Stack className="comment-top">
+										<Stack className="user-info">
+											<Image
+												src={getCommentMemberImage(commentData?.memberData?.memberImage)}
+												alt=""
+												onClick={() => goMemberPage(commentData?.memberData?._id)}
+												width={800}
+												height={600}
+											/>
+											<Stack className="info">
+												<Typography className="name" onClick={() => goMemberPage(commentData?.memberData?._id)}>
+													{commentData?.memberData?.memberNick}
+												</Typography>
+												<Typography className="date">
+													<Moment format={'DD.MM.YY HH:mm'}>{commentData?.createdAt}</Moment>
+												</Typography>
+											</Stack>
+										</Stack>
+										{commentData?.memberId === user?._id && (
+											<Stack className="actions">
+												<IconButton
+													onClick={() => {
+														setUpdatedCommentId(commentData?._id);
+														updateButtonHandler(commentData?._id, CommentStatus.DELETE);
+													}}
+												>
+													<DeleteForeverIcon />
+												</IconButton>
+												<IconButton
+													onClick={() => {
+														setUpdatedComment(commentData?.commentContent);
+														setUpdatedCommentWordsCnt(commentData?.commentContent?.length);
+														setUpdatedCommentId(commentData?._id);
+														setOpenBackdrop(true);
+													}}
+												>
+													<EditIcon />
+												</IconButton>
+											</Stack>
+										)}
+									</Stack>
+									<Typography className="comment-content">{commentData?.commentContent}</Typography>
+								</Stack>
+							))}
+						</Stack>
+					)}
+
+					<Stack className="write-box">
+						<Stack className="write-head">
+							<Typography className="title">Write a comment</Typography>
+							<Typography className="counter">{wordsCnt}/100</Typography>
+						</Stack>
+						<textarea
+							placeholder="Share your thoughts..."
+							value={comment}
+							onChange={(e) => {
+								if (e.target.value.length > 100) return;
+								setWordsCnt(e.target.value.length);
+								setComment(e.target.value);
+							}}
+						/>
+						<Stack className="button-box">
+							<Button onClick={creteCommentHandler}>Post Comment</Button>
+						</Stack>
+					</Stack>
+
+					{total > 0 && (
+						<Box className="pagination-box">
+							<Pagination
+								count={Math.ceil(total / searchFilter.limit) || 1}
+								page={searchFilter.page}
+								shape="circular"
+								color="primary"
+								onChange={paginationHandler}
+							/>
+						</Box>
+					)}
+				</Stack>
+
+				<Backdrop open={openBackdrop} sx={{ zIndex: 999 }}>
+					<Stack className="edit-comment-box">
+						<Stack className="write-head">
+							<Typography className="title">Edit comment</Typography>
+							<Typography className="counter">{updatedCommentWordsCnt}/100</Typography>
+						</Stack>
+						<textarea
+							placeholder="Update your comment..."
+							value={updatedComment}
+							onChange={(e) => updateCommentInputHandler(e.target.value)}
+						/>
+						<Stack className="button-box">
+							<Button onClick={cancelButtonHandler}>Cancel</Button>
+							<Button onClick={() => updateButtonHandler(updatedCommentId)}>Update</Button>
+						</Stack>
+					</Stack>
+				</Backdrop>
+			</div>
+		);
+	}
+
 	return (
 			<div id="community-detail-page">
 				{(() => {
