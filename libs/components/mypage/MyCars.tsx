@@ -90,7 +90,50 @@ const MyCars: NextPage = ({ initialInput, ...props }: any) => {
 	}
 
 	if (device === 'mobile') {
-		return <div>SOLVEN CAR LISTINGS MOBILE</div>;
+		return (
+			<div id="member-list-mobile">
+				<Typography className="list-title">My Cars</Typography>
+				<Stack className="mypage-status-tabs">
+					<Typography
+						onClick={() => changeStatusHandler(CarStatus.ACTIVE)}
+						className={searchFilter.search.carStatus === 'ACTIVE' ? 'tab active' : 'tab'}
+					>
+						On Sale
+					</Typography>
+					<Typography
+						onClick={() => changeStatusHandler(CarStatus.SOLD)}
+						className={searchFilter.search.carStatus === 'SOLD' ? 'tab active' : 'tab'}
+					>
+						On Sold
+					</Typography>
+				</Stack>
+				{agentCars?.length === 0 && (
+					<div className={'no-data'}>
+						<img src="/img/icons/icoAlert.svg" alt="" />
+						<p>No Car found!</p>
+					</div>
+				)}
+				<Stack className="cards-stack">
+					{agentCars.map((car: Car) => {
+						return (
+							<CarCard car={car} deleteCarHandler={deleteCarHandler} updateCarHandler={updateCarHandler} key={car?._id} />
+						);
+					})}
+				</Stack>
+				{agentCars.length !== 0 && (
+					<Stack className="pagination-config">
+						<Pagination
+							count={Math.ceil(total / searchFilter.limit)}
+							page={searchFilter.page}
+							shape="circular"
+							color="primary"
+							onChange={paginationHandler}
+						/>
+						<Typography className="total-result">{total} cars available</Typography>
+					</Stack>
+				)}
+			</div>
+		);
 	} else {
 		return (
 			<div id="my-property-page">

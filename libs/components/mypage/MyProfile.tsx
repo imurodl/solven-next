@@ -138,7 +138,84 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>MY PROFILE PAGE MOBILE</div>;
+		return (
+			<div id="my-profile-mobile">
+				<Typography className="page-title">My Profile</Typography>
+				<Stack className="avatar-box">
+					<div className="image-box">
+						<Image
+							src={
+								updateData?.memberImage
+									? `${REACT_APP_API_URL}/${updateData?.memberImage}`
+									: `/img/profile/defaultUser.svg`
+							}
+							alt=""
+							width={800}
+							height={600}
+						/>
+					</div>
+					<label htmlFor="hidden-input-mobile" className="upload-button">
+						<p>Upload Profile Image</p>
+						<input
+							type="file"
+							hidden
+							id="hidden-input-mobile"
+							onChange={uploadImage}
+							accept="image/jpg, image/jpeg, image/png"
+						/>
+					</label>
+				</Stack>
+				<Stack className="form-box">
+					<Stack className="input-group">
+						<Typography className="input-label">Username</Typography>
+						<input
+							type="text"
+							placeholder="Your username"
+							value={updateData.memberNick || ''}
+							onChange={({ target: { value } }) => handleInputChange('memberNick', value)}
+						/>
+					</Stack>
+					<Stack className="input-group">
+						<Typography className="input-label">Full Name</Typography>
+						<input
+							type="text"
+							placeholder="Your full name"
+							value={updateData.memberFullName || ''}
+							onChange={({ target: { value } }) => handleInputChange('memberFullName', value)}
+						/>
+					</Stack>
+					<Stack className="input-group">
+						<Typography className="input-label">Phone</Typography>
+						<input
+							type="text"
+							placeholder="Your Phone"
+							value={updateData.memberPhone || ''}
+							onChange={({ target: { value } }) => handleInputChange('memberPhone', value)}
+						/>
+					</Stack>
+					<Stack className="input-group">
+						<Typography className="input-label">Address</Typography>
+						<input
+							type="text"
+							placeholder="Your address"
+							value={updateData.memberAddress || ''}
+							onChange={({ target: { value } }) => handleInputChange('memberAddress', value)}
+						/>
+					</Stack>
+					<Stack className="input-group">
+						<Typography className="input-label">Bio</Typography>
+						<textarea
+							placeholder="Tell us about yourself"
+							value={updateData.memberDesc}
+							onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberDesc: value })}
+						/>
+					</Stack>
+				</Stack>
+				<Button className="update-button" onClick={updatePropertyHandler} disabled={doDisabledCheck()}>
+					Update Profile
+				</Button>
+			</div>
+		);
 	} else {
 		return (
 			<div id="my-profile-page">

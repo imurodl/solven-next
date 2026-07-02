@@ -9,7 +9,12 @@ const WriteArticle: NextPage = () => {
 	const device = useDeviceDetect();
 
 	if (device === 'mobile') {
-		return <>ARTICLE PAGE MOBILE</>;
+		return (
+			<div id="write-article-mobile">
+				<Typography className="page-title">Write an Article</Typography>
+				<TuiEditor />
+			</div>
+		);
 	} else
 		return (
 			<div id="write-article-page">

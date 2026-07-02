@@ -33,7 +33,82 @@ const MyMenu = () => {
 	};
 
 	if (device === 'mobile') {
-		return <div>MY MENU</div>;
+		return (
+			<Stack className="my-menu-mobile">
+				<Stack className="profile-head">
+					<Box component={'div'} className={'profile-img'}>
+						<Image
+							src={user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'}
+							alt={'member-photo'}
+							width={800}
+							height={600}
+						/>
+					</Box>
+					<Stack className={'user-info'}>
+						<Typography className={'user-name'}>{user?.memberNick}</Typography>
+						<Box component={'div'} className={'user-phone'}>
+							<img src={'/img/icons/call.svg'} alt={'icon'} />
+							<Typography className={'p-number'}>{user?.memberPhone}</Typography>
+						</Box>
+						<Typography className={'view-list'}>{user?.memberType}</Typography>
+					</Stack>
+				</Stack>
+				<Stack className="category-tabs">
+					{user.memberType === 'AGENT' && (
+						<>
+							<Link href={{ pathname: '/mypage', query: { category: 'addCar' } }} scroll={false}>
+								<div className={`tab ${category === 'addCar' ? 'active' : ''}`}>
+									<span>Add Listing</span>
+								</div>
+							</Link>
+							<Link href={{ pathname: '/mypage', query: { category: 'myProperties' } }} scroll={false}>
+								<div className={`tab ${category === 'myProperties' ? 'active' : ''}`}>
+									<span>My Listings</span>
+								</div>
+							</Link>
+						</>
+					)}
+					<Link href={{ pathname: '/mypage', query: { category: 'myFavorites' } }} scroll={false}>
+						<div className={`tab ${category === 'myFavorites' ? 'active' : ''}`}>
+							<span>My Favorite</span>
+						</div>
+					</Link>
+					<Link href={{ pathname: '/mypage', query: { category: 'recentlyVisited' } }} scroll={false}>
+						<div className={`tab ${category === 'recentlyVisited' ? 'active' : ''}`}>
+							<span>Recently Visited</span>
+						</div>
+					</Link>
+					<Link href={{ pathname: '/mypage', query: { category: 'followers' } }} scroll={false}>
+						<div className={`tab ${category === 'followers' ? 'active' : ''}`}>
+							<span>My Followers</span>
+						</div>
+					</Link>
+					<Link href={{ pathname: '/mypage', query: { category: 'followings' } }} scroll={false}>
+						<div className={`tab ${category === 'followings' ? 'active' : ''}`}>
+							<span>My Followings</span>
+						</div>
+					</Link>
+					<Link href={{ pathname: '/mypage', query: { category: 'myArticles' } }} scroll={false}>
+						<div className={`tab ${category === 'myArticles' ? 'active' : ''}`}>
+							<span>Articles</span>
+						</div>
+					</Link>
+					<Link href={{ pathname: '/mypage', query: { category: 'writeArticle' } }} scroll={false}>
+						<div className={`tab ${category === 'writeArticle' ? 'active' : ''}`}>
+							<span>Write Article</span>
+						</div>
+					</Link>
+					<Link href={{ pathname: '/mypage', query: { category: 'myProfile' } }} scroll={false}>
+						<div className={`tab ${category === 'myProfile' ? 'active' : ''}`}>
+							<span>My Profile</span>
+						</div>
+					</Link>
+					<div className="tab logout" onClick={logoutHandler}>
+						<span>Logout</span>
+					</div>
+				</Stack>
+			</Stack>
+		);
 	} else {
 		return (
 			<Stack width={'100%'} padding={'30px'}>

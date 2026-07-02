@@ -104,7 +104,39 @@ const MyPage: NextPage = (props: any) => {
 		}
 	};
 
-	return (
+	if (device === 'mobile') {
+		return (
+			<div id="my-page-mobile">
+				<MyMenu />
+				<Stack className="my-content">
+					{category === 'addCar' && <AddCar />}
+					{category === 'myProperties' && <MyCars />}
+					{category === 'myFavorites' && <MyFavorites />}
+					{category === 'recentlyVisited' && <RecentlyVisited />}
+					{category === 'myArticles' && <MyArticles />}
+					{category === 'writeArticle' && <WriteArticle />}
+					{category === 'myProfile' && <MyProfile />}
+					{category === 'followers' && (
+						<MemberFollowers
+							subscribeHandler={subscribeHandler}
+							unsubscribeHandler={unsubscribeHandler}
+							likeMemberHandler={likeMemberHandler}
+							redirectToMemberPageHandler={redirectToMemberPageHandler}
+						/>
+					)}
+					{category === 'followings' && (
+						<MemberFollowings
+							subscribeHandler={subscribeHandler}
+							unsubscribeHandler={unsubscribeHandler}
+							likeMemberHandler={likeMemberHandler}
+							redirectToMemberPageHandler={redirectToMemberPageHandler}
+						/>
+					)}
+				</Stack>
+			</div>
+		);
+	} else {
+		return (
 			<div id="my-page" style={{ position: 'relative' }}>
 				<div className="container">
 					<Stack className={'my-page'}>
@@ -144,6 +176,7 @@ const MyPage: NextPage = (props: any) => {
 				</div>
 			</div>
 		);
+	}
 };
 
 export default withLayoutBasic(MyPage);

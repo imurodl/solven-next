@@ -60,7 +60,34 @@ const MyFavorites: NextPage = () => {
 	};
 
 	if (device === 'mobile') {
-		return <div>SOLVEN MY FAVORITES MOBILE</div>;
+		return (
+			<div id="member-list-mobile">
+				<Typography className="list-title">My Favorites</Typography>
+				{myFavorites?.length === 0 && (
+					<div className={'no-data'}>
+						<img src="/img/icons/icoAlert.svg" alt="" />
+						<p>No Favorites found!</p>
+					</div>
+				)}
+				<Stack className="cards-stack">
+					{myFavorites?.map((car: Car) => {
+						return <CarCard car={car} likeCarHandler={likeCarHandler} myFavorites={true} key={car?._id} />;
+					})}
+				</Stack>
+				{myFavorites?.length ? (
+					<Stack className="pagination-config">
+						<Pagination
+							count={Math.ceil(total / searchFavorites.limit)}
+							page={searchFavorites.page}
+							shape="circular"
+							color="primary"
+							onChange={paginationHandler}
+						/>
+						<Typography className="total-result">{total} favorite cars</Typography>
+					</Stack>
+				) : null}
+			</div>
+		);
 	} else {
 		return (
 			<div id="my-favorites-page">

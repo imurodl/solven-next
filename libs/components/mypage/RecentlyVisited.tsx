@@ -38,7 +38,34 @@ const RecentlyVisited: NextPage = () => {
 	};
 
 	if (device === 'mobile') {
-		return <div>SOLVEN MY CARS MOBILE</div>;
+		return (
+			<div id="member-list-mobile">
+				<Typography className="list-title">Recently Visited</Typography>
+				{recentlyVisited?.length === 0 && (
+					<div className={'no-data'}>
+						<img src="/img/icons/icoAlert.svg" alt="" />
+						<p>No Recently Visited Listings found!</p>
+					</div>
+				)}
+				<Stack className="cards-stack">
+					{recentlyVisited?.map((car: Car) => {
+						return <CarCard car={car} recentlyVisited={true} key={car?._id} />;
+					})}
+				</Stack>
+				{recentlyVisited?.length ? (
+					<Stack className="pagination-config">
+						<Pagination
+							count={Math.ceil(total / searchVisited.limit)}
+							page={searchVisited.page}
+							shape="circular"
+							color="primary"
+							onChange={paginationHandler}
+						/>
+						<Typography className="total-result">{total} recently visited cars</Typography>
+					</Stack>
+				) : null}
+			</div>
+		);
 	} else {
 		return (
 			<div id="my-favorites-page">

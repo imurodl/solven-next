@@ -68,7 +68,41 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 	};
 
 	if (device === 'mobile') {
-		return <>ARTICLE PAGE MOBILE</>;
+		return (
+			<div id="member-list-mobile">
+				<Typography className="list-title">Articles</Typography>
+				{boardArticles?.length === 0 && (
+					<div className={'no-data'}>
+						<img src="/img/icons/icoAlert.svg" alt="" />
+						<p>No Articles found!</p>
+					</div>
+				)}
+				<Stack className="cards-stack">
+					{boardArticles?.map((boardArticle: BoardArticle) => {
+						return (
+							<CommunityCard
+								boardArticle={boardArticle}
+								key={boardArticle?._id}
+								size={'small'}
+								likeArticleHandler={likeBoArticleHandler}
+							/>
+						);
+					})}
+				</Stack>
+				{boardArticles?.length > 0 && (
+					<Stack className="pagination-config">
+						<Pagination
+							count={Math.ceil(totalCount / searchCommunity.limit)}
+							page={searchCommunity.page}
+							shape="circular"
+							color="primary"
+							onChange={paginationHandler}
+						/>
+						<Typography className="total-result">{totalCount ?? 0} articles available</Typography>
+					</Stack>
+				)}
+			</div>
+		);
 	} else
 		return (
 			<div id="my-articles-page">
