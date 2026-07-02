@@ -52,7 +52,56 @@ export const CarCard = (props: CarCardProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>MOBILE CAR LISTING CARD</div>;
+		return (
+			<Stack className="car-card-box-mobile" onClick={() => pushCarDetail(car?._id)}>
+				<Stack className="image-box">
+					<Image
+						src={`${process.env.REACT_APP_API_URL}/${car.carImages[0]}`}
+						alt={car.carTitle || 'Car listing'}
+						width={400}
+						height={300}
+					/>
+					<span className="status-badge">{car.carStatus}</span>
+				</Stack>
+				<Stack className="information-box">
+					<Typography className="name">{car.carTitle}</Typography>
+					<Typography className="address">{car.carAddress}</Typography>
+					<Stack className="bottom-row">
+						<Typography className="price">
+							<strong>${formatterStr(car?.carPrice)}</strong>
+						</Typography>
+						<Typography className="date">
+							<Moment format="DD MMM, YYYY">{car.createdAt}</Moment>
+						</Typography>
+					</Stack>
+					<Stack className="meta-row">
+						<Typography className="views">{car.carViews?.toLocaleString()} views</Typography>
+						{!memberPage && car.carStatus === CarStatus.ACTIVE && (
+							<Stack className="action-box">
+								<IconButton
+									className="icon-button"
+									onClick={(e: any) => {
+										e.stopPropagation();
+										pushEditCar(car._id);
+									}}
+								>
+									<ModeIcon className="buttons" />
+								</IconButton>
+								<IconButton
+									className="icon-button"
+									onClick={(e: any) => {
+										e.stopPropagation();
+										deleteCarHandler(car._id);
+									}}
+								>
+									<DeleteIcon className="buttons" />
+								</IconButton>
+							</Stack>
+						)}
+					</Stack>
+				</Stack>
+			</Stack>
+		);
 	} else
 		return (
 			<Stack className="property-card-box">

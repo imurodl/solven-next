@@ -1,0 +1,420 @@
+/** MEMBER (mobile) **/
+
+#member-page-mobile {
+	width: 100%;
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+
+	.member-content {
+		width: 100%;
+	}
+}
+
+.member-menu-mobile {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+
+	.profile-head {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 12px;
+		padding: 20px 16px;
+		background: $background-white;
+		border: 1px solid $border-light;
+		border-radius: $border-radius-medium;
+		box-shadow: $shadow-light;
+
+		.profile-img {
+			width: 88px;
+			height: 88px;
+			border-radius: 50%;
+			overflow: hidden;
+
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
+
+		.user-info {
+			align-items: center;
+			gap: 4px;
+
+			.user-name {
+				font-family: $font;
+				font-size: 18px;
+				font-weight: 600;
+				color: $text-color;
+			}
+
+			.user-phone {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+
+				img {
+					width: 16px;
+					height: 16px;
+				}
+
+				.p-number {
+					font-family: $font;
+					font-size: 13px;
+					color: $text-muted;
+				}
+			}
+
+			.view-list {
+				font-family: $font;
+				font-size: 12px;
+				font-weight: 500;
+				color: $primary-color;
+				text-transform: capitalize;
+			}
+		}
+
+		.follow-button {
+			width: 100%;
+			margin-top: 4px;
+
+			button {
+				width: 100%;
+				height: 42px;
+				border-radius: $border-radius-small;
+				font-family: $font;
+				font-size: 14px;
+				font-weight: 600;
+				text-transform: none;
+
+				&.follow {
+					background: $primary-color;
+					color: #fff;
+
+					&:hover {
+						background: $primary-dark;
+					}
+				}
+
+				&.following {
+					background: #ed5858;
+					color: #fff;
+
+					&:hover {
+						background: #ee7171;
+					}
+				}
+			}
+		}
+	}
+
+	.category-tabs {
+		width: 100%;
+		flex-direction: row;
+		gap: 8px;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		padding-bottom: 4px;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+
+		a {
+			flex-shrink: 0;
+			text-decoration: none;
+		}
+
+		.tab {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			padding: 8px 14px;
+			border-radius: 999px;
+			background: $background-white;
+			border: 1px solid $border-light;
+			transition: $transition-fast;
+
+			span {
+				font-family: $font;
+				font-size: 13px;
+				font-weight: 500;
+				color: $text-color;
+			}
+
+			em {
+				font-style: normal;
+				font-family: $font;
+				font-size: 12px;
+				font-weight: 600;
+				color: $text-muted;
+			}
+
+			&.active {
+				background: $primary-color;
+				border-color: $primary-color;
+
+				span,
+				em {
+					color: #fff;
+				}
+			}
+		}
+	}
+}
+
+#member-list-mobile,
+#member-follows-mobile {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+
+	.list-title {
+		font-family: $font;
+		font-size: 16px;
+		font-weight: 600;
+		color: $text-color;
+		margin-bottom: 4px;
+	}
+
+	.cards-stack {
+		width: 100%;
+		gap: 12px;
+	}
+
+	.no-data {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 8px;
+		padding: 40px 0;
+
+		img {
+			width: 40px;
+			height: 40px;
+			opacity: 0.5;
+		}
+
+		p {
+			font-family: $font;
+			font-size: 14px;
+			color: $text-muted;
+		}
+	}
+
+	.pagination-config {
+		align-items: center;
+		gap: 8px;
+		margin-top: 16px;
+
+		.total-result {
+			font-family: $font;
+			font-size: 13px;
+			color: $text-muted;
+		}
+	}
+}
+
+.car-card-box-mobile {
+	width: 100%;
+	flex-direction: row;
+	gap: 12px;
+	padding: 10px;
+	background: $background-white;
+	border: 1px solid $border-light;
+	border-radius: $border-radius-medium;
+	box-shadow: $shadow-light;
+
+	.image-box {
+		position: relative;
+		width: 120px;
+		height: 96px;
+		flex-shrink: 0;
+		border-radius: $border-radius-small;
+		overflow: hidden;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.status-badge {
+			position: absolute;
+			top: 6px;
+			left: 6px;
+			padding: 2px 8px;
+			border-radius: 999px;
+			background: rgba(5, 11, 32, 0.72);
+			color: #fff;
+			font-family: $font;
+			font-size: 10px;
+			font-weight: 600;
+			text-transform: capitalize;
+		}
+	}
+
+	.information-box {
+		flex: 1;
+		min-width: 0;
+		gap: 4px;
+
+		.name {
+			font-family: $font;
+			font-size: 14px;
+			font-weight: 600;
+			color: $text-color;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.address {
+			font-family: $font;
+			font-size: 12px;
+			color: $text-muted;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.bottom-row {
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			margin-top: 2px;
+
+			.price {
+				font-family: $font;
+				font-size: 15px;
+				color: $primary-color;
+			}
+
+			.date {
+				font-family: $font;
+				font-size: 11px;
+				color: $text-muted;
+			}
+		}
+
+		.meta-row {
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			margin-top: 2px;
+
+			.views {
+				font-family: $font;
+				font-size: 11px;
+				color: $text-muted;
+			}
+
+			.action-box {
+				flex-direction: row;
+				gap: 4px;
+
+				.icon-button {
+					padding: 4px;
+
+					.buttons {
+						font-size: 18px;
+						color: $text-muted;
+					}
+				}
+			}
+		}
+	}
+}
+
+#member-follows-mobile {
+	.follow-card-mobile {
+		width: 100%;
+		flex-direction: row;
+		align-items: center;
+		gap: 10px;
+		padding: 12px;
+		background: $background-white;
+		border: 1px solid $border-light;
+		border-radius: $border-radius-medium;
+		box-shadow: $shadow-light;
+
+		.info {
+			flex-direction: row;
+			align-items: center;
+			gap: 10px;
+			flex: 1;
+			min-width: 0;
+			cursor: pointer;
+
+			img {
+				width: 48px;
+				height: 48px;
+				border-radius: 50%;
+				object-fit: cover;
+				flex-shrink: 0;
+			}
+
+			.name {
+				font-family: $font;
+				font-size: 14px;
+				font-weight: 600;
+				color: $text-color;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+
+		.stats {
+			flex-shrink: 0;
+			align-items: flex-end;
+			gap: 2px;
+
+			span {
+				display: flex;
+				align-items: center;
+				gap: 4px;
+				font-family: $font;
+				font-size: 11px;
+				color: $text-muted;
+
+				&.like svg {
+					font-size: 16px;
+					cursor: pointer;
+				}
+			}
+		}
+
+		.action-box {
+			flex-shrink: 0;
+
+			button {
+				height: 34px;
+				padding: 0 14px;
+				border-radius: $border-radius-small;
+				font-family: $font;
+				font-size: 12px;
+				font-weight: 600;
+				text-transform: none;
+
+				&.follow {
+					background: $primary-color;
+					color: #fff;
+				}
+
+				&.unfollow {
+					background: #ed5858;
+					color: #fff;
+				}
+			}
+		}
+	}
+}

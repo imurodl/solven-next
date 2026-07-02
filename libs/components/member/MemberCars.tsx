@@ -50,7 +50,34 @@ const MyCars: NextPage = ({ initialInput, ...props }: any) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>SOLVEN CARS MOBILE</div>;
+		return (
+			<div id="member-list-mobile">
+				<Typography className="list-title">Car Listings</Typography>
+				{agentCars?.length === 0 && (
+					<div className={'no-data'}>
+						<img src="/img/icons/icoAlert.svg" alt="" />
+						<p>No Car found!</p>
+					</div>
+				)}
+				<Stack className="cards-stack">
+					{agentCars?.map((car: Car) => {
+						return <CarCard car={car} memberPage={true} key={car?._id} />;
+					})}
+				</Stack>
+				{agentCars.length !== 0 && (
+					<Stack className="pagination-config">
+						<Pagination
+							count={Math.ceil(total / searchFilter.limit)}
+							page={searchFilter.page}
+							shape="circular"
+							color="primary"
+							onChange={paginationHandler}
+						/>
+						<Typography className="total-result">{total} cars available</Typography>
+					</Stack>
+				)}
+			</div>
+		);
 	} else {
 		return (
 			<div id="member-properties-page">

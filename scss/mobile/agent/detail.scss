@@ -1,0 +1,275 @@
+#mobile-wrap {
+	#agent-detail-mobile {
+		position: relative;
+		background: $background-light;
+		border-radius: 40px;
+		padding: 24px 16px 40px;
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+
+		.agent-header {
+			width: 100%;
+			flex-direction: column;
+			align-items: center;
+			gap: 12px;
+			padding: 20px 16px;
+			background: $background-white;
+			border: 1px solid $border-light;
+			border-radius: $border-radius-medium;
+			box-shadow: $shadow-light;
+
+			.agent-img {
+				width: 96px;
+				height: 96px;
+				border-radius: 50%;
+				object-fit: cover;
+				cursor: pointer;
+			}
+
+			.agent-info {
+				align-items: center;
+				gap: 6px;
+				cursor: pointer;
+
+				.name {
+					font-family: $font;
+					font-size: 18px;
+					font-weight: 600;
+					color: $text-color;
+				}
+
+				.phone {
+					display: flex;
+					align-items: center;
+					gap: 6px;
+
+					img {
+						width: 16px;
+						height: 16px;
+					}
+
+					span {
+						font-family: $font;
+						font-size: 13px;
+						color: $text-muted;
+					}
+				}
+			}
+		}
+
+		.section-title {
+			font-family: $font;
+			font-size: 18px;
+			font-weight: 600;
+			color: $text-color;
+		}
+
+		.cars-section {
+			width: 100%;
+			gap: 12px;
+
+			.cards-stack {
+				width: 100%;
+				gap: 12px;
+			}
+
+			.no-data {
+				width: 100%;
+				align-items: center;
+				gap: 8px;
+				padding: 40px 0;
+
+				img {
+					width: 40px;
+					height: 40px;
+					opacity: 0.5;
+				}
+
+				p {
+					font-family: $font;
+					font-size: 14px;
+					color: $text-muted;
+				}
+			}
+
+			.pagination-config {
+				align-items: center;
+				gap: 8px;
+				margin-top: 8px;
+
+				.total-result {
+					font-family: $font;
+					font-size: 13px;
+					color: $text-muted;
+				}
+			}
+		}
+
+		.review-section {
+			width: 100%;
+			gap: 16px;
+			padding: 16px;
+			background: $background-white;
+			border: 1px solid $border-light;
+			border-radius: $border-radius-medium;
+			box-shadow: $shadow-light;
+
+			.main-intro {
+				gap: 4px;
+
+				.section-subtitle {
+					font-family: $font;
+					font-size: 13px;
+					color: $text-muted;
+				}
+			}
+
+			.review-wrap {
+				width: 100%;
+				gap: 12px;
+
+				.title-box {
+					display: flex;
+					align-items: center;
+					gap: 6px;
+
+					svg {
+						font-size: 20px;
+						color: $primary-color;
+					}
+
+					span {
+						font-family: $font;
+						font-size: 14px;
+						font-weight: 600;
+						color: $text-color;
+					}
+				}
+
+				.review-card-mobile {
+					width: 100%;
+					padding: 12px;
+					background: $background-light;
+					border-radius: $border-radius-small;
+
+					.head {
+						flex-direction: row;
+						align-items: center;
+						gap: 10px;
+						margin-bottom: 8px;
+
+						.reviewer-img {
+							width: 40px;
+							height: 40px;
+							border-radius: 50%;
+							object-fit: cover;
+						}
+
+						.reviewer-info {
+							gap: 2px;
+
+							.reviewer-name {
+								font-family: $font;
+								font-size: 14px;
+								font-weight: 600;
+								color: $text-color;
+							}
+
+							.review-date {
+								font-family: $font;
+								font-size: 12px;
+								color: $text-muted;
+							}
+						}
+					}
+
+					.review-content {
+						font-family: $font;
+						font-size: 14px;
+						color: $text-color;
+						line-height: 1.5;
+					}
+				}
+
+				.pagination-box {
+					display: flex;
+					justify-content: center;
+					margin-top: 8px;
+				}
+			}
+
+			.leave-review-config {
+				width: 100%;
+				gap: 8px;
+
+				.main-title {
+					font-family: $font;
+					font-size: 16px;
+					font-weight: 600;
+					color: $text-color;
+				}
+
+				.review-title {
+					font-family: $font;
+					font-size: 13px;
+					color: $text-muted;
+				}
+
+				textarea {
+					width: 100%;
+					min-height: 120px;
+					padding: 12px;
+					border-radius: $border-radius-small;
+					border: 1px solid $border-light;
+					background: $background-light;
+					font-family: $font;
+					font-size: 14px;
+					color: $text-color;
+					resize: vertical;
+
+					&:focus {
+						outline: none;
+						border-color: $primary-color;
+					}
+
+					&::placeholder {
+						color: $text-muted;
+					}
+				}
+
+				.submit-btn {
+					display: flex;
+					justify-content: flex-end;
+					margin-top: 8px;
+
+					.submit-review {
+						padding: 8px 24px;
+						border-radius: $border-radius-small;
+						background: $primary-color;
+						text-transform: none;
+
+						.title {
+							font-family: $font;
+							font-size: 14px;
+							font-weight: 500;
+							color: #fff;
+						}
+
+						&:hover {
+							background: $primary-dark;
+						}
+
+						&:disabled {
+							background: $border-light;
+
+							.title {
+								color: $text-muted;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

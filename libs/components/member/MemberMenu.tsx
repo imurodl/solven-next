@@ -41,7 +41,67 @@ const MemberMenu = (props: MemberMenuProps) => {
 	});
 
 	if (device === 'mobile') {
-		return <div>MEMBER MENU MOBILE</div>;
+		return (
+			<Stack className="member-menu-mobile">
+				<Stack className="profile-head">
+					<Box component={'div'} className={'profile-img'}>
+						<Image
+							src={member?.memberImage ? `${REACT_APP_API_URL}/${member?.memberImage}` : '/img/profile/defaultUser.svg'}
+							alt={'member-photo'}
+							width={800}
+							height={600}
+						/>
+					</Box>
+					<Stack className={'user-info'}>
+						<Typography className={'user-name'}>{member?.memberNick}</Typography>
+						<Box component={'div'} className={'user-phone'}>
+							<img src={'/img/icons/call.svg'} alt={'icon'} />
+							<Typography className={'p-number'}>{member?.memberPhone}</Typography>
+						</Box>
+						<Typography className={'view-list'}>{member?.memberType}</Typography>
+					</Stack>
+					<Stack className="follow-button">
+						{member?.meFollowed && member?.meFollowed[0]?.myFollowing ? (
+							<Button className="following" onClick={() => unsubscribeHandler(member?._id, getMemberRefetch, memberId)}>
+								Unfollow
+							</Button>
+						) : (
+							<Button className="follow" onClick={() => subscribeHandler(member?._id, getMemberRefetch, memberId)}>
+								Follow
+							</Button>
+						)}
+					</Stack>
+				</Stack>
+				<Stack className="category-tabs">
+					{member?.memberType === 'AGENT' && (
+						<Link href={{ pathname: '/member', query: { ...router.query, category: 'properties' } }} scroll={false}>
+							<div className={`tab ${category === 'properties' ? 'active' : ''}`}>
+								<span>Listings</span>
+								<em>{member?.memberCars}</em>
+							</div>
+						</Link>
+					)}
+					<Link href={{ pathname: '/member', query: { ...router.query, category: 'followers' } }} scroll={false}>
+						<div className={`tab ${category === 'followers' ? 'active' : ''}`}>
+							<span>Followers</span>
+							<em>{member?.memberFollowers}</em>
+						</div>
+					</Link>
+					<Link href={{ pathname: '/member', query: { ...router.query, category: 'followings' } }} scroll={false}>
+						<div className={`tab ${category === 'followings' ? 'active' : ''}`}>
+							<span>Followings</span>
+							<em>{member?.memberFollowings}</em>
+						</div>
+					</Link>
+					<Link href={{ pathname: '/member', query: { ...router.query, category: 'articles' } }} scroll={false}>
+						<div className={`tab ${category === 'articles' ? 'active' : ''}`}>
+							<span>Articles</span>
+							<em>{member?.memberArticles}</em>
+						</div>
+					</Link>
+				</Stack>
+			</Stack>
+		);
 	} else {
 		return (
 			<Stack width={'100%'} padding={'30px 24px'}>

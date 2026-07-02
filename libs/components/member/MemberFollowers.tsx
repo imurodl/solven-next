@@ -66,7 +66,88 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 	};
 
 	if (device === 'mobile') {
-		return <div>SOLVEN FOLLOWS MOBILE</div>;
+		return (
+			<div id="member-follows-mobile">
+				<Typography className="list-title">{category === 'followers' ? 'Followers' : 'Followings'}</Typography>
+				{memberFollowers?.length === 0 && (
+					<div className={'no-data'}>
+						<img src="/img/icons/icoAlert.svg" alt="" />
+						<p>No Followers yet!</p>
+					</div>
+				)}
+				<Stack className="cards-stack">
+					{memberFollowers.map((follower: Follower) => {
+						const imagePath: string = follower?.followerData?.memberImage
+							? `${REACT_APP_API_URL}/${follower?.followerData?.memberImage}`
+							: '/img/profile/defaultUser.svg';
+						return (
+							<Stack className="follow-card-mobile" key={follower._id}>
+								<Stack className={'info'} onClick={() => redirectToMemberPageHandler(follower?.followerData?._id)}>
+									<Image src={imagePath} alt="" width={800} height={600} />
+									<Typography className="name">{follower?.followerData?.memberNick}</Typography>
+								</Stack>
+								<Stack className={'stats'}>
+									<span>Followers ({follower?.followerData?.memberFollowers})</span>
+									<span>Followings ({follower?.followerData?.memberFollowings})</span>
+									<span className="like">
+										{follower?.meLiked && follower?.meLiked[0]?.myFavorite ? (
+											<FavoriteIcon
+												color="primary"
+												onClick={() =>
+													likeMemberHandler(follower?.followerData?._id, getMemberFollowersRefetch, followInquiry)
+												}
+											/>
+										) : (
+											<FavoriteBorderIcon
+												onClick={() =>
+													likeMemberHandler(follower?.followerData?._id, getMemberFollowersRefetch, followInquiry)
+												}
+											/>
+										)}
+										({follower?.followerData?.memberLikes})
+									</span>
+								</Stack>
+								{user?._id !== follower?.followerId && (
+									<Stack className="action-box">
+										{follower.meFollowed && follower.meFollowed[0]?.myFollowing ? (
+											<Button
+												className="unfollow"
+												onClick={() =>
+													unsubscribeHandler(follower?.followerData?._id, getMemberFollowersRefetch, followInquiry)
+												}
+											>
+												Unfollow
+											</Button>
+										) : (
+											<Button
+												className="follow"
+												onClick={() =>
+													subscribeHandler(follower?.followerData?._id, getMemberFollowersRefetch, followInquiry)
+												}
+											>
+												Follow
+											</Button>
+										)}
+									</Stack>
+								)}
+							</Stack>
+						);
+					})}
+				</Stack>
+				{memberFollowers.length !== 0 && (
+					<Stack className="pagination-config">
+						<Pagination
+							page={followInquiry.page}
+							count={Math.ceil(total / followInquiry.limit)}
+							onChange={paginationHandler}
+							shape="circular"
+							color="primary"
+						/>
+						<Typography className="total-result">{total} followers</Typography>
+					</Stack>
+				)}
+			</div>
+		);
 	} else {
 		return (
 			<div id="member-follows-page">

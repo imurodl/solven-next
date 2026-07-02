@@ -109,7 +109,31 @@ const MemberPage: NextPage = () => {
 	};
 
 	if (device === 'mobile') {
-		return <>MEMBER PAGE MOBILE</>;
+		return (
+			<div id="member-page-mobile">
+				<MemberMenu subscribeHandler={subscribeHandler} unsubscribeHandler={unsubscribeHandler} />
+				<Stack className="member-content">
+					{category === 'properties' && <MemberProperties />}
+					{category === 'followers' && (
+						<MemberFollowers
+							subscribeHandler={subscribeHandler}
+							unsubscribeHandler={unsubscribeHandler}
+							likeMemberHandler={likeMemberHandler}
+							redirectToMemberPageHandler={redirectToMemberPageHandler}
+						/>
+					)}
+					{category === 'followings' && (
+						<MemberFollowings
+							subscribeHandler={subscribeHandler}
+							unsubscribeHandler={unsubscribeHandler}
+							likeMemberHandler={likeMemberHandler}
+							redirectToMemberPageHandler={redirectToMemberPageHandler}
+						/>
+					)}
+					{category === 'articles' && <MemberArticles />}
+				</Stack>
+			</div>
+		);
 	} else {
 		return (
 			<div id="member-page" style={{ position: 'relative' }}>
