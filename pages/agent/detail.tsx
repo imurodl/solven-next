@@ -36,7 +36,7 @@ export const getServerSideProps = async ({ locale, query, req }: any) => {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					query: `query GetMember($input: String!) { getMember(memberId: $input) { _id memberNick memberFullName memberImage memberDesc } }`,
+					query: `query GetMember($input: String!) { getMember(memberId: $input) { _id memberNick memberFullName memberImage memberDesc memberPhone } }`,
 					variables: { input: id },
 				}),
 			});
@@ -54,7 +54,7 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, initialAgent, ...
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
 	const [agentId, setAgentId] = useState<string | null>(null);
-	const [agent, setAgent] = useState<Member | null>(null);
+	const [agent, setAgent] = useState<Member | null>(initialAgent ?? null);
 	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(initialInput);
 	const [agentCars, setAgentCars] = useState<Car[]>([]);
 	const [carTotal, setCarTotal] = useState<number>(0);

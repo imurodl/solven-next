@@ -58,7 +58,7 @@ export const getServerSideProps = async ({ locale, query, req }: any) => {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					query: `query GetBoardArticle($input: String!) { getBoardArticle(articleId: $input) { _id articleTitle articleContent articleImage articleCategory createdAt updatedAt memberData { memberNick } } }`,
+					query: `query GetBoardArticle($input: String!) { getBoardArticle(articleId: $input) { _id articleTitle articleContent articleImage articleCategory articleViews articleLikes articleComments createdAt updatedAt memberData { memberNick } } }`,
 					variables: { input: id },
 				}),
 			});
@@ -138,6 +138,8 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 			setTotal(data.getComments?.metaCounter[0]?.total || 0);
 		},
 	});
+	const article = boardArticleData?.getBoardArticle || initialArticle;
+
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (articleId) setSearchFilter({ ...searchFilter, search: { commentRefId: articleId } });
@@ -303,7 +305,7 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 
 				<Stack className="article-header">
 					<Typography className="category">{articleCategory} BOARD</Typography>
-					<Typography className="title">{boardArticle?.articleTitle}</Typography>
+					<Typography className="title">{article?.articleTitle}</Typography>
 					<Stack className="author-row">
 						<Image
 							src={memberImage}
@@ -315,10 +317,10 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 						/>
 						<Stack className="author-meta">
 							<Typography className="nick" onClick={() => goMemberPage(boardArticle?.memberData?._id)}>
-								{boardArticle?.memberData?.memberNick}
+								{article?.memberData?.memberNick}
 							</Typography>
 							<span className={'date'}>
-								{boardArticle?.createdAt ? format(new Date(boardArticle.createdAt), 'dd.MM.yy HH:mm') : ''}
+								{article?.createdAt ? format(new Date(article.createdAt), 'dd.MM.yy HH:mm') : ''}
 							</span>
 						</Stack>
 					</Stack>
@@ -329,21 +331,21 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 							) : (
 								<ThumbUpOffAltIcon onClick={() => likeBoArticleHandler(user, boardArticle!._id)} />
 							)}
-							<Typography className="text">{boardArticle?.articleLikes}</Typography>
+							<Typography className="text">{article?.articleLikes}</Typography>
 						</Stack>
 						<Stack className="stat">
 							<VisibilityIcon />
-							<Typography className="text">{boardArticle?.articleViews}</Typography>
+							<Typography className="text">{article?.articleViews}</Typography>
 						</Stack>
 						<Stack className="stat">
 							{total > 0 ? <ChatIcon /> : <ChatBubbleOutlineRoundedIcon />}
-							<Typography className="text">{boardArticle?.articleComments}</Typography>
+							<Typography className="text">{article?.articleComments}</Typography>
 						</Stack>
 					</Stack>
 				</Stack>
 
 				<Stack className="article-body">
-					<ToastViewerComponent markdown={boardArticle?.articleContent} className={'ytb_play'} />
+					<ToastViewerComponent markdown={article?.articleContent} className={'ytb_play'} />
 				</Stack>
 
 				<Stack className="comments-section">
@@ -548,7 +550,7 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 								<Stack className="first-box-config">
 									<Stack className="content-and-info">
 										<Stack className="content">
-											<Typography className="content-data">{boardArticle?.articleTitle}</Typography>
+											<Typography className="content-data">{article?.articleTitle}</Typography>
 											<Stack className="member-info">
 												<Image
 													src={memberImage}
@@ -559,11 +561,11 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 													height={600}
 												/>
 												<Typography className="member-nick" onClick={() => goMemberPage(boardArticle?.memberData?._id)}>
-													{boardArticle?.memberData?.memberNick}
+													{article?.memberData?.memberNick}
 												</Typography>
 												<Stack className="divider"></Stack>
 												<span className={'time-added'}>
-													{boardArticle?.createdAt ? format(new Date(boardArticle.createdAt), 'dd.MM.yy HH:mm') : ''}
+													{article?.createdAt ? format(new Date(article.createdAt), 'dd.MM.yy HH:mm') : ''}
 												</span>
 											</Stack>
 										</Stack>
@@ -574,23 +576,23 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 												) : (
 													<ThumbUpOffAltIcon onClick={() => likeBoArticleHandler(user, boardArticle!._id)} />
 												)}
-												<Typography className="text">{boardArticle?.articleLikes}</Typography>
+												<Typography className="text">{article?.articleLikes}</Typography>
 											</Stack>
 											<Stack className="divider"></Stack>
 											<Stack className="icon-info">
 												<VisibilityIcon />
-												<Typography className="text">{boardArticle?.articleViews}</Typography>
+												<Typography className="text">{article?.articleViews}</Typography>
 											</Stack>
 											<Stack className="divider"></Stack>
 											<Stack className="icon-info">
 												{total > 0 ? <ChatIcon /> : <ChatBubbleOutlineRoundedIcon />}
 
-												<Typography className="text">{boardArticle?.articleComments}</Typography>
+												<Typography className="text">{article?.articleComments}</Typography>
 											</Stack>
 										</Stack>
 									</Stack>
 									<Stack>
-										<ToastViewerComponent markdown={boardArticle?.articleContent} className={'ytb_play'} />
+										<ToastViewerComponent markdown={article?.articleContent} className={'ytb_play'} />
 									</Stack>
 									<Stack className="like-and-dislike">
 										<Stack className="top">
@@ -600,7 +602,7 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 												) : (
 													<ThumbUpOffAltIcon onClick={() => likeBoArticleHandler(user, boardArticle!._id)} />
 												)}
-												<Typography className="text">{boardArticle?.articleLikes}</Typography>
+												<Typography className="text">{article?.articleLikes}</Typography>
 											</Button>
 										</Stack>
 									</Stack>

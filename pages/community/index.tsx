@@ -18,23 +18,44 @@ import { GET_BOARD_ARTICLES } from '../../apollo/user/query';
 import { useMutation, useQuery } from '@apollo/client';
 import { LIKE_TARGET_BOARD_ARTICLE } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
-import { Messages } from '../../libs/config';
+import { Messages, GRAPHQL_URL } from '../../libs/config';
 
-export const getServerSideProps = async ({ locale, req }: any) => ({
-	props: {
-		deviceType: getDeviceType(req),
-		...(await serverSideTranslations(locale, ['common'])),
-	},
-});
+export const getServerSideProps = async ({ locale, req, query }: any) => {
+	const translations = await serverSideTranslations(locale, ['common']);
+	const articleCategory = query?.articleCategory || 'FREE';
+	const input = {
+		page: 1,
+		limit: 6,
+		sort: 'createdAt',
+		direction: 'ASC',
+		search: { articleCategory },
+	};
+	let initialArticles = null;
+	try {
+		const res = await fetch(GRAPHQL_URL, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				query: `query GetBoardArticles($input: BoardArticlesInquiry!) { getBoardArticles(input: $input) { list { _id articleCategory articleTitle articleImage articleViews articleLikes articleComments createdAt memberData { memberNick } } metaCounter { total } } }`,
+				variables: { input },
+			}),
+		});
+		const json = await res.json();
+		initialArticles = json?.data?.getBoardArticles ?? null;
+	} catch {
+		initialArticles = null;
+	}
+	return { props: { deviceType: getDeviceType(req), ...translations, initialArticles } };
+};
 
-const Community: NextPage = ({ initialInput, ...props }: T) => {
+const Community: NextPage = ({ initialInput, initialArticles, ...props }: T) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const { query } = router;
 	const articleCategory = query?.articleCategory as string;
 	const [searchCommunity, setSearchCommunity] = useState<BoardArticlesInquiry>(initialInput);
-	const [boardArticles, setBoardArticles] = useState<BoardArticle[]>([]);
-	const [totalCount, setTotalCount] = useState<number>(0);
+	const [boardArticles, setBoardArticles] = useState<BoardArticle[]>(initialArticles?.list || []);
+	const [totalCount, setTotalCount] = useState<number>(initialArticles?.metaCounter?.[0]?.total || 0);
 	if (articleCategory) initialInput.search.articleCategory = articleCategory;
 
 	/** APOLLO REQUESTS **/

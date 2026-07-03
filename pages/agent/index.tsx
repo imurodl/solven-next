@@ -16,18 +16,40 @@ import { LIKE_TARGET_MEMBER } from '../../apollo/user/mutation';
 import { useMutation, useQuery } from '@apollo/client';
 import { GET_AGENTS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
-import { Messages } from '../../libs/config';
+import { Messages, GRAPHQL_URL } from '../../libs/config';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import Link from 'next/link';
 
-export const getServerSideProps = async ({ locale, req }: any) => ({
-	props: {
-		deviceType: getDeviceType(req),
-		...(await serverSideTranslations(locale, ['common'])),
-	},
-});
+export const getServerSideProps = async ({ locale, req, query }: any) => {
+	const translations = await serverSideTranslations(locale, ['common']);
+	const input = query?.input
+		? JSON.parse(query.input as string)
+		: {
+				page: 1,
+				limit: 8,
+				sort: 'createdAt',
+				direction: 'DESC',
+				search: {},
+			};
+	let initialAgents = null;
+	try {
+		const res = await fetch(GRAPHQL_URL, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				query: `query GetAgents($input: AgentsInquiry!) { getAgents(input: $input) { list { _id memberType memberNick memberFullName memberImage memberPhone memberDesc memberCars memberFollowers memberFollowings memberLikes memberViews } metaCounter { total } } }`,
+				variables: { input },
+			}),
+		});
+		const json = await res.json();
+		initialAgents = json?.data?.getAgents ?? null;
+	} catch {
+		initialAgents = null;
+	}
+	return { props: { deviceType: getDeviceType(req), ...translations, initialAgents } };
+};
 
-const AgentList: NextPage = ({ initialInput, ...props }: any) => {
+const AgentList: NextPage = ({ initialInput, initialAgents, ...props }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
@@ -37,8 +59,8 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 	const [searchFilter, setSearchFilter] = useState<any>(
 		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
 	);
-	const [agents, setAgents] = useState<Member[]>([]);
-	const [total, setTotal] = useState<number>(0);
+	const [agents, setAgents] = useState<Member[]>(initialAgents?.list || []);
+	const [total, setTotal] = useState<number>(initialAgents?.metaCounter?.[0]?.total || 0);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [searchText, setSearchText] = useState<string>('');
 

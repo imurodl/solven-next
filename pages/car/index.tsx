@@ -34,18 +34,55 @@ import { GET_CARS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 import { LIKE_TARGET_CAR } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import { GRAPHQL_URL } from '../../libs/config';
 import { useTranslation } from 'next-i18next';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import CloseIcon from '@mui/icons-material/Close';
 
-export const getServerSideProps = async ({ locale, req }: any) => ({
-	props: {
-		deviceType: getDeviceType(req),
-		...(await serverSideTranslations(locale, ['common'])),
-	},
-});
+export const getServerSideProps = async ({ locale, req, query }: any) => {
+	const translations = await serverSideTranslations(locale, ['common']);
+	const input = query?.input
+		? JSON.parse(query.input as string)
+		: {
+				page: 1,
+				limit: 9,
+				sort: 'createdAt',
+				direction: 'DESC',
+				search: {
+					locationList: [],
+					typeList: [],
+					fuelTypeList: [],
+					transmissionList: [],
+					colorList: [],
+					brandList: [],
+					modelList: [],
+					carOptions: [],
+					carListingOptions: [],
+					pricesRange: { start: 0, end: 1000000 },
+					mileageRange: { start: 0, end: 300000 },
+					yearRange: { start: 1990, end: new Date().getFullYear() },
+					text: '',
+				},
+			};
+	let initialCars = null;
+	try {
+		const res = await fetch(GRAPHQL_URL, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				query: `query GetCars($input: CarsInquiry!) { getCars(input: $input) { list { _id carType carStatus carLocation carAddress carBrand carModel carTitle carPrice carFuelType carTransmission carColor carMileage carSeats carViews carLikes carRank carImages carDesc manufacturedAt createdAt } metaCounter { total } } }`,
+				variables: { input },
+			}),
+		});
+		const json = await res.json();
+		initialCars = json?.data?.getCars ?? null;
+	} catch {
+		initialCars = null;
+	}
+	return { props: { deviceType: getDeviceType(req), ...translations, initialCars } };
+};
 
-const CarList: NextPage = ({ initialInput, ...props }: any) => {
+const CarList: NextPage = ({ initialInput, initialCars, ...props }: any) => {
 	const { t } = useTranslation();
 	const device = useDeviceDetect();
 	const router = useRouter();
@@ -56,8 +93,8 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 	const [searchFilter, setSearchFilter] = useState<CarsInquiry>(
 		router?.query?.input ? JSON.parse(router?.query?.input as string) : initialInput,
 	);
-	const [cars, setCars] = useState<Car[]>([]);
-	const [total, setTotal] = useState<number>(0);
+	const [cars, setCars] = useState<Car[]>(initialCars?.list || []);
+	const [total, setTotal] = useState<number>(initialCars?.metaCounter?.[0]?.total || 0);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const [sortingOpen, setSortingOpen] = useState(false);
