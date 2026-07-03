@@ -25,6 +25,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { getDeviceType } from '../../libs/utils';
 import SEO from '../../libs/components/SEO';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -67,7 +68,7 @@ import { Member } from '../../libs/types/member/member';
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
-export const getServerSideProps = async ({ locale, query }: any) => {
+export const getServerSideProps = async ({ locale, query, req }: any) => {
 	const translations = await serverSideTranslations(locale, ['common']);
 	let initialCar = null;
 	const id = query?.id;
@@ -88,7 +89,7 @@ export const getServerSideProps = async ({ locale, query }: any) => {
 			initialCar = null;
 		}
 	}
-	return { props: { ...translations, initialCar } };
+	return { props: { deviceType: getDeviceType(req), ...translations, initialCar } };
 };
 
 const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {

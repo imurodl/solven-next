@@ -32,6 +32,7 @@ import { CommentGroup, CommentStatus } from '../../libs/enums/comment.enum';
 import { T } from '../../libs/types/common';
 import EditIcon from '@mui/icons-material/Edit';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { getDeviceType } from '../../libs/utils';
 import SEO from '../../libs/components/SEO';
 import { BoardArticle } from '../../libs/types/board-article/board-article';
 import { CREATE_COMMENT, LIKE_TARGET_BOARD_ARTICLE, UPDATE_COMMENT } from '../../apollo/user/mutation';
@@ -46,7 +47,7 @@ import {
 import { CommentUpdate } from '../../libs/types/comment/comment.update';
 const ToastViewerComponent = dynamic(() => import('../../libs/components/community/TViewer'), { ssr: false });
 
-export const getServerSideProps = async ({ locale, query }: any) => {
+export const getServerSideProps = async ({ locale, query, req }: any) => {
 	const translations = await serverSideTranslations(locale, ['common']);
 	let initialArticle = null;
 	const id = query?.id;
@@ -67,7 +68,7 @@ export const getServerSideProps = async ({ locale, query }: any) => {
 			initialArticle = null;
 		}
 	}
-	return { props: { ...translations, initialArticle } };
+	return { props: { deviceType: getDeviceType(req), ...translations, initialArticle } };
 };
 
 const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T) => {

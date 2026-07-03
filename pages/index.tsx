@@ -8,13 +8,15 @@ import TopAgents from '../libs/components/homepage/TopAgents';
 import TrendCars from '../libs/components/homepage/TrendCars';
 import { Stack } from '@mui/material';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { getDeviceType } from '../libs/utils';
 import CtaSection from '../libs/components/homepage/CtaSection';
 import CarBrands from '../libs/components/homepage/CarBrands';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-export const getStaticProps = async ({ locale }: any) => ({
+export const getServerSideProps = async ({ locale, req }: any) => ({
 	props: {
+		deviceType: getDeviceType(req),
 		...(await serverSideTranslations(locale, ['common'])),
 	},
 });

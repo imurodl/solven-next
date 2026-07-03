@@ -8,13 +8,15 @@ import Notice from '../../libs/components/help/Notice';
 import Faq from '../../libs/components/help/Faq';
 import Terms from '../../libs/components/help/Terms';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { getDeviceType } from '../../libs/utils';
 import SupportIcon from '@mui/icons-material/Support';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import ArticleIcon from '@mui/icons-material/Article';
 import Link from 'next/link';
 
-export const getStaticProps = async ({ locale }: any) => ({
+export const getServerSideProps = async ({ locale, req }: any) => ({
 	props: {
+		deviceType: getDeviceType(req),
 		...(await serverSideTranslations(locale, ['common'])),
 	},
 });

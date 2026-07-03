@@ -19,12 +19,13 @@ import { Comment } from '../../libs/types/comment/comment';
 import { CommentGroup } from '../../libs/enums/comment.enum';
 import { Messages, REACT_APP_API_URL } from '../../libs/config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { getDeviceType } from '../../libs/utils';
 import SEO from '../../libs/components/SEO';
 import { CREATE_COMMENT, LIKE_TARGET_CAR } from '../../apollo/user/mutation';
 import { GET_COMMENTS, GET_MEMBER, GET_CARS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
 
-export const getServerSideProps = async ({ locale, query }: any) => {
+export const getServerSideProps = async ({ locale, query, req }: any) => {
 	const translations = await serverSideTranslations(locale, ['common']);
 	let initialAgent = null;
 	const id = query?.agentId;
@@ -45,7 +46,7 @@ export const getServerSideProps = async ({ locale, query }: any) => {
 			initialAgent = null;
 		}
 	}
-	return { props: { ...translations, initialAgent } };
+	return { props: { deviceType: getDeviceType(req), ...translations, initialAgent } };
 };
 
 const AgentDetail: NextPage = ({ initialInput, initialComment, initialAgent, ...props }: any) => {

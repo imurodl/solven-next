@@ -24,6 +24,7 @@ import Link from 'next/link';
 import { CarsInquiry } from '../../libs/types/car/car.input';
 import { Car } from '../../libs/types/car/car';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { getDeviceType } from '../../libs/utils';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
 import KeyboardArrowUpRoundedIcon from '@mui/icons-material/KeyboardArrowUpRounded';
 import { Direction, Message } from '../../libs/enums/common.enum';
@@ -36,8 +37,9 @@ import { useTranslation } from 'next-i18next';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import CloseIcon from '@mui/icons-material/Close';
 
-export const getStaticProps = async ({ locale }: any) => ({
+export const getServerSideProps = async ({ locale, req }: any) => ({
 	props: {
+		deviceType: getDeviceType(req),
 		...(await serverSideTranslations(locale, ['common'])),
 	},
 });

@@ -10,6 +10,7 @@ import SEO from '../../libs/components/SEO';
 import { BoardArticle } from '../../libs/types/board-article/board-article';
 import { T } from '../../libs/types/common';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { getDeviceType } from '../../libs/utils';
 import { BoardArticlesInquiry } from '../../libs/types/board-article/board-article.input';
 import { BoardArticleCategory } from '../../libs/enums/board-article.enum';
 import { GET_BOARD_ARTICLES } from '../../apollo/user/query';
@@ -18,8 +19,9 @@ import { LIKE_TARGET_BOARD_ARTICLE } from '../../apollo/user/mutation';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import { Messages } from '../../libs/config';
 
-export const getStaticProps = async ({ locale }: any) => ({
+export const getServerSideProps = async ({ locale, req }: any) => ({
 	props: {
+		deviceType: getDeviceType(req),
 		...(await serverSideTranslations(locale, ['common'])),
 	},
 });

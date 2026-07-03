@@ -5,6 +5,11 @@ export const formatterStr = (value: number | undefined): string => {
 	return numeral(value).format('0,0') != '0' ? numeral(value).format('0,0') : '';
 };
 
+export const getDeviceType = (req?: any): 'mobile' | 'desktop' => {
+	const userAgent: string = req?.headers?.['user-agent'] || '';
+	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent) ? 'mobile' : 'desktop';
+};
+
 export const likeTargetPropertyHandler = async (likeTargetProperty: any, id: string) => {
 	try {
 		await likeTargetProperty({

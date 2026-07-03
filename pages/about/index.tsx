@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import Link from 'next/link';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import { getDeviceType } from '../../libs/utils';
 import { Stack, Box } from '@mui/material';
 
 interface AboutProps {
@@ -206,7 +207,7 @@ const About: NextPage<AboutProps> = ({ carsCount, agentsCount }) => {
 	}
 };
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({ req }: any) => {
 	const endpoint = process.env.REACT_APP_API_GRAPHQL_URL || 'https://api.solven.uz/graphql';
 	const query = `query {
 		getCars(input: { page: 1, limit: 1, sort: "createdAt", direction: DESC, search: {} }) { metaCounter { total } }
@@ -227,7 +228,7 @@ export const getServerSideProps = async () => {
 	} catch {
 		// keep fallbacks
 	}
-	return { props: { carsCount, agentsCount } };
+	return { props: { deviceType: getDeviceType(req), carsCount, agentsCount } };
 };
 
 export default withLayoutBasic(About);

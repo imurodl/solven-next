@@ -7,6 +7,7 @@ import { ApolloProvider } from '@apollo/client';
 import { useApollo } from '../apollo/client';
 import { appWithTranslation } from 'next-i18next';
 import SEO from '../libs/components/SEO';
+import { DeviceContext } from '../libs/hooks/DeviceContext';
 import '../scss/app.scss';
 import '../scss/pc/main.scss';
 import '../scss/mobile/main.scss';
@@ -19,8 +20,10 @@ const App = ({ Component, pageProps }: AppProps) => {
 		<ApolloProvider client={client}>
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
-				<SEO />
-				<Component {...pageProps} />
+				<DeviceContext.Provider value={pageProps.deviceType}>
+					<SEO />
+					<Component {...pageProps} />
+				</DeviceContext.Provider>
 			</ThemeProvider>
 		</ApolloProvider>
 	);
