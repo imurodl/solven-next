@@ -58,6 +58,7 @@ const SEO = ({
 	const fullTitle = title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE;
 	const desc = description || DEFAULT_DESCRIPTION;
 	const img = image || DEFAULT_IMAGE;
+	const usingDefaultImg = !image;
 	const imgAlt = imageAlt || fullTitle;
 	const ogLocale = OG_LOCALE_MAP[currentLocale] || 'en_US';
 
@@ -81,6 +82,9 @@ const SEO = ({
 			<meta property="og:url" content={url} key="og:url" />
 			<meta property="og:image" content={img} key="og:image" />
 			<meta property="og:image:alt" content={imgAlt} key="og:image:alt" />
+			{usingDefaultImg && <meta property="og:image:type" content="image/png" key="og:image:type" />}
+			{usingDefaultImg && <meta property="og:image:width" content="1200" key="og:image:width" />}
+			{usingDefaultImg && <meta property="og:image:height" content="630" key="og:image:height" />}
 			<meta property="og:locale" content={ogLocale} key="og:locale" />
 			{Object.entries(OG_LOCALE_MAP)
 				.filter(([loc]) => loc !== currentLocale)

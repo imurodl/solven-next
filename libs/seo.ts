@@ -2,7 +2,7 @@ export const SITE_URL = 'https://solven.uz';
 export const SITE_NAME = 'Solven';
 export const DEFAULT_LOCALE = 'en';
 export const LOCALES = ['en', 'kr', 'ru', 'uz'] as const;
-export const DEFAULT_IMAGE = `${SITE_URL}/img/logo/solven.png`;
+export const DEFAULT_IMAGE = `${SITE_URL}/img/og-image.png`;
 export const LOGO_URL = `${SITE_URL}/img/logo/solven.png`;
 
 // App locale codes -> BCP-47 language tags. Note: `kr` is the country segment
