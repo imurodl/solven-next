@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import SEO from '../../libs/components/SEO';
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, Stack } from '@mui/material';
 import { useRouter } from 'next/router';
 import { logIn, signUp } from '../../libs/auth';
@@ -66,6 +67,7 @@ const Join: NextPage = (props: any) => {
 	if (device === 'mobile') {
 		return (
 			<Stack className={'join-page'}>
+				<SEO title="Sign In / Sign Up" noindex={true} />
 				<Stack className={'container'}>
 					<Stack className={'main'}>
 						<Box className={'info'}>
@@ -197,6 +199,7 @@ const Join: NextPage = (props: any) => {
 	} else {
 		return (
 			<Stack className={'join-page'}>
+				<SEO title="Sign In / Sign Up" noindex={true} />
 				<Stack className={'container'}>
 					<Stack className={'main'}>
 						<Stack className={'left'}>

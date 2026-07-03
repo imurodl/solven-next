@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../libs/hooks/useDeviceDetect';
 import withLayoutMain from '../libs/components/layout/LayoutHome';
+import SEO from '../libs/components/SEO';
 import CommunityBoards from '../libs/components/homepage/CommunityBoards';
 import PopularCars from '../libs/components/homepage/PopularCars';
 import TopAgents from '../libs/components/homepage/TopAgents';
@@ -37,6 +38,10 @@ const Home: NextPage = () => {
 	if (device === 'mobile') {
 		return (
 			<Stack className="home-page">
+				<SEO
+					title="Buy & Sell Cars in Korea"
+					description="Solven is South Korea's trusted car marketplace. Browse thousands of new and used cars, compare prices, and connect with verified agents."
+				/>
 				<CarBrands />
 				<TrendCars />
 				<PopularCars />
@@ -48,6 +53,10 @@ const Home: NextPage = () => {
 	} else {
 		return (
 			<Stack className="home-page">
+				<SEO
+					title="Buy & Sell Cars in Korea"
+					description="Solven is South Korea's trusted car marketplace. Browse thousands of new and used cars, compare prices, and connect with verified agents."
+				/>
 				<div data-aos="fade-up">
 					<CarBrands />
 				</div>

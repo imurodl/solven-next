@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import SEO from '../../libs/components/SEO';
 import { Stack } from '@mui/material';
 import MemberMenu from '../../libs/components/member/MemberMenu';
 import MemberProperties from '../../libs/components/member/MemberCars';
@@ -17,14 +18,31 @@ import { getDeviceType } from '../../libs/utils';
 import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mutation';
 import { Messages } from '../../libs/config';
 
-export const getServerSideProps = async ({ locale, req }: any) => ({
-	props: {
-		deviceType: getDeviceType(req),
-		...(await serverSideTranslations(locale, ['common'])),
-	},
-});
+export const getServerSideProps = async ({ locale, req, query }: any) => {
+	const translations = await serverSideTranslations(locale, ['common']);
+	let initialMember = null;
+	const id = query?.memberId;
+	if (id) {
+		try {
+			const GRAPHQL_URL = process.env.REACT_APP_API_GRAPHQL_URL || 'https://api.solven.uz/graphql';
+			const res = await fetch(GRAPHQL_URL, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					query: `query GetMember($input: String!) { getMember(memberId: $input) { _id memberNick memberFullName memberImage memberDesc } }`,
+					variables: { input: id },
+				}),
+			});
+			const json = await res.json();
+			initialMember = json?.data?.getMember ?? null;
+		} catch {
+			initialMember = null;
+		}
+	}
+	return { props: { deviceType: getDeviceType(req), initialMember, ...translations } };
+};
 
-const MemberPage: NextPage = () => {
+const MemberPage: NextPage = ({ initialMember }: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const category: any = router.query?.category;
@@ -110,9 +128,44 @@ const MemberPage: NextPage = () => {
 		}
 	};
 
+	const seoMember = initialMember;
+	const seoMemberName = seoMember?.memberFullName || seoMember?.memberNick;
+	const seoMemberImage = seoMember?.memberImage
+		? `${process.env.REACT_APP_API_URL}/${seoMember.memberImage}`
+		: undefined;
+	const memberSeo = (
+		<SEO
+			canonical={seoMember?._id ? `/member/?memberId=${seoMember._id}` : undefined}
+			title={seoMemberName ? `${seoMemberName} — Member` : 'Member Profile'}
+			description={
+				seoMember?.memberDesc
+					? String(seoMember.memberDesc).slice(0, 160)
+					: `View ${seoMemberName || 'this Solven member'}'s car listings, followers and activity on Solven.`
+			}
+			image={seoMemberImage}
+			type="profile"
+			jsonLd={
+				seoMember
+					? {
+							'@context': 'https://schema.org',
+							'@type': 'ProfilePage',
+							mainEntity: {
+								'@type': 'Person',
+								name: seoMemberName,
+								...(seoMemberImage ? { image: seoMemberImage } : {}),
+								...(seoMember.memberDesc ? { description: String(seoMember.memberDesc).slice(0, 300) } : {}),
+								url: `https://solven.uz/member/?memberId=${seoMember._id}`,
+							},
+					  }
+					: undefined
+			}
+		/>
+	);
+
 	if (device === 'mobile') {
 		return (
 			<div id="member-page-mobile">
+				{memberSeo}
 				<MemberMenu subscribeHandler={subscribeHandler} unsubscribeHandler={unsubscribeHandler} />
 				<Stack className="member-content">
 					{category === 'properties' && <MemberProperties />}
@@ -139,6 +192,7 @@ const MemberPage: NextPage = () => {
 	} else {
 		return (
 			<div id="member-page" style={{ position: 'relative' }}>
+				{memberSeo}
 				<div className="container">
 					<Stack className={'member-page'}>
 						<Stack className={'back-frame'}>

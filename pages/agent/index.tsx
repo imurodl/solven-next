@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import SEO from '../../libs/components/SEO';
+import { breadcrumbJsonLd } from '../../libs/seo';
 import { Stack, Box, Button, Pagination, Typography } from '@mui/material';
 import { Menu, MenuItem } from '@mui/material';
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
@@ -146,6 +147,10 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 				<SEO
 					title="Car Agents & Dealers"
 					description="Browse verified car agents and dealers on Solven. View their listings, ratings, and connect to buy or sell cars in Korea."
+					jsonLd={breadcrumbJsonLd([
+						{ name: 'Home', path: '/' },
+						{ name: 'Agents', path: '/agent/' },
+					])}
 				/>
 				<Stack className={'container'}>
 					<Box className={'agent-main-info'}>
@@ -244,6 +249,10 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 				<SEO
 					title="Car Agents & Dealers"
 					description="Browse verified car agents and dealers on Solven. View their listings, ratings, and connect to buy or sell cars in Korea."
+					jsonLd={breadcrumbJsonLd([
+						{ name: 'Home', path: '/' },
+						{ name: 'Agents', path: '/agent/' },
+					])}
 				/>
 				<Stack className={'container'}>
 					<Box className={'agent-main-info'}>

@@ -3,6 +3,8 @@ import { NextPage } from 'next';
 import Link from 'next/link';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import SEO from '../../libs/components/SEO';
+import { breadcrumbJsonLd } from '../../libs/seo';
 import { getDeviceType } from '../../libs/utils';
 import { Stack, Box } from '@mui/material';
 
@@ -17,6 +19,14 @@ const About: NextPage<AboutProps> = ({ carsCount, agentsCount }) => {
 	if (device === 'mobile') {
 		return (
 			<Stack className="about-page">
+				<SEO
+					title="About Solven"
+					description="Learn about Solven — South Korea's trusted marketplace for buying and selling new and used cars with verified agents."
+					jsonLd={breadcrumbJsonLd([
+						{ name: 'Home', path: '/' },
+						{ name: 'About', path: '/about/' },
+					])}
+				/>
 				{/* Hero Section */}
 				<Stack className="hero-section">
 					<Stack className="container">
@@ -112,6 +122,14 @@ const About: NextPage<AboutProps> = ({ carsCount, agentsCount }) => {
 	} else {
 		return (
 			<Stack className="about-page">
+				<SEO
+					title="About Solven"
+					description="Learn about Solven — South Korea's trusted marketplace for buying and selling new and used cars with verified agents."
+					jsonLd={breadcrumbJsonLd([
+						{ name: 'Home', path: '/' },
+						{ name: 'About', path: '/about/' },
+					])}
+				/>
 				{/* Hero Section */}
 				<Stack className="hero-section">
 					<Stack className="container">

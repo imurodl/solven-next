@@ -34,6 +34,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { getDeviceType } from '../../libs/utils';
 import SEO from '../../libs/components/SEO';
+import { articleJsonLd, breadcrumbJsonLd } from '../../libs/seo';
 import { BoardArticle } from '../../libs/types/board-article/board-article';
 import { CREATE_COMMENT, LIKE_TARGET_BOARD_ARTICLE, UPDATE_COMMENT } from '../../apollo/user/mutation';
 import { GET_BOARD_ARTICLE, GET_COMMENTS } from '../../apollo/user/query';
@@ -58,7 +59,7 @@ export const getServerSideProps = async ({ locale, query, req }: any) => {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					query: `query GetBoardArticle($input: String!) { getBoardArticle(articleId: $input) { _id articleTitle articleContent articleImage articleCategory } }`,
+					query: `query GetBoardArticle($input: String!) { getBoardArticle(articleId: $input) { _id articleTitle articleContent articleImage articleCategory createdAt updatedAt memberData { memberNick } } }`,
 					variables: { input: id },
 				}),
 			});
@@ -286,14 +287,18 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 						description={seoPlain ? seoPlain.slice(0, 160) : `Read "${art.articleTitle}" on the Solven community.`}
 						image={seoImg}
 						type="article"
-						jsonLd={{
-							'@context': 'https://schema.org',
-							'@type': 'Article',
-							headline: art.articleTitle,
-							...(seoImg ? { image: seoImg } : {}),
-							articleSection: art.articleCategory,
-							url: `https://solven.uz/community/detail?id=${art._id}`,
-						}}
+						publishedTime={art.createdAt ? new Date(art.createdAt).toISOString() : undefined}
+						modifiedTime={art.updatedAt ? new Date(art.updatedAt).toISOString() : undefined}
+						section={art.articleCategory}
+						author={art.memberData?.memberNick}
+						jsonLd={[
+							articleJsonLd(art, { image: seoImg, plain: seoPlain, author: art.memberData?.memberNick }),
+							breadcrumbJsonLd([
+								{ name: 'Home', path: '/' },
+								{ name: 'Community', path: '/community/' },
+								{ name: art.articleTitle, path: '/community/detail/?id=' + art._id },
+							]),
+						].filter(Boolean)}
 					/>
 				)}
 
@@ -463,14 +468,18 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 							description={plain ? plain.slice(0, 160) : `Read "${art.articleTitle}" on the Solven community.`}
 							image={img}
 							type="article"
-							jsonLd={{
-								'@context': 'https://schema.org',
-								'@type': 'Article',
-								headline: art.articleTitle,
-								...(img ? { image: img } : {}),
-								articleSection: art.articleCategory,
-								url: `https://solven.uz/community/detail?id=${art._id}`,
-							}}
+							publishedTime={art.createdAt ? new Date(art.createdAt).toISOString() : undefined}
+							modifiedTime={art.updatedAt ? new Date(art.updatedAt).toISOString() : undefined}
+							section={art.articleCategory}
+							author={art.memberData?.memberNick}
+							jsonLd={[
+								articleJsonLd(art, { image: img, plain: plain, author: art.memberData?.memberNick }),
+								breadcrumbJsonLd([
+									{ name: 'Home', path: '/' },
+									{ name: 'Community', path: '/community/' },
+									{ name: art.articleTitle, path: '/community/detail/?id=' + art._id },
+								]),
+							].filter(Boolean)}
 						/>
 					);
 				})()}

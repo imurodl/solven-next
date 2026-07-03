@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import { Box, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import SEO from '../../libs/components/SEO';
+import { breadcrumbJsonLd } from '../../libs/seo';
 import Notice from '../../libs/components/help/Notice';
 import Faq from '../../libs/components/help/Faq';
 import Terms from '../../libs/components/help/Terms';
@@ -40,6 +42,14 @@ const CS: NextPage = (props: any) => {
 	if (device === 'mobile') {
 		return (
 			<div id="mobile-wrap">
+				<SEO
+					title="Help & FAQ"
+					description="Get help using Solven — answers to common questions about buying, selling, listings, and agents."
+					jsonLd={breadcrumbJsonLd([
+						{ name: 'Home', path: '/' },
+						{ name: 'Help', path: '/help/' },
+					])}
+				/>
 				<Stack className={'cs-page'}>
 					<Stack className={'container'}>
 						<Box className={'cs-main-info'}>
@@ -78,6 +88,14 @@ const CS: NextPage = (props: any) => {
 	} else
 		return (
 			<div id="pc-wrap">
+				<SEO
+					title="Help & FAQ"
+					description="Get help using Solven — answers to common questions about buying, selling, listings, and agents."
+					jsonLd={breadcrumbJsonLd([
+						{ name: 'Home', path: '/' },
+						{ name: 'Help', path: '/help/' },
+					])}
+				/>
 				<Stack className={'cs-page'}>
 					<Stack className={'container'}>
 						<Box className={'cs-main-info'}>

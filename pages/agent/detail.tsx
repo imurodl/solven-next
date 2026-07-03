@@ -21,6 +21,7 @@ import { Messages, REACT_APP_API_URL } from '../../libs/config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { getDeviceType } from '../../libs/utils';
 import SEO from '../../libs/components/SEO';
+import { personJsonLd, breadcrumbJsonLd } from '../../libs/seo';
 import { CREATE_COMMENT, LIKE_TARGET_CAR } from '../../apollo/user/mutation';
 import { GET_COMMENTS, GET_MEMBER, GET_CARS } from '../../apollo/user/query';
 import { T } from '../../libs/types/common';
@@ -205,13 +206,14 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, initialAgent, ...
 				description={a.memberDesc ? String(a.memberDesc).slice(0, 160) : `View ${name}'s car listings and reviews on Solven.`}
 				image={img}
 				type="profile"
-				jsonLd={{
-					'@context': 'https://schema.org',
-					'@type': 'Person',
-					name,
-					...(img ? { image: img } : {}),
-					url: `https://solven.uz/agent/detail?agentId=${a._id}`,
-				}}
+				jsonLd={[
+					personJsonLd(a, img),
+					breadcrumbJsonLd([
+						{ name: 'Home', path: '/' },
+						{ name: 'Agents', path: '/agent/' },
+						{ name: name, path: '/agent/detail/?agentId=' + a._id },
+					]),
+				].filter(Boolean)}
 			/>
 		);
 	})();

@@ -18,6 +18,7 @@ import CarCard from '../../libs/components/car/CarCard';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import SEO from '../../libs/components/SEO';
+import { breadcrumbJsonLd } from '../../libs/seo';
 import Filter from '../../libs/components/car/Filter';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -156,6 +157,10 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 				<SEO
 					title="Browse Cars for Sale"
 					description="Search new and used cars for sale in Korea on Solven. Filter by brand, location, price, fuel type and more."
+					jsonLd={breadcrumbJsonLd([
+						{ name: 'Home', path: '/' },
+						{ name: 'Cars', path: '/car/' },
+					])}
 				/>
 				<div className="container">
 					<Stack className={`header-basic`}>
@@ -283,6 +288,10 @@ const CarList: NextPage = ({ initialInput, ...props }: any) => {
 				<SEO
 					title="Browse Cars for Sale"
 					description="Search new and used cars for sale in Korea on Solven. Filter by brand, location, price, fuel type and more."
+					jsonLd={breadcrumbJsonLd([
+						{ name: 'Home', path: '/' },
+						{ name: 'Cars', path: '/car/' },
+					])}
 				/>
 				<div className="container">
 					<Stack className={`header-basic`}>

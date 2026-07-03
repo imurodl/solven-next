@@ -21,6 +21,7 @@ import { getDeviceType } from '../../libs/utils';
 import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mutation';
 import { Messages } from '../../libs/config';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import SEO from '../../libs/components/SEO';
 
 export const getServerSideProps = async ({ locale, req }: any) => ({
 	props: {
@@ -109,6 +110,7 @@ const MyPage: NextPage = (props: any) => {
 	if (device === 'mobile') {
 		return (
 			<div id="my-page-mobile">
+				<SEO title="My Page" noindex={true} />
 				<MyMenu />
 				<Stack className="my-content">
 					{category === 'addCar' && <AddCar />}
@@ -140,6 +142,7 @@ const MyPage: NextPage = (props: any) => {
 	} else {
 		return (
 			<div id="my-page" style={{ position: 'relative' }}>
+				<SEO title="My Page" noindex={true} />
 				<div className="container">
 					<Stack className={'my-page'}>
 						<Stack className={'back-frame'}>

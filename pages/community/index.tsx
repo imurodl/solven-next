@@ -7,6 +7,7 @@ import CommunityCard from '../../libs/components/common/CommunityCard';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import SEO from '../../libs/components/SEO';
+import { breadcrumbJsonLd } from '../../libs/seo';
 import { BoardArticle } from '../../libs/types/board-article/board-article';
 import { T } from '../../libs/types/common';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -112,6 +113,10 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 				<SEO
 					title="Community"
 					description="Join the Solven community — car news, buying advice, reviews and discussions for car buyers and sellers in Korea."
+					jsonLd={breadcrumbJsonLd([
+						{ name: 'Home', path: '/' },
+						{ name: 'Community', path: '/community/' },
+					])}
 				/>
 				<div className="container">
 					<Stack className="header-basic">
@@ -225,6 +230,10 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 				<SEO
 					title="Community"
 					description="Join the Solven community — car news, buying advice, reviews and discussions for car buyers and sellers in Korea."
+					jsonLd={breadcrumbJsonLd([
+						{ name: 'Home', path: '/' },
+						{ name: 'Community', path: '/community/' },
+					])}
 				/>
 				<div className="container">
 					<Stack className={`header-basic`}>

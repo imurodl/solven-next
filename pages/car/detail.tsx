@@ -27,6 +27,7 @@ import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { getDeviceType } from '../../libs/utils';
 import SEO from '../../libs/components/SEO';
+import { vehicleJsonLd, breadcrumbJsonLd } from '../../libs/seo';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { GET_COMMENTS, GET_CARS, GET_CAR } from '../../apollo/user/query';
@@ -297,26 +298,14 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 			}
 			image={seoImage}
 			type="product"
-			jsonLd={{
-				'@context': 'https://schema.org',
-				'@type': 'Car',
-				name: carForSeo.carTitle,
-				brand: { '@type': 'Brand', name: carForSeo.carBrand },
-				model: carForSeo.carModel,
-				...(carForSeo.manufacturedAt ? { vehicleModelDate: String(carForSeo.manufacturedAt) } : {}),
-				...(carForSeo.carMileage != null
-					? { mileageFromOdometer: { '@type': 'QuantitativeValue', value: carForSeo.carMileage, unitCode: 'SMI' } }
-					: {}),
-				...(carForSeo.carColor ? { color: carForSeo.carColor } : {}),
-				...(carForSeo.carFuelType ? { fuelType: carForSeo.carFuelType } : {}),
-				...(seoImage ? { image: seoImage } : {}),
-				offers: {
-					'@type': 'Offer',
-					price: carForSeo.carPrice,
-					priceCurrency: 'USD',
-					availability: 'https://schema.org/InStock',
-				},
-			}}
+			jsonLd={[
+				vehicleJsonLd(carForSeo, seoImage),
+				breadcrumbJsonLd([
+					{ name: 'Home', path: '/' },
+					{ name: 'Cars', path: '/car/' },
+					{ name: carForSeo.carTitle, path: '/car/detail/?id=' + carForSeo._id },
+				]),
+			].filter(Boolean)}
 		/>
 	) : null;
 

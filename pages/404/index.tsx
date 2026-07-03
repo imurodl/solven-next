@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { NextPage } from 'next';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import SEO from '../../libs/components/SEO';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 
 const NotFound: NextPage = () => {
@@ -11,6 +12,7 @@ const NotFound: NextPage = () => {
 	if (device === 'mobile') {
 		return (
 			<div className="error-section-page layout-radius">
+				<SEO title="Page Not Found" noindex={true} />
 				<div className="boxcar-container">
 					<div className="right-box">
 						<div className="image-box">
@@ -45,6 +47,7 @@ const NotFound: NextPage = () => {
 	} else {
 		return (
 			<div className="error-section-page layout-radius">
+				<SEO title="Page Not Found" noindex={true} />
 				<div className="boxcar-container">
 					<div className="right-box">
 						<div className="image-box">
