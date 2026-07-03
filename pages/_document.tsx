@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
+import { organizationJsonLd, websiteJsonLd } from '../libs/seo';
 
 class MyDocument extends Document<{ locale: string }> {
 	static async getInitialProps(ctx: DocumentContext) {
@@ -10,7 +11,15 @@ class MyDocument extends Document<{ locale: string }> {
 		return (
 			<Html lang={this.props.locale}>
 				<Head>
-					<link rel="icon" type="image/png" href="/img/logo/favicon.svg" />
+					<meta name="theme-color" content="#1e40af" />
+					<link rel="icon" href="/favicon.ico" sizes="any" />
+					<link rel="icon" type="image/svg+xml" href="/img/logo/favicon.svg" />
+					<link rel="apple-touch-icon" href="/img/logo/solven.png" />
+					<link rel="manifest" href="/site.webmanifest" />
+					<script
+						type="application/ld+json"
+						dangerouslySetInnerHTML={{ __html: JSON.stringify([organizationJsonLd(), websiteJsonLd()]) }}
+					/>
 				</Head>
 				<body>
 					<Main />
