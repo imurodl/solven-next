@@ -16,7 +16,7 @@ import { userVar } from '../../apollo/store';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { getDeviceType } from '../../libs/utils';
 import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mutation';
-import { Messages } from '../../libs/config';
+import { Messages, GRAPHQL_URL } from '../../libs/config';
 
 export const getServerSideProps = async ({ locale, req, query }: any) => {
 	const translations = await serverSideTranslations(locale, ['common']);
@@ -24,7 +24,6 @@ export const getServerSideProps = async ({ locale, req, query }: any) => {
 	const id = query?.memberId;
 	if (id) {
 		try {
-			const GRAPHQL_URL = process.env.REACT_APP_API_GRAPHQL_URL || 'https://api.solven.uz/graphql';
 			const res = await fetch(GRAPHQL_URL, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },

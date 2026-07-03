@@ -118,8 +118,6 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 				input.memberImage = updateData.memberImage;
 			}
 
-			console.log('Sending update with:', input);
-
 			const result = await updateMember({
 				variables: { input },
 			});

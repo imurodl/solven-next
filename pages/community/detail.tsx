@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
-import Moment from 'react-moment';
+import { format } from 'date-fns';
 import { userVar } from '../../apollo/store';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
@@ -38,7 +38,7 @@ import { articleJsonLd, breadcrumbJsonLd } from '../../libs/seo';
 import { BoardArticle } from '../../libs/types/board-article/board-article';
 import { CREATE_COMMENT, LIKE_TARGET_BOARD_ARTICLE, UPDATE_COMMENT } from '../../apollo/user/mutation';
 import { GET_BOARD_ARTICLE, GET_COMMENTS } from '../../apollo/user/query';
-import { Messages } from '../../libs/config';
+import { Messages, GRAPHQL_URL } from '../../libs/config';
 import {
 	sweetConfirmAlert,
 	sweetMixinErrorAlert,
@@ -54,7 +54,6 @@ export const getServerSideProps = async ({ locale, query, req }: any) => {
 	const id = query?.id;
 	if (id) {
 		try {
-			const GRAPHQL_URL = process.env.REACT_APP_API_GRAPHQL_URL || 'https://api.solven.uz/graphql';
 			const res = await fetch(GRAPHQL_URL, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -318,9 +317,9 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 							<Typography className="nick" onClick={() => goMemberPage(boardArticle?.memberData?._id)}>
 								{boardArticle?.memberData?.memberNick}
 							</Typography>
-							<Moment className={'date'} format={'DD.MM.YY HH:mm'}>
-								{boardArticle?.createdAt}
-							</Moment>
+							<span className={'date'}>
+								{boardArticle?.createdAt ? format(new Date(boardArticle.createdAt), 'dd.MM.yy HH:mm') : ''}
+							</span>
 						</Stack>
 					</Stack>
 					<Stack className="stats-row">
@@ -368,7 +367,7 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 													{commentData?.memberData?.memberNick}
 												</Typography>
 												<Typography className="date">
-													<Moment format={'DD.MM.YY HH:mm'}>{commentData?.createdAt}</Moment>
+													{commentData?.createdAt ? format(new Date(commentData.createdAt), 'dd.MM.yy HH:mm') : ''}
 												</Typography>
 											</Stack>
 										</Stack>
@@ -563,9 +562,9 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 													{boardArticle?.memberData?.memberNick}
 												</Typography>
 												<Stack className="divider"></Stack>
-												<Moment className={'time-added'} format={'DD.MM.YY HH:mm'}>
-													{boardArticle?.createdAt}
-												</Moment>
+												<span className={'time-added'}>
+													{boardArticle?.createdAt ? format(new Date(boardArticle.createdAt), 'dd.MM.yy HH:mm') : ''}
+												</span>
 											</Stack>
 										</Stack>
 										<Stack className="info">
@@ -627,7 +626,7 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 																	{commentData?.memberData?.memberNick}
 																</Typography>
 																<Typography className="date">
-																	<Moment format={'DD.MM.YY HH:mm'}>{commentData?.createdAt}</Moment>
+																	{commentData?.createdAt ? format(new Date(commentData.createdAt), 'dd.MM.yy HH:mm') : ''}
 																</Typography>
 															</Stack>
 														</Stack>

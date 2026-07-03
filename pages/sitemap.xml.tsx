@@ -1,7 +1,6 @@
 import { GetServerSideProps } from 'next';
 import { SITE_URL, toCanonicalPath, localeUrl, alternateLinks } from '../libs/seo';
-
-const GRAPHQL_URL = process.env.REACT_APP_API_GRAPHQL_URL || 'https://api.solven.uz/graphql';
+import { GRAPHQL_URL } from '../libs/config';
 
 const ARTICLE_CATEGORIES = ['FREE', 'RECOMMEND', 'NEWS', 'HUMOR'];
 

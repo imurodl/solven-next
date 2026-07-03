@@ -13,9 +13,9 @@ import EastIcon from '@mui/icons-material/East';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { Car } from '../../libs/types/car/car';
-import moment from 'moment';
+import { differenceInDays } from 'date-fns';
 import { formatterStr } from '../../libs/utils';
-import { REACT_APP_API_URL } from '../../libs/config';
+import { REACT_APP_API_URL, GRAPHQL_URL } from '../../libs/config';
 import { userVar } from '../../apollo/store';
 import { CommentInput, CommentsInquiry } from '../../libs/types/comment/comment.input';
 import { Comment } from '../../libs/types/comment/comment';
@@ -75,7 +75,6 @@ export const getServerSideProps = async ({ locale, query, req }: any) => {
 	const id = query?.id;
 	if (id) {
 		try {
-			const GRAPHQL_URL = process.env.REACT_APP_API_GRAPHQL_URL || 'https://api.solven.uz/graphql';
 			const res = await fetch(GRAPHQL_URL, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -368,7 +367,11 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 										<Stack className="content-wrapper">
 											<Typography className="title-main">{getCarData?.getCar?.carTitle}</Typography>
 											<Typography className="listed-date">
-												Listed {moment().diff(getCarData?.getCar?.createdAt, 'days')} days ago
+												Listed{' '}
+												{getCarData?.getCar?.createdAt
+													? differenceInDays(new Date(), new Date(getCarData.getCar.createdAt))
+													: 0}{' '}
+												days ago
 											</Typography>
 
 											<Stack className="main-info-row">
@@ -644,7 +647,11 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 										<Stack className="content-wrapper">
 											<Typography className="title-main">{getCarData?.getCar?.carTitle}</Typography>
 											<Typography className="listed-date">
-												Listed {moment().diff(getCarData?.getCar?.createdAt, 'days')} days ago
+												Listed{' '}
+												{getCarData?.getCar?.createdAt
+													? differenceInDays(new Date(), new Date(getCarData.getCar.createdAt))
+													: 0}{' '}
+												days ago
 											</Typography>
 
 											<Stack className="main-info-row">

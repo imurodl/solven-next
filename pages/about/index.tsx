@@ -6,6 +6,7 @@ import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import SEO from '../../libs/components/SEO';
 import { breadcrumbJsonLd } from '../../libs/seo';
 import { getDeviceType } from '../../libs/utils';
+import { GRAPHQL_URL } from '../../libs/config';
 import { Stack, Box } from '@mui/material';
 
 interface AboutProps {
@@ -226,7 +227,7 @@ const About: NextPage<AboutProps> = ({ carsCount, agentsCount }) => {
 };
 
 export const getServerSideProps = async ({ req }: any) => {
-	const endpoint = process.env.REACT_APP_API_GRAPHQL_URL || 'https://api.solven.uz/graphql';
+	const endpoint = GRAPHQL_URL;
 	const query = `query {
 		getCars(input: { page: 1, limit: 1, sort: "createdAt", direction: DESC, search: {} }) { metaCounter { total } }
 		getAgents(input: { page: 1, limit: 1, sort: "memberRank", direction: DESC, search: {} }) { metaCounter { total } }

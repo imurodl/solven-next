@@ -17,7 +17,7 @@ import { CarsInquiry } from '../../libs/types/car/car.input';
 import { CommentInput, CommentsInquiry } from '../../libs/types/comment/comment.input';
 import { Comment } from '../../libs/types/comment/comment';
 import { CommentGroup } from '../../libs/enums/comment.enum';
-import { Messages, REACT_APP_API_URL } from '../../libs/config';
+import { Messages, REACT_APP_API_URL, GRAPHQL_URL } from '../../libs/config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { getDeviceType } from '../../libs/utils';
 import SEO from '../../libs/components/SEO';
@@ -32,7 +32,6 @@ export const getServerSideProps = async ({ locale, query, req }: any) => {
 	const id = query?.agentId;
 	if (id) {
 		try {
-			const GRAPHQL_URL = process.env.REACT_APP_API_GRAPHQL_URL || 'https://api.solven.uz/graphql';
 			const res = await fetch(GRAPHQL_URL, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },

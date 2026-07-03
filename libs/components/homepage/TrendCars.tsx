@@ -78,7 +78,6 @@ const TrendCars = (props: TrendCarsProps) => {
 		}
 	};
 
-	if (trendCars) console.log('trendCars:', trendCars);
 	if (!trendCars) return null;
 
 	if (device === 'mobile') {

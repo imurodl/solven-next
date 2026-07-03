@@ -93,15 +93,6 @@ const NotificationModal = ({
 	const socket = useReactiveVar(socketVar);
 	const user = useReactiveVar(userVar);
 
-	console.log('NotificationModal: Rendering with state:', {
-		notificationsCount: notifications.length,
-		unreadCount,
-		isOpen: open,
-		hasAnchorEl: !!anchorEl,
-		socketReady: socket?.readyState === WebSocket.OPEN,
-		userId: user?._id,
-	});
-
 	// Update parent component with unread count
 	useEffect(() => {
 		onUnreadCountChange?.(unreadCount);
@@ -110,8 +101,6 @@ const NotificationModal = ({
 	// Fetch notifications when modal opens
 	useEffect(() => {
 		if (open && user?._id) {
-			console.log('NotificationModal: Modal opened, fetching notifications');
-
 			if (socket?.readyState === WebSocket.OPEN) {
 				socket.send(JSON.stringify({ event: 'get_notifications' }));
 			} else {
@@ -123,13 +112,10 @@ const NotificationModal = ({
 	// Mark notifications as read when modal opens
 	useEffect(() => {
 		if (open && notifications.length > 0 && socket?.readyState === WebSocket.OPEN) {
-			console.log('NotificationModal: Marking notifications as read');
-
 			// Get IDs of unread notifications
 			const unreadNotificationIds = notifications.filter((n) => n.status === 'WAIT').map((n) => n.id);
 
 			if (unreadNotificationIds.length > 0) {
-				console.log('Sending markNotificationsAsRead with IDs:', unreadNotificationIds);
 				// Send markNotificationsAsRead event with just the array of IDs
 				socket.send(
 					JSON.stringify({
@@ -147,7 +133,6 @@ const NotificationModal = ({
 			socket.onmessage = (msg) => {
 				try {
 					const data = JSON.parse(msg.data);
-					console.log('Received websocket message:', data);
 
 					if (data.event === 'notification') {
 						// Handle new notification
@@ -162,12 +147,10 @@ const NotificationModal = ({
 						});
 					} else if (data.event === 'notifications_list') {
 						// Handle notifications list (now only contains unread notifications)
-						console.log('NotificationModal: Received notifications list:', data.data);
 						setNotifications(data.data);
 						setUnreadCount(data.data.length); // All notifications in the list are unread
 					} else if (data.event === 'notificationStatus') {
 						// Handle status updates
-						console.log('NotificationModal: Received status update:', data.payload);
 						const { id, status } = data.payload;
 
 						setNotifications((prev) => {

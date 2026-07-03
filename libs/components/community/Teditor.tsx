@@ -63,7 +63,6 @@ const TuiEditor = () => {
 			});
 
 			const responseImage = response.data.data.imageUploader;
-			console.log('=responseImage: ', responseImage);
 			memoizedValues.articleImage = responseImage;
 
 			return `${REACT_APP_API_URL}/${responseImage}`;
@@ -77,7 +76,6 @@ const TuiEditor = () => {
 	};
 
 	const articleTitleHandler = (e: T) => {
-		console.log(e.target.value);
 		memoizedValues.articleTitle = e.target.value;
 	};
 

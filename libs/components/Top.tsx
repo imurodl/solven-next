@@ -67,24 +67,16 @@ const Top = () => {
 
 	useEffect(() => {
 		if (socket && user?._id) {
-			console.log('Top: Setting up notification listener', {
-				socketState: socket.readyState,
-				userId: user._id,
-			});
-
 			socket.onmessage = (msg) => {
 				try {
 					const data = JSON.parse(msg.data);
-					console.log('Top: Received message:', data);
 
 					if (data.event === 'notification') {
-						console.log('Top: Received notification:', data.payload);
 						// Update badge state for new notifications
 						if (data.payload.status === 'WAIT') {
 							setHasUnreadNotifications(true);
 						}
 					} else if (data.event === 'unreadNotifications') {
-						console.log('Top: Received initial unread notifications:', data.payload);
 						// If there are any unread notifications, show the badge
 						if (data.payload && data.payload.length > 0) {
 							setHasUnreadNotifications(true);
@@ -102,7 +94,6 @@ const Top = () => {
 
 		return () => {
 			if (socket) {
-				console.log('Top: Cleaning up notification listener');
 				socket.onmessage = null;
 				socket.onerror = null;
 			}

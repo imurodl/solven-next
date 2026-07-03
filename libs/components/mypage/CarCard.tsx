@@ -7,7 +7,7 @@ import ModeIcon from '@mui/icons-material/Mode';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Car } from '../../types/car/car';
 import { formatterStr } from '../../utils';
-import Moment from 'react-moment';
+import { format } from 'date-fns';
 import { useRouter } from 'next/router';
 import { CarStatus } from '../../enums/car.enum';
 
@@ -27,7 +27,6 @@ export const CarCard = (props: CarCardProps) => {
 
 	/** HANDLERS **/
 	const pushEditCar = async (id: string) => {
-		console.log('+pushEditCar: ', id);
 		await router.push({
 			pathname: '/mypage',
 			query: { category: 'addCar', carId: id },
@@ -71,7 +70,7 @@ export const CarCard = (props: CarCardProps) => {
 							<strong>${formatterStr(car?.carPrice)}</strong>
 						</Typography>
 						<Typography className="date">
-							<Moment format="DD MMM, YYYY">{car.createdAt}</Moment>
+							{car.createdAt ? format(new Date(car.createdAt), 'dd MMM, yyyy') : ''}
 						</Typography>
 					</Stack>
 					<Stack className="meta-row">
@@ -117,7 +116,7 @@ export const CarCard = (props: CarCardProps) => {
 				</Stack>
 				<Stack className="date-box">
 					<Typography className="date">
-						<Moment format="DD MMMM, YYYY">{car.createdAt}</Moment>
+						{car.createdAt ? format(new Date(car.createdAt), 'dd MMMM, yyyy') : ''}
 					</Typography>
 				</Stack>
 				<Stack className="status-box">

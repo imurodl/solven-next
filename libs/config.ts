@@ -1,5 +1,7 @@
 export const REACT_APP_API_URL = `${process.env.REACT_APP_API_URL}`;
 
+export const GRAPHQL_URL = process.env.REACT_APP_API_GRAPHQL_URL || 'https://api.solven.uz/graphql';
+
 export const availableOptions = ['carBarter', 'carRent'];
 
 const thisYear = new Date().getFullYear();

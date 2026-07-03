@@ -59,7 +59,6 @@ const AddCar = ({ initialValues, ...props }: any) => {
 	/** LIFECYCLES **/
 	useEffect(() => {
 		if (getCarData?.getCar) {
-			console.log('Setting car data:', getCarData.getCar);
 			setInsertCarData({
 				carTitle: getCarData.getCar.carTitle || '',
 				carBrand: getCarData.getCar.carBrand || '',
@@ -120,9 +119,6 @@ const AddCar = ({ initialValues, ...props }: any) => {
 				formData.append(i.toString(), selectedFiles[i]);
 			}
 
-			console.log('Uploading files:', selectedFiles);
-			console.log('FormData map:', map);
-
 			const response = await axios.post(`${process.env.REACT_APP_API_GRAPHQL_URL}`, formData, {
 				headers: {
 					'Content-Type': 'multipart/form-data',
@@ -132,7 +128,6 @@ const AddCar = ({ initialValues, ...props }: any) => {
 			});
 
 			const responseImages = response.data.data.imagesUploader;
-			console.log('Upload response:', responseImages);
 
 			// Combine existing images with new ones
 			const updatedImages = [...insertCarData.carImages, ...responseImages].slice(0, 5);
@@ -144,7 +139,6 @@ const AddCar = ({ initialValues, ...props }: any) => {
 	}
 
 	const doDisabledCheck = () => {
-		console.log('Form data:', insertCarData);
 		return (
 			!insertCarData.carTitle ||
 			!insertCarData.carBrand ||
@@ -165,8 +159,6 @@ const AddCar = ({ initialValues, ...props }: any) => {
 
 	const insertPropertyHandler = useCallback(async () => {
 		try {
-			console.log('Submitting car data:', insertCarData);
-
 			const carInput = {
 				carTitle: insertCarData.carTitle,
 				carBrand: insertCarData.carBrand,
@@ -187,8 +179,6 @@ const AddCar = ({ initialValues, ...props }: any) => {
 				manufacturedAt: Number(insertCarData.manufacturedAt),
 				carOptions: insertCarData.carOptions || [],
 			};
-
-			console.log('Formatted car input:', carInput);
 
 			const result = await createCar({
 				variables: {
@@ -236,8 +226,6 @@ const AddCar = ({ initialValues, ...props }: any) => {
 				manufacturedAt: insertCarData.manufacturedAt,
 			};
 
-			console.log('Updating car with data:', updateData);
-
 			const result = await updateCar({
 				variables: {
 					input: updateData,
@@ -262,8 +250,6 @@ const AddCar = ({ initialValues, ...props }: any) => {
 	if (user?.memberType !== 'AGENT') {
 		router.back();
 	}
-
-	console.log('+insertCarData', insertCarData);
 
 	if (device === 'mobile') {
 		return (
