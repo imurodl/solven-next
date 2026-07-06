@@ -206,7 +206,7 @@ const Top = () => {
 						<Box component={'div'} className={'right-section'}>
 							{user?._id ? (
 								<>
-									<IconButton onClick={handleNotificationClick} size="small">
+									<IconButton onClick={handleNotificationClick} size="small" aria-label="Open notifications">
 										<Badge color="error" variant="dot" invisible={!hasUnreadNotifications}>
 											<NotificationsOutlinedIcon className={'notification-icon'} />
 										</Badge>
@@ -424,7 +424,7 @@ const Top = () => {
 							<div className={'lan-box'}>
 								{user?._id && (
 									<>
-										<IconButton onClick={handleNotificationClick} size="small" sx={{ mr: 2 }}>
+										<IconButton onClick={handleNotificationClick} size="small" sx={{ mr: 2 }} aria-label="Open notifications">
 											<Badge color="error" variant="dot" invisible={!hasUnreadNotifications}>
 												<NotificationsOutlinedIcon className={'notification-icon'} />
 											</Badge>

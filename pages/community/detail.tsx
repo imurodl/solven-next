@@ -376,6 +376,7 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 										{commentData?.memberId === user?._id && (
 											<Stack className="actions">
 												<IconButton
+													aria-label="Delete comment"
 													onClick={() => {
 														setUpdatedCommentId(commentData?._id);
 														updateButtonHandler(commentData?._id, CommentStatus.DELETE);
@@ -384,6 +385,7 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 													<DeleteForeverIcon />
 												</IconButton>
 												<IconButton
+													aria-label="Edit comment"
 													onClick={() => {
 														setUpdatedComment(commentData?.commentContent);
 														setUpdatedCommentWordsCnt(commentData?.commentContent?.length);
@@ -635,6 +637,7 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 														{commentData?.memberId === user?._id && (
 															<Stack className="actions">
 																<IconButton
+																	aria-label="Delete comment"
 																	onClick={() => {
 																		setUpdatedCommentId(commentData?._id);
 																		updateButtonHandler(commentData?._id, CommentStatus.DELETE);
@@ -643,6 +646,7 @@ const CommunityDetail: NextPage = ({ initialInput, initialArticle, ...props }: T
 																	<DeleteForeverIcon />
 																</IconButton>
 																<IconButton
+																	aria-label="Edit comment"
 																	onClick={() => {
 																		setUpdatedComment(commentData?.commentContent);
 																		setUpdatedCommentWordsCnt(commentData?.commentContent?.length);

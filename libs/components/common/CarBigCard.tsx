@@ -70,6 +70,7 @@ const CarBigCard = (props: CarBigCardProps) => {
 							<Stack flexDirection={'row'} style={{ width: 'auto' }}>
 								<IconButton
 									color={'default'}
+									aria-label="Views"
 									sx={{
 										width: '32px',
 										height: '32px',
@@ -92,6 +93,7 @@ const CarBigCard = (props: CarBigCardProps) => {
 							>
 								<IconButton
 									color={'default'}
+									aria-label="Toggle favorite"
 									sx={{
 										width: '32px',
 										height: '32px',
@@ -152,6 +154,7 @@ const CarBigCard = (props: CarBigCardProps) => {
 							<Stack flexDirection={'row'} style={{ width: 'auto' }}>
 								<IconButton
 									color={'default'}
+									aria-label="Views"
 									sx={{
 										width: '32px',
 										height: '32px',
@@ -174,6 +177,7 @@ const CarBigCard = (props: CarBigCardProps) => {
 							>
 								<IconButton
 									color={'default'}
+									aria-label="Toggle favorite"
 									sx={{
 										width: '32px',
 										height: '32px',

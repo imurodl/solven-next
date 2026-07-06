@@ -96,7 +96,7 @@ const AgentCard = (props: AgentCardProps) => {
 					</Link>
 
 					<Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
-						<IconButton color={'default'}>
+						<IconButton color={'default'} aria-label="Views">
 							<RemoveRedEyeIcon />
 						</IconButton>
 						<Typography className="view-cnt">{agent?.memberViews}</Typography>
@@ -188,7 +188,7 @@ const AgentCard = (props: AgentCardProps) => {
 					</Link>
 
 					<Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
-						<IconButton color={'default'}>
+						<IconButton color={'default'} aria-label="Views">
 							<RemoveRedEyeIcon />
 						</IconButton>
 						<Typography className="view-cnt">{agent?.memberViews}</Typography>

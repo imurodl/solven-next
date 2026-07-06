@@ -8,6 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { carMileage, carYears, REACT_APP_API_URL } from '../../config';
+import { a11yClickProps } from '../../utils';
 import { CarFuelType, CarLocation, CarType } from '../../enums/car.enum';
 import { CarsInquiry } from '../../types/car/car.input';
 import { useRouter } from 'next/router';
@@ -368,21 +369,21 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 			<>
 				<Stack className={'search-box'}>
 					<Stack className={'select-box'}>
-						<Box component={'div'} className={`box ${openLocation ? 'on' : ''}`} onClick={locationStateChangeHandler}>
+						<Box component={'div'} className={`box ${openLocation ? 'on' : ''}`} onClick={locationStateChangeHandler} {...a11yClickProps(locationStateChangeHandler)}>
 							<span>{searchFilter?.search?.locationList ? searchFilter?.search?.locationList[0] : t('Location')} </span>
 							<ExpandMoreIcon />
 						</Box>
-						<Box className={`box ${openType ? 'on' : ''}`} onClick={typeStateChangeHandler}>
+						<Box className={`box ${openType ? 'on' : ''}`} onClick={typeStateChangeHandler} {...a11yClickProps(typeStateChangeHandler)}>
 							<span> {searchFilter?.search?.brandList?.[0] || t('Brand')} </span>
 							<ExpandMoreIcon />
 						</Box>
-						<Box className={`box ${openRooms ? 'on' : ''}`} onClick={roomStateChangeHandler}>
+						<Box className={`box ${openRooms ? 'on' : ''}`} onClick={roomStateChangeHandler} {...a11yClickProps(roomStateChangeHandler)}>
 							<span>{searchFilter?.search?.modelList ? searchFilter?.search?.modelList[0] : t('Model')}</span>
 							<ExpandMoreIcon />
 						</Box>
 					</Stack>
 					<Stack className={'search-box-other'}>
-						<Box className={'search-btn'} onClick={pushSearchHandler}>
+						<Box className={'search-btn'} onClick={pushSearchHandler} {...a11yClickProps(pushSearchHandler)}>
 							<img src="/img/icons/search_white.svg" alt="" />
 							<p>{t('Search Cars')}</p>
 						</Box>
@@ -392,7 +393,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					<div className={`filter-location ${openLocation ? 'on' : ''}`} ref={locationRef}>
 						{carLocation.map((location: string) => {
 							return (
-								<div onClick={() => propertyLocationSelectHandler(location)} key={location}>
+								<div onClick={() => propertyLocationSelectHandler(location)} key={location} {...a11yClickProps(() => propertyLocationSelectHandler(location))}>
 									<img src={`img/banner/cities/${location}.webp`} alt="" />
 									<span>{location}</span>
 								</div>
@@ -403,7 +404,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					<div className={`filter-type ${openType ? 'on' : ''}`} ref={typeRef}>
 						{carBrands.map((carBrand: CarBrand) => {
 							return (
-								<div onClick={() => propertyTypeSelectHandler(carBrand.carBrandName)} key={carBrand._id}>
+								<div onClick={() => propertyTypeSelectHandler(carBrand.carBrandName)} key={carBrand._id} {...a11yClickProps(() => propertyTypeSelectHandler(carBrand.carBrandName))}>
 									<Image src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`} alt={carBrand.carBrandName} width={800} height={600} />
 									<span>{carBrand.carBrandName}</span>
 								</div>
@@ -417,7 +418,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							const availableModels = selectedBrand?.carBrandModels || [];
 
 							return availableModels.map((model: string) => (
-								<span onClick={() => propertyRoomSelectHandler(model)} key={model}>
+								<span onClick={() => propertyRoomSelectHandler(model)} key={model} {...a11yClickProps(() => propertyRoomSelectHandler(model))}>
 									{model}
 								</span>
 							));
@@ -434,7 +435,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				>
 					<Box sx={style}>
 						<Box className={'advanced-filter-modal'}>
-							<div className={'close'} onClick={() => advancedFilterHandler(false)}>
+							<div className={'close'} onClick={() => advancedFilterHandler(false)} {...a11yClickProps(() => advancedFilterHandler(false))}>
 								<CloseIcon />
 							</div>
 							<div className={'top'}>
@@ -604,12 +605,12 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 								</div>
 							</div>
 							<div className={'bottom'}>
-								<div onClick={resetFilterHandler}>
+								<div onClick={resetFilterHandler} {...a11yClickProps(resetFilterHandler)}>
 									<img src="/img/icons/reset.svg" alt="" />
 									<span>Reset All filters</span>
 								</div>
 								<Button
-									startIcon={<img src={'/img/icons/search.svg'} />}
+									startIcon={<img src={'/img/icons/search.svg'} alt="" />}
 									className={'search-btn'}
 									onClick={pushSearchHandler}
 								>
@@ -626,24 +627,24 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 			<>
 				<Stack className={'search-box'}>
 					<Stack className={'select-box'}>
-						<Box component={'div'} className={`box ${openLocation ? 'on' : ''}`} onClick={locationStateChangeHandler}>
+						<Box component={'div'} className={`box ${openLocation ? 'on' : ''}`} onClick={locationStateChangeHandler} {...a11yClickProps(locationStateChangeHandler)}>
 							<span>{searchFilter?.search?.locationList ? searchFilter?.search?.locationList[0] : t('Location')} </span>
 							<ExpandMoreIcon />
 						</Box>
-						<Box className={`box ${openType ? 'on' : ''}`} onClick={typeStateChangeHandler}>
+						<Box className={`box ${openType ? 'on' : ''}`} onClick={typeStateChangeHandler} {...a11yClickProps(typeStateChangeHandler)}>
 							<span> {searchFilter?.search?.brandList?.[0] || t('Brand')} </span>
 							<ExpandMoreIcon />
 						</Box>
-						<Box className={`box ${openRooms ? 'on' : ''}`} onClick={roomStateChangeHandler}>
+						<Box className={`box ${openRooms ? 'on' : ''}`} onClick={roomStateChangeHandler} {...a11yClickProps(roomStateChangeHandler)}>
 							<span>{searchFilter?.search?.modelList ? searchFilter?.search?.modelList[0] : t('Model')}</span>
 							<ExpandMoreIcon />
 						</Box>
 					</Stack>
 					<Stack className={'search-box-other'}>
-						<Box className={'advanced-filter'} onClick={() => advancedFilterHandler(true)}>
+						<Box className={'advanced-filter'} onClick={() => advancedFilterHandler(true)} {...a11yClickProps(() => advancedFilterHandler(true))}>
 							<span>{t('Advanced Search')}</span>
 						</Box>
-						<Box className={'search-btn'} onClick={pushSearchHandler}>
+						<Box className={'search-btn'} onClick={pushSearchHandler} {...a11yClickProps(pushSearchHandler)}>
 							<img src="/img/icons/search_white.svg" alt="" />
 							<p>{t('Search Cars')}</p>
 						</Box>
@@ -653,7 +654,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					<div className={`filter-location ${openLocation ? 'on' : ''}`} ref={locationRef}>
 						{carLocation.map((location: string) => {
 							return (
-								<div onClick={() => propertyLocationSelectHandler(location)} key={location}>
+								<div onClick={() => propertyLocationSelectHandler(location)} key={location} {...a11yClickProps(() => propertyLocationSelectHandler(location))}>
 									<img src={`img/banner/cities/${location}.webp`} alt="" />
 									<span>{location}</span>
 								</div>
@@ -664,7 +665,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 					<div className={`filter-type ${openType ? 'on' : ''}`} ref={typeRef}>
 						{carBrands.map((carBrand: CarBrand) => {
 							return (
-								<div onClick={() => propertyTypeSelectHandler(carBrand.carBrandName)} key={carBrand._id}>
+								<div onClick={() => propertyTypeSelectHandler(carBrand.carBrandName)} key={carBrand._id} {...a11yClickProps(() => propertyTypeSelectHandler(carBrand.carBrandName))}>
 									<Image src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`} alt={carBrand.carBrandName} width={800} height={600} />
 									<span>{carBrand.carBrandName}</span>
 								</div>
@@ -678,7 +679,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 							const availableModels = selectedBrand?.carBrandModels || [];
 
 							return availableModels.map((model: string) => (
-								<span onClick={() => propertyRoomSelectHandler(model)} key={model}>
+								<span onClick={() => propertyRoomSelectHandler(model)} key={model} {...a11yClickProps(() => propertyRoomSelectHandler(model))}>
 									{model}
 								</span>
 							));
@@ -695,7 +696,7 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 				>
 					<Box sx={style}>
 						<Box className={'advanced-filter-modal'}>
-							<div className={'close'} onClick={() => advancedFilterHandler(false)}>
+							<div className={'close'} onClick={() => advancedFilterHandler(false)} {...a11yClickProps(() => advancedFilterHandler(false))}>
 								<CloseIcon />
 							</div>
 							<div className={'top'}>
@@ -865,12 +866,12 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 								</div>
 							</div>
 							<div className={'bottom'}>
-								<div onClick={resetFilterHandler}>
+								<div onClick={resetFilterHandler} {...a11yClickProps(resetFilterHandler)}>
 									<img src="/img/icons/reset.svg" alt="" />
 									<span>Reset All filters</span>
 								</div>
 								<Button
-									startIcon={<img src={'/img/icons/search.svg'} />}
+									startIcon={<img src={'/img/icons/search.svg'} alt="" />}
 									className={'search-btn'}
 									onClick={pushSearchHandler}
 								>

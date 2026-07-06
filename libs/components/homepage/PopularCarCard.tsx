@@ -6,6 +6,7 @@ import type { Car } from '../../types/car/car';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { REACT_APP_API_URL } from '../../config';
+import { a11yClickProps } from '../../utils';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
@@ -45,7 +46,7 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 					<div className={'price'}>${car.carPrice}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>
-					<strong className={'title'} onClick={() => pushDetailHandler(car._id)}>
+					<strong className={'title'} onClick={() => pushDetailHandler(car._id)} {...a11yClickProps(() => pushDetailHandler(car._id))}>
 						{car.carTitle}
 					</strong>
 					<p className={'car-desc'}>{car.carDesc?.slice(0, 50) || ''}...</p>
@@ -80,7 +81,7 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 									cursor: 'pointer',
 								}}
 							>
-								<IconButton color={'default'}>
+								<IconButton color={'default'} aria-label="Views">
 									<RemoveRedEyeIcon />
 								</IconButton>
 								<Typography className="view-cnt">{car?.carViews}</Typography>
@@ -123,7 +124,7 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 					<div className={'price'}>${car.carPrice}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>
-					<strong className={'title'} onClick={() => pushDetailHandler(car._id)}>
+					<strong className={'title'} onClick={() => pushDetailHandler(car._id)} {...a11yClickProps(() => pushDetailHandler(car._id))}>
 						{car.carTitle}
 					</strong>
 					<p className={'car-desc'}>{car.carDesc?.slice(0, 50) || ''}...</p>
@@ -161,7 +162,7 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 							<span>Model: {car?.carModel}</span>
 						</div>
 						<div className="view-like-box">
-							<IconButton color={'default'}>
+							<IconButton color={'default'} aria-label="Views">
 								<RemoveRedEyeIcon />
 							</IconButton>
 							<Typography className="view-cnt">{car?.carViews}</Typography>

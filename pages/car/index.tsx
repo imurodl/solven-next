@@ -303,7 +303,7 @@ const CarList: NextPage = ({ initialInput, initialCars, ...props }: any) => {
 					<DialogTitle className="modal-header">
 						<Stack direction="row" alignItems="center" justifyContent="space-between">
 							<Typography variant="h6">Filter</Typography>
-							<IconButton edge="end" onClick={() => setFilterModalOpen(false)}>
+							<IconButton edge="end" onClick={() => setFilterModalOpen(false)} aria-label="Close filters">
 								<CloseIcon />
 							</IconButton>
 						</Stack>

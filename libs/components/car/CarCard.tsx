@@ -91,7 +91,7 @@ const CarCard = (props: CarCardType) => {
 						</Stack>
 						{!recentlyVisited && (
 							<Stack className="buttons">
-								<IconButton color={'default'}>
+								<IconButton color={'default'} aria-label="Views">
 									<RemoveRedEyeIcon />
 								</IconButton>
 								<Typography className="view-cnt">{car?.carViews}</Typography>
@@ -166,7 +166,7 @@ const CarCard = (props: CarCardType) => {
 						</Stack>
 						{!recentlyVisited && (
 							<Stack className="buttons">
-								<IconButton color={'default'}>
+								<IconButton color={'default'} aria-label="Views">
 									<RemoveRedEyeIcon />
 								</IconButton>
 								<Typography className="view-cnt">{car?.carViews}</Typography>

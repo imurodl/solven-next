@@ -207,12 +207,12 @@ export const NoticeList = (props: NoticeListType) => {
 									}}
 								>
 									<Tooltip title={'delete'}>
-										<IconButton size="small" onClick={() => handleDelete(notice._id)}>
+										<IconButton size="small" onClick={() => handleDelete(notice._id)} aria-label="Delete notice">
 											<DeleteRoundedIcon fontSize="small" />
 										</IconButton>
 									</Tooltip>
 									<Tooltip title="edit">
-										<IconButton size="small" onClick={() => onEdit(notice)}>
+										<IconButton size="small" onClick={() => onEdit(notice)} aria-label="Edit notice">
 											<NotePencil size={20} weight="fill" />
 										</IconButton>
 									</Tooltip>

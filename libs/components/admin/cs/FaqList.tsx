@@ -207,12 +207,12 @@ export const FaqList = (props: FaqListType) => {
 									}}
 								>
 									<Tooltip title={'delete'}>
-										<IconButton size="small" onClick={() => handleDelete(notice._id)}>
+										<IconButton size="small" onClick={() => handleDelete(notice._id)} aria-label="Delete FAQ">
 											<DeleteRoundedIcon fontSize="small" />
 										</IconButton>
 									</Tooltip>
 									<Tooltip title="edit">
-										<IconButton size="small" onClick={() => onEdit(notice)}>
+										<IconButton size="small" onClick={() => onEdit(notice)} aria-label="Edit FAQ">
 											<NotePencil size={20} weight="fill" />
 										</IconButton>
 									</Tooltip>

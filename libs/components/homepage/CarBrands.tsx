@@ -5,6 +5,7 @@ import { GET_CAR_BRANDS_BY_USER } from '../../../apollo/user/query';
 import { useQuery } from '@apollo/client';
 import { CarBrand } from '../../types/car/car-brand';
 import { REACT_APP_API_URL } from '../../config';
+import { a11yClickProps } from '../../utils';
 import { Box, Stack, Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { CarsInquiry } from '../../types/car/car.input';
@@ -69,7 +70,11 @@ const CarBrands: NextPage<{ initialInput?: CarsInquiry }> = ({ initialInput }) =
 								{getCarBrandsData?.getCarBrandsByUser?.slice(0, 8).map((carBrand: CarBrand) => {
 									return (
 										<SwiperSlide key={carBrand._id} className="brand-slide">
-											<Stack onClick={() => pushBrandHandler(carBrand.carBrandName)} className="brand-item">
+											<Stack
+												onClick={() => pushBrandHandler(carBrand.carBrandName)}
+												className="brand-item"
+												{...a11yClickProps(() => pushBrandHandler(carBrand.carBrandName))}
+											>
 												<Image
 													alt={carBrand.carBrandName}
 													src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`}
@@ -123,7 +128,11 @@ const CarBrands: NextPage<{ initialInput?: CarsInquiry }> = ({ initialInput }) =
 								{getCarBrandsData?.getCarBrandsByUser?.slice(0, 8).map((carBrand: CarBrand) => {
 									return (
 										<SwiperSlide key={carBrand._id} className="brand-slide">
-											<Stack onClick={() => pushBrandHandler(carBrand.carBrandName)} className="brand-item">
+											<Stack
+												onClick={() => pushBrandHandler(carBrand.carBrandName)}
+												className="brand-item"
+												{...a11yClickProps(() => pushBrandHandler(carBrand.carBrandName))}
+											>
 												<Image
 													alt={carBrand.carBrandName}
 													src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`}

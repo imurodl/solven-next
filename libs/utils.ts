@@ -10,6 +10,17 @@ export const getDeviceType = (req?: any): 'mobile' | 'desktop' => {
 	return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent) ? 'mobile' : 'desktop';
 };
 
+export const a11yClickProps = (onActivate: (event: any) => void) => ({
+	role: 'button',
+	tabIndex: 0,
+	onKeyDown: (event: any) => {
+		if (event.key === 'Enter' || event.key === ' ') {
+			event.preventDefault();
+			onActivate(event);
+		}
+	},
+});
+
 export const likeTargetPropertyHandler = async (likeTargetProperty: any, id: string) => {
 	try {
 		await likeTargetProperty({

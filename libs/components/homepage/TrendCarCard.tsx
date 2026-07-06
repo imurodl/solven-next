@@ -8,6 +8,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import type { Car } from '../../types/car/car';
 import { REACT_APP_API_URL } from '../../config';
+import { a11yClickProps } from '../../utils';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
@@ -62,7 +63,13 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 				<CardContent className="car-content">
 					{/* Car Title with hover effect and animated underline */}
 					<Box className="car-title-wrapper">
-						<Typography variant="h6" component="div" className="car-title" onClick={() => pushDetailHandler(car._id)}>
+						<Typography
+							variant="h6"
+							component="div"
+							className="car-title"
+							onClick={() => pushDetailHandler(car._id)}
+							{...a11yClickProps(() => pushDetailHandler(car._id))}
+						>
 							{car.carTitle}
 						</Typography>
 					</Box>
@@ -157,7 +164,13 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 				<CardContent className="car-content">
 					{/* Car Title with hover effect and animated underline */}
 					<Box className="car-title-wrapper">
-						<Typography variant="h6" component="div" className="car-title" onClick={() => pushDetailHandler(car._id)}>
+						<Typography
+							variant="h6"
+							component="div"
+							className="car-title"
+							onClick={() => pushDetailHandler(car._id)}
+							{...a11yClickProps(() => pushDetailHandler(car._id))}
+						>
 							{car.carTitle}
 						</Typography>
 					</Box>

@@ -79,6 +79,7 @@ export const CarCard = (props: CarCardProps) => {
 							<Stack className="action-box">
 								<IconButton
 									className="icon-button"
+									aria-label="Edit listing"
 									onClick={(e: any) => {
 										e.stopPropagation();
 										pushEditCar(car._id);
@@ -88,6 +89,7 @@ export const CarCard = (props: CarCardProps) => {
 								</IconButton>
 								<IconButton
 									className="icon-button"
+									aria-label="Delete listing"
 									onClick={(e: any) => {
 										e.stopPropagation();
 										deleteCarHandler(car._id);
@@ -168,10 +170,10 @@ export const CarCard = (props: CarCardProps) => {
 				</Stack>
 				{!memberPage && car.carStatus == CarStatus.ACTIVE && (
 					<Stack className="action-box">
-						<IconButton className="icon-button" onClick={() => pushEditCar(car._id)}>
+						<IconButton className="icon-button" onClick={() => pushEditCar(car._id)} aria-label="Edit listing">
 							<ModeIcon className="buttons" />
 						</IconButton>
-						<IconButton className="icon-button" onClick={() => deleteCarHandler(car._id)}>
+						<IconButton className="icon-button" onClick={() => deleteCarHandler(car._id)} aria-label="Delete listing">
 							<DeleteIcon className="buttons" />
 						</IconButton>
 					</Stack>

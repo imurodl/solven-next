@@ -6,6 +6,7 @@ import { Stack, Typography } from '@mui/material';
 import { BoardArticle } from '../../types/board-article/board-article';
 import { format } from 'date-fns';
 import { REACT_APP_API_URL } from '../../config';
+import { a11yClickProps } from '../../utils';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import IconButton from '@mui/material/IconButton';
@@ -47,7 +48,11 @@ const CommunityCard = (props: CommunityCardProps) => {
 
 	if (device === 'mobile') {
 		return (
-			<Stack className="community-general-card-config" onClick={(e: any) => chooseArticleHandler(e, boardArticle)}>
+			<Stack
+				className="community-general-card-config"
+				onClick={(e: any) => chooseArticleHandler(e, boardArticle)}
+				{...a11yClickProps((e: any) => chooseArticleHandler(e, boardArticle))}
+			>
 				<Stack className="image-box">
 					<Image src={imagePath} alt={boardArticle?.articleTitle || 'Article'} className="card-img" width={800} height={600} />
 				</Stack>
@@ -66,7 +71,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 					</Stack>
 					<Stack className={'buttons'}>
 						<div className="stat-group" style={{ display: 'flex' }}>
-							<IconButton color={'default'}>
+							<IconButton color={'default'} aria-label="Views">
 								<RemoveRedEyeIcon />
 							</IconButton>
 							<Typography className="view-cnt">{boardArticle?.articleViews}</Typography>
@@ -103,7 +108,11 @@ const CommunityCard = (props: CommunityCardProps) => {
 		);
 	} else {
 		return (
-			<Stack className="community-general-card-config" onClick={(e: any) => chooseArticleHandler(e, boardArticle)}>
+			<Stack
+				className="community-general-card-config"
+				onClick={(e: any) => chooseArticleHandler(e, boardArticle)}
+				{...a11yClickProps((e: any) => chooseArticleHandler(e, boardArticle))}
+			>
 				<Stack className="image-box">
 					<Image src={imagePath} alt={boardArticle?.articleTitle || 'Article'} className="card-img" width={800} height={600} />
 				</Stack>
@@ -122,7 +131,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 					</Stack>
 					<Stack className={'buttons'}>
 						<div className="stat-group" style={{ display: 'flex' }}>
-							<IconButton color={'default'}>
+							<IconButton color={'default'} aria-label="Views">
 								<RemoveRedEyeIcon />
 							</IconButton>
 							<Typography className="view-cnt">{boardArticle?.articleViews}</Typography>

@@ -148,6 +148,7 @@ const AdminCarBrands: NextPage = () => {
 								<TableCell>
 									<IconButton
 										color="primary"
+										aria-label="Edit brand"
 										onClick={() => handleEdit(brand)}
 										disabled={brand.carBrandStatus === CarBrandStatus.DELETE}
 									>

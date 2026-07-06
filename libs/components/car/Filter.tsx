@@ -6,6 +6,7 @@ import { CarsInquiry } from '../../types/car/car.input';
 import { useRouter } from 'next/router';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { carMileage, carPrices, carYears } from '../../config';
+import { a11yClickProps } from '../../utils';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { GET_CAR_BRANDS_BY_USER } from '../../../apollo/user/query';
@@ -459,7 +460,7 @@ const Filter = (props: FilterType) => {
 				<div className="find-your-home">
 					<div className="title-main">
 						{t('filter.findYourCar')}
-						<IconButton className="refresh-icon" onClick={clearAllHandler}>
+						<IconButton className="refresh-icon" onClick={clearAllHandler} aria-label="Reset filters">
 							<RefreshIcon />
 						</IconButton>
 					</div>
@@ -831,7 +832,7 @@ const Filter = (props: FilterType) => {
 					<div className="find-your-home">
 						<div className="title-main">
 							{t('filter.findYourCar')}
-							<IconButton className="refresh-icon" onClick={clearAllHandler}>
+							<IconButton className="refresh-icon" onClick={clearAllHandler} aria-label="Reset filters">
 								<RefreshIcon />
 							</IconButton>
 						</div>
@@ -1195,11 +1196,11 @@ const Filter = (props: FilterType) => {
 				</div>
 
 				<div className="filter-footer">
-					<div className="show-more" onClick={() => setShowMore(!showMore)}>
+					<div className="show-more" onClick={() => setShowMore(!showMore)} {...a11yClickProps(() => setShowMore(!showMore))}>
 						<span>{showMore ? 'Show Less' : 'Show More'}</span>
 						<ExpandMoreIcon style={{ transform: showMore ? 'rotate(180deg)' : 'none' }} />
 					</div>
-					<div className="clear-filter" onClick={clearAllHandler}>
+					<div className="clear-filter" onClick={clearAllHandler} {...a11yClickProps(clearAllHandler)}>
 						<span>Clear All</span>
 						<RefreshIcon />
 					</div>
