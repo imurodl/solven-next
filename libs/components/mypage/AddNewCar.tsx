@@ -247,9 +247,14 @@ const AddCar = ({ initialValues, ...props }: any) => {
 		}
 	}, [insertCarData, router.query.carId]);
 
-	if (user?.memberType !== 'AGENT') {
-		router.back();
-	}
+	useEffect(() => {
+		// Only agents may list a car. Guard in an effect (not during render) so a
+		// direct/SSR load of ?category=addCar doesn't call the client-only router.
+		// Wait for userVar to hydrate before redirecting so a real agent isn't bounced.
+		if (user?.memberType && user.memberType !== 'AGENT') {
+			router.back();
+		}
+	}, [user?.memberType, router]);
 
 	if (device === 'mobile') {
 		return (
