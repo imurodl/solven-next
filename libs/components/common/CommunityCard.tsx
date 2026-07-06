@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Stack, Typography } from '@mui/material';
@@ -28,6 +29,10 @@ const CommunityCard = (props: CommunityCardProps) => {
 	const imagePath: string = boardArticle?.articleImage
 		? `${REACT_APP_API_URL}/${boardArticle?.articleImage}`
 		: '/img/community/communityImg.png';
+	const detailHref = {
+		pathname: '/community/detail',
+		query: { articleCategory: boardArticle?.articleCategory, id: boardArticle?._id },
+	};
 
 	/** HANDLERS **/
 	const chooseArticleHandler = (e: React.SyntheticEvent, boardArticle: BoardArticle) => {
@@ -67,7 +72,9 @@ const CommunityCard = (props: CommunityCardProps) => {
 						>
 							{boardArticle?.memberData?.memberNick}
 						</Typography>
+						<Link href={detailHref} onClick={(e: any) => e.stopPropagation()} style={{ textDecoration: 'none', color: 'inherit' }}>
 						<Typography className="title">{boardArticle?.articleTitle}</Typography>
+					</Link>
 					</Stack>
 					<Stack className={'buttons'}>
 						<div className="stat-group" style={{ display: 'flex' }}>
@@ -127,7 +134,9 @@ const CommunityCard = (props: CommunityCardProps) => {
 						>
 							{boardArticle?.memberData?.memberNick}
 						</Typography>
+						<Link href={detailHref} onClick={(e: any) => e.stopPropagation()} style={{ textDecoration: 'none', color: 'inherit' }}>
 						<Typography className="title">{boardArticle?.articleTitle}</Typography>
+					</Link>
 					</Stack>
 					<Stack className={'buttons'}>
 						<div className="stat-group" style={{ display: 'flex' }}>

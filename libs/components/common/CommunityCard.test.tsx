@@ -59,10 +59,21 @@ describe('CommunityCard', () => {
 		expect(likeArticleHandler).toHaveBeenCalledWith(expect.anything(), expect.anything(), 'art-1');
 	});
 
-	it('navigates to the article detail page when the card is clicked', () => {
+	it('renders the title as a crawlable link to the article detail page', () => {
 		render(<CommunityCard boardArticle={baseArticle} likeArticleHandler={jest.fn()} />);
 
-		fireEvent.click(screen.getByText('Hello World'));
+		const link = screen.getByText('Hello World').closest('a') as HTMLAnchorElement;
+		expect(link).toBeInTheDocument();
+		const href = link.getAttribute('href') ?? '';
+		expect(href).toContain('/community/detail');
+		expect(href).toContain('id=art-1');
+	});
+
+	it('navigates to the article detail page when the card body is clicked', () => {
+		render(<CommunityCard boardArticle={baseArticle} likeArticleHandler={jest.fn()} />);
+
+		// Clicking a non-link area of the card still uses the wrapper router.push.
+		fireEvent.click(screen.getByAltText('Hello World'));
 
 		expect(push).toHaveBeenCalledWith(
 			expect.objectContaining({
