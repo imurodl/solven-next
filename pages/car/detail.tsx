@@ -36,6 +36,9 @@ import { Direction, Message } from '../../libs/enums/common.enum';
 import { CREATE_COMMENT, LIKE_TARGET_CAR } from '../../apollo/user/mutation';
 import { sweetErrorHandling, sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import CarSpecs from '../../libs/components/car/detail/CarSpecs';
+import SellerInfoBox from '../../libs/components/car/detail/SellerInfoBox';
+import CarReviews from '../../libs/components/car/detail/CarReviews';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -265,25 +268,6 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 		}
 	};
 
-	const carFeaturesList = [
-		{ id: CarOptions.HEATED_SEATS, icon: AirlineSeatReclineExtraIcon, label: 'Heated Seats' },
-		{ id: CarOptions.VENTILATED_SEATS, icon: AirlineSeatReclineExtraIcon, label: 'Ventilated Seats' },
-		{ id: CarOptions.POWER_SEATS, icon: AirlineSeatReclineExtraIcon, label: 'Power Seats' },
-		{ id: CarOptions.LEATHER_SEATS, icon: AirlineSeatReclineExtraIcon, label: 'Leather Seats' },
-		{ id: CarOptions.HEATED_STEERING, icon: DirectionsCarIcon, label: 'Heated Steering' },
-		{ id: CarOptions.SMART_KEY, icon: SecurityIcon, label: 'Smart Key' },
-		{ id: CarOptions.CRUISE_CONTROL, icon: SpeedIcon, label: 'Cruise Control' },
-		{ id: CarOptions.NAVIGATION, icon: GpsFixedIcon, label: 'Navigation' },
-		{ id: CarOptions.PARKING_SENSOR_REAR, icon: LocalParkingIcon, label: 'Rear Parking Sensor' },
-		{ id: CarOptions.PARKING_SENSOR_FRONT, icon: LocalParkingIcon, label: 'Front Parking Sensor' },
-		{ id: CarOptions.REAR_CAMERA, icon: CameraAltIcon, label: 'Rear Camera' },
-		{ id: CarOptions.CAMERA_360, icon: CameraAltIcon, label: '360° Camera' },
-		{ id: CarOptions.SUNROOF, icon: SunroofIcon, label: 'Sunroof' },
-		{ id: CarOptions.BLACK_BOX, icon: SecurityIcon, label: 'Black Box' },
-		{ id: CarOptions.LANE_KEEP_ASSIST, icon: DirectionsCarIcon, label: 'Lane Keep Assist' },
-		{ id: CarOptions.BLIND_SPOT_WARNING, icon: RemoveRedEyeIcon, label: 'Blind Spot Warning' },
-	];
-
 	const car = getCarData?.getCar || initialCar;
 	const carForSeo = car;
 	const seoImage = carForSeo?.carImages?.[0] ? `${REACT_APP_API_URL}/${carForSeo.carImages[0]}` : undefined;
@@ -437,156 +421,21 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 						</Stack>
 						<Stack className="car-specs-config">
 							<Stack className="left-config">
-								<Stack className="specs-grid">
-									<Stack className="spec-item">
-										<Stack className="icon-box">
-											<DirectionsCarIcon />
-										</Stack>
-										<Stack className="spec-content">
-											<Typography className="spec-label">Car Type</Typography>
-											<Typography className="spec-value">{car?.carType}</Typography>
-										</Stack>
-									</Stack>
-									<Stack className="spec-item">
-										<Stack className="icon-box">
-											<SpeedIcon />
-										</Stack>
-										<Stack className="spec-content">
-											<Typography className="spec-label">Mileage</Typography>
-											<Typography className="spec-value">{car?.carMileage} km</Typography>
-										</Stack>
-									</Stack>
-									<Stack className="spec-item">
-										<Stack className="icon-box">
-											<LocalGasStationIcon />
-										</Stack>
-										<Stack className="spec-content">
-											<Typography className="spec-label">Fuel Type</Typography>
-											<Typography className="spec-value">{car?.carFuelType}</Typography>
-										</Stack>
-									</Stack>
-									<Stack className="spec-item">
-										<Stack className="icon-box">
-											<ColorLensIcon />
-										</Stack>
-										<Stack className="spec-content">
-											<Typography className="spec-label">Color</Typography>
-											<Typography className="spec-value">{car?.carColor}</Typography>
-										</Stack>
-									</Stack>
-									<Stack className="spec-item">
-										<Stack className="icon-box">
-											<AirlineSeatReclineNormalIcon />
-										</Stack>
-										<Stack className="spec-content">
-											<Typography className="spec-label">Seats</Typography>
-											<Typography className="spec-value">{car?.carSeats} seats</Typography>
-										</Stack>
-									</Stack>
-									<Stack className="spec-item">
-										<Stack className="icon-box">
-											<SettingsIcon />
-										</Stack>
-										<Stack className="spec-content">
-											<Typography className="spec-label">Transmission</Typography>
-											<Typography className="spec-value">{car?.carTransmission}</Typography>
-										</Stack>
-									</Stack>
-								</Stack>
-								<Stack className="car-features">
-									<Typography className="section-title">Car Features</Typography>
-									<Stack className="features-grid">
-										{carFeaturesList.map((feature) => {
-											const isAvailable = car?.carOptions?.includes(feature.id);
-											const IconComponent = feature.icon;
-											return (
-												<Stack className={`feature-item ${isAvailable ? 'available' : 'unavailable'}`} key={feature.id}>
-													<IconComponent className="feature-icon" />
-													<Typography className="feature-text">{feature.label}</Typography>
-												</Stack>
-											);
-										})}
-									</Stack>
-								</Stack>
+								<CarSpecs car={car} />
 
 								<Stack className="right-config">
-									<Stack className="seller-info">
-										<Typography className="section-title">Seller Information</Typography>
-										<Stack className="seller-profile">
-											<Image
-											className="profile-image"
-											src={
-												sellerInfo?.memberImage
-													? `${REACT_APP_API_URL}/${sellerInfo.memberImage}`
-													: '/img/profile/defaultUser.svg'
-											}
-											alt="Seller"
-											width={80}
-											height={80}
-										/>
-											<Stack className="profile-details">
-												<Link href={`/member?memberId=${sellerInfo?._id}`}>
-													<Typography className="seller-name">{sellerInfo?.memberNick}</Typography>
-												</Link>
-												<Typography className="seller-type">
-													{sellerInfo?.memberType === MemberType.AGENT ? 'Verified Agent' : 'Private Seller'}
-												</Typography>
-												<Stack className="seller-rating">
-													<Typography className="rating-count">
-														{sellerInfo?.memberCars ?? 0} listings · {sellerInfo?.memberLikes ?? 0} likes
-													</Typography>
-												</Stack>
-											</Stack>
-										</Stack>
-										<Stack className="contact-buttons">
-											<Button className="contact-button primary" startIcon={<PhoneIcon />}>
-												{sellerInfo?.memberPhone}
-											</Button>
-											<Button className="contact-button secondary" startIcon={<EmailIcon />}>
-												Send Message
-											</Button>
-										</Stack>
-									</Stack>
+									<SellerInfoBox sellerInfo={sellerInfo} />
 								</Stack>
 
-								{/* Comments section */}
-								{carComments?.length > 0 && (
-									<Stack className="reviews-config">
-										<Typography className="section-title">Reviews ({commentTotal})</Typography>
-										<Stack className="review-list">
-											{carComments?.map((comment: Comment) => (
-												<Review comment={comment} key={comment?._id} />
-											))}
-											<Box className="pagination-box">
-												<MuiPagination
-													page={commentInquiry.page}
-													count={Math.ceil(commentTotal / commentInquiry.limit)}
-													onChange={commentPaginationChangeHandler}
-													shape="circular"
-													color="primary"
-												/>
-											</Box>
-										</Stack>
-									</Stack>
-								)}
-								<Stack className="leave-review-config">
-									<Typography className="section-title">Leave A Review</Typography>
-									<textarea
-										placeholder="Write your review here..."
-										onChange={({ target: { value } }: any) => {
-											setInsertCommentData({ ...insertCommentData, commentContent: value });
-										}}
-										value={insertCommentData.commentContent}
-									></textarea>
-									<Button
-										className="submit-review-btn"
-										variant="contained"
-										onClick={createCommentHandler}
-										disabled={!insertCommentData.commentContent.trim()}
-									>
-										Submit Review
-									</Button>
-								</Stack>
+								<CarReviews
+									carComments={carComments}
+									commentTotal={commentTotal}
+									commentInquiry={commentInquiry}
+									commentPaginationChangeHandler={commentPaginationChangeHandler}
+									insertCommentData={insertCommentData}
+									setInsertCommentData={setInsertCommentData}
+									createCommentHandler={createCommentHandler}
+								/>
 							</Stack>
 						</Stack>
 						{/* Similar Cars Section */}
@@ -735,154 +584,19 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 						</Stack>
 						<Stack className="car-specs-config">
 							<Stack className="left-config">
-								<Stack className="specs-grid">
-									<Stack className="spec-item">
-										<Stack className="icon-box">
-											<DirectionsCarIcon />
-										</Stack>
-										<Stack className="spec-content">
-											<Typography className="spec-label">Car Type</Typography>
-											<Typography className="spec-value">{car?.carType}</Typography>
-										</Stack>
-									</Stack>
-									<Stack className="spec-item">
-										<Stack className="icon-box">
-											<SpeedIcon />
-										</Stack>
-										<Stack className="spec-content">
-											<Typography className="spec-label">Mileage</Typography>
-											<Typography className="spec-value">{car?.carMileage} km</Typography>
-										</Stack>
-									</Stack>
-									<Stack className="spec-item">
-										<Stack className="icon-box">
-											<LocalGasStationIcon />
-										</Stack>
-										<Stack className="spec-content">
-											<Typography className="spec-label">Fuel Type</Typography>
-											<Typography className="spec-value">{car?.carFuelType}</Typography>
-										</Stack>
-									</Stack>
-									<Stack className="spec-item">
-										<Stack className="icon-box">
-											<ColorLensIcon />
-										</Stack>
-										<Stack className="spec-content">
-											<Typography className="spec-label">Color</Typography>
-											<Typography className="spec-value">{car?.carColor}</Typography>
-										</Stack>
-									</Stack>
-									<Stack className="spec-item">
-										<Stack className="icon-box">
-											<AirlineSeatReclineNormalIcon />
-										</Stack>
-										<Stack className="spec-content">
-											<Typography className="spec-label">Seats</Typography>
-											<Typography className="spec-value">{car?.carSeats} seats</Typography>
-										</Stack>
-									</Stack>
-									<Stack className="spec-item">
-										<Stack className="icon-box">
-											<SettingsIcon />
-										</Stack>
-										<Stack className="spec-content">
-											<Typography className="spec-label">Transmission</Typography>
-											<Typography className="spec-value">{car?.carTransmission}</Typography>
-										</Stack>
-									</Stack>
-								</Stack>
-								<Stack className="car-features">
-									<Typography className="section-title">Car Features</Typography>
-									<Stack className="features-grid">
-										{carFeaturesList.map((feature) => {
-											const isAvailable = car?.carOptions?.includes(feature.id);
-											const IconComponent = feature.icon;
-											return (
-												<Stack className={`feature-item ${isAvailable ? 'available' : 'unavailable'}`} key={feature.id}>
-													<IconComponent className="feature-icon" />
-													<Typography className="feature-text">{feature.label}</Typography>
-												</Stack>
-											);
-										})}
-									</Stack>
-								</Stack>
-								{/* Comments section */}
-								{carComments?.length > 0 && (
-									<Stack className="reviews-config">
-										<Typography className="section-title">Reviews ({commentTotal})</Typography>
-										<Stack className="review-list">
-											{carComments?.map((comment: Comment) => (
-												<Review comment={comment} key={comment?._id} />
-											))}
-											<Box className="pagination-box">
-												<MuiPagination
-													page={commentInquiry.page}
-													count={Math.ceil(commentTotal / commentInquiry.limit)}
-													onChange={commentPaginationChangeHandler}
-													shape="circular"
-													color="primary"
-												/>
-											</Box>
-										</Stack>
-									</Stack>
-								)}
-								<Stack className="leave-review-config">
-									<Typography className="section-title">Leave A Review</Typography>
-									<textarea
-										placeholder="Write your review here..."
-										onChange={({ target: { value } }: any) => {
-											setInsertCommentData({ ...insertCommentData, commentContent: value });
-										}}
-										value={insertCommentData.commentContent}
-									></textarea>
-									<Button
-										className="submit-review-btn"
-										variant="contained"
-										onClick={createCommentHandler}
-										disabled={!insertCommentData.commentContent.trim()}
-									>
-										Submit Review
-									</Button>
-								</Stack>
+								<CarSpecs car={car} />
+								<CarReviews
+									carComments={carComments}
+									commentTotal={commentTotal}
+									commentInquiry={commentInquiry}
+									commentPaginationChangeHandler={commentPaginationChangeHandler}
+									insertCommentData={insertCommentData}
+									setInsertCommentData={setInsertCommentData}
+									createCommentHandler={createCommentHandler}
+								/>
 							</Stack>
 							<Stack className="right-config">
-								<Stack className="seller-info">
-									<Typography className="section-title">Seller Information</Typography>
-									<Stack className="seller-profile">
-										<Image
-											className="profile-image"
-											src={
-												sellerInfo?.memberImage
-													? `${REACT_APP_API_URL}/${sellerInfo.memberImage}`
-													: '/img/profile/defaultUser.svg'
-											}
-											alt="Seller"
-											width={80}
-											height={80}
-										/>
-										<Stack className="profile-details">
-											<Link href={`/member?memberId=${sellerInfo?._id}`}>
-												<Typography className="seller-name">{sellerInfo?.memberNick}</Typography>
-											</Link>
-											<Typography className="seller-type">
-													{sellerInfo?.memberType === MemberType.AGENT ? 'Verified Agent' : 'Private Seller'}
-												</Typography>
-											<Stack className="seller-rating">
-												<Typography className="rating-count">
-													{sellerInfo?.memberCars ?? 0} listings · {sellerInfo?.memberLikes ?? 0} likes
-												</Typography>
-											</Stack>
-										</Stack>
-									</Stack>
-									<Stack className="contact-buttons">
-										<Button className="contact-button primary" startIcon={<PhoneIcon />}>
-											{sellerInfo?.memberPhone}
-										</Button>
-										<Button className="contact-button secondary" startIcon={<EmailIcon />}>
-											Send Message
-										</Button>
-									</Stack>
-								</Stack>
+								<SellerInfoBox sellerInfo={sellerInfo} />
 							</Stack>
 						</Stack>
 						{/* Similar Cars Section */}
