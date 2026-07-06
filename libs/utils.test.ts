@@ -3,6 +3,7 @@ import {
 	likeTargetPropertyHandler,
 	likeTargetBoardArticleHandler,
 	likeTargetMemberHandler,
+	a11yClickProps,
 } from './utils';
 import { sweetMixinErrorAlert } from './sweetAlert';
 
@@ -53,5 +54,45 @@ describe('like target handlers', () => {
 
 		await expect(handler(mutation, 'target-123')).resolves.toBeUndefined();
 		expect(sweetMixinErrorAlert).toHaveBeenCalledWith('boom');
+	});
+});
+
+describe('a11yClickProps', () => {
+	it('exposes button role and keyboard focusability', () => {
+		const props = a11yClickProps(jest.fn());
+
+		expect(props.role).toBe('button');
+		expect(props.tabIndex).toBe(0);
+		expect(typeof props.onKeyDown).toBe('function');
+	});
+
+	it('activates the handler on Enter', () => {
+		const onActivate = jest.fn();
+		const event = { key: 'Enter', preventDefault: jest.fn() };
+
+		a11yClickProps(onActivate).onKeyDown(event);
+
+		expect(event.preventDefault).toHaveBeenCalled();
+		expect(onActivate).toHaveBeenCalledWith(event);
+	});
+
+	it('activates the handler on Space', () => {
+		const onActivate = jest.fn();
+		const event = { key: ' ', preventDefault: jest.fn() };
+
+		a11yClickProps(onActivate).onKeyDown(event);
+
+		expect(event.preventDefault).toHaveBeenCalled();
+		expect(onActivate).toHaveBeenCalledTimes(1);
+	});
+
+	it('ignores other keys', () => {
+		const onActivate = jest.fn();
+		const event = { key: 'a', preventDefault: jest.fn() };
+
+		a11yClickProps(onActivate).onKeyDown(event);
+
+		expect(event.preventDefault).not.toHaveBeenCalled();
+		expect(onActivate).not.toHaveBeenCalled();
 	});
 });
