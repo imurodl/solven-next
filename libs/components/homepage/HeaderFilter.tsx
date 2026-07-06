@@ -1,13 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import { Stack, Box, Modal, Divider, Button, Typography, Checkbox } from '@mui/material';
+import { Stack, Box } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CloseIcon from '@mui/icons-material/Close';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import { carMileage, carYears, REACT_APP_API_URL } from '../../config';
 import { a11yClickProps } from '../../utils';
 import { CarFuelType, CarLocation, CarType } from '../../enums/car.enum';
 import { CarsInquiry } from '../../types/car/car.input';
@@ -17,6 +11,8 @@ import { GET_CAR_BRANDS_BY_USER } from '../../../apollo/user/query';
 import { CarBrand } from '../../types/car/car-brand';
 import { T } from '../../types/common';
 import { useQuery } from '@apollo/client';
+import HeaderFilterDropdowns from './headerfilter/HeaderFilterDropdowns';
+import AdvancedFilterModal from './headerfilter/AdvancedFilterModal';
 
 const carTypeOptions: CarType[] = [
 	CarType.LIGHT,
@@ -27,26 +23,6 @@ const carTypeOptions: CarType[] = [
 	CarType.TRUCK,
 	CarType.OTHER,
 ];
-
-const style = {
-	position: 'absolute' as 'absolute',
-	top: '50%',
-	left: '50%',
-	transform: 'translate(-50%, -50%)',
-	width: 'auto',
-	bgcolor: 'background.paper',
-	borderRadius: '12px',
-	outline: 'none',
-	boxShadow: 24,
-};
-
-const MenuProps = {
-	PaperProps: {
-		style: {
-			maxHeight: '200px',
-		},
-	},
-};
 
 const thisYear = new Date().getFullYear();
 
@@ -389,237 +365,40 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						</Box>
 					</Stack>
 
-					{/*MENU */}
-					<div className={`filter-location ${openLocation ? 'on' : ''}`} ref={locationRef}>
-						{carLocation.map((location: string) => {
-							return (
-								<div onClick={() => propertyLocationSelectHandler(location)} key={location} {...a11yClickProps(() => propertyLocationSelectHandler(location))}>
-									<img src={`img/banner/cities/${location}.webp`} alt="" />
-									<span>{location}</span>
-								</div>
-							);
-						})}
-					</div>
-
-					<div className={`filter-type ${openType ? 'on' : ''}`} ref={typeRef}>
-						{carBrands.map((carBrand: CarBrand) => {
-							return (
-								<div onClick={() => propertyTypeSelectHandler(carBrand.carBrandName)} key={carBrand._id} {...a11yClickProps(() => propertyTypeSelectHandler(carBrand.carBrandName))}>
-									<Image src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`} alt={carBrand.carBrandName} width={800} height={600} />
-									<span>{carBrand.carBrandName}</span>
-								</div>
-							);
-						})}
-					</div>
-
-					<div className={`filter-rooms ${openRooms ? 'on' : ''}`} ref={roomsRef}>
-						{(() => {
-							const selectedBrand = carBrands.find((b) => b.carBrandName === searchFilter.search.brandList?.[0]);
-							const availableModels = selectedBrand?.carBrandModels || [];
-
-							return availableModels.map((model: string) => (
-								<span onClick={() => propertyRoomSelectHandler(model)} key={model} {...a11yClickProps(() => propertyRoomSelectHandler(model))}>
-									{model}
-								</span>
-							));
-						})()}
-					</div>
+					<HeaderFilterDropdowns
+						openLocation={openLocation}
+						openType={openType}
+						openRooms={openRooms}
+						locationRef={locationRef}
+						typeRef={typeRef}
+						roomsRef={roomsRef}
+						carLocation={carLocation}
+						carBrands={carBrands}
+						searchFilter={searchFilter}
+						propertyLocationSelectHandler={propertyLocationSelectHandler}
+						propertyTypeSelectHandler={propertyTypeSelectHandler}
+						propertyRoomSelectHandler={propertyRoomSelectHandler}
+					/>
 				</Stack>
 
-				{/* ADVANCED FILTER MODAL */}
-				<Modal
-					open={openAdvancedFilter}
-					onClose={() => advancedFilterHandler(false)}
-					aria-labelledby="modal-modal-title"
-					aria-describedby="modal-modal-description"
-				>
-					<Box sx={style}>
-						<Box className={'advanced-filter-modal'}>
-							<div className={'close'} onClick={() => advancedFilterHandler(false)} {...a11yClickProps(() => advancedFilterHandler(false))}>
-								<CloseIcon />
-							</div>
-							<div className={'top'}>
-								<div className={'search-input-box'}>
-									<img src="/img/icons/search.svg" alt="" />
-									<input
-										value={searchFilter?.search?.text ?? ''}
-										type="text"
-										placeholder={'Search by name...'}
-										onChange={(e: any) => {
-											setSearchFilter({
-												...searchFilter,
-												search: { ...searchFilter.search, text: e.target.value },
-											});
-										}}
-									/>
-								</div>
-							</div>
-							<Divider />
-							<div className={'middle'}>
-								<div className={'row-box'}>
-									<div className={'box'}>
-										<span>Car Type</span>
-										{carType.map((type: string) => (
-											<Stack
-												className={'input-box'}
-												key={type}
-												flexDirection={'row'}
-												width={'100%'}
-												alignItems={'center'}
-												gap={'4px'}
-											>
-												<label style={{ cursor: 'pointer' }} htmlFor={type}>
-													<Typography className="property-type">{type}</Typography>
-												</label>
-												<Checkbox
-													id={type}
-													className="property-checkbox"
-													color="default"
-													value={type}
-													onChange={carTypeSelectHandler}
-													checked={(searchFilter?.search?.typeList || []).includes(type as CarType)}
-												/>
-											</Stack>
-										))}
-									</div>
-									<div className={'box'}>
-										<span>Car Fuel Type</span>
-										{carFuelType.map((type: string) => (
-											<Stack className={'input-box'} key={type} flexDirection={'row'}>
-												<label style={{ cursor: 'pointer' }} htmlFor={type}>
-													<Typography className="property-type">{type}</Typography>
-												</label>
-												<Checkbox
-													id={type}
-													className="property-checkbox"
-													color="default"
-													value={type}
-													onChange={carFuelTypeSelectHandler}
-													checked={(searchFilter?.search?.fuelTypeList || []).includes(type as CarFuelType)}
-												/>
-											</Stack>
-										))}
-									</div>
-								</div>
-								<div className="row-box">
-									<div className={'box'}>
-										<span>options</span>
-										<div className={'inside'}>
-											<FormControl>
-												<Select
-													value={optionCheck}
-													onChange={propertyOptionSelectHandler}
-													displayEmpty
-													inputProps={{ 'aria-label': 'Without label' }}
-												>
-													<MenuItem value={'all'}>All Options</MenuItem>
-													<MenuItem value={'carBarter'}>Barter</MenuItem>
-													<MenuItem value={'carRent'}>Rent</MenuItem>
-												</Select>
-											</FormControl>
-										</div>
-									</div>
-								</div>
-								<div className={'row-box'}>
-									<div className={'box'}>
-										<span>Year Built</span>
-										<div className={'inside space-between align-center'}>
-											<FormControl sx={{ width: '122px' }}>
-												<Select
-													value={yearCheck.start.toString()}
-													onChange={yearStartChangeHandler}
-													displayEmpty
-													inputProps={{ 'aria-label': 'Without label' }}
-													MenuProps={MenuProps}
-												>
-													{carYears?.slice(0)?.map((year: number) => (
-														<MenuItem value={year} disabled={yearCheck.end <= year} key={year}>
-															{year}
-														</MenuItem>
-													))}
-												</Select>
-											</FormControl>
-											<div className={'minus-line'}></div>
-											<FormControl sx={{ width: '122px' }}>
-												<Select
-													value={yearCheck.end.toString()}
-													onChange={yearEndChangeHandler}
-													displayEmpty
-													inputProps={{ 'aria-label': 'Without label' }}
-													MenuProps={MenuProps}
-												>
-													{carYears
-														?.slice(0)
-														.reverse()
-														.map((year: number) => (
-															<MenuItem value={year} disabled={yearCheck.start >= year} key={year}>
-																{year}
-															</MenuItem>
-														))}
-												</Select>
-											</FormControl>
-										</div>
-									</div>
-									<div className={'box'}>
-										<span>mileage range</span>
-										<div className={'inside space-between align-center'}>
-											<FormControl sx={{ width: '122px' }}>
-												<Select
-													value={searchFilter?.search?.mileageRange?.start}
-													onChange={(e: any) => mileageHandler(e, 'start')}
-													inputProps={{ 'aria-label': 'Mileage Start' }}
-													MenuProps={MenuProps}
-												>
-													{carMileage.map((mileage: number) => (
-														<MenuItem
-															value={mileage}
-															disabled={(searchFilter?.search?.mileageRange?.end || 0) < mileage}
-															key={mileage}
-														>
-															{mileage}
-														</MenuItem>
-													))}
-												</Select>
-											</FormControl>
-											<div className={'minus-line'}></div>
-											<FormControl sx={{ width: '122px' }}>
-												<Select
-													value={searchFilter?.search?.mileageRange?.end}
-													onChange={(e: any) => mileageHandler(e, 'end')}
-													inputProps={{ 'aria-label': 'Mileage End' }}
-													MenuProps={MenuProps}
-												>
-													{carMileage.map((mileage: number) => (
-														<MenuItem
-															value={mileage}
-															disabled={(searchFilter?.search?.mileageRange?.start || 0) > mileage}
-															key={mileage}
-														>
-															{mileage}
-														</MenuItem>
-													))}
-												</Select>
-											</FormControl>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div className={'bottom'}>
-								<div onClick={resetFilterHandler} {...a11yClickProps(resetFilterHandler)}>
-									<img src="/img/icons/reset.svg" alt="" />
-									<span>Reset All filters</span>
-								</div>
-								<Button
-									startIcon={<img src={'/img/icons/search.svg'} alt="" />}
-									className={'search-btn'}
-									onClick={pushSearchHandler}
-								>
-									Search
-								</Button>
-							</div>
-						</Box>
-					</Box>
-				</Modal>
+				<AdvancedFilterModal
+					openAdvancedFilter={openAdvancedFilter}
+					advancedFilterHandler={advancedFilterHandler}
+					searchFilter={searchFilter}
+					setSearchFilter={setSearchFilter}
+					carType={carType}
+					carFuelType={carFuelType}
+					carTypeSelectHandler={carTypeSelectHandler}
+					carFuelTypeSelectHandler={carFuelTypeSelectHandler}
+					optionCheck={optionCheck}
+					propertyOptionSelectHandler={propertyOptionSelectHandler}
+					yearCheck={yearCheck}
+					yearStartChangeHandler={yearStartChangeHandler}
+					yearEndChangeHandler={yearEndChangeHandler}
+					mileageHandler={mileageHandler}
+					resetFilterHandler={resetFilterHandler}
+					pushSearchHandler={pushSearchHandler}
+				/>
 			</>
 		);
 	} else {
@@ -650,237 +429,40 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 						</Box>
 					</Stack>
 
-					{/*MENU */}
-					<div className={`filter-location ${openLocation ? 'on' : ''}`} ref={locationRef}>
-						{carLocation.map((location: string) => {
-							return (
-								<div onClick={() => propertyLocationSelectHandler(location)} key={location} {...a11yClickProps(() => propertyLocationSelectHandler(location))}>
-									<img src={`img/banner/cities/${location}.webp`} alt="" />
-									<span>{location}</span>
-								</div>
-							);
-						})}
-					</div>
-
-					<div className={`filter-type ${openType ? 'on' : ''}`} ref={typeRef}>
-						{carBrands.map((carBrand: CarBrand) => {
-							return (
-								<div onClick={() => propertyTypeSelectHandler(carBrand.carBrandName)} key={carBrand._id} {...a11yClickProps(() => propertyTypeSelectHandler(carBrand.carBrandName))}>
-									<Image src={`${REACT_APP_API_URL}/${carBrand.carBrandImg}`} alt={carBrand.carBrandName} width={800} height={600} />
-									<span>{carBrand.carBrandName}</span>
-								</div>
-							);
-						})}
-					</div>
-
-					<div className={`filter-rooms ${openRooms ? 'on' : ''}`} ref={roomsRef}>
-						{(() => {
-							const selectedBrand = carBrands.find((b) => b.carBrandName === searchFilter.search.brandList?.[0]);
-							const availableModels = selectedBrand?.carBrandModels || [];
-
-							return availableModels.map((model: string) => (
-								<span onClick={() => propertyRoomSelectHandler(model)} key={model} {...a11yClickProps(() => propertyRoomSelectHandler(model))}>
-									{model}
-								</span>
-							));
-						})()}
-					</div>
+					<HeaderFilterDropdowns
+						openLocation={openLocation}
+						openType={openType}
+						openRooms={openRooms}
+						locationRef={locationRef}
+						typeRef={typeRef}
+						roomsRef={roomsRef}
+						carLocation={carLocation}
+						carBrands={carBrands}
+						searchFilter={searchFilter}
+						propertyLocationSelectHandler={propertyLocationSelectHandler}
+						propertyTypeSelectHandler={propertyTypeSelectHandler}
+						propertyRoomSelectHandler={propertyRoomSelectHandler}
+					/>
 				</Stack>
 
-				{/* ADVANCED FILTER MODAL */}
-				<Modal
-					open={openAdvancedFilter}
-					onClose={() => advancedFilterHandler(false)}
-					aria-labelledby="modal-modal-title"
-					aria-describedby="modal-modal-description"
-				>
-					<Box sx={style}>
-						<Box className={'advanced-filter-modal'}>
-							<div className={'close'} onClick={() => advancedFilterHandler(false)} {...a11yClickProps(() => advancedFilterHandler(false))}>
-								<CloseIcon />
-							</div>
-							<div className={'top'}>
-								<div className={'search-input-box'}>
-									<img src="/img/icons/search.svg" alt="" />
-									<input
-										value={searchFilter?.search?.text ?? ''}
-										type="text"
-										placeholder={'Search by name...'}
-										onChange={(e: any) => {
-											setSearchFilter({
-												...searchFilter,
-												search: { ...searchFilter.search, text: e.target.value },
-											});
-										}}
-									/>
-								</div>
-							</div>
-							<Divider />
-							<div className={'middle'}>
-								<div className={'row-box'}>
-									<div className={'box'}>
-										<span>Car Type</span>
-										{carType.map((type: string) => (
-											<Stack
-												className={'input-box'}
-												key={type}
-												flexDirection={'row'}
-												width={'100%'}
-												alignItems={'center'}
-												gap={'4px'}
-											>
-												<label style={{ cursor: 'pointer' }} htmlFor={type}>
-													<Typography className="property-type">{type}</Typography>
-												</label>
-												<Checkbox
-													id={type}
-													className="property-checkbox"
-													color="default"
-													value={type}
-													onChange={carTypeSelectHandler}
-													checked={(searchFilter?.search?.typeList || []).includes(type as CarType)}
-												/>
-											</Stack>
-										))}
-									</div>
-									<div className={'box'}>
-										<span>Car Fuel Type</span>
-										{carFuelType.map((type: string) => (
-											<Stack className={'input-box'} key={type} flexDirection={'row'}>
-												<label style={{ cursor: 'pointer' }} htmlFor={type}>
-													<Typography className="property-type">{type}</Typography>
-												</label>
-												<Checkbox
-													id={type}
-													className="property-checkbox"
-													color="default"
-													value={type}
-													onChange={carFuelTypeSelectHandler}
-													checked={(searchFilter?.search?.fuelTypeList || []).includes(type as CarFuelType)}
-												/>
-											</Stack>
-										))}
-									</div>
-								</div>
-								<div className="row-box">
-									<div className={'box'}>
-										<span>options</span>
-										<div className={'inside'}>
-											<FormControl>
-												<Select
-													value={optionCheck}
-													onChange={propertyOptionSelectHandler}
-													displayEmpty
-													inputProps={{ 'aria-label': 'Without label' }}
-												>
-													<MenuItem value={'all'}>All Options</MenuItem>
-													<MenuItem value={'carBarter'}>Barter</MenuItem>
-													<MenuItem value={'carRent'}>Rent</MenuItem>
-												</Select>
-											</FormControl>
-										</div>
-									</div>
-								</div>
-								<div className={'row-box'}>
-									<div className={'box'}>
-										<span>Year Built</span>
-										<div className={'inside space-between align-center'}>
-											<FormControl sx={{ width: '122px' }}>
-												<Select
-													value={yearCheck.start.toString()}
-													onChange={yearStartChangeHandler}
-													displayEmpty
-													inputProps={{ 'aria-label': 'Without label' }}
-													MenuProps={MenuProps}
-												>
-													{carYears?.slice(0)?.map((year: number) => (
-														<MenuItem value={year} disabled={yearCheck.end <= year} key={year}>
-															{year}
-														</MenuItem>
-													))}
-												</Select>
-											</FormControl>
-											<div className={'minus-line'}></div>
-											<FormControl sx={{ width: '122px' }}>
-												<Select
-													value={yearCheck.end.toString()}
-													onChange={yearEndChangeHandler}
-													displayEmpty
-													inputProps={{ 'aria-label': 'Without label' }}
-													MenuProps={MenuProps}
-												>
-													{carYears
-														?.slice(0)
-														.reverse()
-														.map((year: number) => (
-															<MenuItem value={year} disabled={yearCheck.start >= year} key={year}>
-																{year}
-															</MenuItem>
-														))}
-												</Select>
-											</FormControl>
-										</div>
-									</div>
-									<div className={'box'}>
-										<span>mileage range</span>
-										<div className={'inside space-between align-center'}>
-											<FormControl sx={{ width: '122px' }}>
-												<Select
-													value={searchFilter?.search?.mileageRange?.start}
-													onChange={(e: any) => mileageHandler(e, 'start')}
-													inputProps={{ 'aria-label': 'Mileage Start' }}
-													MenuProps={MenuProps}
-												>
-													{carMileage.map((mileage: number) => (
-														<MenuItem
-															value={mileage}
-															disabled={(searchFilter?.search?.mileageRange?.end || 0) < mileage}
-															key={mileage}
-														>
-															{mileage}
-														</MenuItem>
-													))}
-												</Select>
-											</FormControl>
-											<div className={'minus-line'}></div>
-											<FormControl sx={{ width: '122px' }}>
-												<Select
-													value={searchFilter?.search?.mileageRange?.end}
-													onChange={(e: any) => mileageHandler(e, 'end')}
-													inputProps={{ 'aria-label': 'Mileage End' }}
-													MenuProps={MenuProps}
-												>
-													{carMileage.map((mileage: number) => (
-														<MenuItem
-															value={mileage}
-															disabled={(searchFilter?.search?.mileageRange?.start || 0) > mileage}
-															key={mileage}
-														>
-															{mileage}
-														</MenuItem>
-													))}
-												</Select>
-											</FormControl>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div className={'bottom'}>
-								<div onClick={resetFilterHandler} {...a11yClickProps(resetFilterHandler)}>
-									<img src="/img/icons/reset.svg" alt="" />
-									<span>Reset All filters</span>
-								</div>
-								<Button
-									startIcon={<img src={'/img/icons/search.svg'} alt="" />}
-									className={'search-btn'}
-									onClick={pushSearchHandler}
-								>
-									Search
-								</Button>
-							</div>
-						</Box>
-					</Box>
-				</Modal>
+				<AdvancedFilterModal
+					openAdvancedFilter={openAdvancedFilter}
+					advancedFilterHandler={advancedFilterHandler}
+					searchFilter={searchFilter}
+					setSearchFilter={setSearchFilter}
+					carType={carType}
+					carFuelType={carFuelType}
+					carTypeSelectHandler={carTypeSelectHandler}
+					carFuelTypeSelectHandler={carFuelTypeSelectHandler}
+					optionCheck={optionCheck}
+					propertyOptionSelectHandler={propertyOptionSelectHandler}
+					yearCheck={yearCheck}
+					yearStartChangeHandler={yearStartChangeHandler}
+					yearEndChangeHandler={yearEndChangeHandler}
+					mileageHandler={mileageHandler}
+					resetFilterHandler={resetFilterHandler}
+					pushSearchHandler={pushSearchHandler}
+				/>
 			</>
 		);
 	}
