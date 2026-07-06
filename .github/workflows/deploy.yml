@@ -61,3 +61,30 @@ jobs:
             git reset --hard origin/develop
             docker compose -f docker-compose.prod.yml build
             docker compose -f docker-compose.prod.yml up -d
+
+  smoke:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Listing SSR check (retry while container warms up)
+        run: |
+          ok=0
+          for i in $(seq 1 18); do
+            code=$(curl -s -o /tmp/car -w '%{http_code}' https://solven.uz/car || true)
+            if [ "$code" = "200" ] && grep -q 'car/detail?id=' /tmp/car; then
+              echo "car listing SSR ok on attempt $i"; ok=1; break
+            fi
+            echo "attempt $i: http=$code has_cards=$(grep -c 'car/detail?id=' /tmp/car 2>/dev/null || echo 0)"; sleep 10
+          done
+          [ "$ok" = "1" ] || { echo "::error::/car did not SSR car cards after ~3m"; exit 1; }
+
+      - name: Detail SSR + JSON-LD check
+        run: |
+          id=$(grep -oE 'car/detail\?id=[a-f0-9]+' /tmp/car | head -1 | sed 's/.*id=//')
+          [ -n "$id" ] || { echo "::error::could not extract a car id from listing"; exit 1; }
+          echo "using car id: $id"
+          code=$(curl -s -o /tmp/detail -w '%{http_code}' "https://solven.uz/car/detail?id=$id" || true)
+          [ "$code" = "200" ] || { echo "::error::car/detail http=$code"; exit 1; }
+          grep -q 'application/ld+json' /tmp/detail || { echo "::error::car/detail missing JSON-LD (SSR/SEO regressed)"; exit 1; }
+          grep -q 'title-main' /tmp/detail || { echo "::error::car/detail missing rendered title (SSR regressed)"; exit 1; }
+          echo "detail SSR + JSON-LD ok"
