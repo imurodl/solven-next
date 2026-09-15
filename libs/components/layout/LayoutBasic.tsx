@@ -6,6 +6,7 @@ import Footer from '../Footer';
 import { Stack } from '@mui/material';
 import { getJwtToken, updateUserInfo } from '../../auth';
 import Chat from '../Chat';
+import AiChat from '../AiChat';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { useTranslation } from 'next-i18next';
@@ -117,6 +118,8 @@ const withLayoutBasic = (Component: any) => {
 							<Component {...props} title={memoizedValues.title} desc={memoizedValues.desc} />
 						</Stack>
 
+						<AiChat />
+
 						<Stack id={'footer'}>
 							<Footer />
 						</Stack>
@@ -136,6 +139,7 @@ const withLayoutBasic = (Component: any) => {
 						</Stack>
 
 						{router.pathname === '/404' ? '' : <Chat />}
+						{router.pathname === '/404' ? '' : <AiChat />}
 						<ScrollToTop />
 
 						<Stack id={'footer'}>

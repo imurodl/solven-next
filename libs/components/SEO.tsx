@@ -12,9 +12,19 @@ import {
 	alternateLinks,
 } from '../seo';
 
-const DEFAULT_TITLE = 'Solven — Buy & Sell Cars in Korea';
-const DEFAULT_DESCRIPTION =
-	'Solven is a trusted car marketplace in South Korea. Browse new and used cars, compare prices, connect with verified agents, and find your perfect car.';
+// Locale-aware defaults so "what is solven" searches get an answer in that language.
+const DEFAULT_TITLE_BY_LOCALE: Record<string, string> = {
+	en: 'Solven — Buy & Sell Cars in Korea',
+	kr: 'Solven — 한국 중고차·신차 마켓플레이스',
+	ru: 'Solven — купить и продать авто в Корее',
+	uz: 'Solven — Koreyada mashina sotib olish va sotish',
+};
+const DEFAULT_DESC_BY_LOCALE: Record<string, string> = {
+	en: 'Solven is a trusted car marketplace in South Korea. Browse new and used cars, compare prices, reserve online, message verified dealers and read real reviews.',
+	kr: 'Solven은 한국의 믿을 수 있는 자동차 마켓플레이스입니다. 신차와 중고차를 둘러보고 가격을 비교하고 온라인으로 예약하세요. 검증된 딜러와 실제 후기까지.',
+	ru: 'Solven — надёжный авторынок в Южной Корее. Новые и подержанные авто, сравнение цен, онлайн-бронирование, проверенные дилеры и реальные отзывы.',
+	uz: "Solven — Janubiy Koreyadagi ishonchli avtomobil bozori. Yangi va ishlatilgan mashinalar, narx taqqoslash, onlayn bron, tekshirilgan dilerlar va haqiqiy sharhlar.",
+};
 
 /** Absolute canonical URL for the current locale, trailing-slash + input-stripped. */
 export const buildCanonicalUrl = (source: string, locale: string = DEFAULT_LOCALE): string =>
@@ -55,8 +65,8 @@ const SEO = ({
 	const url = localeUrl(canonicalPath, currentLocale);
 	const alternates = alternateLinks(canonicalPath);
 
-	const fullTitle = title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE;
-	const desc = description || DEFAULT_DESCRIPTION;
+	const fullTitle = title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE_BY_LOCALE[currentLocale] || DEFAULT_TITLE_BY_LOCALE.en;
+	const desc = description || DEFAULT_DESC_BY_LOCALE[currentLocale] || DEFAULT_DESC_BY_LOCALE.en;
 	const img = image || DEFAULT_IMAGE;
 	const usingDefaultImg = !image;
 	const imgAlt = imageAlt || fullTitle;

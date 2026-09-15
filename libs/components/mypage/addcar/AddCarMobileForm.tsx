@@ -1,3 +1,4 @@
+import AddCarExtras from './AddCarExtras';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Button, Stack, Typography } from '@mui/material';
@@ -253,6 +254,7 @@ const AddCarMobileForm = (props: AddCarMobileFormProps) => {
 			</Stack>
 
 			<Stack className="form-group">
+				<AddCarExtras insertCarData={insertCarData} setInsertCarData={setInsertCarData} />
 				<Typography className="group-title">Description</Typography>
 				<textarea
 					placeholder="Enter detailed description of the car"

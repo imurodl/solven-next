@@ -1,3 +1,4 @@
+import AddCarExtras from './AddCarExtras';
 import React from 'react';
 import { useRouter } from 'next/router';
 import { Button, Stack, Typography } from '@mui/material';
@@ -302,6 +303,10 @@ const AddCarDesktopForm = (props: AddCarDesktopFormProps) => {
 								))}
 							</div>
 						</div>
+					</div>
+
+					<div className="config-column">
+						<AddCarExtras insertCarData={insertCarData} setInsertCarData={setInsertCarData} />
 					</div>
 
 					<div className="config-column">

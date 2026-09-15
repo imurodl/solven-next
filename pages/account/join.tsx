@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
+import OAuthButtons from '../../libs/components/common/OAuthButtons';
 import SEO from '../../libs/components/SEO';
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, Stack } from '@mui/material';
 import { useRouter } from 'next/router';
@@ -21,7 +22,7 @@ export const getServerSideProps = async ({ locale, req }: any) => ({
 const Join: NextPage = (props: any) => {
 	const router = useRouter();
 	const device = useDeviceDetect();
-	const [input, setInput] = useState({ nick: '', password: '', phone: '', type: 'USER' });
+	const [input, setInput] = useState({ nick: '', password: '', phone: '', type: 'USER', email: '' });
 	const [loginView, setLoginView] = useState<boolean>(true);
 	const { t, i18n } = useTranslation('common');
 
@@ -57,7 +58,7 @@ const Join: NextPage = (props: any) => {
 
 	const doSignUp = useCallback(async () => {
 		try {
-			await signUp(input.nick, input.password, input.phone, input.type);
+			await signUp(input.nick, input.password, input.phone, input.type, input.email || undefined);
 			await router.push(`${router.query.referrer ?? '/'}`);
 		} catch (err: any) {
 			await sweetMixinErrorAlert(err.message);
@@ -141,6 +142,13 @@ const Join: NextPage = (props: any) => {
 										>
 											{t('Agent')}
 										</button>
+										<button
+											type="button"
+											className={`type-button ${input?.type === 'MECHANIC' ? 'active' : ''}`}
+											onClick={() => handleInput('type', 'MECHANIC')}
+										>
+											{t('Mechanic')}
+										</button>
 									</div>
 								</div>
 							)}
@@ -173,6 +181,7 @@ const Join: NextPage = (props: any) => {
 								</Button>
 							)}
 						</Box>
+						<OAuthButtons referrer={router.query.referrer?.toString()} />
 						<Box className={'ask-info'}>
 							{loginView ? (
 								<p>
@@ -274,6 +283,13 @@ const Join: NextPage = (props: any) => {
 											>
 												{t('Agent')}
 											</button>
+											<button
+												type="button"
+												className={`type-button ${input?.type === 'MECHANIC' ? 'active' : ''}`}
+												onClick={() => handleInput('type', 'MECHANIC')}
+											>
+												{t('Mechanic')}
+											</button>
 										</div>
 									</div>
 								)}
@@ -307,7 +323,8 @@ const Join: NextPage = (props: any) => {
 									</Button>
 								)}
 							</Box>
-							<Box className={'ask-info'}>
+							<OAuthButtons referrer={router.query.referrer?.toString()} />
+						<Box className={'ask-info'}>
 								{loginView ? (
 									<p>
 										{t('Not registered yet?')}

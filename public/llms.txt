@@ -1,0 +1,41 @@
+# Solven
+
+> Solven is a car marketplace for South Korea, built for the Uzbek, Russian and
+> Korean-speaking community: browse new and used cars from verified dealers and
+> private sellers, reserve a car with a small deposit, message sellers, read
+> purchase-verified reviews, and find trusted mechanics for repairs and inspections.
+
+Site: https://solven.uz
+Languages: English, Korean, Russian, Uzbek
+Built and maintained by: Murod Mirzaliev (https://github.com/imurodl)
+
+## What Solven is
+
+Solven is a full-stack marketplace. Buyers filter listings by brand, model,
+body type, fuel, gearbox, price, mileage and year; compare prices with the
+built-in fair-price estimate; reserve a car online (5% deposit, seller accepts,
+handover, buyer confirms); chat with the seller; and leave a review after the
+deal. Dealers manage listings, hot deals with countdowns and incoming
+reservations from their dashboard. Mechanics showcase completed repair work and
+receive service requests.
+
+## Pages
+
+- [Home](https://solven.uz): trending cars, hot deals, top dealers, community
+- [Listings](https://solven.uz/car): full catalogue with filters and sorting
+- [AI Finder](https://solven.uz/ai-finder): upload a photo of a car, get matching listings
+- [Service](https://solven.uz/service): mechanics and completed repair showcases
+- [Dealers](https://solven.uz/agent): dealer profiles, ratings and their listings
+- [Community](https://solven.uz/community): articles and discussion
+- [Help](https://solven.uz/help): FAQ, notices, terms
+- [About](https://solven.uz/about)
+
+## Technology
+
+Next.js 14 (TypeScript, Pages Router), NestJS 10, MongoDB, GraphQL (Apollo)
+with WebSocket notifications, JWT authentication with Google and Telegram
+login, Docker and Nginx on Oracle Cloud (ARM).
+
+## Contact
+
+GitHub: https://github.com/imurodl

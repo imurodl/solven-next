@@ -12,16 +12,18 @@ import CarBadges from '../common/CarBadges';
 import { format } from 'date-fns';
 import { useRouter } from 'next/router';
 import { CarStatus } from '../../enums/car.enum';
+import ListingTools from './ListingTools';
 
 interface CarCardProps {
 	car: Car;
 	deleteCarHandler?: any;
 	memberPage?: boolean;
 	updateCarHandler?: any;
+	onChanged?: () => void;
 }
 
 export const CarCard = (props: CarCardProps) => {
-	const { car, deleteCarHandler, memberPage, updateCarHandler } = props;
+	const { car, deleteCarHandler, memberPage, updateCarHandler, onChanged } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -102,6 +104,11 @@ export const CarCard = (props: CarCardProps) => {
 							</Stack>
 						)}
 					</Stack>
+					{!memberPage && car.carStatus === CarStatus.ACTIVE && (
+						<div onClick={(e) => e.stopPropagation()}>
+							<ListingTools car={car} onChanged={onChanged} />
+						</div>
+					)}
 				</Stack>
 			</Stack>
 		);
@@ -110,6 +117,7 @@ export const CarCard = (props: CarCardProps) => {
 			<Stack className="property-card-box">
 				<Stack className="image-box" onClick={() => pushCarDetail(car?._id)}>
 					<Image src={`${process.env.REACT_APP_API_URL}/${car.carImages[0]}`} alt={car.carTitle || 'Car listing'} width={800} height={600} />
+					<CarBadges car={car} />
 				</Stack>
 				<Stack className="information-box" onClick={() => pushCarDetail(car?._id)}>
 					<Typography className="name">{car.carTitle}</Typography>
@@ -117,6 +125,11 @@ export const CarCard = (props: CarCardProps) => {
 					<Typography className="price">
 						<strong><Price car={car} /></strong>
 					</Typography>
+					{!memberPage && car.carStatus === CarStatus.ACTIVE && (
+						<div onClick={(e) => e.stopPropagation()}>
+							<ListingTools car={car} onChanged={onChanged} />
+						</div>
+					)}
 				</Stack>
 				<Stack className="date-box">
 					<Typography className="date">

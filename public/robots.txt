@@ -1,7 +1,55 @@
+# Solven — https://solven.uz
+
 User-agent: *
 Allow: /
 Disallow: /_admin/
-Disallow: /mypage/
-Disallow: /account/
+Disallow: /api/
+# /mypage, /checkout, /account are served with <meta name="robots" content="noindex">
+# so crawlers can see the directive; blocking them here would leave stale entries.
+# Filter combinations are unbounded — keep crawl budget on canonical pages.
+Disallow: /*?input=
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# AI crawlers (answers in ChatGPT / Claude / Perplexity / Gemini)
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
 
 Sitemap: https://solven.uz/sitemap.xml

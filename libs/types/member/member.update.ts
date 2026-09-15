@@ -5,6 +5,7 @@ export interface MemberUpdate {
 	memberType?: MemberType;
 	memberStatus?: MemberStatus;
 	memberPhone?: string;
+	memberEmail?: string;
 	memberNick?: string;
 	memberPassword?: string;
 	memberFullName?: string;

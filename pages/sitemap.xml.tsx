@@ -19,6 +19,8 @@ const STATIC_ENTRIES: Entry[] = [
 	{ path: '/community', changefreq: 'daily', priority: '0.7', alternates: true },
 	{ path: '/about', changefreq: 'monthly', priority: '0.5', alternates: true },
 	{ path: '/help', changefreq: 'monthly', priority: '0.5', alternates: true },
+	{ path: '/service', changefreq: 'daily', priority: '0.8', alternates: true },
+	{ path: '/ai-finder', changefreq: 'monthly', priority: '0.6', alternates: true },
 ];
 
 async function gql(query: string, variables: Record<string, any>): Promise<any> {
@@ -51,6 +53,19 @@ async function fetchCarEntries(): Promise<Entry[]> {
 		lastmod: isoDate(c.updatedAt || c.createdAt),
 		changefreq: 'weekly',
 		priority: '0.6',
+	}));
+}
+
+async function fetchServiceEntries(): Promise<Entry[]> {
+	const data = await gql(
+		`query GetServiceJobs($input: ServiceJobsInquiry!) { getServiceJobs(input: $input) { list { _id updatedAt createdAt } } }`,
+		{ input: { page: 1, limit: 1000, sort: 'createdAt', direction: 'DESC', search: {} } },
+	);
+	return (data?.getServiceJobs?.list ?? []).map((j: any) => ({
+		path: `/service/detail?id=${j._id}`,
+		lastmod: isoDate(j.updatedAt || j.createdAt),
+		changefreq: 'weekly',
+		priority: '0.5',
 	}));
 }
 
@@ -114,12 +129,13 @@ function buildSitemap(entries: Entry[]): string {
 const Sitemap = () => null;
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-	const [cars, agents, articles] = await Promise.all([
+	const [cars, agents, articles, services] = await Promise.all([
 		fetchCarEntries(),
 		fetchAgentEntries(),
 		fetchArticleEntries(),
+		fetchServiceEntries(),
 	]);
-	const entries: Entry[] = [...STATIC_ENTRIES, ...cars, ...agents, ...articles];
+	const entries: Entry[] = [...STATIC_ENTRIES, ...cars, ...agents, ...articles, ...services];
 
 	res.setHeader('Content-Type', 'text/xml');
 	res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');

@@ -12,6 +12,11 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { getDeviceType } from '../libs/utils';
 import CtaSection from '../libs/components/homepage/CtaSection';
 import CarBrands from '../libs/components/homepage/CarBrands';
+import HotDeals from '../libs/components/homepage/HotDeals';
+import AiFinderBanner from '../libs/components/homepage/AiFinderBanner';
+import ServiceBanner from '../libs/components/homepage/ServiceBanner';
+import SocialProofToast from '../libs/components/common/SocialProofToast';
+import PromoModal from '../libs/components/common/PromoModal';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -44,10 +49,15 @@ const Home: NextPage = () => {
 				/>
 				<CarBrands />
 				<TrendCars />
+				<HotDeals />
+				<AiFinderBanner />
 				<PopularCars />
+				<ServiceBanner />
 				<TopAgents />
 				<CommunityBoards />
 				<CtaSection />
+				<SocialProofToast />
+				<PromoModal />
 			</Stack>
 		);
 	} else {
@@ -64,7 +74,16 @@ const Home: NextPage = () => {
 					<TrendCars />
 				</div>
 				<div data-aos="fade-up">
+					<HotDeals />
+				</div>
+				<div data-aos="fade-up">
+					<AiFinderBanner />
+				</div>
+				<div data-aos="fade-up">
 					<PopularCars />
+				</div>
+				<div data-aos="fade-up">
+					<ServiceBanner />
 				</div>
 				<div data-aos="fade-up">
 					<TopAgents />
@@ -75,6 +94,8 @@ const Home: NextPage = () => {
 				<div data-aos="fade-up">
 					<CtaSection />
 				</div>
+				<SocialProofToast />
+				<PromoModal />
 			</Stack>
 		);
 	}

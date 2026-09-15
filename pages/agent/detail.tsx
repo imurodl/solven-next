@@ -20,6 +20,8 @@ import { CommentGroup } from '../../libs/enums/comment.enum';
 import { Messages, REACT_APP_API_URL, GRAPHQL_URL } from '../../libs/config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { getDeviceType } from '../../libs/utils';
+import ReviewSection from '../../libs/components/car/detail/ReviewSection';
+import RatingStars from '../../libs/components/common/RatingStars';
 import SEO from '../../libs/components/SEO';
 import { personJsonLd, breadcrumbJsonLd } from '../../libs/seo';
 import { CREATE_COMMENT, LIKE_TARGET_CAR } from '../../apollo/user/mutation';
@@ -236,6 +238,11 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, initialAgent, ...
 							<img src="/img/icons/call.svg" alt="" />
 							<span>{agent?.memberPhone}</span>
 						</Box>
+						{agent?.memberReviews ? (
+							<Box component={'div'} className={'agent-rating'}>
+								<RatingStars value={agent.memberRating ?? 0} count={agent.memberReviews} showValue />
+							</Box>
+						) : null}
 					</Stack>
 				</Stack>
 				<Stack className={'cars-section'}>
@@ -290,6 +297,11 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, initialAgent, ...
 									color="primary"
 								/>
 							</Box>
+						</Stack>
+					)}
+					{agentId && (
+						<Stack className={'seller-reviews'}>
+							<ReviewSection sellerId={agentId} compact />
 						</Stack>
 					)}
 					<Stack className={'leave-review-config'}>
@@ -398,6 +410,11 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, initialAgent, ...
 							</Stack>
 						)}
 
+						{agentId && (
+							<Stack className={'seller-reviews'}>
+								<ReviewSection sellerId={agentId} compact />
+							</Stack>
+						)}
 						<Stack className={'leave-review-config'}>
 							<Typography className={'main-title'}>Leave A Review</Typography>
 							<Typography className={'review-title'}>Review</Typography>

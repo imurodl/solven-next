@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 import Link from 'next/link';
 import { List, Stack, Typography, Box } from '@mui/material';
-import { User, UserCircleGear, ChatsCircle, Headset, SignOut } from 'phosphor-react';
+import { User, UserCircleGear, ChatsCircle, Headset, SignOut, Receipt, Ticket, Star, Wrench } from 'phosphor-react';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
@@ -51,6 +51,31 @@ const AdminMenuList = () => {
 					title: 'Car Brands',
 					icon: <UserCircleGear size={20} weight="fill" className="menu-icon" />,
 					url: '/_admin/cars/brands',
+				},
+			],
+		},
+		{
+			title: 'DEALS',
+			items: [
+				{
+					title: 'Orders',
+					icon: <Receipt size={20} weight="fill" className="menu-icon" />,
+					url: '/_admin/orders',
+				},
+				{
+					title: 'Coupons',
+					icon: <Ticket size={20} weight="fill" className="menu-icon" />,
+					url: '/_admin/coupons',
+				},
+				{
+					title: 'Reviews',
+					icon: <Star size={20} weight="fill" className="menu-icon" />,
+					url: '/_admin/reviews',
+				},
+				{
+					title: 'Service Jobs',
+					icon: <Wrench size={20} weight="fill" className="menu-icon" />,
+					url: '/_admin/service',
 				},
 			],
 		},

@@ -183,6 +183,14 @@ const CarList: NextPage = ({ initialInput, initialCars, ...props }: any) => {
 				setSearchFilter({ ...searchFilter, sort: 'carPrice', direction: Direction.DESC });
 				setFilterSortKey('highestPrice');
 				break;
+			case 'rating':
+				setSearchFilter({ ...searchFilter, sort: 'carRating', direction: Direction.DESC });
+				setFilterSortKey('topRated');
+				break;
+			case 'mileage':
+				setSearchFilter({ ...searchFilter, sort: 'carMileage', direction: Direction.ASC });
+				setFilterSortKey('lowestMileage');
+				break;
 		}
 		setSortingOpen(false);
 		setAnchorEl(null);
@@ -262,6 +270,24 @@ const CarList: NextPage = ({ initialInput, initialCars, ...props }: any) => {
 									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 								>
 									{t('highestPrice')}
+								</MenuItem>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'rating'}
+									disableRipple
+									data-selected={filterSortKey === 'topRated'}
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									{t('topRated')}
+								</MenuItem>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'mileage'}
+									disableRipple
+									data-selected={filterSortKey === 'lowestMileage'}
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									{t('lowestMileage')}
 								</MenuItem>
 							</Menu>
 						</div>
@@ -390,6 +416,24 @@ const CarList: NextPage = ({ initialInput, initialCars, ...props }: any) => {
 									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
 								>
 									{t('highestPrice')}
+								</MenuItem>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'rating'}
+									disableRipple
+									data-selected={filterSortKey === 'topRated'}
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									{t('topRated')}
+								</MenuItem>
+								<MenuItem
+									onClick={sortingHandler}
+									id={'mileage'}
+									disableRipple
+									data-selected={filterSortKey === 'lowestMileage'}
+									sx={{ boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px' }}
+								>
+									{t('lowestMileage')}
 								</MenuItem>
 							</Menu>
 						</div>

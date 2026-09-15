@@ -116,7 +116,7 @@ const MyCars: NextPage = ({ initialInput, ...props }: any) => {
 				<Stack className="cards-stack">
 					{agentCars.map((car: Car) => {
 						return (
-							<CarCard car={car} deleteCarHandler={deleteCarHandler} updateCarHandler={updateCarHandler} key={car?._id} />
+							<CarCard car={car} deleteCarHandler={deleteCarHandler} updateCarHandler={updateCarHandler} onChanged={() => getAgentCarsRefetch()} key={car?._id} />
 						);
 					})}
 				</Stack>
@@ -174,7 +174,7 @@ const MyCars: NextPage = ({ initialInput, ...props }: any) => {
 							</div>
 						) : (
 							agentCars.map((car: Car) => {
-								return <CarCard car={car} deleteCarHandler={deleteCarHandler} updateCarHandler={updateCarHandler} />;
+								return <CarCard car={car} deleteCarHandler={deleteCarHandler} updateCarHandler={updateCarHandler} onChanged={() => getAgentCarsRefetch()} key={car?._id} />;
 							})
 						)}
 

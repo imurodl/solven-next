@@ -2,6 +2,12 @@ export const REACT_APP_API_URL = `${process.env.REACT_APP_API_URL}`;
 
 export const GRAPHQL_URL = process.env.REACT_APP_API_GRAPHQL_URL || 'https://api.solven.uz/graphql';
 
+// OAuth endpoints must hit the API host directly (cookies + Google callback live
+// there), not the /api proxy path used for GraphQL in production.
+export const API_AUTH_URL =
+	process.env.NEXT_PUBLIC_API_AUTH_URL ||
+	(process.env.REACT_APP_API_URL && !process.env.REACT_APP_API_URL.includes('solven.uz/api') ? process.env.REACT_APP_API_URL : 'https://api.solven.uz');
+
 export const availableOptions = ['carBarter', 'carRent'];
 
 const thisYear = new Date().getFullYear();

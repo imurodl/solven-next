@@ -5,11 +5,12 @@ import { Button, Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import axios from 'axios';
 import { Messages, REACT_APP_API_URL } from '../../config';
-import { getJwtToken, updateStorage, updateUserInfo } from '../../auth';
+import { getJwtToken, hydrateProfile, updateStorage, updateUserInfo } from '../../auth';
 import { useMutation, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { MemberUpdate } from '../../types/member/member.update';
 import { UPDATE_MEMBER } from '../../../apollo/user/mutation';
+import LinkedAccounts from './LinkedAccounts';
 import { sweetErrorHandling, sweetMixinSuccessAlert } from '../../sweetAlert';
 import PersonIcon from '@mui/icons-material/Person';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -32,6 +33,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 				...updateData,
 				memberNick: user.memberNick || '',
 				memberPhone: user.memberPhone || '',
+				memberEmail: user.memberEmail || '',
 				memberAddress: user.memberAddress || '',
 				memberImage: user.memberImage || '',
 				memberFullName: user.memberFullName || '',
@@ -93,16 +95,17 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 	const updatePropertyHandler = useCallback(async () => {
 		try {
 			if (!user._id) throw new Error(Messages.error2);
-			if (!updateData.memberNick?.trim() || !updateData.memberPhone?.trim()) {
-				throw new Error('Username and phone are required');
+			if (!updateData.memberNick?.trim()) {
+				throw new Error('Username is required');
 			}
 
 			// Create base input with required fields
 			const input: any = {
 				_id: user._id,
 				memberNick: updateData.memberNick.trim(),
-				memberPhone: updateData.memberPhone.trim(),
 			};
+			if (updateData.memberPhone?.trim()) input.memberPhone = updateData.memberPhone.trim();
+			if (updateData.memberEmail?.trim()) input.memberEmail = updateData.memberEmail.trim();
 
 			// Only add optional fields if they have values
 			if (updateData.memberFullName?.trim()) {
@@ -125,6 +128,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 			const jwtToken = result.data.updateMember?.accessToken;
 			await updateStorage({ jwtToken });
 			updateUserInfo(result.data.updateMember?.accessToken);
+			await hydrateProfile();
 			await sweetMixinSuccessAlert('information updated successfully.');
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
@@ -132,7 +136,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 	}, [updateData, user._id]);
 
 	const doDisabledCheck = () => {
-		return !updateData.memberNick?.trim() || !updateData.memberPhone?.trim();
+		return !updateData.memberNick?.trim();
 	};
 
 	if (device === 'mobile') {
@@ -192,6 +196,15 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 						/>
 					</Stack>
 					<Stack className="input-group">
+						<Typography className="input-label">Email</Typography>
+						<input
+							type="email"
+							placeholder="you@example.com"
+							value={updateData.memberEmail || ''}
+							onChange={({ target: { value } }) => handleInputChange('memberEmail', value)}
+						/>
+					</Stack>
+					<Stack className="input-group">
 						<Typography className="input-label">Address</Typography>
 						<input
 							type="text"
@@ -212,6 +225,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 				<Button className="update-button" onClick={updatePropertyHandler} disabled={doDisabledCheck()}>
 					Update Profile
 				</Button>
+				<LinkedAccounts />
 			</div>
 		);
 	} else {
@@ -317,6 +331,15 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 									/>
 								</Stack>
 								<Stack className="input-group">
+									<Typography className="input-label">Email</Typography>
+									<input
+										type="email"
+										placeholder="you@example.com"
+										value={updateData.memberEmail || ''}
+										onChange={({ target: { value } }) => handleInputChange('memberEmail', value)}
+									/>
+								</Stack>
+								<Stack className="input-group">
 									<Typography className="input-label">Address</Typography>
 									<input
 										type="text"
@@ -350,6 +373,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 								</span>
 							</Button>
 						</Stack>
+						<LinkedAccounts />
 					</Stack>
 				</Stack>
 			</div>

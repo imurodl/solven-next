@@ -78,6 +78,8 @@ const AddCar = ({ initialValues, ...props }: any) => {
 				carDesc: getCarData.getCar.carDesc || '',
 				carImages: getCarData.getCar.carImages || [],
 				manufacturedAt: getCarData.getCar.manufacturedAt || 0,
+				carCondition: getCarData.getCar.carCondition || undefined,
+				carVin: getCarData.getCar.carVin || '',
 			});
 		}
 	}, [getCarData]);
@@ -178,6 +180,8 @@ const AddCar = ({ initialValues, ...props }: any) => {
 				carImages: insertCarData.carImages,
 				manufacturedAt: Number(insertCarData.manufacturedAt),
 				carOptions: insertCarData.carOptions || [],
+				carCondition: insertCarData.carCondition || undefined,
+				carVin: insertCarData.carVin?.trim() || undefined,
 			};
 
 			const result = await createCar({
@@ -224,6 +228,8 @@ const AddCar = ({ initialValues, ...props }: any) => {
 				carBarter: insertCarData.carBarter,
 				carRent: insertCarData.carRent,
 				manufacturedAt: insertCarData.manufacturedAt,
+				carCondition: insertCarData.carCondition || undefined,
+				carVin: insertCarData.carVin?.trim() || undefined,
 			};
 
 			const result = await updateCar({
