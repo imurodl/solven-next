@@ -88,3 +88,13 @@ jobs:
           grep -q 'application/ld+json' /tmp/detail || { echo "::error::car/detail missing JSON-LD (SSR/SEO regressed)"; exit 1; }
           grep -q 'title-main' /tmp/detail || { echo "::error::car/detail missing rendered title (SSR regressed)"; exit 1; }
           echo "detail SSR + JSON-LD ok"
+
+      - name: New routes respond
+        run: |
+          for path in /service /ai-finder /llms.txt /robots.txt /sitemap.xml; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "https://solven.uz$path" || true)
+            [ "$code" = "200" ] || { echo "::error::$path http=$code"; exit 1; }
+            echo "$path ok"
+          done
+          curl -s https://solven.uz/checkout | grep -q 'noindex' || { echo "::error::/checkout is missing noindex"; exit 1; }
+          echo "checkout noindex ok"
