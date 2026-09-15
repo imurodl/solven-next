@@ -11,6 +11,14 @@ jest.mock('next/image', () => ({
 	default: ({ src, alt }: any) => <img src={typeof src === 'string' ? src : ''} alt={alt} />,
 }));
 
+jest.mock('next/router', () => ({
+	useRouter: () => ({ locale: 'en', pathname: '/car', query: {}, push: jest.fn() }),
+}));
+
+jest.mock('next-i18next', () => ({
+	useTranslation: () => ({ t: (k: string) => k }),
+}));
+
 const baseCar: any = {
 	_id: 'car-1',
 	carTitle: 'Test Coupe',
@@ -27,13 +35,34 @@ const baseCar: any = {
 };
 
 describe('CarCard', () => {
-	it('renders the title, formatted price, and mileage fallback', () => {
-		render(<CarCard car={baseCar} likeCarHandler={jest.fn()} />);
+	it('renders the title, formatted price and mileage', () => {
+		render(<CarCard car={{ ...baseCar, carMileage: 42000 }} likeCarHandler={jest.fn()} />);
 
 		expect(screen.getByText('Test Coupe')).toBeInTheDocument();
 		expect(screen.getByText('$25,000')).toBeInTheDocument();
-		// carMileage is undefined -> falls back to '50'
-		expect(screen.getByText(/50 Miles/)).toBeInTheDocument();
+		expect(screen.getByText(/42,000 km/)).toBeInTheDocument();
+	});
+
+	it('shows the sale price with the original struck through and a discount badge', () => {
+		const onSale = {
+			...baseCar,
+			carSalePrice: 20000,
+			carIsOnSale: true,
+			carSaleExpiresAt: new Date(Date.now() + 86400000).toISOString(),
+		};
+		render(<CarCard car={onSale} likeCarHandler={jest.fn()} />);
+
+		expect(screen.getByText('$20,000')).toBeInTheDocument();
+		expect(screen.getByText('$25,000').tagName).toBe('S');
+		expect(screen.getByText('-20%')).toBeInTheDocument();
+	});
+
+	it('marks reserved and sold cars', () => {
+		const { container, rerender } = render(<CarCard car={{ ...baseCar, carAvailability: 'RESERVED' }} likeCarHandler={jest.fn()} />);
+		expect(screen.getByText('Reserved')).toBeInTheDocument();
+		expect(container.querySelector('.is-reserved')).not.toBeNull();
+		rerender(<CarCard car={{ ...baseCar, carAvailability: 'SOLD' }} likeCarHandler={jest.fn()} />);
+		expect(screen.getByText('Sold')).toBeInTheDocument();
 	});
 
 	it('shows the outlined heart when the car is not liked', () => {

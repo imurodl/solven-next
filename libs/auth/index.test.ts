@@ -16,9 +16,11 @@ jest.mock('../../apollo/client', () => ({
 	initializeApollo: jest.fn(),
 }));
 
-jest.mock('../../apollo/store', () => ({
-	userVar: jest.fn(),
-}));
+jest.mock('../../apollo/store', () => {
+	const emptyUser = { _id: '', memberType: '', memberStatus: '', memberAuthType: '', memberPhone: '', memberEmail: '', memberNick: '' };
+	const userVar = jest.fn(() => ({ ...emptyUser }));
+	return { userVar, emptyUser };
+});
 
 jest.mock('../sweetAlert', () => ({
 	sweetMixinErrorAlert: jest.fn().mockResolvedValue(undefined),
@@ -101,8 +103,9 @@ describe('updateUserInfo', () => {
 
 		updateUserInfo(token);
 
-		expect(mockedUserVar).toHaveBeenCalledTimes(1);
-		const claims = mockedUserVar.mock.calls[0][0];
+		const setCalls = mockedUserVar.mock.calls.filter((c) => c.length > 0);
+		expect(setCalls).toHaveLength(1);
+		const claims = setCalls[0][0];
 		expect(claims._id).toBe('member-1');
 		expect(claims.memberNick).toBe('maxdriver');
 		expect(claims.memberImage).toBe('uploads/me.jpg');
@@ -111,13 +114,13 @@ describe('updateUserInfo', () => {
 	it('falls back to the default avatar when memberImage is missing', () => {
 		updateUserInfo(makeJwt({ _id: 'member-2' }));
 
-		const claims = mockedUserVar.mock.calls[0][0];
+		const claims = mockedUserVar.mock.calls.filter((c) => c.length > 0)[0][0];
 		expect(claims.memberImage).toBe('/img/profile/defaultUser.svg');
 	});
 
 	it('returns false and does not touch userVar for an empty token', () => {
 		expect(updateUserInfo('')).toBe(false);
-		expect(mockedUserVar).not.toHaveBeenCalled();
+		expect(mockedUserVar.mock.calls.filter((c) => c.length > 0)).toHaveLength(0);
 	});
 });
 
@@ -125,14 +128,18 @@ describe('logIn', () => {
 	it('stores tokens and updates user info on success', async () => {
 		const accessToken = makeJwt({ _id: 'member-1', memberNick: 'maxdriver' });
 		const mutate = jest.fn().mockResolvedValue({ data: { login: { accessToken, refreshToken: 'refresh-1' } } });
-		mockedInitializeApollo.mockReturnValue({ mutate });
+		const query = jest.fn().mockResolvedValue({ data: { getMyProfile: { memberPhone: '010', memberEmail: 'a@b.c', hasGoogle: true } } });
+		mockedInitializeApollo.mockReturnValue({ mutate, query });
 
 		await logIn('maxdriver', 'secret');
 
 		expect(localStorage.getItem('accessToken')).toBe(accessToken);
 		expect(localStorage.getItem('refreshToken')).toBe('refresh-1');
 		expect(localStorage.getItem('login')).not.toBeNull();
-		expect(mockedUserVar).toHaveBeenCalledTimes(1);
+		const setCalls = mockedUserVar.mock.calls.filter((c) => c.length > 0);
+		expect(setCalls[0][0]._id).toBe('member-1');
+		// profile hydration merges the private fields that are not in the JWT
+		expect(setCalls[setCalls.length - 1][0]).toMatchObject({ memberPhone: '010', memberEmail: 'a@b.c', hasGoogle: true });
 	});
 
 	it('surfaces an error alert on a wrong-password failure', async () => {
@@ -152,12 +159,13 @@ describe('signUp', () => {
 	it('stores tokens and updates user info on success', async () => {
 		const accessToken = makeJwt({ _id: 'member-9', memberNick: 'newbie' });
 		const mutate = jest.fn().mockResolvedValue({ data: { signup: { accessToken, refreshToken: 'refresh-9' } } });
-		mockedInitializeApollo.mockReturnValue({ mutate });
+		const query = jest.fn().mockResolvedValue({ data: { getMyProfile: null } });
+		mockedInitializeApollo.mockReturnValue({ mutate, query });
 
 		await signUp('newbie', 'secret', '01000000000', 'USER');
 
 		expect(localStorage.getItem('accessToken')).toBe(accessToken);
 		expect(localStorage.getItem('refreshToken')).toBe('refresh-9');
-		expect(mockedUserVar).toHaveBeenCalledTimes(1);
+		expect(mockedUserVar.mock.calls.filter((c) => c.length > 0)[0][0]._id).toBe('member-9');
 	});
 });

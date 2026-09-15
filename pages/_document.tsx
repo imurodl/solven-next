@@ -22,6 +22,12 @@ class MyDocument extends Document<{ locale: string }> {
 					/>
 				</Head>
 				<body>
+					{/* Apply the saved/system theme before first paint so there is no light->dark flash */}
+					<script
+						dangerouslySetInnerHTML={{
+							__html: `(function(){try{var t=localStorage.getItem('theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();`,
+						}}
+					/>
 					<Main />
 					<NextScript />
 				</body>

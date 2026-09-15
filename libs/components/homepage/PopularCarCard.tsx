@@ -15,6 +15,9 @@ import LocalGasStationIcon from '@mui/icons-material/LocalGasStation';
 import SettingsIcon from '@mui/icons-material/Settings';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import Price from '../common/Price';
+import CarBadges from '../common/CarBadges';
+import { isSoldOut, isReserved } from '../../utils/sale';
 
 interface PopularCarCardProps {
 	car: Car;
@@ -43,7 +46,8 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${car?.carImages[0]})` }}
 					onClick={() => pushDetailHandler(car._id)}
 				>
-					<div className={'price'}>${car.carPrice}</div>
+					<div className={'price'}><Price car={car} /></div>
+					<CarBadges car={car} />
 				</Box>
 				<Box component={'div'} className={'info'}>
 					<strong className={'title'} onClick={() => pushDetailHandler(car._id)} {...a11yClickProps(() => pushDetailHandler(car._id))}>
@@ -121,7 +125,8 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${car?.carImages[0]})` }}
 					onClick={() => pushDetailHandler(car._id)}
 				>
-					<div className={'price'}>${car.carPrice}</div>
+					<div className={'price'}><Price car={car} /></div>
+					<CarBadges car={car} />
 				</Box>
 				<Box component={'div'} className={'info'}>
 					<strong className={'title'} onClick={() => pushDetailHandler(car._id)} {...a11yClickProps(() => pushDetailHandler(car._id))}>

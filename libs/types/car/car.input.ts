@@ -1,5 +1,7 @@
 import {
+	CarAvailability,
 	CarColor,
+	CarCondition,
 	CarFuelType,
 	CarLocation,
 	CarOptions,
@@ -28,6 +30,14 @@ export interface CarInput {
 	carDesc?: string;
 	carBarter?: boolean;
 	carRent?: boolean;
+	carSalePrice?: number;
+	carIsOnSale?: boolean;
+	carSaleStartsAt?: Date | string;
+	carSaleExpiresAt?: Date | string;
+	carCondition?: CarCondition;
+	carVin?: string;
+	carImageCredits?: string[];
+	car3dModel?: string;
 }
 
 interface CarsISearch {
@@ -45,6 +55,9 @@ interface CarsISearch {
 	mileageRange?: Range;
 	yearRange?: Range;
 	text?: string;
+	carIsOnSale?: boolean;
+	conditionList?: CarCondition[];
+	availabilityList?: CarAvailability[];
 }
 
 export interface CarsInquiry {

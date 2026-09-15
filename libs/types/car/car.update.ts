@@ -1,4 +1,6 @@
 import {
+	CarAvailability,
+	CarCondition,
 	CarColor,
 	CarFuelType,
 	CarLocation,
@@ -26,6 +28,17 @@ export interface CarUpdate {
 	carDesc?: string;
 	carBarter?: boolean;
 	carRent?: boolean;
+	carSalePrice?: number | null;
+	carIsOnSale?: boolean;
+	carSaleStartsAt?: Date | string | null;
+	carSaleExpiresAt?: Date | string | null;
+	carAvailability?: CarAvailability;
+	carCondition?: CarCondition;
+	carVin?: string;
+	carImageCredits?: string[];
+	car3dModel?: string;
+	carBrand?: string;
+	carModel?: string;
 	soldAt?: Date;
 	deletedAt?: Date;
 	manufacturedAt?: number;

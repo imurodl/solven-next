@@ -1,0 +1,17 @@
+export enum OrderStatus {
+	PENDING = 'PENDING',
+	ACCEPTED = 'ACCEPTED',
+	PAID = 'PAID',
+	DELIVERED = 'DELIVERED',
+	COMPLETED = 'COMPLETED',
+	CANCELLED = 'CANCELLED',
+	RETURN_REQUESTED = 'RETURN_REQUESTED',
+	RETURNED = 'RETURNED',
+}
+
+export enum DeliveryMethod {
+	PICKUP = 'PICKUP',
+	DELIVERY = 'DELIVERY',
+}
+
+export const ACTIVE_ORDER_STATUSES = [OrderStatus.PENDING, OrderStatus.ACCEPTED, OrderStatus.PAID, OrderStatus.DELIVERED];

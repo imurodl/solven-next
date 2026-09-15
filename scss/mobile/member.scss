@@ -103,7 +103,7 @@
 				}
 
 				&.following {
-					background: #ed5858;
+					background: var(--danger);
 					color: #fff;
 
 					&:hover {
@@ -411,7 +411,7 @@
 				}
 
 				&.unfollow {
-					background: #ed5858;
+					background: var(--danger);
 					color: #fff;
 				}
 			}

@@ -1,0 +1,187 @@
+/** New feature styles (parity work) — mobile. **/
+
+#mobile-wrap {
+	.nav-extras {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+		margin-right: 4px;
+		.nav-icon-btn {
+			color: #fff;
+			padding: 6px;
+		}
+		.btn-currency {
+			display: inline-flex;
+			align-items: center;
+			gap: 3px;
+			height: 28px;
+			padding: 0 7px;
+			border-radius: 8px;
+			border: 1px solid rgba(255, 255, 255, 0.35);
+			background: transparent;
+			color: #fff;
+			font-family: $font;
+			font-size: 12px;
+			font-weight: 700;
+		}
+		.active-order-pill {
+			display: none;
+		}
+	}
+	.navbar-basic:not(.transparent) .nav-extras,
+	.navbar-main.light .nav-extras {
+		.nav-icon-btn,
+		.btn-currency {
+			color: var(--text-1);
+			border-color: var(--border);
+		}
+	}
+}
+
+// Shared price / badges / stars / avatar / countdown (mobile) -----------------
+.slv-price.on-sale {
+	display: inline-flex;
+	align-items: baseline;
+	gap: 6px;
+	flex-wrap: wrap;
+	.original {
+		color: var(--text-3);
+		font-weight: 500;
+		font-size: 0.85em;
+	}
+	.sale {
+		color: var(--sale);
+		font-weight: 700;
+	}
+	.pct {
+		background: var(--sale);
+		color: #fff;
+		font-size: 10px;
+		font-weight: 700;
+		padding: 2px 5px;
+		border-radius: 5px;
+	}
+	&.stacked {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0;
+		line-height: 1.15;
+	}
+}
+.car-badges {
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	z-index: 2;
+	pointer-events: none;
+	.badge {
+		padding: 3px 7px;
+		border-radius: 5px;
+		font-size: 10px;
+		font-weight: 800;
+		text-transform: uppercase;
+		color: #fff;
+		&.sale {
+			background: var(--sale);
+		}
+		&.new {
+			background: var(--success);
+		}
+		&.reserved {
+			background: var(--warning);
+		}
+		&.sold {
+			background: var(--text-2);
+		}
+	}
+}
+.card-config,
+.popular-card-box,
+.trend-car-card {
+	position: relative;
+	.top,
+	.card-img,
+	.car-image-section {
+		position: relative;
+	}
+	&.is-sold .top img,
+	&.is-sold .card-img,
+	&.is-sold .car-image {
+		filter: grayscale(0.6) brightness(0.85);
+	}
+}
+.slv-stars {
+	display: inline-flex;
+	align-items: center;
+	gap: 1px;
+	.star {
+		color: var(--border);
+		font-size: 16px;
+		&.on {
+			color: var(--star);
+		}
+	}
+	&.interactive .star {
+		cursor: pointer;
+		font-size: 28px;
+	}
+	.value {
+		margin-left: 5px;
+		font-size: 13px;
+		color: var(--text-1);
+	}
+	.count {
+		margin-left: 3px;
+		color: var(--text-3);
+		font-size: 11px;
+	}
+}
+.slv-avatar {
+	border-radius: 50%;
+	object-fit: cover;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	font-weight: 700;
+	flex-shrink: 0;
+}
+.slv-countdown {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	.unit {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		min-width: 44px;
+		padding: 6px 4px;
+		border-radius: 8px;
+		background: var(--surface);
+		border: 1px solid var(--border-soft);
+		b {
+			font-size: 18px;
+			line-height: 1;
+			color: var(--text-1);
+		}
+		span {
+			margin-top: 3px;
+			font-size: 9px;
+			text-transform: uppercase;
+			color: var(--text-3);
+		}
+	}
+	.sep {
+		font-style: normal;
+		font-weight: 700;
+		color: var(--text-3);
+	}
+	&.compact {
+		font-weight: 700;
+		color: var(--sale);
+		font-size: 12px;
+	}
+}

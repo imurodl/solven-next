@@ -24,7 +24,7 @@
 				}
 
 				.sub-title {
-					color: #6b7280;
+					color: var(--text-2);
 					font-size: 16px;
 					font-weight: 400;
 					line-height: 1.5;
@@ -46,9 +46,9 @@
 				align-items: center;
 				gap: 16px;
 				padding: 48px;
-				background: #ffffff;
+				background: var(--surface);
 				border-radius: 16px;
-				border: 1px solid #e5e7eb;
+				border: 1px solid var(--border-soft);
 				box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
 				img {
@@ -58,7 +58,7 @@
 				}
 
 				p {
-					color: #6b7280;
+					color: var(--text-2);
 					font-size: 16px;
 					font-weight: 500;
 				}
@@ -75,15 +75,15 @@
 			.pagination-box {
 				.MuiPagination-root {
 					.MuiPaginationItem-root {
-						color: #6b7280;
+						color: var(--text-2);
 						font-weight: 500;
 
 						&.Mui-selected {
-							background: #1e40af;
+							background: var(--primary);
 							color: white;
 
 							&:hover {
-								background: #1e3a8a;
+								background: var(--primary-dark);
 							}
 						}
 
@@ -96,7 +96,7 @@
 
 			.total {
 				p {
-					color: #6b7280;
+					color: var(--text-2);
 					font-size: 14px;
 					font-weight: 500;
 				}

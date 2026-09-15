@@ -1,0 +1,186 @@
+/** THEME TOKENS
+ *  Single source of truth for every themeable colour. Light values match the
+ *  original design; dark values are derived from the same cool-blue palette.
+ *  Hero/banner sections with imagery keep literal colours in both themes.
+ */
+
+:root {
+	color-scheme: light;
+
+	/* Backgrounds */
+	--bg-page: #ffffff;
+	--surface: #ffffff;
+	--surface-2: #fafafa;
+	--bg-muted: #f4f5f7;
+	--bg-warm: #f8f9fc;
+	--bg-strong: #e5e7eb;
+	--bg-inverse: #181a20;
+	--dark-section: #050b20;
+
+	/* Text */
+	--text-1: #050b20;
+	--text-2: #6b7280;
+	--text-3: #8b93a3;
+	--text-4: #aeb4c0;
+	--text-on-primary: #ffffff;
+
+	/* Borders */
+	--border: #d1d5db;
+	--border-soft: #e5e7eb;
+	--border-dark: #050b20;
+
+	/* Brand */
+	--primary: #1e40af;
+	--primary-dark: #1e3a8a;
+	--primary-2: #3b4bdf;
+	--primary-soft: #eef2ff;
+	--primary-glow: rgba(30, 64, 175, 0.18);
+	--accent: #405ff2;
+	--footer-bg: #050b20;
+
+	/* Status */
+	--danger: #ef4444;
+	--danger-soft: #fef2f2;
+	--success: #229a16;
+	--success-soft: #ecfdf3;
+	--info: #1976d2;
+	--info-soft: #e3f2fd;
+	--warning: #f57c00;
+	--warning-soft: #fff7ed;
+	--star: #f5a623;
+	--sale: #e11d48;
+
+	/* Effects */
+	--shadow-1: rgba(0, 0, 0, 0.06);
+	--shadow-2: rgba(0, 0, 0, 0.12);
+	--overlay: rgba(5, 11, 32, 0.55);
+	--scrollbar-thumb: #bdbdbd;
+	--scrollbar-track: #eeeeee;
+	--skeleton-base: #e9ebef;
+	--skeleton-highlight: #f5f6f8;
+	--glass: rgba(255, 255, 255, 0.92);
+	--section-alt: #f8f9fc;
+}
+
+[data-theme='dark'] {
+	color-scheme: dark;
+
+	--bg-page: #0f1420;
+	--surface: #171d2b;
+	--surface-2: #1c2333;
+	--bg-muted: #222a3a;
+	--bg-warm: #171d2b;
+	--bg-strong: #2c3547;
+	--bg-inverse: #2c3547;
+	--dark-section: #0a0e19;
+
+	--text-1: #eef1f6;
+	--text-2: #b4bccb;
+	--text-3: #8c95a7;
+	--text-4: #67708a;
+	--text-on-primary: #ffffff;
+
+	--border: #303a4e;
+	--border-soft: #26303f;
+	--border-dark: #dfe4ee;
+
+	--primary: #5b7cf6;
+	--primary-dark: #4364e0;
+	--primary-2: #7b8ff8;
+	--primary-soft: #1b2440;
+	--primary-glow: rgba(91, 124, 246, 0.2);
+	--accent: #7b8ff8;
+	--footer-bg: #0a0e19;
+
+	--danger: #f87171;
+	--danger-soft: #2b1d20;
+	--success: #4ade80;
+	--success-soft: #16261c;
+	--info: #64b5f6;
+	--info-soft: #1a2633;
+	--warning: #fb923c;
+	--warning-soft: #2b2016;
+	--star: #f5b942;
+	--sale: #fb7185;
+
+	--shadow-1: rgba(0, 0, 0, 0.4);
+	--shadow-2: rgba(0, 0, 0, 0.6);
+	--overlay: rgba(0, 0, 0, 0.7);
+	--scrollbar-thumb: #3a4356;
+	--scrollbar-track: #1c2333;
+	--skeleton-base: #222a3a;
+	--skeleton-highlight: #2c3547;
+	--glass: rgba(23, 29, 43, 0.92);
+	--section-alt: #131926;
+}
+
+html {
+	background: var(--bg-page);
+}
+
+body {
+	background: var(--bg-page);
+	color: var(--text-1);
+	transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Desktop layout is a fixed 1300px canvas: scale it to fit narrower desktop
+   windows instead of clipping the right edge. Mobile (<=768px) has its own layout. */
+@media (min-width: 769px) and (max-width: 1400px) {
+	html {
+		zoom: calc(100vw / 1400);
+	}
+}
+
+/* Third-party surfaces follow the theme */
+.swal2-popup {
+	background: var(--surface) !important;
+	color: var(--text-1) !important;
+}
+.swal2-title,
+.swal2-html-container {
+	color: var(--text-1) !important;
+}
+.swal2-input,
+.swal2-textarea,
+.swal2-select {
+	background: var(--bg-muted) !important;
+	color: var(--text-1) !important;
+	border-color: var(--border) !important;
+}
+
+/* Dark-mode: keep brand/logo assets and dark icons visible */
+[data-theme='dark'] img[src*='/img/logo/logoText'],
+[data-theme='dark'] img[src*='/img/logo/solven.png'] {
+	filter: brightness(0) invert(1);
+}
+[data-theme='dark'] img.com-icon:not([src*='White']) {
+	filter: invert(1) opacity(0.85);
+}
+[data-theme='dark'] .MuiPaper-root,
+[data-theme='dark'] .MuiMenu-paper,
+[data-theme='dark'] .MuiDialog-paper,
+[data-theme='dark'] .MuiDrawer-paper {
+	background-color: var(--surface);
+	color: var(--text-1);
+}
+[data-theme='dark'] .MuiOutlinedInput-notchedOutline {
+	border-color: var(--border);
+}
+[data-theme='dark'] .MuiInputBase-root,
+[data-theme='dark'] .MuiInputBase-input {
+	color: var(--text-1);
+}
+[data-theme='dark'] .MuiInputLabel-root {
+	color: var(--text-2);
+}
+[data-theme='dark'] .MuiPaginationItem-root {
+	color: var(--text-1);
+}
+[data-theme='dark'] .MuiDivider-root {
+	border-color: var(--border-soft);
+}
+[data-theme='dark'] .MuiTableCell-root {
+	color: var(--text-1);
+	border-color: var(--border-soft);
+}

@@ -95,7 +95,7 @@ export const light = {
 		MuiCssBaseline: {
 			styleOverrides: {
 				html: { height: '100%' },
-				body: { background: '#fff', height: '100%', minHeight: '100%' },
+				body: { background: 'var(--bg-page)', height: '100%', minHeight: '100%' },
 				p: {
 					margin: '0',
 				},
@@ -111,7 +111,7 @@ export const light = {
 		MuiButton: {
 			styleOverrides: {
 				root: {
-					color: '#212121',
+					color: 'var(--text-1)',
 					minWidth: 'auto',
 					lineHeight: '1.2',
 					boxShadow: 'none',
@@ -303,4 +303,31 @@ export const light = {
 	},
 	shadow,
 	typography,
+};
+
+/**
+ * DARK THEME — same component overrides, palette from the CSS tokens in theme.scss
+ */
+export const dark = {
+	...light,
+	palette: {
+		mode: 'dark',
+		background: {
+			default: '#0f1420',
+			paper: '#171d2b',
+		},
+		primary: {
+			contrastText: '#ffffff',
+			main: '#5b7cf6',
+		},
+		secondary: {
+			main: '#7b8ff8',
+		},
+		text: {
+			primary: '#eef1f6',
+			secondary: '#b4bccb',
+			dark: '#ffffff',
+		},
+		divider: '#303a4e',
+	},
 };

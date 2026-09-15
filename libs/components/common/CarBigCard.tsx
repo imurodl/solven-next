@@ -6,6 +6,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { Car } from '../../types/car/car';
 import { REACT_APP_API_URL, topCarRank } from '../../config';
 import { formatterStr } from '../../utils';
+import Price from '../common/Price';
+import CarBadges from '../common/CarBadges';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { useRouter } from 'next/router';
@@ -40,7 +42,7 @@ const CarBigCard = (props: CarBigCardProps) => {
 					onClick={() => goCarDetailPage(car?._id)}
 					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${car?.carImages?.[0]})` }}
 				>
-					<div className={'price'}>${formatterStr(car?.carPrice)}</div>
+					<div className={'price'}><Price car={car} /></div>
 				</Box>
 				<Box component={'div'} className={'info'}>
 					<strong onClick={() => goCarDetailPage(car?._id)} className={'title'}>
@@ -124,7 +126,7 @@ const CarBigCard = (props: CarBigCardProps) => {
 					onClick={() => goCarDetailPage(car?._id)}
 					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${car?.carImages?.[0]})` }}
 				>
-					<div className={'price'}>${formatterStr(car?.carPrice)}</div>
+					<div className={'price'}><Price car={car} /></div>
 				</Box>
 				<Box component={'div'} className={'info'}>
 					<strong onClick={() => goCarDetailPage(car?._id)} className={'title'}>

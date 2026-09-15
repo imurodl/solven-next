@@ -14,6 +14,9 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useState } from 'react';
+import Price from '../common/Price';
+import CarBadges from '../common/CarBadges';
+import { isSoldOut, isReserved } from '../../utils/sale';
 
 interface TrendCarCardProps {
 	car: Car;
@@ -48,7 +51,8 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 					/>
 
 					{/* Price Badge */}
-					<Box className="price-badge">${car.carPrice}</Box>
+					<Box className="price-badge"><Price car={car} /></Box>
+					<CarBadges car={car} />
 
 					{/* Views Count - Only visible on hover */}
 					{isHovered && (
@@ -149,7 +153,8 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 					/>
 
 					{/* Price Badge */}
-					<Box className="price-badge">${car.carPrice}</Box>
+					<Box className="price-badge"><Price car={car} /></Box>
+					<CarBadges car={car} />
 
 					{/* Views Count - Only visible on hover */}
 					{isHovered && (

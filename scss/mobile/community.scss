@@ -1,8 +1,8 @@
 #mobile-wrap {
-	background: #050b20;
+	background: var(--dark-section);
 	#community-list-page {
 		position: relative;
-		background: #f8f9fc;
+		background: var(--bg-warm);
 		border-radius: 40px;
 		padding-bottom: 40px;
 		min-height: calc(100vh - 60px);
@@ -19,7 +19,7 @@
 					strong {
 						font-size: 24px;
 						font-weight: 700;
-						background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+						background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
 						background-clip: text;
 						-webkit-background-clip: text;
 						-webkit-text-fill-color: transparent;
@@ -137,7 +137,7 @@
 								transition: $transition-smooth;
 
 								&:active {
-									background: darken($primary-color, 5%);
+									background: var(--primary-dark);
 								}
 							}
 						}
@@ -305,7 +305,7 @@
 									color: white;
 									border-radius: 50%;
 									&:hover {
-										background-color: darken($primary-color, 5%);
+										background-color: var(--primary-dark);
 									}
 								}
 							}

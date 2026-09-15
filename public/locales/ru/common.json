@@ -39,12 +39,10 @@
 	"Languages": "Языки",
 	"Get the App": "Скачать приложение",
 	"Connect With Us": "Связаться с нами",
-
 	"English": "Английский",
 	"Korean": "Корейский",
 	"Russian": "Русский",
 	"Uzbek": "Узбекский",
-
 	"Login": "Вход",
 	"Sign Up": "Регистрация",
 	"Login in with this account across the following sites.": "Войдите с этой учетной записью на следующих сайтах.",
@@ -64,7 +62,6 @@
 	"I want to be registered as:": "Я хочу зарегистрироваться как:",
 	"User": "Пользователь",
 	"Agent": "Агент",
-
 	"error": {
 		"SOMETHING_WENT_WRONG": "Что-то пошло не так!",
 		"NO_DATA_FOUND": "Данные не найдены!",
@@ -82,7 +79,6 @@
 		"NOT_ALLOWED_REQUEST": "Недопустимый запрос!",
 		"INSERT_ALL_INPUTS": "Пожалуйста, заполните все поля"
 	},
-
 	"sortBy": "Сортировать по",
 	"newest": "Новые",
 	"oldest": "Старые",
@@ -119,5 +115,18 @@
 		"showLess": "Показать меньше",
 		"from": "От",
 		"to": "До"
-	}
+	},
+	"Service": "Сервис",
+	"AI Finder": "AI-поиск",
+	"Messages": "Сообщения",
+	"Light mode": "Светлая тема",
+	"Dark mode": "Тёмная тема",
+	"order.status.PENDING": "Ожидает продавца",
+	"order.status.ACCEPTED": "Принят — внесите депозит",
+	"order.status.PAID": "Депозит внесён",
+	"order.status.DELIVERED": "Готов к передаче",
+	"order.status.COMPLETED": "Завершён",
+	"order.status.CANCELLED": "Отменён",
+	"order.status.RETURN_REQUESTED": "Запрошен возврат",
+	"order.status.RETURNED": "Возвращён"
 }

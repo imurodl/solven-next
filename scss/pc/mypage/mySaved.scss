@@ -14,7 +14,7 @@
 				.right-box {
 					width: 315px;
 					.main-title {
-						color: #181a20;
+						color: var(--text-1);
 						font-family: $font;
 						font-size: 30px;
 						font-style: normal;
@@ -24,7 +24,7 @@
 						text-transform: capitalize;
 					}
 					.sub-title {
-						color: #181a20;
+						color: var(--text-1);
 						font-family: $font;
 						font-size: 14px;
 						font-style: normal;
@@ -47,9 +47,9 @@
 					align-items: center;
 					padding: 0px 30px;
 					border-radius: 12px;
-					background: #f6f6f6;
+					background: var(--bg-muted);
 					p {
-						color: #181a20;
+						color: var(--text-1);
 						font-family: $font;
 						font-size: 15px;
 						font-style: normal;
@@ -70,11 +70,11 @@
 					align-items: center;
 					justify-content: space-between;
 					padding: 0px 20px;
-					border-bottom: 1px solid #dddddd;
+					border-bottom: 1px solid var(--border);
 					.title {
 						width: 410px;
 						margin-right: 20px;
-						color: #181a20;
+						color: var(--text-1);
 						font-family: $font;
 						font-size: 15px;
 						font-style: normal;
@@ -83,7 +83,7 @@
 					}
 					.date {
 						width: 150px;
-						color: #181a20;
+						color: var(--text-1);
 						font-family: $font;
 						font-size: 14px;
 						font-style: normal;
@@ -102,10 +102,10 @@
 							height: 40px;
 							border-radius: 4px;
 							:hover {
-								background: #f6f6f6;
+								background: var(--bg-muted);
 							}
 							.buttons {
-								color: #181a20;
+								color: var(--text-1);
 							}
 						}
 					}
@@ -118,7 +118,7 @@
 					margin-top: 30px;
 					.total-result {
 						p {
-							color: #181a20;
+							color: var(--text-1);
 							text-align: center;
 							font-family: $font;
 							font-size: 14px;

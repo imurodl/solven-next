@@ -19,6 +19,8 @@ export const UPDATE_MEMBER_BY_ADMIN = gql`
 			memberDesc
 			memberCars
 			memberRank
+			memberRating
+			memberReviews
 			memberArticles
 			memberPoints
 			memberLikes
@@ -63,6 +65,23 @@ export const UPDATE_CAR_BY_ADMIN = gql`
 			carDesc
 			carBarter
 			carRent
+			carSalePrice
+			carIsOnSale
+			carSaleStartsAt
+			carSaleExpiresAt
+			carAvailability
+			carCondition
+			carRating
+			carReviews
+			carSoldCount
+			carImageCredits
+			car3dModel
+			carTranslations {
+				en { title desc }
+				kr { title desc }
+				ru { title desc }
+				uz { title desc }
+			}
 			memberId
 			soldAt
 			deletedAt
@@ -99,6 +118,23 @@ export const REMOVE_CAR_BY_ADMIN = gql`
 			carDesc
 			carBarter
 			carRent
+			carSalePrice
+			carIsOnSale
+			carSaleStartsAt
+			carSaleExpiresAt
+			carAvailability
+			carCondition
+			carRating
+			carReviews
+			carSoldCount
+			carImageCredits
+			car3dModel
+			carTranslations {
+				en { title desc }
+				kr { title desc }
+				ru { title desc }
+				uz { title desc }
+			}
 			memberId
 			soldAt
 			deletedAt
@@ -274,5 +310,90 @@ export const REMOVE_NOTICE_BY_ADMIN = gql`
 			createdAt
 			updatedAt
 		}
+	}
+`;
+
+export const UPDATE_ORDER_STATUS_BY_ADMIN = gql`
+	mutation UpdateOrderStatusByAdmin($input: OrderUpdate!) {
+		updateOrderStatusByAdmin(input: $input) {
+			_id
+			orderId
+			orderStatus
+		}
+	}
+`;
+
+export const CREATE_COUPON = gql`
+	mutation CreateCoupon($input: CouponInput!) {
+		createCoupon(input: $input) {
+			_id
+			couponCode
+			couponType
+			couponValue
+			couponStatus
+			maxUses
+			usedCount
+			minOrderAmount
+			validUntil
+		}
+	}
+`;
+
+export const UPDATE_COUPON_BY_ADMIN = gql`
+	mutation UpdateCouponByAdmin($input: CouponUpdate!) {
+		updateCouponByAdmin(input: $input) {
+			_id
+			couponStatus
+			couponValue
+			maxUses
+			minOrderAmount
+			validUntil
+		}
+	}
+`;
+
+export const REMOVE_REVIEW_BY_ADMIN = gql`
+	mutation RemoveReviewByAdmin($reviewId: String!) {
+		removeReviewByAdmin(reviewId: $reviewId) {
+			_id
+			reviewStatus
+		}
+	}
+`;
+
+export const UPDATE_SERVICE_JOB_BY_ADMIN = gql`
+	mutation UpdateServiceJobByAdmin($input: ServiceJobUpdate!) {
+		updateServiceJobByAdmin(input: $input) {
+			_id
+			serviceStatus
+		}
+	}
+`;
+
+export const REMOVE_SERVICE_JOB_BY_ADMIN = gql`
+	mutation RemoveServiceJobByAdmin($serviceJobId: String!) {
+		removeServiceJobByAdmin(serviceJobId: $serviceJobId) {
+			_id
+		}
+	}
+`;
+
+export const RETRANSLATE_CAR = gql`
+	mutation RetranslateCar($carId: String!) {
+		retranslateCar(carId: $carId) {
+			_id
+			carTranslations {
+				en { title desc }
+				kr { title desc }
+				ru { title desc }
+				uz { title desc }
+			}
+		}
+	}
+`;
+
+export const CLEAR_CHAT_HISTORY = gql`
+	mutation ClearChatHistory {
+		clearChatHistory
 	}
 `;

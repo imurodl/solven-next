@@ -1,6 +1,8 @@
 /** IMPORTS **/
 @import 'variables.scss';
 @import 'reset.scss';
+@import 'theme.scss';
+@import 'skeleton.scss';
 @import 'mobile/main.scss';
 
 .css-16cg59e-MuiTypography-root {
@@ -19,7 +21,7 @@
 a {
 	white-space: nowrap;
 	text-decoration: none;
-	color: #212121;
+	color: var(--text-1);
 }
 button {
 	text-transform: none;
@@ -27,7 +29,7 @@ button {
 	padding: 0;
 }
 button.outline {
-	border: 1px solid #eee;
+	border: 1px solid var(--border-soft);
 }
 button.contain {
 	color: #fff;
@@ -43,11 +45,11 @@ body {
 	}
 	&::-webkit-scrollbar-thumb {
 		height: 30%;
-		background: #bdbdbd;
+		background: var(--bg-strong);
 		border-radius: 10px;
 	}
 	&::-webkit-scrollbar-track {
-		background: #eee;
+		background: var(--bg-strong);
 	}
 
 	.MuiPopover-paper {
@@ -57,7 +59,7 @@ body {
 hr {
 	border-width: 0;
 	border-bottom-width: thin;
-	border-color: #eee;
+	border-color: var(--border-soft);
 	margin: auto;
 }
 

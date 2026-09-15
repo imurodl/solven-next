@@ -7,7 +7,8 @@ export interface Member {
 	memberType: MemberType;
 	memberStatus: MemberStatus;
 	memberAuthType: MemberAuthType;
-	memberPhone: string;
+	memberPhone?: string;
+	memberEmail?: string;
 	memberNick: string;
 	memberPassword?: string;
 	memberFullName?: string;
@@ -25,6 +26,11 @@ export interface Member {
 	memberComments: number;
 	memberWarnings: number;
 	memberBlocks: number;
+	memberRating?: number;
+	memberReviews?: number;
+	memberServiceJobs?: number;
+	hasTelegram?: boolean;
+	hasGoogle?: boolean;
 	deletedAt?: Date;
 	createdAt: Date;
 	updatedAt: Date;
@@ -32,6 +38,7 @@ export interface Member {
 	meLiked?: MeLiked[];
 	meFollowed?: MeFollowed[];
 	accessToken?: string;
+	refreshToken?: string;
 }
 
 export interface Members {

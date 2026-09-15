@@ -5,7 +5,8 @@ export interface CustomJwtPayload extends JwtPayload {
 	memberType: string;
 	memberStatus: string;
 	memberAuthType: string;
-	memberPhone: string;
+	memberPhone?: string;
+	memberEmail?: string;
 	memberNick: string;
 	memberFullName?: string;
 	memberImage?: string;
@@ -19,4 +20,9 @@ export interface CustomJwtPayload extends JwtPayload {
 	memberViews: number;
 	memberWarnings: number;
 	memberBlocks: number;
+	memberRating?: number;
+	memberReviews?: number;
+	memberServiceJobs?: number;
+	hasTelegram?: boolean;
+	hasGoogle?: boolean;
 }

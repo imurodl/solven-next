@@ -128,10 +128,10 @@
 			}
 
 			&.logout {
-				border-color: #ed5858;
+				border-color: var(--danger);
 
 				span {
-					color: #ed5858;
+					color: var(--danger);
 				}
 			}
 		}

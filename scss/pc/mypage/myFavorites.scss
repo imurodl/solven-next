@@ -14,7 +14,7 @@
 				.right-box {
 					width: 315px;
 					.main-title {
-						color: #181a20;
+						color: var(--text-1);
 						font-family: $font;
 						font-size: 30px;
 						font-style: normal;
@@ -24,7 +24,7 @@
 						text-transform: capitalize;
 					}
 					.sub-title {
-						color: #181a20;
+						color: var(--text-1);
 						font-family: $font;
 						font-size: 14px;
 						font-style: normal;
@@ -165,7 +165,7 @@
 								overflow: hidden;
 
 								p {
-									color: #717171;
+									color: var(--text-2);
 									font-family: $font;
 									font-size: 13px;
 									font-style: normal;
@@ -195,7 +195,7 @@
 								align-items: center;
 
 								.option-icon {
-									color: #666;
+									color: var(--text-2);
 									font-size: 22px;
 								}
 
@@ -259,7 +259,7 @@
 				margin-top: 30px;
 				.total-result {
 					p {
-						color: #181a20;
+						color: var(--text-1);
 						text-align: center;
 						font-family: $font;
 						font-size: 14px;

@@ -85,3 +85,14 @@ export enum CarBrandStatus {
 	PAUSED = 'PAUSED',
 	DELETE = 'DELETE',
 }
+
+export enum CarAvailability {
+	AVAILABLE = 'AVAILABLE',
+	RESERVED = 'RESERVED',
+	SOLD = 'SOLD',
+}
+
+export enum CarCondition {
+	NEW = 'NEW',
+	USED = 'USED',
+}

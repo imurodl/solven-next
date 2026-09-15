@@ -32,6 +32,7 @@
 @import '/scss/pc/member/memberFollows.scss';
 @import '/scss/pc/member/memberArticles.scss';
 @import '/scss/pc/member/memberProperties.scss';
+@import '/scss/pc/parity.scss';
 
 // Mixins
 @mixin flex-center {
@@ -162,7 +163,7 @@ body::-webkit-scrollbar {
 				box-sizing: border-box;
 				z-index: 99;
 				align-items: center;
-				background-color: #050b20;
+				background-color: var(--dark-section);
 				border-top: 1px solid rgba(255, 255, 255, 0.07);
 			}
 
@@ -212,7 +213,7 @@ body::-webkit-scrollbar {
 								left: -177%;
 								top: 40px;
 								width: 434px;
-								background: white;
+								background: var(--surface);
 								border-radius: 12px;
 								box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 								transition: all 0.3s ease;
@@ -232,7 +233,7 @@ body::-webkit-scrollbar {
 									right: 50%;
 									width: 10px;
 									height: 10px;
-									background: white;
+									background: var(--surface);
 									transform: translateX(50%) rotate(45deg);
 									z-index: 0;
 								}
@@ -357,7 +358,7 @@ body::-webkit-scrollbar {
 		.container {
 			margin-top: 50px;
 			strong {
-				color: #050b20;
+				color: var(--text-1);
 				font-family: $font;
 				font-size: 40px;
 				font-style: normal;
@@ -367,7 +368,7 @@ body::-webkit-scrollbar {
 				text-transform: capitalize;
 			}
 			span {
-				color: #050b20;
+				color: var(--text-1);
 				font-family: $font;
 				font-size: 20px;
 				font-style: normal;
@@ -477,7 +478,7 @@ body::-webkit-scrollbar {
 						}
 
 						&:hover {
-							background: darken($background-light, 5%);
+							background: var(--bg-strong);
 						}
 
 						span {
@@ -522,7 +523,7 @@ body::-webkit-scrollbar {
 						@include button-hover-effect;
 
 						&:hover {
-							background: darken($background-light, 5%);
+							background: var(--bg-strong);
 							color: $primary-color;
 						}
 
@@ -610,7 +611,7 @@ body::-webkit-scrollbar {
 						span {
 							margin-left: 14px;
 							font-size: 14px;
-							color: #1f2937;
+							color: var(--text-1);
 							font-weight: 500;
 							text-transform: capitalize;
 						}
@@ -648,14 +649,14 @@ body::-webkit-scrollbar {
 							border-radius: 10px;
 							object-fit: contain;
 							padding: 8px;
-							background: white;
+							background: var(--surface);
 							box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 						}
 
 						span {
 							margin-left: 14px;
 							font-size: 14px;
-							color: #1f2937;
+							color: var(--text-1);
 							font-weight: 500;
 							text-transform: capitalize;
 						}
@@ -676,7 +677,7 @@ body::-webkit-scrollbar {
 						border: 1px solid rgba(229, 231, 235, 0.5);
 						font-size: 14px;
 						font-weight: 500;
-						color: #1f2937;
+						color: var(--text-1);
 						cursor: pointer;
 						transition: all 0.2s ease;
 
@@ -769,7 +770,7 @@ body::-webkit-scrollbar {
 					display: flex;
 					flex-direction: column;
 					strong {
-						color: #181a20;
+						color: var(--text-1);
 						font-family: $font;
 						font-size: 15px;
 						font-style: normal;
@@ -778,7 +779,7 @@ body::-webkit-scrollbar {
 					}
 					span {
 						margin-top: 4px;
-						color: #181a20;
+						color: var(--text-1);
 						font-family: $font;
 						font-size: 13px;
 						font-style: normal;
@@ -797,7 +798,7 @@ body::-webkit-scrollbar {
 		}
 		p {
 			margin-top: 10px;
-			color: #181a20;
+			color: var(--text-1);
 			font-family: $font;
 			font-size: 14px;
 			font-style: normal;
@@ -810,10 +811,10 @@ body::-webkit-scrollbar {
 			flex-direction: row;
 			gap: 10px;
 			align-items: center;
-			border-bottom: 1px solid #ddd;
+			border-bottom: 1px solid var(--border);
 			.reply-text {
 				padding-bottom: 10px;
-				color: #181a20;
+				color: var(--text-1);
 				font-family: $font;
 				font-size: 14px;
 				font-style: normal;
@@ -858,7 +859,7 @@ body::-webkit-scrollbar {
 			height: 500px;
 			display: flex;
 			flex-direction: column;
-			background: white;
+			background: var(--surface);
 			border-radius: $border-radius-large;
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 			z-index: 100;
@@ -875,7 +876,7 @@ body::-webkit-scrollbar {
 				display: flex;
 				justify-content: center;
 				align-items: center;
-				border-bottom: 1px solid #f1f5f9;
+				border-bottom: 1px solid var(--border-soft);
 
 				div {
 					color: $text-color;
@@ -894,7 +895,7 @@ body::-webkit-scrollbar {
 				flex-direction: column;
 				justify-content: flex-start;
 				overflow: auto;
-				background: white;
+				background: var(--surface);
 
 				.chat-main {
 					position: relative;
@@ -910,7 +911,7 @@ body::-webkit-scrollbar {
 						max-width: 85%;
 						height: auto;
 						display: flex;
-						background: #f1f5f9;
+						background: var(--bg-muted);
 						border-radius: 16px 16px 16px 4px;
 						color: $text-color;
 						font-family: $font;
@@ -924,7 +925,7 @@ body::-webkit-scrollbar {
 						max-width: 85%;
 						height: auto;
 						display: flex;
-						background: #f1f5f9;
+						background: var(--bg-muted);
 						border-radius: 16px 16px 16px 4px;
 						color: $text-color;
 						font-family: $font;
@@ -954,8 +955,8 @@ body::-webkit-scrollbar {
 				justify-content: center;
 				align-items: center;
 				padding: 0 20px;
-				background: white;
-				border-top: 1px solid #f1f5f9;
+				background: var(--surface);
+				border-top: 1px solid var(--border-soft);
 				margin-bottom: 6px;
 				border-bottom-right-radius: $border-radius-large;
 				border-bottom-left-radius: $border-radius-large;
@@ -966,9 +967,9 @@ body::-webkit-scrollbar {
 					display: flex;
 					flex-direction: column;
 					align-items: center;
-					background: #f8fafc;
+					background: var(--bg-muted);
 					border-radius: 12px;
-					border: 1px solid #f1f5f9;
+					border: 1px solid var(--border-soft);
 					outline: none;
 					font-family: $font;
 					font-size: 14px;
@@ -976,11 +977,11 @@ body::-webkit-scrollbar {
 
 					&:focus {
 						border-color: $primary-color;
-						background: white;
+						background: var(--surface);
 					}
 
 					&::placeholder {
-						color: #94a3b8;
+						color: var(--text-3);
 					}
 				}
 
@@ -992,7 +993,7 @@ body::-webkit-scrollbar {
 					justify-content: center;
 					align-items: center;
 					border-radius: 12px;
-					background: #f1f5f9;
+					background: var(--bg-muted);
 					border: 1px solid #e2e8f0;
 					transition: all 0.2s ease;
 					cursor: pointer;
@@ -1005,7 +1006,7 @@ body::-webkit-scrollbar {
 
 					&:hover {
 						background: #e2e8f0;
-						border-color: #cbd5e1;
+						border-color: var(--border);
 
 						svg {
 							transform: translateX(2px);
@@ -1013,7 +1014,7 @@ body::-webkit-scrollbar {
 					}
 
 					&:active {
-						background: #cbd5e1;
+						background: var(--bg-strong);
 						svg {
 							transform: translateX(3px);
 						}
@@ -1030,9 +1031,9 @@ body::-webkit-scrollbar {
 		height: auto;
 		display: flex;
 		flex-direction: column;
-		background: #050b20;
+		background: var(--dark-section);
 		.footer {
-			background-color: #050b20;
+			background-color: var(--dark-section);
 			color: #fff;
 			.footer-inner {
 				max-width: 1920px;
@@ -1063,16 +1064,16 @@ body::-webkit-scrollbar {
 							padding: 12px 16px;
 							width: 250px;
 							font-size: 14px;
-							color: #050b20;
+							color: var(--text-1);
 							border: none;
 							outline: none;
 							font-family: $font;
 							&::placeholder {
-								color: #6b7280;
+								color: var(--text-2);
 							}
 						}
 						button {
-							background: #405ff2;
+							background: var(--accent);
 							color: #fff;
 							border-radius: 50px;
 							padding: 12px 32px;
@@ -1288,10 +1289,10 @@ body::-webkit-scrollbar {
 }
 
 #pc-wrap {
-	background: #050b20;
+	background: var(--dark-section);
 	.error-section-page {
 		padding-bottom: 40px;
-		background: #f6f6f6;
+		background: var(--bg-muted);
 		border-radius: 80px;
 		height: 90vh;
 		.boxcar-container {
@@ -1317,7 +1318,7 @@ body::-webkit-scrollbar {
 						h2 {
 							font-size: 32px;
 							margin-bottom: 24px;
-							color: #181a20;
+							color: var(--text-1);
 						}
 						.text {
 							font-size: 16px;
@@ -1328,7 +1329,7 @@ body::-webkit-scrollbar {
 							display: inline-flex;
 							align-items: center;
 							gap: 8px;
-							background-color: #405ff2;
+							background-color: var(--accent);
 							color: #fff;
 							padding: 20px 30px;
 							border-radius: 16px;
@@ -1381,7 +1382,7 @@ body::-webkit-scrollbar {
 		}
 
 		&:hover .MuiOutlinedInput-notchedOutline {
-			border-color: darken($border-color, 10%);
+			border-color: var(--text-4);
 		}
 
 		&.Mui-focused .MuiOutlinedInput-notchedOutline {
@@ -1408,7 +1409,7 @@ body::-webkit-scrollbar {
 		color: $text-color;
 		padding: 10px 30px;
 		transition: $transition-fast;
-		background-color: #ffffff;
+		background-color: var(--surface);
 		box-shadow: none;
 		border-radius: $border-radius-medium;
 		&:hover {
@@ -1443,7 +1444,7 @@ body::-webkit-scrollbar {
 		border: 1px solid $border-light;
 		transition: $transition-fast;
 		&:hover {
-			background: darken($background-light, 5%);
+			background: var(--bg-strong);
 			border-color: $text-muted;
 		}
 		svg,
@@ -1526,7 +1527,7 @@ body::-webkit-scrollbar {
 							}
 							&.Mui-checked {
 								.MuiSvgIcon-root {
-									color: #1e40af;
+									color: var(--primary);
 									border: none;
 									scale: 1.1;
 								}
@@ -1591,7 +1592,7 @@ body::-webkit-scrollbar {
 							color: $background-white;
 
 							&:hover {
-								background: darken($primary-color, 10%);
+								background: var(--primary-dark);
 							}
 						}
 					}
@@ -1705,7 +1706,7 @@ body::-webkit-scrollbar {
 			height: 56px;
 			border: none;
 			border-radius: $border-radius-small;
-			background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 10%) 100%);
+			background: linear-gradient(135deg, $primary-color 0%, var(--primary-dark) 100%);
 			color: $background-white;
 			font-family: $font;
 			font-size: 14px;
@@ -1717,7 +1718,7 @@ body::-webkit-scrollbar {
 			&:hover {
 				transform: translateY(-2px);
 				box-shadow: $shadow-medium;
-				background: linear-gradient(135deg, darken($primary-color, 5%) 0%, darken($primary-color, 15%) 100%);
+				background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-dark) 100%);
 			}
 
 			&:active {
@@ -1813,7 +1814,7 @@ body::-webkit-scrollbar {
 		margin-bottom: 2px;
 	}
 	p {
-		color: #bdbdbd;
+		color: var(--text-4);
 		text-align: center;
 	}
 }

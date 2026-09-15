@@ -3,7 +3,7 @@
 		position: relative;
 		width: 100%;
 		height: auto;
-		background: #fff;
+		background: var(--surface);
 		.info-box {
 			display: flex;
 			justify-content: space-between;
@@ -18,7 +18,7 @@
 					font-size: 32px;
 					font-weight: 700;
 					margin-bottom: 12px;
-					background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+					background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
 					background-clip: text;
 					-webkit-background-clip: text;
 					-webkit-text-fill-color: transparent;
@@ -30,7 +30,7 @@
 					}
 				}
 				p {
-					color: #181a20;
+					color: var(--text-1);
 					font-family: $font;
 					font-size: 14px;
 					font-style: normal;
@@ -84,7 +84,7 @@
 					cursor: pointer;
 					align-items: center;
 					span {
-						color: #181a20;
+						color: var(--text-1);
 						font-family: $font;
 						font-size: 15px;
 						font-style: normal;
@@ -115,9 +115,9 @@
 							margin-right: 20px;
 						}
 						&.active {
-							border: 1px solid #181a20;
-							background: #fff;
-							color: #181a20;
+							border: 1px solid var(--border-dark);
+							background: var(--surface);
+							color: var(--text-1);
 							font-family: $font;
 							font-size: 14px;
 							font-style: normal;
@@ -146,7 +146,7 @@
 						font-size: 32px;
 						font-weight: 700;
 						margin-bottom: 12px;
-						background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+						background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
 						background-clip: text;
 						-webkit-background-clip: text;
 						-webkit-text-fill-color: transparent;
@@ -170,7 +170,7 @@
 							justify-content: center;
 							cursor: pointer;
 							border-radius: 12px;
-							background-color: #fff;
+							background-color: var(--surface);
 							box-shadow: $shadow-light;
 							transition: $transition-smooth;
 							border: 1px solid $border-light;
@@ -221,7 +221,7 @@
 						flex-direction: row;
 						gap: 30px;
 						p {
-							color: #050b20;
+							color: var(--text-1);
 							font-family: $font;
 							font-size: 17px;
 							font-style: normal;
@@ -237,7 +237,7 @@
 								height: 2px;
 								bottom: -2px;
 								left: 0;
-								background-color: #405ff2;
+								background-color: var(--accent);
 								transition: width 0.3s ease;
 							}
 							&.active::before {
@@ -358,7 +358,7 @@
 											cursor: pointer;
 											color: $text-color;
 											transition: $transition-smooth;
-											background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+											background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
 											background-clip: text;
 											-webkit-background-clip: text;
 											-webkit-text-fill-color: transparent;
@@ -372,7 +372,7 @@
 											line-height: 1.4;
 
 											&:hover {
-												background: linear-gradient(135deg, $primary-color 0%, lighten($primary-color, 10%) 100%);
+												background: linear-gradient(135deg, $primary-color 0%, var(--primary-2) 100%);
 												background-clip: text;
 												-webkit-background-clip: text;
 												-webkit-text-fill-color: transparent;
@@ -401,8 +401,8 @@
 									.car-features {
 										display: flex;
 										justify-content: space-between;
-										border-top: 1px solid #eee;
-										border-bottom: 1px solid #eee;
+										border-top: 1px solid var(--border-soft);
+										border-bottom: 1px solid var(--border-soft);
 										padding: 16px 0;
 										margin: 16px 0;
 
@@ -412,7 +412,7 @@
 											align-items: center;
 
 											.feature-icon {
-												color: #666;
+												color: var(--text-2);
 												font-size: 20px;
 												margin-bottom: 4px;
 											}
@@ -438,7 +438,7 @@
 												font-size: 14px;
 
 												&.active {
-													color: #1a1a1a;
+													color: var(--text-1);
 													font-weight: 500;
 												}
 
@@ -461,7 +461,7 @@
 											cursor: pointer;
 
 											.like-icon {
-												color: #666;
+												color: var(--text-2);
 												font-size: 24px;
 
 												&.liked {
@@ -471,7 +471,7 @@
 
 											.like-count {
 												font-size: 14px;
-												color: #666;
+												color: var(--text-2);
 											}
 										}
 									}
@@ -521,7 +521,7 @@
 							&:hover {
 								transform: translateX(4px);
 								span {
-									color: #1e40af;
+									color: var(--primary);
 								}
 								img {
 									filter: invert(23%) sepia(75%) saturate(1739%) hue-rotate(213deg) brightness(94%) contrast(89%);
@@ -554,7 +554,7 @@
 						flex-direction: row;
 						gap: 30px;
 						p {
-							color: #050b20;
+							color: var(--text-1);
 							font-family: $font;
 							font-size: 17px;
 							font-style: normal;
@@ -570,7 +570,7 @@
 								height: 2px;
 								bottom: -2px;
 								left: 0;
-								background-color: #405ff2;
+								background-color: var(--accent);
 								transition: width 0.3s ease;
 							}
 							&.active::before {
@@ -684,7 +684,7 @@
 								bottom: 16px;
 								border-radius: 6px;
 								background: rgba(255, 255, 255, 0.95);
-								color: #1a1a1a;
+								color: var(--text-1);
 								font-size: 15px;
 								font-weight: 600;
 								z-index: 1;
@@ -700,7 +700,7 @@
 							box-sizing: border-box;
 
 							.title {
-								color: #1a1a1a;
+								color: var(--text-1);
 								font-size: 16px;
 								font-weight: 600;
 								line-height: 1.4;
@@ -720,7 +720,7 @@
 							}
 
 							.car-desc {
-								color: #666;
+								color: var(--text-2);
 								font-size: 13px;
 								font-weight: 400;
 								line-height: 1.5;
@@ -741,7 +741,7 @@
 									flex: 1;
 									margin: 0 4px;
 									padding: 10px;
-									background: #f8f9fa;
+									background: var(--bg-warm);
 									border-radius: 10px;
 									border: 1px solid transparent;
 									transition: all 0.2s ease;
@@ -752,7 +752,7 @@
 									text-align: center;
 
 									&:hover {
-										background: #fff;
+										background: var(--surface);
 										border-color: rgba(64, 95, 242, 0.1);
 										box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
@@ -765,13 +765,13 @@
 									.spec-icon {
 										width: 18px;
 										height: 18px;
-										color: #666;
+										color: var(--text-2);
 										margin-bottom: 6px;
 										transition: all 0.2s ease;
 									}
 
 									span {
-										color: #1a1a1a;
+										color: var(--text-1);
 										font-size: 12px;
 										font-weight: 500;
 										white-space: nowrap;
@@ -788,7 +788,7 @@
 								justify-content: space-between;
 								align-items: center;
 								padding-top: 12px;
-								border-top: 1px solid #eee;
+								border-top: 1px solid var(--border-soft);
 
 								.brand-model-box {
 									display: flex;
@@ -796,12 +796,12 @@
 									gap: 2px;
 
 									span {
-										color: #666;
+										color: var(--text-2);
 										font-size: 12px;
 										font-weight: 500;
 
 										&:first-child {
-											color: #1a1a1a;
+											color: var(--text-1);
 										}
 									}
 								}
@@ -813,7 +813,7 @@
 
 									.MuiIconButton-root {
 										padding: 4px;
-										color: #666;
+										color: var(--text-2);
 										font-size: 20px;
 
 										&:hover {
@@ -823,7 +823,7 @@
 
 									.view-cnt {
 										font-size: 12px;
-										color: #666;
+										color: var(--text-2);
 										margin-left: -8px;
 									}
 								}
@@ -903,7 +903,7 @@
 			position: relative;
 			padding: 80px 0;
 			width: 100%;
-			background: #ffffff;
+			background: var(--surface);
 
 			.container {
 				flex-direction: column;
@@ -933,7 +933,7 @@
 							&:hover {
 								transform: translateX(4px);
 								span {
-									color: #1e40af;
+									color: var(--primary);
 								}
 							}
 							span {
@@ -1004,8 +1004,8 @@
 							height: auto;
 							padding: 20px;
 							margin: 10px 0;
-							background: #ffffff;
-							border: 1px solid #e5e7eb;
+							background: var(--surface);
+							border: 1px solid var(--border-soft);
 							border-radius: 1rem;
 							display: flex;
 							flex-direction: column;
@@ -1013,7 +1013,7 @@
 							transition: all 0.3s ease;
 							&:hover {
 								box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-								border-color: #1e40af;
+								border-color: var(--primary);
 								transform: translateY(-5px);
 								.agent-header img {
 									transform: scale(1.05);
@@ -1083,8 +1083,8 @@
 								justify-content: space-between;
 								margin-bottom: 24px;
 								padding: 12px 0;
-								border-top: 1px solid #f3f4f6;
-								border-bottom: 1px solid #f3f4f6;
+								border-top: 1px solid var(--border-soft);
+								border-bottom: 1px solid var(--border-soft);
 								.stat-item {
 									display: flex;
 									align-items: center;
@@ -1187,10 +1187,10 @@
 							&:hover {
 								transform: translateX(4px);
 								span {
-									color: #1e40af;
+									color: var(--primary);
 								}
 								svg {
-									color: #1e40af;
+									color: var(--primary);
 								}
 							}
 
@@ -1269,7 +1269,7 @@
 							gap: 16px;
 
 							.community-card {
-								background: #fff;
+								background: var(--surface);
 								border-radius: $border-radius-medium;
 								transition: $transition-smooth;
 								overflow: hidden;
@@ -1357,13 +1357,13 @@
 		.cta-section {
 			position: relative;
 			width: 100%;
-			background-color: #050b20;
+			background-color: var(--dark-section);
 
 			.cta-container {
 				padding: 80px 0;
 				border-bottom-left-radius: 80px;
 				border-bottom-right-radius: 80px;
-				background-color: #fff;
+				background-color: var(--surface);
 				overflow: hidden;
 
 				.cta-card {
@@ -1394,7 +1394,7 @@
 						.cta-button {
 							background: $primary-color;
 							&:hover {
-								background: darken($primary-color, 5%);
+								background: var(--primary-dark);
 							}
 						}
 					}
@@ -1432,13 +1432,13 @@
 							font-weight: 700;
 							line-height: 1.2;
 							margin-bottom: 16px;
-							color: #1a1a1a;
+							color: var(--text-1);
 						}
 
 						.description {
 							font-size: 16px;
 							line-height: 1.6;
-							color: #666;
+							color: var(--text-2);
 							margin-bottom: 32px;
 							opacity: 0.9;
 						}
@@ -1704,7 +1704,7 @@
 							color: $text-color;
 
 							&:hover {
-								background: darken($background-light, 3%);
+								background: var(--bg-strong);
 								border-color: $border-color;
 							}
 
@@ -1785,7 +1785,7 @@
 			gap: 8px;
 
 			&:hover {
-				background: darken($primary-color, 5%);
+				background: var(--primary-dark);
 				transform: scale(1.05);
 			}
 
@@ -1863,7 +1863,7 @@
 							transition: $transition-smooth;
 
 							&:hover {
-								background: darken($background-light, 2%);
+								background: var(--bg-strong);
 							}
 
 							&.Mui-focused {
@@ -1898,7 +1898,7 @@
 							transition: $transition-smooth;
 
 							&:hover {
-								background: darken($background-light, 2%);
+								background: var(--bg-strong);
 							}
 
 							&.Mui-focused {

@@ -15,6 +15,7 @@
 @import '/scss/mobile/help.scss';
 @import '/scss/mobile/member.scss';
 @import '/scss/mobile/mypage.scss';
+@import '/scss/mobile/parity.scss';
 
 // Mixins
 @mixin flex-center {
@@ -82,7 +83,7 @@ body {
 		flex-direction: row;
 		justify-content: center;
 		span {
-			color: #181a20;
+			color: var(--text-1);
 			font-family: $font;
 			font-size: 34px;
 			font-style: normal;
@@ -98,7 +99,7 @@ body {
 
 	#footer {
 		width: 100vw;
-		background: #050b20;
+		background: var(--dark-section);
 		padding: 40px 0 0;
 		margin: 0;
 		left: 50%;
@@ -149,7 +150,7 @@ body {
 							padding: 0 24px;
 							border: none;
 							border-radius: 12px;
-							background: #3b4bdf;
+							background: var(--primary-2);
 							color: #fff;
 							font-family: $font;
 							font-size: 14px;
@@ -157,7 +158,7 @@ body {
 							transition: all 0.3s ease;
 
 							&:hover {
-								background: darken(#3b4bdf, 5%);
+								background: var(--primary-dark);
 							}
 						}
 					}
@@ -228,7 +229,7 @@ body {
 								}
 
 								&:hover {
-									background: #3b4bdf;
+									background: var(--primary-2);
 									transform: translateY(-3px);
 
 									svg {
@@ -260,7 +261,7 @@ body {
 					transition: all 0.3s ease;
 
 					&:hover {
-						color: #3b4bdf;
+						color: var(--primary-2);
 					}
 				}
 			}
@@ -406,7 +407,7 @@ body {
 			right: 0;
 			width: 280px;
 			height: 100vh;
-			background: #fff;
+			background: var(--surface);
 			transform: translateX(100%);
 			transition: transform 0.3s ease;
 			z-index: 1001;
@@ -552,7 +553,7 @@ body {
 							color: #fff;
 
 							&:hover {
-								background: darken($primary-color, 5%);
+								background: var(--primary-dark);
 							}
 						}
 					}
@@ -792,7 +793,7 @@ body {
 			right: -100%;
 			width: 80%;
 			height: 100vh;
-			background: #fff;
+			background: var(--surface);
 			transition: right 0.3s ease;
 			z-index: 1001;
 
@@ -822,7 +823,7 @@ body {
 
 					svg {
 						font-size: 24px;
-						color: #000;
+						color: var(--text-1);
 					}
 
 					&:hover {
@@ -855,7 +856,7 @@ body {
 							transition: all 0.2s ease;
 
 							span {
-								color: #000;
+								color: var(--text-1);
 								font-family: $font;
 								font-size: 14px;
 								font-weight: 500;
@@ -869,7 +870,7 @@ body {
 								background: rgba(59, 75, 223, 0.1);
 
 								span {
-									color: #3b4bdf;
+									color: var(--primary-2);
 								}
 							}
 						}
@@ -905,7 +906,7 @@ body {
 							}
 
 							span {
-								color: #000;
+								color: var(--text-1);
 								font-family: $font;
 								font-size: 14px;
 								font-weight: 500;
@@ -945,7 +946,7 @@ body {
 				max-width: 280px;
 				margin: 8px 16px;
 				border-radius: 8px;
-				background: #fff;
+				background: var(--surface);
 				box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 
 				.MuiMenu-list {
@@ -1064,7 +1065,7 @@ body {
 				transition: all 0.3s ease;
 
 				&.on {
-					background: #fff;
+					background: var(--surface);
 					box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 				}
 
@@ -1099,7 +1100,7 @@ body {
 				align-items: center;
 				justify-content: center;
 				border-radius: 12px;
-				background: #3b4bdf;
+				background: var(--primary-2);
 				cursor: pointer;
 				transition: all 0.3s ease;
 				color: #fff;
@@ -1111,7 +1112,7 @@ body {
 				}
 
 				&:hover {
-					background: darken(#3b4bdf, 5%);
+					background: var(--primary-dark);
 				}
 			}
 		}
@@ -1124,7 +1125,7 @@ body {
 			left: 16px;
 			right: 16px;
 			padding: 16px;
-			background: #fff;
+			background: var(--surface);
 			border-radius: 12px;
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 			visibility: hidden;

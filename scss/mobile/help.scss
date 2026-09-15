@@ -1,8 +1,8 @@
 #mobile-wrap {
-	background: #050b20;
+	background: var(--dark-section);
 	.cs-page {
 		position: relative;
-		background: #f8f9fc;
+		background: var(--bg-warm);
 		border-radius: 40px;
 		padding-bottom: 40px;
 		min-height: calc(100vh - 60px);
@@ -19,7 +19,7 @@
 					span {
 						font-size: 24px;
 						font-weight: 700;
-						background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+						background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
 						background-clip: text;
 						-webkit-background-clip: text;
 						-webkit-text-fill-color: transparent;
@@ -83,7 +83,7 @@
 							border-color: $primary-color;
 
 							&:active {
-								background: darken($primary-color, 5%);
+								background: var(--primary-dark);
 							}
 						}
 					}
@@ -182,11 +182,11 @@
 								padding: 16px;
 
 								&:hover {
-									background: #f8fafc;
+									background: var(--bg-muted);
 								}
 
 								&.Mui-expanded {
-									background: #f8fafc;
+									background: var(--bg-muted);
 								}
 
 								.MuiAccordionSummary-content {
@@ -228,7 +228,7 @@
 
 							.header {
 								padding: 16px;
-								background: #f8fafc;
+								background: var(--bg-muted);
 								border-bottom: 1px solid $border-light;
 								display: flex;
 								align-items: center;

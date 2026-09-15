@@ -1,0 +1,16 @@
+export enum ServiceType {
+	ENGINE = 'ENGINE',
+	TRANSMISSION = 'TRANSMISSION',
+	BODY = 'BODY',
+	PAINT = 'PAINT',
+	TIRE = 'TIRE',
+	ELECTRIC = 'ELECTRIC',
+	DETAILING = 'DETAILING',
+	INSPECTION = 'INSPECTION',
+	OTHER = 'OTHER',
+}
+
+export enum ServiceJobStatus {
+	ACTIVE = 'ACTIVE',
+	DELETE = 'DELETE',
+}

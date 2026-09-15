@@ -39,12 +39,10 @@
 	"Languages": "Tillar",
 	"Get the App": "Ilovani yuklab oling",
 	"Connect With Us": "Biz bilan aloqa",
-
 	"English": "Inglizcha",
 	"Korean": "Koreyscha",
 	"Russian": "Ruscha",
 	"Uzbek": "O'zbekcha",
-
 	"Login": "Kirish",
 	"Sign Up": "Ro'yxatdan o'tish",
 	"Login in with this account across the following sites.": "Ushbu hisob bilan quyidagi saytlarga kiring.",
@@ -64,7 +62,6 @@
 	"I want to be registered as:": "Men quyidagi sifatida ro'yxatdan o'tmoqchiman:",
 	"User": "Foydalanuvchi",
 	"Agent": "Agent",
-
 	"error": {
 		"SOMETHING_WENT_WRONG": "Nimadir noto'g'ri ketdi!",
 		"NO_DATA_FOUND": "Ma'lumot topilmadi!",
@@ -82,7 +79,6 @@
 		"NOT_ALLOWED_REQUEST": "Ruxsat etilmagan so'rov!",
 		"INSERT_ALL_INPUTS": "Iltimos, barcha maydonlarni to'ldiring"
 	},
-
 	"sortBy": "Saralash",
 	"newest": "Eng yangi",
 	"oldest": "Eng eski",
@@ -119,5 +115,18 @@
 		"showLess": "Kamroq ko'rsatish",
 		"from": "Dan",
 		"to": "Gacha"
-	}
+	},
+	"Service": "Servis",
+	"AI Finder": "AI qidiruv",
+	"Messages": "Xabarlar",
+	"Light mode": "Yorug' rejim",
+	"Dark mode": "Qorong'u rejim",
+	"order.status.PENDING": "Sotuvchi kutilmoqda",
+	"order.status.ACCEPTED": "Qabul qilindi — depozit to'lang",
+	"order.status.PAID": "Depozit to'landi",
+	"order.status.DELIVERED": "Topshirishga tayyor",
+	"order.status.COMPLETED": "Yakunlandi",
+	"order.status.CANCELLED": "Bekor qilindi",
+	"order.status.RETURN_REQUESTED": "Qaytarish so'raldi",
+	"order.status.RETURNED": "Qaytarildi"
 }

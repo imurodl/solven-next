@@ -7,6 +7,8 @@ import ModeIcon from '@mui/icons-material/Mode';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Car } from '../../types/car/car';
 import { formatterStr } from '../../utils';
+import Price from '../common/Price';
+import CarBadges from '../common/CarBadges';
 import { format } from 'date-fns';
 import { useRouter } from 'next/router';
 import { CarStatus } from '../../enums/car.enum';
@@ -67,7 +69,7 @@ export const CarCard = (props: CarCardProps) => {
 					<Typography className="address">{car.carAddress}</Typography>
 					<Stack className="bottom-row">
 						<Typography className="price">
-							<strong>${formatterStr(car?.carPrice)}</strong>
+							<strong><Price car={car} /></strong>
 						</Typography>
 						<Typography className="date">
 							{car.createdAt ? format(new Date(car.createdAt), 'dd MMM, yyyy') : ''}
@@ -113,7 +115,7 @@ export const CarCard = (props: CarCardProps) => {
 					<Typography className="name">{car.carTitle}</Typography>
 					<Typography className="address">{car.carAddress}</Typography>
 					<Typography className="price">
-						<strong>${formatterStr(car?.carPrice)}</strong>
+						<strong><Price car={car} /></strong>
 					</Typography>
 				</Stack>
 				<Stack className="date-box">

@@ -5,17 +5,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 $font: 'DM Sans', sans-serif;
-$primary-color: #1e40af;
-$primary-dark: #1e3a8a;
-$text-color: #050b20;
-$text-muted: #6b7280;
-// $background-light: #f9fafb;
-$background-light: #f4f5f5;
-$background-white: #ffffff;
-$border-color: #d1d5db;
-$border-light: #e5e7eb;
-$shadow-light: 0 1px 2px rgba(0, 0, 0, 0.05);
-$shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+// Colours resolve to CSS custom properties (see theme.scss) so dark mode works
+// without recompiling; keep these names for the existing SCSS.
+$primary-color: var(--primary);
+$primary-dark: var(--primary-dark);
+$text-color: var(--text-1);
+$text-muted: var(--text-2);
+$background-light: var(--bg-muted);
+$background-white: var(--surface);
+$border-color: var(--border);
+$border-light: var(--border-soft);
+$shadow-light: 0 1px 2px var(--shadow-1);
+$shadow-medium: 0 4px 6px var(--shadow-2);
 $border-radius-large: 2rem;
 $border-radius-medium: 1rem;
 $border-radius-small: 0.5rem;

@@ -1,5 +1,5 @@
 #mobile-wrap {
-	background: #050b20;
+	background: var(--dark-section);
 	#car-detail-page {
 		position: relative;
 		background: $background-light;
@@ -29,7 +29,7 @@
 							font-size: 24px;
 							font-weight: 700;
 							margin-bottom: 12px;
-							background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+							background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
 							background-clip: text;
 							-webkit-background-clip: text;
 							-webkit-text-fill-color: transparent;
@@ -857,7 +857,7 @@
 											cursor: pointer;
 											color: $text-color;
 											transition: $transition-smooth;
-											background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+											background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
 											background-clip: text;
 											-webkit-background-clip: text;
 											-webkit-text-fill-color: transparent;
@@ -871,7 +871,7 @@
 											line-height: 1.4;
 
 											&:hover {
-												background: linear-gradient(135deg, $primary-color 0%, lighten($primary-color, 10%) 100%);
+												background: linear-gradient(135deg, $primary-color 0%, var(--primary-2) 100%);
 												background-clip: text;
 												-webkit-background-clip: text;
 												-webkit-text-fill-color: transparent;

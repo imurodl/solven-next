@@ -1,5 +1,5 @@
 #pc-wrap {
-	background: #050b20;
+	background: var(--dark-section);
 	#member-page {
 		.container {
 			display: flex;
@@ -17,14 +17,14 @@
 					height: auto;
 					display: flex;
 					flex-direction: row;
-					background: #050b20;
+					background: var(--dark-section);
 					overflow: hidden;
 					.left-config {
 						position: relative;
 						padding: 0;
 						width: 280px;
 						min-height: 100vh;
-						background: #050b20;
+						background: var(--dark-section);
 						border: none;
 						box-shadow: none;
 						margin: 0;
@@ -80,18 +80,18 @@
 										filter: brightness(0) invert(1);
 									}
 									.p-number {
-										color: #cbd5e1;
+										color: var(--text-4);
 										font-size: 13px;
 									}
 								}
 								.view-list {
 									font-weight: bold;
-									color: #ef4444;
+									color: var(--danger);
 									font-size: 12px;
 									background: rgba(239, 68, 68, 0.1);
 									padding: 4px 8px;
 									border-radius: 4px;
-									border: 1px solid #ef4444;
+									border: 1px solid var(--danger);
 								}
 							}
 						}
@@ -121,13 +121,13 @@
 
 									&:hover {
 										background: rgba(239, 68, 68, 0.1);
-										border-color: #ef4444;
-										color: #ef4444;
+										border-color: var(--danger);
+										color: var(--danger);
 									}
 								}
 
 								&.follow {
-									background: #405ff2;
+									background: var(--accent);
 									border: none;
 									color: #ffffff;
 
@@ -159,7 +159,7 @@
 									font-style: normal;
 									font-weight: 600;
 									line-height: 28px;
-									color: #94a3b8;
+									color: var(--text-3);
 									text-transform: uppercase;
 									letter-spacing: 0.7px;
 									padding: 0 20px;
@@ -214,7 +214,7 @@
 										}
 										p {
 											font-size: 14px;
-											color: #cbd5e1;
+											color: var(--text-4);
 											font-family: $font;
 											font-weight: 500;
 											transition: $transition-fast;

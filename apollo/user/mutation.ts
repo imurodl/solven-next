@@ -21,6 +21,8 @@ export const SIGN_UP = gql`
 			memberBlocks
 			memberCars
 			memberRank
+			memberRating
+			memberReviews
 			memberArticles
 			memberPoints
 			memberLikes
@@ -51,6 +53,8 @@ export const LOGIN = gql`
 			memberBlocks
 			memberCars
 			memberRank
+			memberRating
+			memberReviews
 			memberPoints
 			memberLikes
 			memberViews
@@ -80,6 +84,8 @@ export const REFRESH_TOKEN = gql`
 			memberBlocks
 			memberCars
 			memberRank
+			memberRating
+			memberReviews
 			memberPoints
 			memberLikes
 			memberViews
@@ -113,6 +119,8 @@ export const UPDATE_MEMBER = gql`
 			memberDesc
 			memberCars
 			memberRank
+			memberRating
+			memberReviews
 			memberArticles
 			memberPoints
 			memberLikes
@@ -144,6 +152,8 @@ export const LIKE_TARGET_MEMBER = gql`
 			memberBlocks
 			memberCars
 			memberRank
+			memberRating
+			memberReviews
 			memberPoints
 			memberLikes
 			memberViews
@@ -185,6 +195,23 @@ export const CREATE_CAR = gql`
 			carDesc
 			carBarter
 			carRent
+			carSalePrice
+			carIsOnSale
+			carSaleStartsAt
+			carSaleExpiresAt
+			carAvailability
+			carCondition
+			carRating
+			carReviews
+			carSoldCount
+			carImageCredits
+			car3dModel
+			carTranslations {
+				en { title desc }
+				kr { title desc }
+				ru { title desc }
+				uz { title desc }
+			}
 			memberId
 			soldAt
 			deletedAt
@@ -221,6 +248,23 @@ export const UPDATE_CAR = gql`
 			carDesc
 			carBarter
 			carRent
+			carSalePrice
+			carIsOnSale
+			carSaleStartsAt
+			carSaleExpiresAt
+			carAvailability
+			carCondition
+			carRating
+			carReviews
+			carSoldCount
+			carImageCredits
+			car3dModel
+			carTranslations {
+				en { title desc }
+				kr { title desc }
+				ru { title desc }
+				uz { title desc }
+			}
 			memberId
 			soldAt
 			deletedAt
@@ -257,6 +301,23 @@ export const LIKE_TARGET_CAR = gql`
 			carDesc
 			carBarter
 			carRent
+			carSalePrice
+			carIsOnSale
+			carSaleStartsAt
+			carSaleExpiresAt
+			carAvailability
+			carCondition
+			carRating
+			carReviews
+			carSoldCount
+			carImageCredits
+			car3dModel
+			carTranslations {
+				en { title desc }
+				kr { title desc }
+				ru { title desc }
+				uz { title desc }
+			}
 			memberId
 			soldAt
 			deletedAt
@@ -282,6 +343,8 @@ export const LIKE_TARGET_CAR = gql`
 				memberLikes
 				memberComments
 				memberRank
+				memberRating
+				memberReviews
 				memberWarnings
 				memberViews
 				memberBlocks
@@ -416,5 +479,245 @@ export const UNSUBSCRIBE = gql`
 			createdAt
 			updatedAt
 		}
+	}
+`;
+
+/**************************
+ *         REVIEW         *
+ *************************/
+
+export const CREATE_REVIEW = gql`
+	mutation CreateReview($input: ReviewInput!) {
+		createReview(input: $input) {
+			_id
+			reviewRating
+			reviewContent
+			reviewImages
+			createdAt
+		}
+	}
+`;
+
+export const TOGGLE_REVIEW_REACTION = gql`
+	mutation ToggleReviewReaction($reviewId: String!, $reaction: ReviewReaction!) {
+		toggleReviewReaction(reviewId: $reviewId, reaction: $reaction) {
+			_id
+			likesCount
+			dislikesCount
+			myReaction
+		}
+	}
+`;
+
+/**************************
+ *         ORDER          *
+ *************************/
+
+const ORDER_RESULT = `
+	_id
+	orderId
+	orderStatus
+	carId
+	orderTotal
+	orderDeposit
+	orderDiscount
+	acceptedAt
+	paidAt
+	deliveredAt
+	completedAt
+	cancelledAt
+`;
+
+export const CREATE_ORDER = gql`
+	mutation CreateOrder($input: OrderInput!) {
+		createOrder(input: $input) { ${ORDER_RESULT} }
+	}
+`;
+
+export const RESPOND_ORDER = gql`
+	mutation RespondOrder($orderId: String!, $accept: Boolean!, $reason: String) {
+		respondOrder(orderId: $orderId, accept: $accept, reason: $reason) { ${ORDER_RESULT} }
+	}
+`;
+
+export const PAY_ORDER_DEPOSIT = gql`
+	mutation PayOrderDeposit($orderId: String!) {
+		payOrderDeposit(orderId: $orderId) { ${ORDER_RESULT} }
+	}
+`;
+
+export const MARK_ORDER_DELIVERED = gql`
+	mutation MarkOrderDelivered($orderId: String!) {
+		markOrderDelivered(orderId: $orderId) { ${ORDER_RESULT} }
+	}
+`;
+
+export const CONFIRM_ORDER = gql`
+	mutation ConfirmOrder($orderId: String!) {
+		confirmOrder(orderId: $orderId) { ${ORDER_RESULT} }
+	}
+`;
+
+export const CANCEL_ORDER = gql`
+	mutation CancelOrder($orderId: String!, $reason: String) {
+		cancelOrder(orderId: $orderId, reason: $reason) { ${ORDER_RESULT} }
+	}
+`;
+
+export const REQUEST_RETURN = gql`
+	mutation RequestReturn($orderId: String!, $reason: String) {
+		requestReturn(orderId: $orderId, reason: $reason) { ${ORDER_RESULT} }
+	}
+`;
+
+/**************************
+ *        MESSAGE         *
+ *************************/
+
+export const SEND_MESSAGE = gql`
+	mutation SendMessage($input: SendMessageInput!) {
+		sendMessage(input: $input) {
+			_id
+			conversationId
+			message
+			createdAt
+		}
+	}
+`;
+
+export const REPLY_MESSAGE = gql`
+	mutation ReplyMessage($input: ReplyMessageInput!) {
+		replyMessage(input: $input) {
+			_id
+			conversationId
+			message
+			senderId
+			receiverId
+			messageStatus
+			createdAt
+		}
+	}
+`;
+
+export const SEND_SERVICE_REQUEST = gql`
+	mutation SendServiceRequest($input: SendServiceRequestInput!) {
+		sendServiceRequest(input: $input) {
+			_id
+			conversationId
+			message
+			createdAt
+		}
+	}
+`;
+
+/**************************
+ *      SERVICE JOB       *
+ *************************/
+
+export const CREATE_SERVICE_JOB = gql`
+	mutation CreateServiceJob($input: ServiceJobInput!) {
+		createServiceJob(input: $input) {
+			_id
+			serviceTitle
+			serviceStatus
+		}
+	}
+`;
+
+export const UPDATE_SERVICE_JOB = gql`
+	mutation UpdateServiceJob($input: ServiceJobUpdate!) {
+		updateServiceJob(input: $input) {
+			_id
+			serviceTitle
+			serviceStatus
+			servicePrice
+		}
+	}
+`;
+
+export const LIKE_TARGET_SERVICE_JOB = gql`
+	mutation LikeTargetServiceJob($serviceJobId: String!) {
+		likeTargetServiceJob(serviceJobId: $serviceJobId) {
+			_id
+			serviceLikes
+			meLiked {
+				memberId
+				likeRefId
+				myFavorite
+			}
+		}
+	}
+`;
+
+/**************************
+ *           AI           *
+ *************************/
+
+export const ANALYZE_CAR_PHOTO = gql`
+	mutation AnalyzeCarPhoto($input: CarPhotoAnalysisInput!) {
+		analyzeCarPhoto(input: $input) {
+			brand
+			model
+			bodyType
+			color
+			yearGuess
+			confidence
+			notes
+			matchedCars {
+				_id
+				carTitle
+				carBrand
+				carModel
+				carPrice
+				carSalePrice
+				carIsOnSale
+				carSaleStartsAt
+				carSaleExpiresAt
+				carAvailability
+				carImages
+				carMileage
+				manufacturedAt
+				carFuelType
+				carTransmission
+				carLocation
+				carType
+				carLikes
+				carViews
+				carRating
+				carReviews
+				carColor
+				carStatus
+				carAddress
+				carSeats
+				carOptions
+				carComments
+				carRank
+				carBarter
+				carRent
+				memberId
+				createdAt
+				updatedAt
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
+				}
+			}
+		}
+	}
+`;
+
+export const GENERATE_CAR_DESCRIPTION = gql`
+	mutation GenerateCarDescription($input: CarDescriptionInput!) {
+		generateCarDescription(input: $input) {
+			title
+			desc
+		}
+	}
+`;
+
+export const MODEL_UPLOADER = gql`
+	mutation ModelUploader($file: Upload!) {
+		modelUploader(file: $file)
 	}
 `;

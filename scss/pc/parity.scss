@@ -1,0 +1,249 @@
+/** New feature styles (parity work): navbar extras, badges, hot deals, reviews,
+ *  checkout, orders, messages, service, AI, share, toasts. Desktop. **/
+
+#pc-wrap {
+	// Navbar additions -------------------------------------------------------
+	#top .navbar .navbar-main .container .router-box,
+	#top .navbar .navbar-basic .container .router-box {
+		width: 800px;
+	}
+
+	.nav-extras {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		.nav-icon-btn {
+			color: #fff;
+			border-radius: 8px;
+			&:hover {
+				background: rgba(255, 255, 255, 0.12);
+			}
+		}
+		.btn-currency {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
+			height: 32px;
+			padding: 0 10px;
+			border-radius: 8px;
+			border: 1px solid rgba(255, 255, 255, 0.3);
+			background: transparent;
+			color: #fff;
+			font-family: $font;
+			font-size: 13px;
+			font-weight: 600;
+			cursor: pointer;
+			&:hover {
+				background: rgba(255, 255, 255, 0.12);
+			}
+		}
+		.active-order-pill {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			height: 32px;
+			padding: 0 12px;
+			margin-right: 6px;
+			border-radius: 999px;
+			background: var(--primary);
+			color: #fff;
+			font-size: 12px;
+			font-weight: 700;
+			letter-spacing: 0.2px;
+			white-space: nowrap;
+			cursor: pointer;
+			animation: slv-fade-up 0.3s ease;
+			svg {
+				font-size: 16px;
+			}
+			&:hover {
+				background: var(--primary-dark);
+			}
+		}
+	}
+	// Inner-page (light) navbar variant: icons follow text colour
+	#top .navbar .navbar-basic:not(.transparent) .nav-extras {
+		.nav-icon-btn,
+		.btn-currency {
+			color: var(--text-1);
+			border-color: var(--border);
+		}
+	}
+}
+
+// Shared price / badges / stars / avatar / countdown -------------------------
+.slv-price {
+	&.on-sale {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 8px;
+		flex-wrap: wrap;
+		.original {
+			color: var(--text-3);
+			font-weight: 500;
+			font-size: 0.85em;
+		}
+		.sale {
+			color: var(--sale);
+			font-weight: 700;
+		}
+		.pct {
+			background: var(--sale);
+			color: #fff;
+			font-size: 11px;
+			font-weight: 700;
+			padding: 2px 6px;
+			border-radius: 6px;
+		}
+		&.stacked {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0;
+			line-height: 1.15;
+		}
+	}
+}
+
+.car-badges {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	z-index: 2;
+	pointer-events: none;
+	.badge {
+		display: inline-block;
+		padding: 4px 9px;
+		border-radius: 6px;
+		font-size: 11px;
+		font-weight: 800;
+		letter-spacing: 0.3px;
+		text-transform: uppercase;
+		color: #fff;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+		&.sale {
+			background: var(--sale);
+		}
+		&.new {
+			background: var(--success);
+		}
+		&.reserved {
+			background: var(--warning);
+		}
+		&.sold {
+			background: var(--text-2);
+		}
+	}
+}
+.card-config,
+.popular-card-box,
+.trend-car-card,
+.property-big-card-box,
+.mycar-card {
+	position: relative;
+	.top,
+	.card-img,
+	.car-image-section {
+		position: relative;
+	}
+	&.is-sold {
+		.top img,
+		.card-img,
+		.car-image {
+			filter: grayscale(0.6) brightness(0.85);
+		}
+	}
+	&.is-reserved {
+		.top img,
+		.card-img,
+		.car-image {
+			filter: saturate(0.7);
+		}
+	}
+}
+
+.slv-stars {
+	display: inline-flex;
+	align-items: center;
+	gap: 1px;
+	.star {
+		color: var(--border);
+		&.on {
+			color: var(--star);
+		}
+	}
+	&.interactive .star {
+		cursor: pointer;
+		transition: transform 0.15s;
+		&:hover {
+			transform: scale(1.15);
+		}
+	}
+	.value {
+		margin-left: 6px;
+		color: var(--text-1);
+		font-size: 14px;
+	}
+	.count {
+		margin-left: 4px;
+		color: var(--text-3);
+		font-size: 12px;
+	}
+}
+
+.slv-avatar {
+	border-radius: 50%;
+	object-fit: cover;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	font-weight: 700;
+	font-family: $font;
+	flex-shrink: 0;
+	&.fallback {
+		user-select: none;
+	}
+}
+
+.slv-countdown {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	.unit {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		min-width: 52px;
+		padding: 8px 6px;
+		border-radius: 10px;
+		background: var(--surface);
+		border: 1px solid var(--border-soft);
+		b {
+			font-size: 22px;
+			line-height: 1;
+			color: var(--text-1);
+			font-variant-numeric: tabular-nums;
+		}
+		span {
+			margin-top: 4px;
+			font-size: 10px;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			color: var(--text-3);
+		}
+	}
+	.sep {
+		font-style: normal;
+		font-weight: 700;
+		color: var(--text-3);
+	}
+	&.compact {
+		font-variant-numeric: tabular-nums;
+		font-weight: 700;
+		color: var(--sale);
+		font-size: 13px;
+	}
+}

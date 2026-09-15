@@ -1,6 +1,6 @@
 #pc-wrap,
 #mobile-wrap {
-	background: #050b20;
+	background: var(--dark-section);
 	#community-detail-page {
 		position: relative;
 		background: $background-light;
@@ -161,7 +161,7 @@
 							transition: $transition-smooth;
 
 							&:hover {
-								background: darken($primary-color, 5%);
+								background: var(--primary-dark);
 								transform: translateY(-2px);
 							}
 						}
@@ -395,7 +395,7 @@
 										transition: $transition-smooth;
 
 										&:hover {
-											background: darken($primary-color, 5%);
+											background: var(--primary-dark);
 											transform: translateY(-2px);
 										}
 
@@ -705,7 +705,7 @@
 			transition: $transition-smooth;
 
 			&:hover {
-				background: darken($primary-color, 5%);
+				background: var(--primary-dark);
 				transform: translateY(-1px);
 			}
 		}
@@ -900,7 +900,7 @@
 				transition: $transition-smooth;
 
 				&:hover {
-					background: darken($primary-color, 5%);
+					background: var(--primary-dark);
 					transform: translateY(-2px);
 				}
 
@@ -997,7 +997,7 @@
 				border: 1px solid $border-light;
 
 				&:hover {
-					background: darken($background-light, 5%);
+					background: var(--bg-strong);
 					transform: translateY(-2px);
 				}
 			}
@@ -1007,7 +1007,7 @@
 				color: white;
 
 				&:hover {
-					background: darken($primary-color, 5%);
+					background: var(--primary-dark);
 					transform: translateY(-2px);
 				}
 			}

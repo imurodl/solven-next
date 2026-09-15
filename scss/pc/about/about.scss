@@ -7,7 +7,7 @@
 		// Hero Section
 		.hero-section {
 			padding: 120px 0 80px;
-			background: #050b20;
+			background: var(--dark-section);
 
 			.container {
 				max-width: 1300px;
@@ -40,7 +40,7 @@
 		// Stats Section
 		.stats-section {
 			padding: 80px 0;
-			background: #fff;
+			background: var(--surface);
 
 			.container {
 				max-width: 1300px;
@@ -54,7 +54,7 @@
 					.stat-item {
 						text-align: center;
 						padding: 40px 20px;
-						background: #f8f9fa;
+						background: var(--bg-warm);
 						border-radius: 16px;
 						transition: $transition-fast;
 
@@ -73,7 +73,7 @@
 						}
 
 						.label {
-							color: #050b20;
+							color: var(--text-1);
 							font-family: $font;
 							font-size: 16px;
 							font-weight: 500;
@@ -86,7 +86,7 @@
 		// Mission Section
 		.mission-section {
 			padding: 100px 0;
-			background: #fff;
+			background: var(--surface);
 
 			.container {
 				max-width: 1300px;
@@ -109,7 +109,7 @@
 
 					.text-side {
 						h2 {
-							color: #050b20;
+							color: var(--text-1);
 							font-family: $font;
 							font-size: 36px;
 							font-weight: 700;
@@ -117,7 +117,7 @@
 						}
 
 						p {
-							color: #6b7280;
+							color: var(--text-2);
 							font-family: $font;
 							font-size: 16px;
 							line-height: 1.6;
@@ -136,7 +136,7 @@
 								.icon {
 									width: 48px;
 									height: 48px;
-									background: #f8f9fa;
+									background: var(--bg-warm);
 									border-radius: 12px;
 									display: flex;
 									align-items: center;
@@ -146,7 +146,7 @@
 
 								.text {
 									h3 {
-										color: #050b20;
+										color: var(--text-1);
 										font-family: $font;
 										font-size: 18px;
 										font-weight: 600;
@@ -154,7 +154,7 @@
 									}
 
 									p {
-										color: #6b7280;
+										color: var(--text-2);
 										font-size: 14px;
 										margin: 0;
 									}
@@ -169,7 +169,7 @@
 		// CTA Section
 		.cta-section {
 			padding: 100px 0;
-			background: #050b20;
+			background: var(--dark-section);
 
 			.container {
 				max-width: 1300px;
@@ -208,7 +208,7 @@
 						transition: $transition-fast;
 
 						&:hover {
-							background: darken($primary-color, 10%);
+							background: var(--primary-dark);
 							transform: translateY(-3px);
 						}
 					}

@@ -1,8 +1,8 @@
 #mobile-wrap {
-	background: #050b20;
+	background: var(--dark-section);
 	#property-list-page {
 		position: relative;
-		background: #f8f9fc;
+		background: var(--bg-warm);
 		border-radius: 40px;
 		padding-bottom: 40px;
 		min-height: calc(100vh - 60px);
@@ -23,7 +23,7 @@
 					strong {
 						font-size: 24px;
 						font-weight: 700;
-						background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+						background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
 						background-clip: text;
 						-webkit-background-clip: text;
 						-webkit-text-fill-color: transparent;
@@ -49,7 +49,7 @@
 				padding: 0 0 16px;
 				gap: 10px;
 				span {
-					color: #818181;
+					color: var(--text-3);
 					font-family: $font;
 					font-size: 14px;
 					font-weight: 400;
@@ -63,7 +63,7 @@
 					justify-content: space-between;
 					align-items: center;
 					border-radius: $border-radius-small;
-					border: 1px solid #e9e9e9;
+					border: 1px solid var(--border-soft);
 					font-size: 14px;
 
 					&:hover {
@@ -390,7 +390,7 @@
 					height: 40px;
 					padding: 8px 16px;
 					border-radius: $border-radius-small;
-					border: 1px solid #e9e9e9;
+					border: 1px solid var(--border-soft);
 					font-size: 14px;
 					color: $text-color;
 					background: $background-white;
@@ -412,7 +412,7 @@
 					gap: 10px;
 
 					span {
-						color: #818181;
+						color: var(--text-3);
 						font-family: $font;
 						font-size: 14px;
 						font-weight: 400;
@@ -426,7 +426,7 @@
 						justify-content: space-between;
 						align-items: center;
 						border-radius: $border-radius-small;
-						border: 1px solid #e9e9e9;
+						border: 1px solid var(--border-soft);
 						font-size: 14px;
 						text-transform: none;
 						color: $text-color;
@@ -672,7 +672,7 @@
 					color: $background-white;
 
 					&:active {
-						background: darken($primary-color, 5%);
+						background: var(--primary-dark);
 					}
 				}
 			}

@@ -39,12 +39,10 @@
 	"Languages": "언어",
 	"Get the App": "앱 다운로드",
 	"Connect With Us": "연락하기",
-
 	"English": "영어",
 	"Korean": "한국어",
 	"Russian": "러시아어",
 	"Uzbek": "우즈베크어",
-
 	"Login": "로그인",
 	"Sign Up": "회원가입",
 	"Login in with this account across the following sites.": "이 계정으로 다음 사이트에서 로그인하세요.",
@@ -64,7 +62,6 @@
 	"I want to be registered as:": "다음으로 등록하고 싶습니다:",
 	"User": "일반 사용자",
 	"Agent": "딜러",
-
 	"error": {
 		"SOMETHING_WENT_WRONG": "문제가 발생했습니다!",
 		"NO_DATA_FOUND": "데이터를 찾을 수 없습니다!",
@@ -82,23 +79,19 @@
 		"NOT_ALLOWED_REQUEST": "허용되지 않은 요청입니다!",
 		"INSERT_ALL_INPUTS": "모든 입력 항목을 제공해주세요"
 	},
-
 	"noData": "데이터가 없습니다",
-
 	"sortBy": "정렬 기준",
 	"newest": "최신순",
 	"oldest": "오래된순",
 	"lowestPrice": "낮은 가격순",
 	"highestPrice": "높은 가격순",
 	"showResults": "결과 보기",
-
 	"carSearch": "차량 검색",
 	"breadcrumb": {
 		"home": "홈",
 		"listings": "차량 목록",
 		"separator": "/"
 	},
-
 	"filter": {
 		"findYourCar": "차량 찾기",
 		"searchByName": "이름으로 검색...",
@@ -122,5 +115,18 @@
 		"showLess": "접기",
 		"from": "시작",
 		"to": "끝"
-	}
+	},
+	"Service": "정비 서비스",
+	"AI Finder": "AI 검색",
+	"Messages": "메시지",
+	"Light mode": "라이트 모드",
+	"Dark mode": "다크 모드",
+	"order.status.PENDING": "판매자 확인 대기",
+	"order.status.ACCEPTED": "수락됨 · 보증금 결제",
+	"order.status.PAID": "보증금 결제 완료",
+	"order.status.DELIVERED": "인도 준비 완료",
+	"order.status.COMPLETED": "거래 완료",
+	"order.status.CANCELLED": "취소됨",
+	"order.status.RETURN_REQUESTED": "반품 요청됨",
+	"order.status.RETURNED": "반품 완료"
 }

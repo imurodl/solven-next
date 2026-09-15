@@ -1,5 +1,5 @@
 #pc-wrap {
-	background: #050b20;
+	background: var(--dark-section);
 	#car-detail-page {
 		position: relative;
 		background: $background-light;
@@ -29,7 +29,7 @@
 							font-size: 36px;
 							font-weight: 700;
 							margin-bottom: 12px;
-							background: linear-gradient(135deg, $text-color 0%, lighten($text-color, 20%) 100%);
+							background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
 							background-clip: text;
 							-webkit-background-clip: text;
 							-webkit-text-fill-color: transparent;
@@ -685,7 +685,7 @@
 							transition: $transition-smooth;
 
 							&:hover {
-								background: darken($primary-color, 5%);
+								background: var(--primary-dark);
 							}
 
 							&:disabled {
@@ -781,7 +781,7 @@
 									color: white;
 
 									&:hover {
-										background: darken($primary-color, 5%);
+										background: var(--primary-dark);
 									}
 								}
 
@@ -791,7 +791,7 @@
 									border: 1px solid $border-light;
 
 									&:hover {
-										background: darken($background-light, 5%);
+										background: var(--bg-strong);
 									}
 								}
 							}

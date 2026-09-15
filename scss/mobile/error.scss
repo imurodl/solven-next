@@ -1,8 +1,8 @@
 #mobile-wrap {
-	background: #050b20;
+	background: var(--dark-section);
 	.error-section-page {
 		padding: 40px 16px;
-		background: #f6f6f6;
+		background: var(--bg-muted);
 		border-radius: 40px;
 		min-height: calc(100vh - 300px);
 		.boxcar-container {
@@ -35,7 +35,7 @@
 						h2 {
 							font-size: 22px;
 							margin-bottom: 16px;
-							color: #181a20;
+							color: var(--text-1);
 							padding: 0 10px;
 						}
 
@@ -50,7 +50,7 @@
 							display: inline-flex;
 							align-items: center;
 							gap: 6px;
-							background-color: #405ff2;
+							background-color: var(--accent);
 							color: #fff;
 							padding: 14px 24px;
 							border-radius: 12px;

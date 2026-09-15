@@ -26,6 +26,8 @@ export const GET_AGENTS = gql`
 				memberLikes
 				memberComments
 				memberRank
+				memberRating
+				memberReviews
 				memberWarnings
 				memberViews
 				memberBlocks
@@ -112,6 +114,23 @@ export const GET_CAR = gql`
 			carDesc
 			carBarter
 			carRent
+			carSalePrice
+			carIsOnSale
+			carSaleStartsAt
+			carSaleExpiresAt
+			carAvailability
+			carCondition
+			carRating
+			carReviews
+			carSoldCount
+			carImageCredits
+			car3dModel
+			carTranslations {
+				en { title desc }
+				kr { title desc }
+				ru { title desc }
+				uz { title desc }
+			}
 			memberId
 			soldAt
 			deletedAt
@@ -137,6 +156,8 @@ export const GET_CAR = gql`
 				memberLikes
 				memberComments
 				memberRank
+				memberRating
+				memberReviews
 				memberWarnings
 				memberViews
 				memberBlocks
@@ -181,6 +202,23 @@ export const GET_CARS = gql`
 				carDesc
 				carBarter
 				carRent
+				carSalePrice
+				carIsOnSale
+				carSaleStartsAt
+				carSaleExpiresAt
+				carAvailability
+				carCondition
+				carRating
+				carReviews
+				carSoldCount
+				carImageCredits
+				car3dModel
+				carTranslations {
+					en { title desc }
+					kr { title desc }
+					ru { title desc }
+					uz { title desc }
+				}
 				memberId
 				soldAt
 				deletedAt
@@ -206,6 +244,8 @@ export const GET_CARS = gql`
 					memberLikes
 					memberComments
 					memberRank
+					memberRating
+					memberReviews
 					memberWarnings
 					memberViews
 					memberBlocks
@@ -254,6 +294,23 @@ export const GET_AGENT_CARS = gql`
 				carDesc
 				carBarter
 				carRent
+				carSalePrice
+				carIsOnSale
+				carSaleStartsAt
+				carSaleExpiresAt
+				carAvailability
+				carCondition
+				carRating
+				carReviews
+				carSoldCount
+				carImageCredits
+				car3dModel
+				carTranslations {
+					en { title desc }
+					kr { title desc }
+					ru { title desc }
+					uz { title desc }
+				}
 				memberId
 				soldAt
 				deletedAt
@@ -279,6 +336,8 @@ export const GET_AGENT_CARS = gql`
 					memberLikes
 					memberComments
 					memberRank
+					memberRating
+					memberReviews
 					memberWarnings
 					memberViews
 					memberBlocks
@@ -327,6 +386,23 @@ export const GET_FAVORITES = gql`
 				carDesc
 				carBarter
 				carRent
+				carSalePrice
+				carIsOnSale
+				carSaleStartsAt
+				carSaleExpiresAt
+				carAvailability
+				carCondition
+				carRating
+				carReviews
+				carSoldCount
+				carImageCredits
+				car3dModel
+				carTranslations {
+					en { title desc }
+					kr { title desc }
+					ru { title desc }
+					uz { title desc }
+				}
 				memberId
 				soldAt
 				deletedAt
@@ -352,6 +428,8 @@ export const GET_FAVORITES = gql`
 					memberLikes
 					memberComments
 					memberRank
+					memberRating
+					memberReviews
 					memberWarnings
 					memberViews
 					memberBlocks
@@ -400,6 +478,23 @@ export const GET_VISITED = gql`
 				carDesc
 				carBarter
 				carRent
+				carSalePrice
+				carIsOnSale
+				carSaleStartsAt
+				carSaleExpiresAt
+				carAvailability
+				carCondition
+				carRating
+				carReviews
+				carSoldCount
+				carImageCredits
+				car3dModel
+				carTranslations {
+					en { title desc }
+					kr { title desc }
+					ru { title desc }
+					uz { title desc }
+				}
 				memberId
 				soldAt
 				deletedAt
@@ -425,6 +520,8 @@ export const GET_VISITED = gql`
 					memberLikes
 					memberComments
 					memberRank
+					memberRating
+					memberReviews
 					memberWarnings
 					memberViews
 					memberBlocks
@@ -480,6 +577,8 @@ export const GET_BOARD_ARTICLE = gql`
 				memberBlocks
 				memberCars
 				memberRank
+				memberRating
+				memberReviews
 				memberPoints
 				memberLikes
 				memberViews
@@ -532,6 +631,8 @@ export const GET_BOARD_ARTICLES = gql`
 					memberBlocks
 					memberCars
 					memberRank
+					memberRating
+					memberReviews
 					memberPoints
 					memberLikes
 					memberViews
@@ -578,6 +679,8 @@ export const GET_COMMENTS = gql`
 					memberBlocks
 					memberCars
 					memberRank
+					memberRating
+					memberReviews
 					memberPoints
 					memberLikes
 					memberViews
@@ -636,6 +739,8 @@ export const GET_MEMBER_FOLLOWERS = gql`
 					memberFollowings
 					memberFollowers
 					memberRank
+					memberRating
+					memberReviews
 					memberWarnings
 					memberBlocks
 					deletedAt
@@ -679,6 +784,8 @@ export const GET_MEMBER_FOLLOWINGS = gql`
 					memberFollowings
 					memberFollowers
 					memberRank
+					memberRating
+					memberReviews
 					memberWarnings
 					memberBlocks
 					deletedAt
@@ -775,4 +882,444 @@ export const GET_NOTICE = gql`
       updatedAt
     }
   }
+`;
+/**************************
+ *         PROFILE        *
+ *************************/
+
+export const GET_MY_PROFILE = gql`
+	query GetMyProfile {
+		getMyProfile {
+			_id
+			memberType
+			memberStatus
+			memberAuthType
+			memberPhone
+			memberEmail
+			memberNick
+			memberFullName
+			memberImage
+			memberAddress
+			memberDesc
+			memberCars
+			memberArticles
+			memberFollowers
+			memberFollowings
+			memberPoints
+			memberLikes
+			memberComments
+			memberRank
+			memberRating
+			memberReviews
+			memberServiceJobs
+			memberWarnings
+			memberViews
+			memberBlocks
+			hasTelegram
+			hasGoogle
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const GET_MECHANICS = gql`
+	query GetMechanics($input: MechanicsInquiry!) {
+		getMechanics(input: $input) {
+			list {
+				_id
+				memberType
+				memberStatus
+				memberNick
+				memberFullName
+				memberImage
+				memberAddress
+				memberDesc
+				memberServiceJobs
+				memberArticles
+				memberFollowers
+				memberFollowings
+				memberLikes
+				memberViews
+				memberRank
+				memberRating
+				memberReviews
+				createdAt
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
+				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+/**************************
+ *         REVIEW         *
+ *************************/
+
+export const GET_REVIEWS = gql`
+	query GetReviews($input: ReviewsInquiry!) {
+		getReviews(input: $input) {
+			list {
+				_id
+				memberId
+				carId
+				sellerId
+				orderId
+				reviewRating
+				reviewContent
+				reviewImages
+				reviewStatus
+				createdAt
+				carTitle
+				carImage
+				likesCount
+				dislikesCount
+				myReaction
+				memberData {
+					_id
+					memberNick
+					memberFullName
+					memberImage
+					memberType
+				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+export const GET_CAR_REVIEW_SUMMARY = gql`
+	query GetCarReviewSummary($carId: String!) {
+		getCarReviewSummary(carId: $carId) {
+			averageRating
+			totalReviews
+			ratingDistribution {
+				star
+				count
+			}
+		}
+	}
+`;
+
+export const GET_SELLER_REVIEW_SUMMARY = gql`
+	query GetSellerReviewSummary($sellerId: String!) {
+		getSellerReviewSummary(sellerId: $sellerId) {
+			averageRating
+			totalReviews
+			ratingDistribution {
+				star
+				count
+			}
+		}
+	}
+`;
+
+/**************************
+ *         ORDER          *
+ *************************/
+
+const ORDER_FIELDS = `
+	_id
+	orderId
+	memberId
+	sellerId
+	carId
+	carSnapshot {
+		carTitle
+		carImage
+		carPrice
+		carBrand
+		carModel
+		manufacturedAt
+		carMileage
+	}
+	orderStatus
+	deliveryMethod
+	deliveryInfo {
+		fullName
+		phone
+		address
+		city
+		note
+	}
+	orderTotal
+	orderDeposit
+	orderDiscount
+	orderCouponCode
+	acceptedAt
+	paidAt
+	deliveredAt
+	completedAt
+	cancelledAt
+	cancelReason
+	returnRequestedAt
+	returnReason
+	returnedAt
+	createdAt
+	updatedAt
+	reviewed
+	memberData {
+		_id
+		memberNick
+		memberFullName
+		memberImage
+		memberPhone
+	}
+	sellerData {
+		_id
+		memberNick
+		memberFullName
+		memberImage
+		memberPhone
+		memberAddress
+		memberRating
+		memberReviews
+	}
+`;
+
+export const GET_ORDER_QUOTE = gql`
+	query GetOrderQuote($carId: String!, $couponCode: String) {
+		getOrderQuote(carId: $carId, couponCode: $couponCode) {
+			carPrice
+			discountAmount
+			orderTotal
+			orderDeposit
+			depositRate
+			couponCode
+			couponMessage
+		}
+	}
+`;
+
+export const GET_MY_ORDERS = gql`
+	query GetMyOrders($input: OrdersInquiry!) {
+		getMyOrders(input: $input) {
+			list { ${ORDER_FIELDS} }
+			metaCounter { total }
+		}
+	}
+`;
+
+export const GET_SELLER_ORDERS = gql`
+	query GetSellerOrders($input: OrdersInquiry!) {
+		getSellerOrders(input: $input) {
+			list { ${ORDER_FIELDS} }
+			metaCounter { total }
+		}
+	}
+`;
+
+export const GET_ORDER_BY_ID = gql`
+	query GetOrderById($orderId: String!) {
+		getOrderById(orderId: $orderId) { ${ORDER_FIELDS} }
+	}
+`;
+
+export const GET_MY_ACTIVE_ORDER = gql`
+	query GetMyActiveOrder {
+		getMyActiveOrder {
+			_id
+			orderId
+			orderStatus
+			carId
+			carSnapshot {
+				carTitle
+				carImage
+			}
+			createdAt
+		}
+	}
+`;
+
+export const VALIDATE_COUPON = gql`
+	query ValidateCoupon($code: String!, $orderTotal: Float!) {
+		validateCoupon(code: $code, orderTotal: $orderTotal) {
+			valid
+			message
+			discountAmount
+			finalTotal
+			couponCode
+		}
+	}
+`;
+
+/**************************
+ *        MESSAGE         *
+ *************************/
+
+export const GET_MY_CONVERSATIONS = gql`
+	query GetMyConversations {
+		getMyConversations {
+			conversationId
+			kind
+			carId
+			carTitle
+			carImage
+			lastMessage
+			lastMessageAt
+			unreadCount
+			partner {
+				_id
+				memberNick
+				memberFullName
+				memberImage
+				memberType
+			}
+		}
+	}
+`;
+
+export const GET_UNREAD_MESSAGE_COUNT = gql`
+	query GetUnreadMessageCount {
+		getUnreadMessageCount
+	}
+`;
+
+export const GET_CONVERSATION = gql`
+	query GetConversation($conversationId: String!) {
+		getConversation(conversationId: $conversationId) {
+			_id
+			conversationId
+			kind
+			carId
+			senderId
+			receiverId
+			message
+			messageStatus
+			createdAt
+			senderData {
+				_id
+				memberNick
+				memberImage
+			}
+		}
+	}
+`;
+
+/**************************
+ *      SERVICE JOB       *
+ *************************/
+
+const SERVICE_JOB_FIELDS = `
+	_id
+	serviceType
+	serviceStatus
+	serviceTitle
+	serviceDesc
+	carBrand
+	carModel
+	manufacturedAt
+	servicePrice
+	serviceDuration
+	serviceImages
+	serviceLocation
+	serviceAddress
+	serviceViews
+	serviceLikes
+	serviceComments
+	serviceRank
+	serviceTranslations {
+		en { title desc }
+		kr { title desc }
+		ru { title desc }
+		uz { title desc }
+	}
+	memberId
+	createdAt
+	updatedAt
+	memberData {
+		_id
+		memberType
+		memberNick
+		memberFullName
+		memberImage
+		memberAddress
+		memberDesc
+		memberPhone
+		memberServiceJobs
+		memberLikes
+		memberViews
+		memberRating
+		memberReviews
+		memberFollowers
+	}
+	meLiked {
+		memberId
+		likeRefId
+		myFavorite
+	}
+`;
+
+export const GET_SERVICE_JOBS = gql`
+	query GetServiceJobs($input: ServiceJobsInquiry!) {
+		getServiceJobs(input: $input) {
+			list { ${SERVICE_JOB_FIELDS} }
+			metaCounter { total }
+		}
+	}
+`;
+
+export const GET_SERVICE_JOB = gql`
+	query GetServiceJob($serviceJobId: String!) {
+		getServiceJob(serviceJobId: $serviceJobId) { ${SERVICE_JOB_FIELDS} }
+	}
+`;
+
+export const GET_MECHANIC_SERVICE_JOBS = gql`
+	query GetMechanicServiceJobs($input: ServiceJobsInquiry!) {
+		getMechanicServiceJobs(input: $input) {
+			list { ${SERVICE_JOB_FIELDS} }
+			metaCounter { total }
+		}
+	}
+`;
+
+/**************************
+ *           AI           *
+ *************************/
+
+export const GET_AI_STATUS = gql`
+	query GetAiStatus {
+		getAiStatus {
+			photoFinder
+			priceCheck
+			descriptionWriter
+			remainingToday
+		}
+	}
+`;
+
+export const ESTIMATE_CAR_PRICE = gql`
+	query EstimateCarPrice($input: CarPriceEstimateInput!) {
+		estimateCarPrice(input: $input) {
+			estimate
+			low
+			high
+			sampleSize
+			reasoning
+			verdict
+		}
+	}
+`;
+
+export const GET_RECENT_ACTIVITY = gql`
+	query GetRecentActivity($limit: Int) {
+		getRecentActivity(limit: $limit) {
+			type
+			title
+			subtitle
+			carId
+			image
+			rating
+			createdAt
+		}
+	}
 `;

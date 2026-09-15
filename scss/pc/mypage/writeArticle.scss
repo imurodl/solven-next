@@ -10,7 +10,7 @@
 			.right-box {
 				width: 315px;
 				.main-title {
-					color: #181a20;
+					color: var(--text-1);
 					font-family: $font;
 					font-size: 30px;
 					font-style: normal;
@@ -20,7 +20,7 @@
 					text-transform: capitalize;
 				}
 				.sub-title {
-					color: #181a20;
+					color: var(--text-1);
 					font-family: $font;
 					font-size: 14px;
 					font-style: normal;
@@ -42,7 +42,7 @@
 			.flex-space {
 				.btn-next {
 					background: #87cdf9;
-					color: #000000;
+					color: var(--text-1);
 				}
 			}
 			.select {
@@ -54,7 +54,7 @@
 				font-size: 14px;
 				padding: 0 16px;
 				margin-top: 16px;
-				border: 1px solid #eee;
+				border: 1px solid var(--border-soft);
 				border-radius: 4px;
 			}
 			.btn-flex { margin-top: 40px; }
@@ -62,13 +62,13 @@
 		.css-guvl2y-MuiButtonBase-root-MuiButton-root {
 			background: #87cdf9;
 			svg {
-				fill: #000000;
+				fill: var(--text-1);
 			}
 		}
 		.toastui-editor-popup-body { padding: 20px; }
 		.youtube-input {
 			padding: 8px 16px;
-			border: 1px solid #ddd;
+			border: 1px solid var(--border);
 		}
 		.youtube-div {
 			display:flex;

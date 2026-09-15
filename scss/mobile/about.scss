@@ -7,7 +7,7 @@
 		// Hero Section
 		.hero-section {
 			padding: 60px 16px 40px;
-			background: #050b20;
+			background: var(--dark-section);
 
 			.container {
 				.content {
@@ -36,7 +36,7 @@
 		// Stats Section
 		.stats-section {
 			padding: 40px 16px;
-			background: #fff;
+			background: var(--surface);
 
 			.container {
 				.stat-grid {
@@ -47,7 +47,7 @@
 					.stat-item {
 						text-align: center;
 						padding: 24px 16px;
-						background: #f8f9fa;
+						background: var(--bg-warm);
 						border-radius: 12px;
 						transition: $transition-fast;
 
@@ -66,7 +66,7 @@
 						}
 
 						.label {
-							color: #050b20;
+							color: var(--text-1);
 							font-family: $font;
 							font-size: 14px;
 							font-weight: 500;
@@ -79,7 +79,7 @@
 		// Mission Section
 		.mission-section {
 			padding: 40px 16px;
-			background: #fff;
+			background: var(--surface);
 
 			.container {
 				.content-grid {
@@ -98,7 +98,7 @@
 
 					.text-side {
 						h2 {
-							color: #050b20;
+							color: var(--text-1);
 							font-family: $font;
 							font-size: 24px;
 							font-weight: 700;
@@ -106,7 +106,7 @@
 						}
 
 						p {
-							color: #6b7280;
+							color: var(--text-2);
 							font-family: $font;
 							font-size: 15px;
 							line-height: 1.6;
@@ -125,7 +125,7 @@
 								.icon {
 									width: 40px;
 									height: 40px;
-									background: #f8f9fa;
+									background: var(--bg-warm);
 									border-radius: 10px;
 									display: flex;
 									align-items: center;
@@ -135,7 +135,7 @@
 
 								.text {
 									h3 {
-										color: #050b20;
+										color: var(--text-1);
 										font-family: $font;
 										font-size: 16px;
 										font-weight: 600;
@@ -143,7 +143,7 @@
 									}
 
 									p {
-										color: #6b7280;
+										color: var(--text-2);
 										font-size: 13px;
 										margin: 0;
 									}
@@ -158,7 +158,7 @@
 		// CTA Section
 		.cta-section {
 			padding: 60px 16px;
-			background: #050b20;
+			background: var(--dark-section);
 
 			.container {
 				.cta-content {
@@ -193,7 +193,7 @@
 						transition: $transition-smooth;
 
 						&:hover {
-							background: darken($primary-color, 5%);
+							background: var(--primary-dark);
 							transform: translateY(-2px);
 						}
 					}

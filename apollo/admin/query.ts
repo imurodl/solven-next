@@ -22,6 +22,8 @@ export const GET_ALL_MEMBERS_BY_ADMIN = gql`
 				memberBlocks
 				memberCars
 				memberRank
+				memberRating
+				memberReviews
 				memberArticles
 				memberPoints
 				memberLikes
@@ -69,6 +71,23 @@ export const GET_ALL_CARS_BY_ADMIN = gql`
 				carDesc
 				carBarter
 				carRent
+				carSalePrice
+				carIsOnSale
+				carSaleStartsAt
+				carSaleExpiresAt
+				carAvailability
+				carCondition
+				carRating
+				carReviews
+				carSoldCount
+				carImageCredits
+				car3dModel
+				carTranslations {
+					en { title desc }
+					kr { title desc }
+					ru { title desc }
+					uz { title desc }
+				}
 				memberId
 				soldAt
 				deletedAt
@@ -94,6 +113,8 @@ export const GET_ALL_CARS_BY_ADMIN = gql`
 					memberLikes
 					memberComments
 					memberRank
+					memberRating
+					memberReviews
 					memberWarnings
 					memberViews
 					memberBlocks
@@ -149,6 +170,8 @@ export const GET_ALL_BOARD_ARTICLES_BY_ADMIN = gql`
 					memberBlocks
 					memberCars
 					memberRank
+					memberRating
+					memberReviews
 					memberPoints
 					memberLikes
 					memberViews
@@ -196,6 +219,8 @@ export const GET_COMMENTS = gql`
 					memberBlocks
 					memberCars
 					memberRank
+					memberRating
+					memberReviews
 					memberPoints
 					memberLikes
 					memberViews
@@ -240,6 +265,126 @@ export const GET_CAR_BRANDS = gql`
 			carBrandStatus
 			createdAt
 			updatedAt
+		}
+	}
+`;
+
+export const GET_ALL_ORDERS_BY_ADMIN = gql`
+	query GetAllOrdersByAdmin($input: OrdersInquiry!) {
+		getAllOrdersByAdmin(input: $input) {
+			list {
+				_id
+				orderId
+				memberId
+				sellerId
+				carId
+				carSnapshot {
+					carTitle
+					carImage
+					carPrice
+				}
+				orderStatus
+				deliveryMethod
+				deliveryInfo {
+					fullName
+					phone
+					address
+					city
+				}
+				orderTotal
+				orderDeposit
+				orderDiscount
+				orderCouponCode
+				createdAt
+				updatedAt
+				memberData {
+					_id
+					memberNick
+					memberImage
+				}
+				sellerData {
+					_id
+					memberNick
+					memberImage
+				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+export const GET_ALL_COUPONS_BY_ADMIN = gql`
+	query GetAllCouponsByAdmin {
+		getAllCouponsByAdmin {
+			_id
+			couponCode
+			couponType
+			couponValue
+			couponStatus
+			maxUses
+			usedCount
+			minOrderAmount
+			validUntil
+			createdAt
+		}
+	}
+`;
+
+export const GET_ALL_REVIEWS_BY_ADMIN = gql`
+	query GetAllReviewsByAdmin($input: ReviewsInquiry!) {
+		getAllReviewsByAdmin(input: $input) {
+			list {
+				_id
+				memberId
+				carId
+				reviewRating
+				reviewContent
+				reviewImages
+				reviewStatus
+				createdAt
+				carTitle
+				likesCount
+				dislikesCount
+				memberData {
+					_id
+					memberNick
+					memberImage
+				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+export const GET_ALL_SERVICE_JOBS_BY_ADMIN = gql`
+	query GetAllServiceJobsByAdmin($input: AllServiceJobsInquiry!) {
+		getAllServiceJobsByAdmin(input: $input) {
+			list {
+				_id
+				serviceType
+				serviceStatus
+				serviceTitle
+				carBrand
+				carModel
+				servicePrice
+				serviceImages
+				serviceLocation
+				serviceViews
+				serviceLikes
+				createdAt
+				memberData {
+					_id
+					memberNick
+					memberImage
+				}
+			}
+			metaCounter {
+				total
+			}
 		}
 	}
 `;

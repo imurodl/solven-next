@@ -16,6 +16,12 @@ import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import IconButton from '@mui/material/IconButton';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import Price from '../common/Price';
+import CarBadges from '../common/CarBadges';
+import RatingStars from '../common/RatingStars';
+import { isSoldOut, isReserved } from '../../utils/sale';
+import { useRouter } from 'next/router';
+import { localizeCar } from '../../utils/localize';
 
 interface CarCardType {
 	car: Car;
@@ -32,10 +38,13 @@ const CarCard = (props: CarCardType) => {
 	const imagePath: string = car?.carImages[0] ? `${REACT_APP_API_URL}/${car?.carImages[0]}` : '/img/banner/header1.svg';
 
 	const isLiked = myFavorites || (car?.meLiked && car?.meLiked[0]?.myFavorite);
+	const router = useRouter();
+	const title = localizeCar(car, router.locale).title;
+	const stateClass = isSoldOut(car) ? 'is-sold' : isReserved(car) ? 'is-reserved' : '';
 
 	if (device === 'mobile') {
 		return (
-			<Stack className="card-config" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+			<Stack className={`card-config ${stateClass}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
 				<Stack className="top">
 					<Link
 						href={{
@@ -52,6 +61,7 @@ const CarCard = (props: CarCardType) => {
 								sizes="(max-width: 768px) 100vw, 300px"
 							/>
 					</Link>
+					<CarBadges car={car} />
 				</Stack>
 				<Stack className="bottom">
 					<Stack className="name-address">
@@ -62,7 +72,7 @@ const CarCard = (props: CarCardType) => {
 									query: { id: car?._id },
 								}}
 							>
-								<Typography className={'car-titlee'}>{car.carTitle}</Typography>
+								<Typography className={'car-titlee'}>{title}</Typography>
 							</Link>
 						</Stack>
 						<Stack className="address">
@@ -74,7 +84,7 @@ const CarCard = (props: CarCardType) => {
 					<Stack className="options">
 						<Stack className="option">
 							<SpeedIcon className="option-icon" />
-							<Typography>{car.carMileage || '50'} Miles</Typography>
+							<Typography>{formatterStr(car.carMileage)} km</Typography>
 						</Stack>
 						<Stack className="option">
 							<LocalGasStationIcon className="option-icon" />
@@ -87,7 +97,10 @@ const CarCard = (props: CarCardType) => {
 					</Stack>
 					<Stack className="type-buttons">
 						<Stack className="price">
-							<Typography>${formatterStr(car?.carPrice)}</Typography>
+							<Typography component="div">
+								<Price car={car} stacked />
+							</Typography>
+							{!!car?.carReviews && <RatingStars value={car.carRating ?? 0} count={car.carReviews} />}
 						</Stack>
 						{!recentlyVisited && (
 							<Stack className="buttons">
@@ -111,7 +124,7 @@ const CarCard = (props: CarCardType) => {
 		);
 	} else {
 		return (
-			<Stack className="card-config" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+			<Stack className={`card-config ${stateClass}`} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
 				<Stack className="top">
 					<Link
 						href={{
@@ -127,6 +140,7 @@ const CarCard = (props: CarCardType) => {
 								sizes="(max-width: 768px) 100vw, 300px"
 							/>
 					</Link>
+					<CarBadges car={car} />
 				</Stack>
 				<Stack className="bottom">
 					<Stack className="name-address">
@@ -137,7 +151,7 @@ const CarCard = (props: CarCardType) => {
 									query: { id: car?._id },
 								}}
 							>
-								<Typography>{car.carTitle}</Typography>
+								<Typography>{title}</Typography>
 							</Link>
 						</Stack>
 						<Stack className="address">
@@ -149,7 +163,7 @@ const CarCard = (props: CarCardType) => {
 					<Stack className="options">
 						<Stack className="option">
 							<SpeedIcon className="option-icon" />
-							<Typography>{car.carMileage || '50'} Miles</Typography>
+							<Typography>{formatterStr(car.carMileage)} km</Typography>
 						</Stack>
 						<Stack className="option">
 							<LocalGasStationIcon className="option-icon" />
@@ -162,7 +176,10 @@ const CarCard = (props: CarCardType) => {
 					</Stack>
 					<Stack className="type-buttons">
 						<Stack className="price">
-							<Typography>${formatterStr(car?.carPrice)}</Typography>
+							<Typography component="div">
+								<Price car={car} stacked />
+							</Typography>
+							{!!car?.carReviews && <RatingStars value={car.carRating ?? 0} count={car.carReviews} />}
 						</Stack>
 						{!recentlyVisited && (
 							<Stack className="buttons">

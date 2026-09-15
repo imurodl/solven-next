@@ -19,6 +19,7 @@ import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import NotificationModal from './common/NotificationModal';
+import NavExtras from './common/NavExtras';
 
 const Top = () => {
 	const device = useDeviceDetect();
@@ -252,6 +253,7 @@ const Top = () => {
 									{t('Sign In')}
 								</button>
 							)}
+							<NavExtras compact />
 							<button className={'menu-btn'} onClick={() => setIsMenuOpen(true)}>
 								<List size={24} />
 							</button>
@@ -282,6 +284,16 @@ const Top = () => {
 								<Link href={'/agent'}>
 									<div className={`menu-item ${router.pathname.startsWith('/agent') ? 'active' : ''}`}>
 										<span>{t('Agents')}</span>
+									</div>
+								</Link>
+								<Link href={'/service'}>
+									<div className={`menu-item ${router.pathname.startsWith('/service') ? 'active' : ''}`}>
+										<span>{t('Service')}</span>
+									</div>
+								</Link>
+								<Link href={'/ai-finder'}>
+									<div className={`menu-item ${router.pathname.startsWith('/ai-finder') ? 'active' : ''}`}>
+										<span>{t('AI Finder')}</span>
 									</div>
 								</Link>
 								<Link href={'/community?articleCategory=FREE'}>
@@ -371,6 +383,12 @@ const Top = () => {
 							<Link href={'/agent'}>
 								<div className={router.pathname.startsWith('/agent') ? 'active' : ''}>{t('Agents')}</div>
 							</Link>
+							<Link href={'/service'}>
+								<div className={router.pathname.startsWith('/service') ? 'active' : ''}>{t('Service')}</div>
+							</Link>
+							<Link href={'/ai-finder'}>
+								<div className={router.pathname.startsWith('/ai-finder') ? 'active' : ''}>{t('AI Finder')}</div>
+							</Link>
 							<Link href={'/community?articleCategory=FREE'}>
 								<div className={router.pathname.startsWith('/community') ? 'active' : ''}>{t('Community')}</div>
 							</Link>
@@ -422,6 +440,7 @@ const Top = () => {
 							)}
 
 							<div className={'lan-box'}>
+								<NavExtras />
 								{user?._id && (
 									<>
 										<IconButton onClick={handleNotificationClick} size="small" sx={{ mr: 2 }} aria-label="Open notifications">
