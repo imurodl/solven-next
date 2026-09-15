@@ -570,7 +570,7 @@ body::-webkit-scrollbar {
 				.filter-type,
 				.filter-rooms {
 					@include dropdown-base;
-					background: rgba(255, 255, 255, 0.98);
+					background: var(--glass);
 					backdrop-filter: blur(10px);
 					border: 1px solid rgba(229, 231, 235, 0.5);
 					box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);

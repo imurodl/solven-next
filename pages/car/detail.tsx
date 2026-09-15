@@ -39,6 +39,15 @@ import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import CarSpecs from '../../libs/components/car/detail/CarSpecs';
 import SellerInfoBox from '../../libs/components/car/detail/SellerInfoBox';
 import CarReviews from '../../libs/components/car/detail/CarReviews';
+import ReviewSection from '../../libs/components/car/detail/ReviewSection';
+import DealActions from '../../libs/components/car/detail/DealActions';
+import PriceCheck from '../../libs/components/car/detail/PriceCheck';
+import Price from '../../libs/components/common/Price';
+import Countdown from '../../libs/components/common/Countdown';
+import CarBadges from '../../libs/components/common/CarBadges';
+import { isSaleActive } from '../../libs/utils/sale';
+import { localizeCar } from '../../libs/utils/localize';
+import { useTranslation } from 'next-i18next';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import ModelTrainingIcon from '@mui/icons-material/ModelTraining';
 import CategoryIcon from '@mui/icons-material/Category';
@@ -82,7 +91,7 @@ export const getServerSideProps = async ({ locale, query, req }: any) => {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					query: `query GetCar($input: String!) { getCar(carId: $input) { _id carTitle carDesc carPrice carImages carBrand carModel carType carFuelType carMileage carColor manufacturedAt carTransmission carSeats carOptions carViews carLikes carRank carAddress carLocation createdAt } }`,
+					query: `query GetCar($input: String!) { getCar(carId: $input) { _id carTitle carDesc carPrice carImages carBrand carModel carType carFuelType carMileage carColor manufacturedAt carTransmission carSeats carOptions carViews carLikes carRank carAddress carLocation createdAt memberId carStatus carSalePrice carIsOnSale carSaleStartsAt carSaleExpiresAt carAvailability carCondition carRating carReviews carSoldCount carImageCredits car3dModel carTranslations { en { title desc } kr { title desc } ru { title desc } uz { title desc } } } }`,
 					variables: { input: id },
 				}),
 			});
@@ -127,7 +136,7 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
 			if (data?.getCar?.carImages?.[0]) setSlideImage(data.getCar.carImages[0]);
-			if (getCarData?.getCar?.memberData) setSellerInfo(getCarData?.getCar?.memberData);
+			if (data?.getCar?.memberData) setSellerInfo(data.getCar.memberData);
 		},
 	});
 
@@ -270,6 +279,9 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 
 	const car = getCarData?.getCar || initialCar;
 	const carForSeo = car;
+	const { t } = useTranslation('common');
+	const localized = localizeCar(car, router.locale);
+	const [feedbackTab, setFeedbackTab] = useState<'reviews' | 'questions'>('reviews');
 	const seoImage = carForSeo?.carImages?.[0] ? `${REACT_APP_API_URL}/${carForSeo.carImages[0]}` : undefined;
 	const seoTags = carForSeo ? (
 		<SEO
@@ -303,7 +315,7 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 					width: '100%',
 					height: '800px',
 					borderRadius: '80px',
-					background: '#f4f5f5',
+					background: 'var(--bg-muted)',
 				}}
 			>
 				{seoTags}
@@ -329,6 +341,7 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 											height={900}
 											sizes="(max-width: 768px) 100vw, 700px"
 										/>
+										<CarBadges car={car} />
 									</Box>
 									<Stack className="thumbnail-list">
 										{car?.carImages?.map((image: string, index: number) => (
@@ -350,7 +363,7 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 
 									<Stack className="car-info-box">
 										<Stack className="content-wrapper">
-											<Typography className="title-main">{car?.carTitle}</Typography>
+											<Typography className="title-main">{localized.title || car?.carTitle}</Typography>
 											<Typography className="listed-date">
 												Listed{' '}
 												{car?.createdAt
@@ -360,12 +373,17 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 											</Typography>
 
 											<Stack className="main-info-row">
-												<Stack className="info-item">
+												<Stack className="info-item price-item">
 													<AttachMoneyIcon />
 													<Stack>
-														<Typography className="info-value">
-															${formatterStr(car?.carPrice)}
+														<Typography className="info-value" component="div">
+															<Price car={car} showBadge />
 														</Typography>
+														{isSaleActive(car) && (
+															<Typography className="sale-ends" component="div">
+																{t('Deal ends in')} <Countdown until={car?.carSaleExpiresAt} compact />
+															</Typography>
+														)}
 													</Stack>
 												</Stack>
 												<Stack className="info-item">
@@ -385,7 +403,7 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 											<Stack className="description-section">
 												<Typography className="section-title">Description</Typography>
 												<Typography className="description-text">
-													{car?.carDesc || 'No description available.'}
+													{localized.desc || car?.carDesc || t('No description available.')}
 												</Typography>
 											</Stack>
 
@@ -414,7 +432,12 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 											>
 												{car?.carLikes}
 											</Button>
+											<PriceCheck car={car} />
 										</Stack>
+										<DealActions car={car} />
+										{car?.carImageCredits?.length > 0 && (
+											<Typography className="photo-credits">{t('Photos')}: {car.carImageCredits.join(' · ')}</Typography>
+										)}
 									</Stack>
 								</Stack>
 							</Stack>
@@ -424,18 +447,30 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 								<CarSpecs car={car} />
 
 								<Stack className="right-config">
-									<SellerInfoBox sellerInfo={sellerInfo} />
+									<SellerInfoBox sellerInfo={sellerInfo} car={car} />
 								</Stack>
 
-								<CarReviews
-									carComments={carComments}
-									commentTotal={commentTotal}
-									commentInquiry={commentInquiry}
-									commentPaginationChangeHandler={commentPaginationChangeHandler}
-									insertCommentData={insertCommentData}
-									setInsertCommentData={setInsertCommentData}
-									createCommentHandler={createCommentHandler}
-								/>
+								<Stack className="feedback-tabs" direction="row">
+									<button className={feedbackTab === 'reviews' ? 'active' : ''} onClick={() => setFeedbackTab('reviews')}>
+										{t('Reviews')} {car?.carReviews ? `(${car.carReviews})` : ''}
+									</button>
+									<button className={feedbackTab === 'questions' ? 'active' : ''} onClick={() => setFeedbackTab('questions')}>
+										{t('Questions')} {commentTotal ? `(${commentTotal})` : ''}
+									</button>
+								</Stack>
+								{feedbackTab === 'reviews' ? (
+									<ReviewSection carId={carId ?? undefined} />
+								) : (
+									<CarReviews
+										carComments={carComments}
+										commentTotal={commentTotal}
+										commentInquiry={commentInquiry}
+										commentPaginationChangeHandler={commentPaginationChangeHandler}
+										insertCommentData={insertCommentData}
+										setInsertCommentData={setInsertCommentData}
+										createCommentHandler={createCommentHandler}
+									/>
+								)}
 							</Stack>
 						</Stack>
 						{/* Similar Cars Section */}
@@ -443,8 +478,8 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 							<Stack className="similar-cars-config">
 								<Stack className="title-pagination-box">
 									<Stack className="title-box">
-										<Typography className="section-title">Similar Cars</Typography>
-										<Typography className="section-subtitle">Other cars you might be interested in</Typography>
+										<Typography className="section-title">{t('Similar Cars')}</Typography>
+										<Typography className="section-subtitle">{t('Other cars you might be interested in')}</Typography>
 									</Stack>
 								</Stack>
 								<Stack className="cards-box">
@@ -491,11 +526,12 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 											height={900}
 											sizes="(max-width: 768px) 100vw, 700px"
 										/>
+										<CarBadges car={car} />
 									</Box>
 
 									<Stack className="car-info-box">
 										<Stack className="content-wrapper">
-											<Typography className="title-main">{car?.carTitle}</Typography>
+											<Typography className="title-main">{localized.title || car?.carTitle}</Typography>
 											<Typography className="listed-date">
 												Listed{' '}
 												{car?.createdAt
@@ -505,12 +541,17 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 											</Typography>
 
 											<Stack className="main-info-row">
-												<Stack className="info-item">
+												<Stack className="info-item price-item">
 													<AttachMoneyIcon />
 													<Stack>
-														<Typography className="info-value">
-															${formatterStr(car?.carPrice)}
+														<Typography className="info-value" component="div">
+															<Price car={car} showBadge />
 														</Typography>
+														{isSaleActive(car) && (
+															<Typography className="sale-ends" component="div">
+																{t('Deal ends in')} <Countdown until={car?.carSaleExpiresAt} compact />
+															</Typography>
+														)}
 													</Stack>
 												</Stack>
 												<Stack className="info-item">
@@ -530,7 +571,7 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 											<Stack className="description-section">
 												<Typography className="section-title">Description</Typography>
 												<Typography className="description-text">
-													{car?.carDesc || 'No description available.'}
+													{localized.desc || car?.carDesc || t('No description available.')}
 												</Typography>
 											</Stack>
 
@@ -559,7 +600,12 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 											>
 												{car?.carLikes}
 											</Button>
+											<PriceCheck car={car} />
 										</Stack>
+										<DealActions car={car} />
+										{car?.carImageCredits?.length > 0 && (
+											<Typography className="photo-credits">{t('Photos')}: {car.carImageCredits.join(' · ')}</Typography>
+										)}
 									</Stack>
 								</Stack>
 
@@ -585,18 +631,30 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 						<Stack className="car-specs-config">
 							<Stack className="left-config">
 								<CarSpecs car={car} />
-								<CarReviews
-									carComments={carComments}
-									commentTotal={commentTotal}
-									commentInquiry={commentInquiry}
-									commentPaginationChangeHandler={commentPaginationChangeHandler}
-									insertCommentData={insertCommentData}
-									setInsertCommentData={setInsertCommentData}
-									createCommentHandler={createCommentHandler}
-								/>
+								<Stack className="feedback-tabs" direction="row">
+									<button className={feedbackTab === 'reviews' ? 'active' : ''} onClick={() => setFeedbackTab('reviews')}>
+										{t('Reviews')} {car?.carReviews ? `(${car.carReviews})` : ''}
+									</button>
+									<button className={feedbackTab === 'questions' ? 'active' : ''} onClick={() => setFeedbackTab('questions')}>
+										{t('Questions')} {commentTotal ? `(${commentTotal})` : ''}
+									</button>
+								</Stack>
+								{feedbackTab === 'reviews' ? (
+									<ReviewSection carId={carId ?? undefined} />
+								) : (
+									<CarReviews
+										carComments={carComments}
+										commentTotal={commentTotal}
+										commentInquiry={commentInquiry}
+										commentPaginationChangeHandler={commentPaginationChangeHandler}
+										insertCommentData={insertCommentData}
+										setInsertCommentData={setInsertCommentData}
+										createCommentHandler={createCommentHandler}
+									/>
+								)}
 							</Stack>
 							<Stack className="right-config">
-								<SellerInfoBox sellerInfo={sellerInfo} />
+								<SellerInfoBox sellerInfo={sellerInfo} car={car} />
 							</Stack>
 						</Stack>
 						{/* Similar Cars Section */}
@@ -604,8 +662,8 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 							<Stack className="similar-cars-config">
 								<Stack className="title-pagination-box">
 									<Stack className="title-box">
-										<Typography className="section-title">Similar Cars</Typography>
-										<Typography className="section-subtitle">Other cars you might be interested in</Typography>
+										<Typography className="section-title">{t('Similar Cars')}</Typography>
+										<Typography className="section-subtitle">{t('Other cars you might be interested in')}</Typography>
 									</Stack>
 									<Stack className="pagination-box">
 										<WestIcon className="swiper-similar-prev" />

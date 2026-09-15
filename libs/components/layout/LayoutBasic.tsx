@@ -66,6 +66,30 @@ const withLayoutBasic = (Component: any) => {
 					title = 'Member Page';
 					desc = 'Home / Member';
 					break;
+				case '/checkout':
+					title = 'Checkout';
+					desc = 'Home / Checkout';
+					break;
+				case '/order/tracking':
+					title = 'Order Tracking';
+					desc = 'Home / My Page / Orders';
+					break;
+				case '/service':
+					title = 'Service & Mechanics';
+					desc = 'Home / Service';
+					break;
+				case '/service/detail':
+					title = 'Service Detail';
+					desc = 'Home / Service / Detail';
+					break;
+				case '/ai-finder':
+					title = 'AI Car Finder';
+					desc = 'Home / AI Finder';
+					break;
+				case '/car/3d':
+					title = '3D View';
+					desc = 'Home / Listings / 3D';
+					break;
 				default:
 					break;
 			}

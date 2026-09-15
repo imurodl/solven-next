@@ -8,6 +8,11 @@ import MyFavorites from '../../libs/components/mypage/MyFavorites';
 import RecentlyVisited from '../../libs/components/mypage/RecentlyVisited';
 import AddCar from '../../libs/components/mypage/AddNewCar';
 import MyProfile from '../../libs/components/mypage/MyProfile';
+import MyOrders from '../../libs/components/mypage/MyOrders';
+import MyMessages from '../../libs/components/mypage/MyMessages';
+import MyReviews from '../../libs/components/mypage/MyReviews';
+import MyServiceJobs from '../../libs/components/mypage/MyServiceJobs';
+import AddServiceJob from '../../libs/components/mypage/AddServiceJob';
 import MyArticles from '../../libs/components/mypage/MyArticles';
 import { useMutation, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
@@ -120,6 +125,12 @@ const MyPage: NextPage = (props: any) => {
 					{category === 'myArticles' && <MyArticles />}
 					{category === 'writeArticle' && <WriteArticle />}
 					{category === 'myProfile' && <MyProfile />}
+					{category === 'myOrders' && <MyOrders mode="buyer" />}
+					{category === 'deals' && <MyOrders mode="seller" />}
+					{category === 'messages' && <MyMessages />}
+					{category === 'myReviews' && <MyReviews />}
+					{category === 'myServiceJobs' && <MyServiceJobs />}
+					{category === 'addServiceJob' && <AddServiceJob />}
 					{category === 'followers' && (
 						<MemberFollowers
 							subscribeHandler={subscribeHandler}
@@ -158,6 +169,12 @@ const MyPage: NextPage = (props: any) => {
 									{category === 'myArticles' && <MyArticles />}
 									{category === 'writeArticle' && <WriteArticle />}
 									{category === 'myProfile' && <MyProfile />}
+									{category === 'myOrders' && <MyOrders mode="buyer" />}
+									{category === 'deals' && <MyOrders mode="seller" />}
+									{category === 'messages' && <MyMessages />}
+									{category === 'myReviews' && <MyReviews />}
+									{category === 'myServiceJobs' && <MyServiceJobs />}
+									{category === 'addServiceJob' && <AddServiceJob />}
 									{category === 'followers' && (
 										<MemberFollowers
 											subscribeHandler={subscribeHandler}

@@ -12,6 +12,16 @@ import { REACT_APP_API_URL } from '../../config';
 import { logOut } from '../../auth';
 import { sweetConfirmAlert, sweetMixinErrorAlert } from '../../sweetAlert';
 import PersonIcon from '@mui/icons-material/Person';
+import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
+import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
+import BuildOutlinedIcon from '@mui/icons-material/BuildOutlined';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Badge } from '@mui/material';
+import { useTranslation } from 'next-i18next';
+import { unreadMessagesVar } from '../../../apollo/store';
+import { MemberType } from '../../enums/member.enum';
 
 const MyMenu = () => {
 	const device = useDeviceDetect();
@@ -19,6 +29,46 @@ const MyMenu = () => {
 	const pathname = router.query.category ?? 'myProfile';
 	const category: any = router.query?.category ?? 'myProfile';
 	const user = useReactiveVar(userVar);
+	const unread = useReactiveVar(unreadMessagesVar);
+	const { t } = useTranslation('common');
+	const isSeller = user.memberType === MemberType.AGENT || user.memberType === MemberType.ADMIN;
+	const isMechanic = user.memberType === MemberType.MECHANIC || user.memberType === MemberType.ADMIN;
+
+	// New sections rendered with MUI icons (existing entries keep their svg assets).
+	const dealEntries = [
+		{ key: 'myOrders', label: t('My Orders'), icon: <ReceiptLongOutlinedIcon fontSize="small" /> },
+		...(isSeller ? [{ key: 'deals', label: t('Deals'), icon: <HandshakeOutlinedIcon fontSize="small" /> }] : []),
+		{ key: 'messages', label: t('Messages'), icon: <ChatBubbleOutlineIcon fontSize="small" />, badge: unread },
+		{ key: 'myReviews', label: t('My Reviews'), icon: <RateReviewOutlinedIcon fontSize="small" /> },
+	];
+	const mechanicEntries = isMechanic
+		? [
+				{ key: 'addServiceJob', label: t('Add Service Job'), icon: <AddCircleOutlineIcon fontSize="small" /> },
+				{ key: 'myServiceJobs', label: t('My Service Jobs'), icon: <BuildOutlinedIcon fontSize="small" /> },
+		  ]
+		: [];
+	const renderEntry = (e: { key: string; label: string; icon: React.ReactNode; badge?: number }) => (
+		<ListItem key={e.key} className={pathname === e.key ? 'focus' : ''}>
+			<Link href={{ pathname: '/mypage', query: { category: e.key } }} scroll={false}>
+				<div className={'flex-box'}>
+					<Badge color="error" badgeContent={e.badge} max={99} invisible={!e.badge}>
+						<span className={`mui-icon ${category === e.key ? 'on' : ''}`}>{e.icon}</span>
+					</Badge>
+					<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+						{e.label}
+					</Typography>
+				</div>
+			</Link>
+		</ListItem>
+	);
+	const renderTab = (e: { key: string; label: string; badge?: number }) => (
+		<Link key={e.key} href={{ pathname: '/mypage', query: { category: e.key } }} scroll={false}>
+			<div className={`tab ${category === e.key ? 'active' : ''}`}>
+				<span>{e.label}</span>
+				{!!e.badge && <b className="tab-badge">{e.badge}</b>}
+			</div>
+		</Link>
+	);
 
 	/** HANDLERS **/
 	const logoutHandler = async () => {
@@ -98,6 +148,7 @@ const MyMenu = () => {
 							<span>Write Article</span>
 						</div>
 					</Link>
+					{[...dealEntries, ...mechanicEntries].map(renderTab)}
 					<Link href={{ pathname: '/mypage', query: { category: 'myProfile' } }} scroll={false}>
 						<div className={`tab ${category === 'myProfile' ? 'active' : ''}`}>
 							<span>My Profile</span>
@@ -138,6 +189,20 @@ const MyMenu = () => {
 				</Stack>
 
 				<Stack className={'sections'}>
+					<Stack className={'section'}>
+						<Typography className="title" variant={'h5'}>
+							{t('DEALS & INBOX')}
+						</Typography>
+						<List className={'sub-section'}>{dealEntries.map(renderEntry)}</List>
+					</Stack>
+					{mechanicEntries.length > 0 && (
+						<Stack className={'section'}>
+							<Typography className="title" variant={'h5'}>
+								{t('SERVICE JOBS')}
+							</Typography>
+							<List className={'sub-section'}>{mechanicEntries.map(renderEntry)}</List>
+						</Stack>
+					)}
 					<Stack className={'section'}>
 						{/* style={{ height: user.memberType === 'AGENT' ? '228px' : '153px' }} */}
 						<Typography className="title" variant={'h5'}>

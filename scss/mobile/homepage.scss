@@ -16,7 +16,7 @@
 					font-weight: 700;
 					margin-bottom: 24px;
 					text-align: center;
-					background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
+					background: linear-gradient(135deg, $text-color 0%, var(--text-2) 100%);
 					background-clip: text;
 					-webkit-background-clip: text;
 					-webkit-text-fill-color: transparent;
@@ -97,7 +97,7 @@
 						font-weight: 700;
 						margin-bottom: 24px;
 						text-align: center;
-						background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
+						background: linear-gradient(135deg, $text-color 0%, var(--text-2) 100%);
 						background-clip: text;
 						-webkit-background-clip: text;
 						-webkit-text-fill-color: transparent;
@@ -175,7 +175,7 @@
 										left: 12px;
 										bottom: 12px;
 										padding: 8px 16px;
-										background: rgba(255, 255, 255, 0.9);
+										background: var(--glass);
 										border-radius: 10px;
 										font-size: 15px;
 										font-weight: 600;
@@ -420,7 +420,7 @@
 						font-weight: 700;
 						margin-bottom: 24px;
 						text-align: center;
-						background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
+						background: linear-gradient(135deg, $text-color 0%, var(--text-2) 100%);
 						background-clip: text;
 						-webkit-background-clip: text;
 						-webkit-text-fill-color: transparent;
@@ -503,7 +503,7 @@
 								left: 12px;
 								bottom: 12px;
 								padding: 6px 12px;
-								background: rgba(255, 255, 255, 0.9);
+								background: var(--glass);
 								border-radius: 8px;
 								font-size: 14px;
 								font-weight: 600;
@@ -680,7 +680,7 @@
 							font-weight: 700;
 							margin-bottom: 24px;
 							text-align: center;
-							background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
+							background: linear-gradient(135deg, $text-color 0%, var(--text-2) 100%);
 							background-clip: text;
 							-webkit-background-clip: text;
 							-webkit-text-fill-color: transparent;
@@ -862,7 +862,7 @@
 							font-weight: 700;
 							margin-bottom: 24px;
 							text-align: center;
-							background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
+							background: linear-gradient(135deg, $text-color 0%, var(--text-2) 100%);
 							background-clip: text;
 							-webkit-background-clip: text;
 							-webkit-text-fill-color: transparent;

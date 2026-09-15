@@ -1059,7 +1059,7 @@ body {
 				justify-content: space-between;
 				align-items: center;
 				border-radius: 12px;
-				background: rgba(255, 255, 255, 0.9);
+				background: var(--glass);
 				backdrop-filter: blur(4px);
 				cursor: pointer;
 				transition: all 0.3s ease;

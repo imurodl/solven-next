@@ -18,7 +18,7 @@
 					font-size: 32px;
 					font-weight: 700;
 					margin-bottom: 12px;
-					background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
+					background: linear-gradient(135deg, $text-color 0%, var(--text-2) 100%);
 					background-clip: text;
 					-webkit-background-clip: text;
 					-webkit-text-fill-color: transparent;
@@ -146,7 +146,7 @@
 						font-size: 32px;
 						font-weight: 700;
 						margin-bottom: 12px;
-						background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
+						background: linear-gradient(135deg, $text-color 0%, var(--text-2) 100%);
 						background-clip: text;
 						-webkit-background-clip: text;
 						-webkit-text-fill-color: transparent;
@@ -358,7 +358,7 @@
 											cursor: pointer;
 											color: $text-color;
 											transition: $transition-smooth;
-											background: linear-gradient(135deg, $text-color 0%, var(--bg-inverse) 100%);
+											background: linear-gradient(135deg, $text-color 0%, var(--text-2) 100%);
 											background-clip: text;
 											-webkit-background-clip: text;
 											-webkit-text-fill-color: transparent;
@@ -683,7 +683,7 @@
 								left: 16px;
 								bottom: 16px;
 								border-radius: 6px;
-								background: rgba(255, 255, 255, 0.95);
+								background: var(--glass);
 								color: var(--text-1);
 								font-size: 15px;
 								font-weight: 600;
