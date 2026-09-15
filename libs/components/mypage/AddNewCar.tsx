@@ -80,6 +80,7 @@ const AddCar = ({ initialValues, ...props }: any) => {
 				manufacturedAt: getCarData.getCar.manufacturedAt || 0,
 				carCondition: getCarData.getCar.carCondition || undefined,
 				carVin: getCarData.getCar.carVin || '',
+				car3dModel: getCarData.getCar.car3dModel || '',
 			});
 		}
 	}, [getCarData]);
@@ -182,6 +183,7 @@ const AddCar = ({ initialValues, ...props }: any) => {
 				carOptions: insertCarData.carOptions || [],
 				carCondition: insertCarData.carCondition || undefined,
 				carVin: insertCarData.carVin?.trim() || undefined,
+				car3dModel: insertCarData.car3dModel || undefined,
 			};
 
 			const result = await createCar({
@@ -230,6 +232,7 @@ const AddCar = ({ initialValues, ...props }: any) => {
 				manufacturedAt: insertCarData.manufacturedAt,
 				carCondition: insertCarData.carCondition || undefined,
 				carVin: insertCarData.carVin?.trim() || undefined,
+				car3dModel: insertCarData.car3dModel ?? '',
 			};
 
 			const result = await updateCar({

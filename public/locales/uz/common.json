@@ -456,5 +456,19 @@
 	"BROWN": "Jigarrang",
 	"PURPLE": "Binafsha",
 	"GOLD": "Oltin",
-	"BEIGE": "Bej"
+	"BEIGE": "Bej",
+	"Loading 3D model": "3D model yuklanmoqda",
+	"Stop rotation": "Aylanishni to'xtatish",
+	"Auto rotate": "Avtomatik aylantirish",
+	"View in your space": "O'z makoningizda ko'ring",
+	"Drag to orbit, scroll to zoom. AR is available on supported phones.": "Aylantirish uchun torting, kattalashtirish uchun aylantiring. AR qo'llab-quvvatlanadigan telefonlarda mavjud.",
+	"3D view": "3D ko'rinish",
+	"Back to listing": "E'longa qaytish",
+	"This listing has no 3D model yet.": "Bu e'londa hali 3D model yo'q.",
+	"Only .glb models are supported": "Faqat .glb modellar qo'llab-quvvatlanadi",
+	"3D model (optional)": "3D model (ixtiyoriy)",
+	"Replace .glb": ".glb ni almashtirish",
+	"Upload .glb": ".glb yuklash",
+	"Remove": "O'chirish",
+	"Buyers get an interactive 3D view and AR on their phone. Max 25MB.": "Xaridorlar telefonida interaktiv 3D ko'rinish va AR oladi. Maksimum 25MB."
 }

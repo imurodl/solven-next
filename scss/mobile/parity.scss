@@ -1908,3 +1908,21 @@
 		}
 	}
 }
+
+#car-3d-page {
+	background: var(--bg-page);
+	padding: 16px 0 40px;
+	.container { flex-direction: column; gap: 14px; padding: 0 16px; }
+	.page-title { font-size: 20px; font-weight: 700; color: var(--text-1); }
+	.empty { padding: 40px 0; text-align: center; }
+}
+.car-model-viewer {
+	gap: 12px;
+	.viewer-box {
+		position: relative; width: 100%; height: 60vh; border-radius: 14px; overflow: hidden;
+		background: var(--bg-muted); border: 1px solid var(--border);
+		model-viewer { width: 100%; height: 100%; }
+	}
+	.viewer-loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--text-2); pointer-events: none; }
+}
+.addcar-extras .model-upload { gap: 8px; padding: 12px; border: 1px dashed var(--border); border-radius: 12px; .title { font-weight: 600; } }

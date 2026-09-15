@@ -2426,3 +2426,62 @@
 		flex-direction: column;
 	}
 }
+
+// Admin below 900px: top bar + temporary drawer, full-width content, scrollable tables
+#pc-wrap.admin.admin-narrow {
+	.admin-appbar {
+		background: var(--dark-section);
+		color: #fff;
+		.MuiIconButton-root { color: #fff; margin-right: 8px; }
+		.admin-appbar-title { font-size: 16px; font-weight: 600; }
+	}
+	#bunker {
+		width: 100%;
+		margin-left: 0;
+		padding: 76px 12px 32px;
+		.flex-space { flex-wrap: wrap; gap: 12px; }
+		.MuiTableContainer-root, .table-wrap { overflow-x: auto; }
+		.MuiTable-root { min-width: 720px; }
+		.MuiTabs-root .MuiTabs-scroller { overflow-x: auto !important; }
+		.MuiBox-root .MuiStack-root.filter-row, .search-box, .search-wrap { flex-wrap: wrap; }
+	}
+}
+
+// 3D viewer page
+#pc-wrap {
+	#car-3d-page .container { flex-direction: column; }
+}
+#car-3d-page {
+	background: var(--bg-page);
+	padding: 32px 0 64px;
+	.container { gap: 20px; }
+	.page-title { font-size: 26px; font-weight: 700; color: var(--text-1); }
+	.empty { padding: 60px 0; text-align: center; }
+}
+.car-model-viewer {
+	gap: 14px;
+	.viewer-box {
+		position: relative;
+		width: 100%;
+		height: min(70vh, 640px);
+		border-radius: 16px;
+		overflow: hidden;
+		background: radial-gradient(circle at 50% 30%, var(--surface) 0%, var(--bg-muted) 100%);
+		border: 1px solid var(--border);
+		model-viewer { width: 100%; height: 100%; --poster-color: transparent; }
+	}
+	.viewer-loading {
+		position: absolute; inset: 0;
+		display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+		color: var(--text-2);
+		pointer-events: none;
+	}
+	.viewer-actions { gap: 10px; }
+}
+.addcar-extras .model-upload {
+	gap: 8px;
+	padding: 14px 16px;
+	border: 1px dashed var(--border);
+	border-radius: 12px;
+	.title { display: flex; align-items: center; gap: 6px; font-weight: 600; color: var(--text-1); }
+}

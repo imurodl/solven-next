@@ -456,5 +456,19 @@
 	"BROWN": "Brown",
 	"PURPLE": "Purple",
 	"GOLD": "Gold",
-	"BEIGE": "Beige"
+	"BEIGE": "Beige",
+	"Loading 3D model": "Loading 3D model",
+	"Stop rotation": "Stop rotation",
+	"Auto rotate": "Auto rotate",
+	"View in your space": "View in your space",
+	"Drag to orbit, scroll to zoom. AR is available on supported phones.": "Drag to orbit, scroll to zoom. AR is available on supported phones.",
+	"3D view": "3D view",
+	"Back to listing": "Back to listing",
+	"This listing has no 3D model yet.": "This listing has no 3D model yet.",
+	"Only .glb models are supported": "Only .glb models are supported",
+	"3D model (optional)": "3D model (optional)",
+	"Replace .glb": "Replace .glb",
+	"Upload .glb": "Upload .glb",
+	"Remove": "Remove",
+	"Buyers get an interactive 3D view and AR on their phone. Max 25MB.": "Buyers get an interactive 3D view and AR on their phone. Max 25MB."
 }

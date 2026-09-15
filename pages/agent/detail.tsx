@@ -346,6 +346,11 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, initialAgent, ...
 								<img src="/img/icons/call.svg" alt="" />
 								<span>{agent?.memberPhone}</span>
 							</div>
+							{agent?.memberReviews ? (
+								<div className={'agent-rating'}>
+									<RatingStars value={agent.memberRating ?? 0} count={agent.memberReviews} showValue />
+								</div>
+							) : null}
 						</Box>
 					</Stack>
 					<Stack className={'agent-home-list'}>

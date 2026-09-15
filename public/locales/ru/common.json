@@ -456,5 +456,19 @@
 	"BROWN": "Коричневый",
 	"PURPLE": "Фиолетовый",
 	"GOLD": "Золотой",
-	"BEIGE": "Бежевый"
+	"BEIGE": "Бежевый",
+	"Loading 3D model": "Загрузка 3D-модели",
+	"Stop rotation": "Остановить вращение",
+	"Auto rotate": "Автовращение",
+	"View in your space": "Посмотреть в своём пространстве",
+	"Drag to orbit, scroll to zoom. AR is available on supported phones.": "Перетаскивайте для вращения, прокручивайте для масштабирования. AR доступен на поддерживаемых телефонах.",
+	"3D view": "3D-просмотр",
+	"Back to listing": "Назад к объявлению",
+	"This listing has no 3D model yet.": "У этого объявления пока нет 3D-модели.",
+	"Only .glb models are supported": "Поддерживаются только модели .glb",
+	"3D model (optional)": "3D-модель (необязательно)",
+	"Replace .glb": "Заменить .glb",
+	"Upload .glb": "Загрузить .glb",
+	"Remove": "Удалить",
+	"Buyers get an interactive 3D view and AR on their phone. Max 25MB.": "Покупатели получат интерактивный 3D-просмотр и AR на телефоне. Максимум 25 МБ."
 }

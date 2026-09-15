@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, MenuItem, Select, Stack, TextField, Typography, CircularProgress } from '@mui/material';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import PriceCheckIcon from '@mui/icons-material/PriceCheck';
+import ViewInArIcon from '@mui/icons-material/ViewInAr';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
@@ -11,6 +12,7 @@ import { CarInput } from '../../../types/car/car.input';
 import { CarCondition } from '../../../enums/car.enum';
 import { useCurrency } from '../../../context/CurrencyContext';
 import { sweetMixinErrorAlert } from '../../../sweetAlert';
+import { uploadModel } from '../../../utils/upload';
 
 interface AddCarExtrasProps {
 	insertCarData: CarInput;
@@ -23,6 +25,7 @@ const AddCarExtras = ({ insertCarData, setInsertCarData }: AddCarExtrasProps) =>
 	const router = useRouter();
 	const { formatPrice } = useCurrency();
 	const [notes, setNotes] = useState('');
+	const [uploadingModel, setUploadingModel] = useState(false);
 	const [generate, { loading: generating }] = useMutation(GENERATE_CAR_DESCRIPTION);
 	const [estimate, { data: estData, loading: estimating }] = useLazyQuery(ESTIMATE_CAR_PRICE, { fetchPolicy: 'network-only' });
 	const est = estData?.estimateCarPrice;
@@ -70,6 +73,25 @@ const AddCarExtras = ({ insertCarData, setInsertCarData }: AddCarExtrasProps) =>
 			},
 		});
 
+	const pickModel = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		e.target.value = '';
+		if (!file) return;
+		if (!/\.glb$/i.test(file.name)) {
+			await sweetMixinErrorAlert(t('Only .glb models are supported'));
+			return;
+		}
+		try {
+			setUploadingModel(true);
+			const path = await uploadModel(file);
+			setInsertCarData({ ...insertCarData, car3dModel: path });
+		} catch (err: any) {
+			await sweetMixinErrorAlert(err.message);
+		} finally {
+			setUploadingModel(false);
+		}
+	};
+
 	return (
 		<Stack className="addcar-extras" spacing={2}>
 			<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
@@ -94,6 +116,27 @@ const AddCarExtras = ({ insertCarData, setInsertCarData }: AddCarExtrasProps) =>
 						inputProps={{ maxLength: 17 }}
 					/>
 				</Stack>
+			</Stack>
+
+			<Stack className="model-upload">
+				<Typography className="title">
+					<ViewInArIcon fontSize="inherit" /> {t('3D model (optional)')}
+				</Typography>
+				<Stack direction="row" spacing={1.5} alignItems="center" flexWrap="wrap">
+					<Button component="label" className="btn-outline" disabled={uploadingModel} startIcon={uploadingModel ? <CircularProgress size={14} /> : <ViewInArIcon />}>
+						{insertCarData.car3dModel ? t('Replace .glb') : t('Upload .glb')}
+						<input type="file" hidden accept=".glb,model/gltf-binary" onChange={pickModel} />
+					</Button>
+					{insertCarData.car3dModel && (
+						<>
+							<Typography className="muted hint">{insertCarData.car3dModel.split('/').pop()}</Typography>
+							<Button size="small" onClick={() => setInsertCarData({ ...insertCarData, car3dModel: '' })}>
+								{t('Remove')}
+							</Button>
+						</>
+					)}
+				</Stack>
+				<Typography className="muted hint">{t('Buyers get an interactive 3D view and AR on their phone. Max 25MB.')}</Typography>
 			</Stack>
 
 			<Stack className="ai-tools">

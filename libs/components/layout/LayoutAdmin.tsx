@@ -13,6 +13,8 @@ import IconButton from '@mui/material/IconButton';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import MenuIcon from '@mui/icons-material/Menu';
 import { getJwtToken, logOut, updateUserInfo } from '../../auth';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
@@ -30,6 +32,9 @@ const withAdminLayout = (Component: ComponentType) => {
 		const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 		const [title, setTitle] = useState('admin');
 		const [loading, setLoading] = useState(true);
+		// Below 900px the sidebar becomes a temporary drawer behind a top bar.
+		const isNarrow = useMediaQuery('(max-width:900px)');
+		const [drawerOpen, setDrawerOpen] = useState(false);
 
 		/** LIFECYCLES **/
 		useEffect(() => {
@@ -44,6 +49,12 @@ const withAdminLayout = (Component: ComponentType) => {
 			}
 		}, [loading, user, router]);
 
+		useEffect(() => {
+			const close = () => setDrawerOpen(false);
+			router.events.on('routeChangeComplete', close);
+			return () => router.events.off('routeChangeComplete', close);
+		}, [router.events]);
+
 		/** HANDLERS **/
 		const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
 			setAnchorElUser(event.currentTarget);
@@ -56,23 +67,47 @@ const withAdminLayout = (Component: ComponentType) => {
 		if (!user || user?.memberType !== MemberType.ADMIN) return null;
 
 		return (
-			<main id="pc-wrap" className="admin">
+			<main id="pc-wrap" className={isNarrow ? 'admin admin-narrow' : 'admin'}>
 				<Box component={'div'} sx={{ display: 'flex' }}>
-					<Drawer
-						sx={{
-							width: drawerWidth,
-							flexShrink: 0,
-							'& .MuiDrawer-paper': {
+					{isNarrow ? (
+						<>
+							<AppBar position="fixed" className="admin-appbar" elevation={0}>
+								<Toolbar>
+									<IconButton edge="start" aria-label="Open admin menu" onClick={() => setDrawerOpen(true)}>
+										<MenuIcon />
+									</IconButton>
+									<Typography className="admin-appbar-title">Solven Admin</Typography>
+								</Toolbar>
+							</AppBar>
+							<Drawer
+								variant="temporary"
+								anchor="left"
+								open={drawerOpen}
+								onClose={() => setDrawerOpen(false)}
+								ModalProps={{ keepMounted: true }}
+								className="aside"
+								sx={{ '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' } }}
+							>
+								<MenuList />
+							</Drawer>
+						</>
+					) : (
+						<Drawer
+							sx={{
 								width: drawerWidth,
-								boxSizing: 'border-box',
-							},
-						}}
-						variant="permanent"
-						anchor="left"
-						className="aside"
-					>
-						<MenuList />
-					</Drawer>
+								flexShrink: 0,
+								'& .MuiDrawer-paper': {
+									width: drawerWidth,
+									boxSizing: 'border-box',
+								},
+							}}
+							variant="permanent"
+							anchor="left"
+							className="aside"
+						>
+							<MenuList />
+						</Drawer>
+					)}
 
 					<Box component={'div'} id="bunker" sx={{ flexGrow: 1 }}>
 						{/* @ts-expect-error admin components receive extra props */}

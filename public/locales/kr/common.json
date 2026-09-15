@@ -456,5 +456,19 @@
 	"BROWN": "갈색",
 	"PURPLE": "보라",
 	"GOLD": "금색",
-	"BEIGE": "베이지"
+	"BEIGE": "베이지",
+	"Loading 3D model": "3D 모델 불러오는 중",
+	"Stop rotation": "회전 멈춤",
+	"Auto rotate": "자동 회전",
+	"View in your space": "내 공간에서 보기",
+	"Drag to orbit, scroll to zoom. AR is available on supported phones.": "드래그로 회전, 스크롤로 확대/축소. 지원되는 휴대폰에서는 AR로 볼 수 있어요.",
+	"3D view": "3D 보기",
+	"Back to listing": "매물로 돌아가기",
+	"This listing has no 3D model yet.": "이 매물에는 아직 3D 모델이 없어요.",
+	"Only .glb models are supported": ".glb 모델만 지원돼요",
+	"3D model (optional)": "3D 모델 (선택)",
+	"Replace .glb": ".glb 교체",
+	"Upload .glb": ".glb 업로드",
+	"Remove": "삭제",
+	"Buyers get an interactive 3D view and AR on their phone. Max 25MB.": "구매자가 휴대폰에서 3D로 돌려보고 AR로 볼 수 있어요. 최대 25MB."
 }
