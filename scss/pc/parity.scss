@@ -656,6 +656,7 @@
 #order-tracking-page {
 	width: 100%;
 	padding: 40px 0 80px;
+	background: var(--bg-page);
 	.container {
 		width: 1300px;
 		margin: 0 auto;
@@ -1249,6 +1250,7 @@
 #service-detail-page {
 	width: 100%;
 	padding: 40px 0 80px;
+	background: var(--bg-page);
 	.container {
 		width: 1300px;
 		margin: 0 auto;
@@ -1741,6 +1743,7 @@
 #ai-finder-page {
 	width: 100%;
 	padding: 40px 0 80px;
+	background: var(--bg-page);
 	.container {
 		width: 1300px;
 		margin: 0 auto;
@@ -2408,4 +2411,18 @@
 .seller-reviews {
 	width: 100%;
 	margin-top: 24px;
+}
+
+// New pages stack their sections vertically (the global .container is a flex row)
+#pc-wrap {
+	#service-page .container,
+	#service-detail-page .container,
+	#ai-finder-page .container,
+	#checkout-page .container,
+	#order-tracking-page .container,
+	.hot-deals .container,
+	.ai-banner .container,
+	.service-banner .container {
+		flex-direction: column;
+	}
 }
