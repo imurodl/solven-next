@@ -2557,7 +2557,7 @@
 }
 
 // Detail info panel grows with its content (loan calculator, deal actions) instead of scrolling inside
-#pc-wrap #car-detail-page .car-info-box {
+#pc-wrap #car-detail-page .car-detail-config .car-info-config .images-container .main-image-info-container .car-info-box {
 	height: auto;
 	min-height: 700px;
 	.content-wrapper { overflow: visible; padding-right: 0; }
