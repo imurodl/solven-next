@@ -2563,17 +2563,9 @@
 	.content-wrapper { overflow: visible; padding-right: 0; }
 }
 
-// Temporary admin drawer renders in a portal (outside #pc-wrap): mirror the sidebar look
+// Temporary admin drawer renders in a portal (outside #pc-wrap); admin.scss is scoped to both.
 .admin-drawer .MuiDrawer-paper {
 	background: var(--dark-section);
-	color: #fff;
 	border-right: 1px solid rgba(255, 255, 255, 0.1);
-	.logo-box { display: flex; flex-direction: row; padding: 16px; img { width: 72px; height: 72px; } }
-	.user { background: rgba(255, 255, 255, 0.06); padding: 12px 16px; display: flex; align-items: center; gap: 10px; img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; } }
-	.MuiListItemIcon-root { margin-right: 12px; color: #fff; min-width: 0; }
-	.MuiListItemText-root .MuiTypography-root, .MuiListSubheader-root { color: #fff; background: transparent; }
-	.MuiListSubheader-root { font-size: 11px; letter-spacing: 1px; opacity: 0.6; }
-	.menu-list { padding: 4px 12px; li { padding: 8px 12px; border-radius: 6px; font-size: 14px; } li.on { background: rgba(255, 255, 255, 0.12); } }
-	.menu-icon { color: #fff; }
-	a { color: inherit; text-decoration: none; }
+	.admin-menu { min-height: 100%; }
 }
