@@ -2555,3 +2555,10 @@
 	.toastui-editor-defaultUI .toastui-editor-toolbar, .toastui-editor-defaultUI .toastui-editor-mode-switch { background: var(--bg-muted); border-color: var(--border); }
 	.toastui-editor-defaultUI .ProseMirror, .toastui-editor-ww-container, .toastui-editor-md-container { background: var(--surface); color: var(--text-1); }
 }
+
+// Detail info panel grows with its content (loan calculator, deal actions) instead of scrolling inside
+#pc-wrap #car-detail-page .car-info-box {
+	height: auto;
+	min-height: 700px;
+	.content-wrapper { overflow: visible; padding-right: 0; }
+}
