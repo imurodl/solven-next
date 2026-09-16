@@ -121,7 +121,7 @@ const TuiEditor = () => {
 					<Typography style={{ color: '#7f838d', margin: '10px' }} variant="h3">
 						Category
 					</Typography>
-					<FormControl sx={{ width: '100%', background: 'white' }}>
+					<FormControl sx={{ width: '100%', background: 'var(--surface)' }}>
 						<Select
 							value={articleCategory}
 							onChange={changeCategoryHandler}
@@ -145,7 +145,7 @@ const TuiEditor = () => {
 						onChange={articleTitleHandler}
 						id="filled-basic"
 						label="Type Title"
-						style={{ width: '300px', background: 'white' }}
+						style={{ width: '300px', background: 'var(--surface)', color: 'var(--text-1)' }}
 					/>
 				</Box>
 			</Stack>

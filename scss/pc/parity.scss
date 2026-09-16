@@ -2543,3 +2543,15 @@
 	.loan-row { gap: 0; span { font-size: 13px; color: var(--text-2); } b { color: var(--text-1); } .MuiSlider-root { margin: 0 4px; } }
 	.loan-result { margin-top: 6px; padding-top: 10px; border-top: 1px dashed var(--border); .monthly { font-size: 22px; color: var(--primary); } }
 }
+
+// Toast UI viewer/editor follow the theme tokens
+[data-theme='dark'] {
+	.toastui-editor-contents { color: var(--text-1); }
+	.toastui-editor-contents p, .toastui-editor-contents li, .toastui-editor-contents h1, .toastui-editor-contents h2, .toastui-editor-contents h3, .toastui-editor-contents h4 { color: var(--text-1); }
+	.toastui-editor-contents blockquote { color: var(--text-2); border-left-color: var(--border); }
+	.toastui-editor-contents code, .toastui-editor-contents pre { background: var(--bg-muted); color: var(--text-1); }
+	.toastui-editor-contents table th, .toastui-editor-contents table td { border-color: var(--border); }
+	.toastui-editor-defaultUI { border-color: var(--border); }
+	.toastui-editor-defaultUI .toastui-editor-toolbar, .toastui-editor-defaultUI .toastui-editor-mode-switch { background: var(--bg-muted); border-color: var(--border); }
+	.toastui-editor-defaultUI .ProseMirror, .toastui-editor-ww-container, .toastui-editor-md-container { background: var(--surface); color: var(--text-1); }
+}
