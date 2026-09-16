@@ -32,7 +32,7 @@ export const getServerSideProps = async ({ locale, req }: any) => {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
 				query: `query($input: ServiceJobsInquiry!){ getServiceJobs(input:$input){ list { _id serviceType serviceTitle carBrand carModel manufacturedAt servicePrice serviceDuration serviceImages serviceLocation serviceViews serviceLikes memberId memberData { _id memberNick memberImage } } metaCounter { total } } }`,
-				variables: { input: { page: 1, limit: LIMIT, sort: 'createdAt', direction: -1, search: {} } },
+				variables: { input: { page: 1, limit: LIMIT, sort: 'createdAt', direction: 'DESC', search: {} } },
 			}),
 		});
 		initialJobs = (await res.json())?.data?.getServiceJobs ?? null;
@@ -58,11 +58,11 @@ const ServicePage: NextPage = ({ initialJobs }: any) => {
 	if (text.trim()) search.text = text.trim();
 
 	const { data, loading, refetch } = useQuery(GET_SERVICE_JOBS, {
-		variables: { input: { page, limit: LIMIT, sort: 'createdAt', direction: -1, search } },
+		variables: { input: { page, limit: LIMIT, sort: 'createdAt', direction: 'DESC', search } },
 		fetchPolicy: 'cache-and-network',
 	});
 	const { data: mechData, loading: mechLoading } = useQuery(GET_MECHANICS, {
-		variables: { input: { page: 1, limit: 30, sort: 'memberRank', direction: -1, search: {} } },
+		variables: { input: { page: 1, limit: 30, sort: 'memberRank', direction: 'DESC', search: {} } },
 		skip: tab !== 'mechanics',
 	});
 	const [likeJob] = useMutation(LIKE_TARGET_SERVICE_JOB);

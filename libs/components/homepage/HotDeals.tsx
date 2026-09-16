@@ -25,7 +25,7 @@ const HotDeals = () => {
 	const device = useDeviceDetect();
 	const { data, refetch } = useQuery(GET_CARS, {
 		fetchPolicy: 'cache-and-network',
-		variables: { input: { page: 1, limit: 6, sort: 'carSaleExpiresAt', direction: 1, search: { carIsOnSale: true } } },
+		variables: { input: { page: 1, limit: 6, sort: 'carSaleExpiresAt', direction: 'ASC', search: { carIsOnSale: true } } },
 	});
 	const [likeTargetCar] = useMutation(LIKE_TARGET_CAR);
 	const deals: Car[] = (data?.getCars?.list ?? []).filter((c: Car) => isSaleActive(c));
@@ -55,7 +55,7 @@ const HotDeals = () => {
 						<Typography className="section-title">{t('Hot Deals')}</Typography>
 						<Typography className="section-subtitle">{t('Price drops that end soon — reserve before the timer runs out')}</Typography>
 					</div>
-					<Link href={{ pathname: '/car', query: { input: JSON.stringify({ page: 1, limit: 9, sort: 'carRank', direction: -1, search: { carIsOnSale: true } }) } }}>
+					<Link href={{ pathname: '/car', query: { input: JSON.stringify({ page: 1, limit: 9, sort: 'carRank', direction: 'DESC', search: { carIsOnSale: true } }) } }}>
 						<span className="see-all">
 							{t('All deals')} <EastIcon fontSize="inherit" />
 						</span>

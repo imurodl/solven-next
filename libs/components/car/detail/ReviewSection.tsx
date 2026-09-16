@@ -52,7 +52,7 @@ const ReviewSection = ({ carId, sellerId, memberFilter, compact = false }: Revie
 		refetch: refetchReviews,
 		loading,
 	} = useQuery(GET_REVIEWS, {
-		variables: { input: { page, limit: showAll ? 50 : PAGE, sort: 'createdAt', direction: -1, search } },
+		variables: { input: { page, limit: showAll ? 50 : PAGE, sort: 'createdAt', direction: 'DESC', search } },
 		fetchPolicy: 'cache-and-network',
 		skip: !carId && !sellerId && !memberFilter,
 	});

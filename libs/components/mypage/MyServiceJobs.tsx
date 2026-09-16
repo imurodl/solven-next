@@ -20,7 +20,7 @@ const MyServiceJobs = () => {
 	const { formatPrice } = useCurrency();
 	const [page, setPage] = useState(1);
 	const { data, loading, refetch } = useQuery(GET_MECHANIC_SERVICE_JOBS, {
-		variables: { input: { page, limit: LIMIT, sort: 'createdAt', direction: -1, search: {} } },
+		variables: { input: { page, limit: LIMIT, sort: 'createdAt', direction: 'DESC', search: {} } },
 		fetchPolicy: 'network-only',
 	});
 	const [updateJob] = useMutation(UPDATE_SERVICE_JOB);

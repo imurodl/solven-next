@@ -46,7 +46,7 @@ const ServiceDetail: NextPage = () => {
 	const job: ServiceJob | undefined = data?.getServiceJob;
 	const { data: moreData } = useQuery(GET_SERVICE_JOBS, {
 		skip: !job,
-		variables: { input: { page: 1, limit: 4, sort: 'createdAt', direction: -1, search: { memberId: job?.memberId } } },
+		variables: { input: { page: 1, limit: 4, sort: 'createdAt', direction: 'DESC', search: { memberId: job?.memberId } } },
 	});
 	const [likeJob] = useMutation(LIKE_TARGET_SERVICE_JOB);
 

@@ -21,7 +21,7 @@ const PromoModal = () => {
 	const [open, setOpen] = useState(false);
 	const { data } = useQuery(GET_CARS, {
 		fetchPolicy: 'cache-first',
-		variables: { input: { page: 1, limit: 5, sort: 'carRank', direction: -1, search: { carIsOnSale: true } } },
+		variables: { input: { page: 1, limit: 5, sort: 'carRank', direction: 'DESC', search: { carIsOnSale: true } } },
 	});
 	const deal: Car | undefined = (data?.getCars?.list ?? []).find((c: Car) => isSaleActive(c) && discountPercent(c) >= 5);
 

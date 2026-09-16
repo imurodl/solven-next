@@ -15,7 +15,7 @@ const ServiceBanner = () => {
 	const router = useRouter();
 	const device = useDeviceDetect();
 	const { data } = useQuery(GET_SERVICE_JOBS, {
-		variables: { input: { page: 1, limit: 3, sort: 'serviceRank', direction: -1, search: {} } },
+		variables: { input: { page: 1, limit: 3, sort: 'serviceRank', direction: 'DESC', search: {} } },
 		fetchPolicy: 'cache-and-network',
 	});
 	const jobs: ServiceJob[] = data?.getServiceJobs?.list ?? [];
