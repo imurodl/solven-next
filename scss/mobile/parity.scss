@@ -1909,7 +1909,8 @@
 	}
 }
 
-#car-3d-page {
+#mobile-wrap {
+	#car-3d-page {
 	background: var(--bg-page);
 	padding: 16px 0 40px;
 	.container { flex-direction: column; gap: 14px; padding: 0 16px; }
@@ -1926,3 +1927,28 @@
 	.viewer-loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--text-2); pointer-events: none; }
 }
 .addcar-extras .model-upload { gap: 8px; padding: 12px; border: 1px dashed var(--border); border-radius: 12px; .title { font-weight: 600; } }
+
+.compare-tray {
+	position: fixed; left: 12px; right: 12px; bottom: 76px; z-index: 1200;
+	padding: 10px 12px; border-radius: 14px; background: var(--surface); color: var(--text-1);
+	border: 1px solid var(--border); box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+	.tray-text { flex: 1; font-size: 13px; }
+	.tray-clear { min-width: 0; padding: 4px; }
+}
+#compare-page {
+	background: var(--bg-page); padding: 16px 0 40px;
+	.container { flex-direction: column; gap: 14px; padding: 0 16px; }
+	.page-title { font-size: 20px; font-weight: 700; color: var(--text-1); }
+	.compare-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+	.compare-table { min-width: 560px; border-collapse: collapse; background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+		th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); text-align: left; font-size: 13px; color: var(--text-1); }
+		tbody th { width: 130px; color: var(--text-2); font-weight: 500; background: var(--bg-muted); }
+		.car-head { position: relative; min-width: 150px; img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 8px; display: block; margin-bottom: 6px; } .title { font-weight: 600; } .remove { position: absolute; top: 4px; right: 4px; border: 0; border-radius: 50%; width: 24px; height: 24px; background: rgba(0,0,0,0.55); color: #fff; } }
+		.yes { color: var(--success, #1a9e5c); } .no { color: var(--text-3); } .sale { color: var(--danger, #e5484d); }
+	}
+}
+.loan-calculator { margin-top: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); gap: 4px;
+	.loan-title { font-weight: 600; margin-bottom: 4px; } .loan-row span { font-size: 13px; color: var(--text-2); } .loan-result { margin-top: 6px; padding-top: 8px; border-top: 1px dashed var(--border); .monthly { font-size: 20px; color: var(--primary); } }
+}
+
+}

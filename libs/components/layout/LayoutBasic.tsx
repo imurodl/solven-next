@@ -7,6 +7,7 @@ import { Stack } from '@mui/material';
 import { getJwtToken, updateUserInfo } from '../../auth';
 import Chat from '../Chat';
 import AiChat from '../AiChat';
+import CompareTray from '../compare/CompareTray';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { useTranslation } from 'next-i18next';
@@ -91,6 +92,10 @@ const withLayoutBasic = (Component: any) => {
 					title = '3D View';
 					desc = 'Home / Listings / 3D';
 					break;
+				case '/car/compare':
+					title = 'Compare Cars';
+					desc = 'Home / Listings / Compare';
+					break;
 				default:
 					break;
 			}
@@ -119,6 +124,7 @@ const withLayoutBasic = (Component: any) => {
 						</Stack>
 
 						<AiChat />
+						<CompareTray />
 
 						<Stack id={'footer'}>
 							<Footer />
@@ -140,6 +146,7 @@ const withLayoutBasic = (Component: any) => {
 
 						{router.pathname === '/404' ? '' : <Chat />}
 						{router.pathname === '/404' ? '' : <AiChat />}
+						<CompareTray />
 						<ScrollToTop />
 
 						<Stack id={'footer'}>

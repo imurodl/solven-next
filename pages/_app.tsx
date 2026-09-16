@@ -21,7 +21,7 @@ import '../scss/pc/main.scss';
 import '../scss/mobile/main.scss';
 
 // Private / transactional pages must not be indexed.
-const NOINDEX_PATHS = new Set(['/account/join', '/checkout', '/mypage', '/order/tracking', '/_admin']);
+const NOINDEX_PATHS = new Set(['/account/join', '/checkout', '/mypage', '/order/tracking', '/_admin', '/car/compare', '/car/3d']);
 
 const App = ({ Component, pageProps }: AppProps) => {
 	const { mode } = useThemeMode();

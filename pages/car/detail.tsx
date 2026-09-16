@@ -42,6 +42,8 @@ import CarReviews from '../../libs/components/car/detail/CarReviews';
 import ReviewSection from '../../libs/components/car/detail/ReviewSection';
 import DealActions from '../../libs/components/car/detail/DealActions';
 import PriceCheck from '../../libs/components/car/detail/PriceCheck';
+import LoanCalculator from '../../libs/components/car/detail/LoanCalculator';
+import CompareButton from '../../libs/components/compare/CompareButton';
 import Price from '../../libs/components/common/Price';
 import Countdown from '../../libs/components/common/Countdown';
 import CarBadges from '../../libs/components/common/CarBadges';
@@ -433,8 +435,10 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 												{car?.carLikes}
 											</Button>
 											<PriceCheck car={car} />
+											{car?._id && <CompareButton carId={car._id} />}
 										</Stack>
 										<DealActions car={car} />
+										<LoanCalculator car={car} />
 										{car?.carImageCredits?.length > 0 && (
 											<Typography className="photo-credits">{t('Photos')}: {car.carImageCredits.join(' · ')}</Typography>
 										)}
@@ -601,8 +605,10 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 												{car?.carLikes}
 											</Button>
 											<PriceCheck car={car} />
+											{car?._id && <CompareButton carId={car._id} />}
 										</Stack>
 										<DealActions car={car} />
+										<LoanCalculator car={car} />
 										{car?.carImageCredits?.length > 0 && (
 											<Typography className="photo-credits">{t('Photos')}: {car.carImageCredits.join(' · ')}</Typography>
 										)}

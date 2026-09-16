@@ -9,6 +9,7 @@ import { useReactiveVar } from '@apollo/client';
 import { getJwtToken, updateUserInfo } from '../../auth';
 import Chat from '../Chat';
 import AiChat from '../AiChat';
+import CompareTray from '../compare/CompareTray';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
@@ -49,6 +50,7 @@ const withLayoutMain = (Component: any) => {
 						</Stack>
 
 						<AiChat />
+						<CompareTray />
 
 						<Stack id={'footer'}>
 							<Footer />
@@ -80,6 +82,7 @@ const withLayoutMain = (Component: any) => {
 
 						<Chat />
 						<AiChat />
+						<CompareTray />
 						<ScrollToTop />
 
 						<Stack id={'footer'}>

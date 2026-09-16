@@ -39,3 +39,6 @@ export const unreadMessagesVar = makeVar<number>(0);
 
 // Most recent open deal of the signed-in buyer (navbar pill); null when none.
 export const activeOrderVar = makeVar<{ _id: string; orderId: string; orderStatus: string; carTitle?: string } | null>(null);
+
+// Cars picked for side-by-side comparison (ids), mirrored to localStorage.
+export const compareVar = makeVar<string[]>([]);

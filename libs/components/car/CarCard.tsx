@@ -22,6 +22,7 @@ import RatingStars from '../common/RatingStars';
 import { isSoldOut, isReserved } from '../../utils/sale';
 import { useRouter } from 'next/router';
 import { localizeCar } from '../../utils/localize';
+import CompareButton from '../compare/CompareButton';
 
 interface CarCardType {
 	car: Car;
@@ -116,6 +117,7 @@ const CarCard = (props: CarCardType) => {
 									{isLiked ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
 								</IconButton>
 								<Typography className="view-cnt">{car?.carLikes}</Typography>
+								<CompareButton carId={car._id} />
 							</Stack>
 						)}
 					</Stack>
@@ -195,6 +197,7 @@ const CarCard = (props: CarCardType) => {
 									{isLiked ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
 								</IconButton>
 								<Typography className="view-cnt">{car?.carLikes}</Typography>
+								<CompareButton carId={car._id} />
 							</Stack>
 						)}
 					</Stack>
