@@ -85,7 +85,7 @@ const withAdminLayout = (Component: ComponentType) => {
 								open={drawerOpen}
 								onClose={() => setDrawerOpen(false)}
 								ModalProps={{ keepMounted: true }}
-								className="aside"
+								className="aside admin-drawer"
 								sx={{ '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' } }}
 							>
 								<MenuList />
