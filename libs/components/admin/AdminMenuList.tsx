@@ -3,7 +3,6 @@ import { useRouter, withRouter } from 'next/router';
 import Link from 'next/link';
 import { List, Stack, Typography, Box } from '@mui/material';
 import { User, UserCircleGear, ChatsCircle, Headset, SignOut, Receipt, Ticket, Star, Wrench } from 'phosphor-react';
-import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { REACT_APP_API_URL } from '../../config';
@@ -12,7 +11,6 @@ import { sweetConfirmAlert } from '../../sweetAlert';
 
 const AdminMenuList = () => {
 	const router = useRouter();
-	const device = useDeviceDetect();
 	const [mobileLayout, setMobileLayout] = useState(false);
 	const user = useReactiveVar(userVar);
 	const pathname = router.asPath;
@@ -110,10 +108,6 @@ const AdminMenuList = () => {
 			],
 		},
 	];
-
-	if (device === 'mobile') {
-		return <div>ADMIN MENU</div>;
-	}
 
 	return (
 		<Stack className="admin-menu">
