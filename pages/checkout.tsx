@@ -20,7 +20,7 @@ import { useCurrency } from '../libs/context/CurrencyContext';
 import { REACT_APP_API_URL } from '../libs/config';
 import { isPurchasable } from '../libs/utils/sale';
 import { sweetErrorHandling, sweetMixinErrorAlert } from '../libs/sweetAlert';
-import { hydrateProfile } from '../libs/auth';
+import { getJwtToken, hydrateProfile } from '../libs/auth';
 import SEO from '../libs/components/SEO';
 
 export const getServerSideProps = async ({ locale, req }: any) => ({
@@ -56,8 +56,9 @@ const Checkout: NextPage = () => {
 
 	useEffect(() => {
 		if (!router.isReady) return;
+		// _app restores the session after this effect on a full load: only bounce without a stored token.
 		if (!user?._id) {
-			router.replace({ pathname: '/account/join', query: { referrer: router.asPath } });
+			if (!getJwtToken()) router.replace({ pathname: '/account/join', query: { referrer: router.asPath } });
 			return;
 		}
 		hydrateProfile();

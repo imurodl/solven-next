@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button, Stack, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
@@ -10,6 +10,7 @@ interface Providers {
 	google: boolean;
 	telegram: boolean;
 	telegramBot?: string;
+	telegramBotId?: string;
 }
 
 interface OAuthButtonsProps {
@@ -21,17 +22,39 @@ interface OAuthButtonsProps {
 
 declare global {
 	interface Window {
-		onTelegramAuth?: (user: Record<string, unknown>) => void;
+		Telegram?: {
+			Login?: {
+				auth: (options: { bot_id: string; request_access?: string; lang?: string }, callback: (user: Record<string, unknown> | false) => void) => void;
+			};
+		};
 	}
 }
 
-// Google (redirect) and Telegram (login widget) buttons. In "link" mode the
-// same buttons attach the provider to the signed-in account.
+const TELEGRAM_WIDGET_SRC = 'https://telegram.org/js/telegram-widget.js?22';
+
+// Loads Telegram's widget script once, without the data-* attributes: the
+// embedded button would eval its data-onauth handler, which the CSP forbids,
+// so the popup API (Telegram.Login.auth) is used from our own button instead.
+const loadTelegramWidget = (): Promise<void> =>
+	new Promise((resolve, reject) => {
+		if (window.Telegram?.Login) return resolve();
+		const existing = document.querySelector<HTMLScriptElement>(`script[src="${TELEGRAM_WIDGET_SRC}"]`);
+		const script = existing ?? document.createElement('script');
+		script.addEventListener('load', () => resolve());
+		script.addEventListener('error', () => reject(new Error('Telegram widget failed to load')));
+		if (!existing) {
+			script.src = TELEGRAM_WIDGET_SRC;
+			script.async = true;
+			document.head.appendChild(script);
+		}
+	});
+
+// Google (redirect) and Telegram (popup) buttons. In "link" mode the same
+// buttons attach the provider to the signed-in account.
 const OAuthButtons = ({ mode = 'login', onLinked, linked, referrer }: OAuthButtonsProps) => {
 	const { t } = useTranslation('common');
 	const router = useRouter();
 	const [providers, setProviders] = useState<Providers | null>(null);
-	const tgRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		fetch(`${API_AUTH_URL}/auth/providers`)
@@ -40,45 +63,42 @@ const OAuthButtons = ({ mode = 'login', onLinked, linked, referrer }: OAuthButto
 			.catch(() => setProviders({ google: false, telegram: false }));
 	}, []);
 
-	// Telegram widget: injects an iframe button that calls window.onTelegramAuth.
-	useEffect(() => {
-		if (!providers?.telegram || !providers.telegramBot || !tgRef.current) return;
-		if (mode === 'link' && linked?.telegram) return;
-		window.onTelegramAuth = async (user) => {
-			try {
-				const endpoint = mode === 'link' ? `${API_AUTH_URL}/auth/link/telegram` : `${API_AUTH_URL}/auth/telegram`;
-				const res = await fetch(endpoint, {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json', ...(mode === 'link' ? { Authorization: `Bearer ${getJwtToken()}` } : {}) },
-					body: JSON.stringify(user),
-				});
-				const data = await res.json();
-				if (!res.ok) throw new Error(data?.message || 'Telegram login failed');
-				await loginWithTokens(data.token, data.refresh);
-				if (mode === 'link') {
-					await sweetTopSmallSuccessAlert(t('Telegram linked'), 1200);
-					onLinked?.();
-				} else {
-					window.location.href = referrer || '/';
+	const [tgBusy, setTgBusy] = useState(false);
+
+	const telegramLogin = async () => {
+		if (!providers?.telegramBotId || tgBusy) return;
+		setTgBusy(true);
+		try {
+			await loadTelegramWidget();
+			window.Telegram?.Login?.auth({ bot_id: providers.telegramBotId, request_access: 'write', lang: router.locale }, async (user) => {
+				try {
+					if (!user) return;
+					const endpoint = mode === 'link' ? `${API_AUTH_URL}/auth/link/telegram` : `${API_AUTH_URL}/auth/telegram`;
+					const res = await fetch(endpoint, {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json', ...(mode === 'link' ? { Authorization: `Bearer ${getJwtToken()}` } : {}) },
+						body: JSON.stringify(user),
+					});
+					const data = await res.json();
+					if (!res.ok) throw new Error(data?.message || 'Telegram login failed');
+					await loginWithTokens(data.token, data.refresh);
+					if (mode === 'link') {
+						await sweetTopSmallSuccessAlert(t('Telegram linked'), 1200);
+						onLinked?.();
+					} else {
+						window.location.href = referrer || '/';
+					}
+				} catch (err: any) {
+					await sweetMixinErrorAlert(err.message);
+				} finally {
+					setTgBusy(false);
 				}
-			} catch (err: any) {
-				await sweetMixinErrorAlert(err.message);
-			}
-		};
-		const script = document.createElement('script');
-		script.src = 'https://telegram.org/js/telegram-widget.js?22';
-		script.async = true;
-		script.setAttribute('data-telegram-login', providers.telegramBot);
-		script.setAttribute('data-size', 'large');
-		script.setAttribute('data-radius', '10');
-		script.setAttribute('data-onauth', 'onTelegramAuth(user)');
-		script.setAttribute('data-request-access', 'write');
-		tgRef.current.innerHTML = '';
-		tgRef.current.appendChild(script);
-		return () => {
-			window.onTelegramAuth = undefined;
-		};
-	}, [providers, mode, linked?.telegram]);
+			});
+		} catch (err: any) {
+			setTgBusy(false);
+			await sweetMixinErrorAlert(err.message);
+		}
+	};
 
 	if (!providers || (!providers.google && !providers.telegram)) return null;
 
@@ -103,16 +123,17 @@ const OAuthButtons = ({ mode = 'login', onLinked, linked, referrer }: OAuthButto
 					{mode === 'link' ? (linked?.google ? t('Google linked') : t('Link Google')) : t('Continue with Google')}
 				</Button>
 			)}
-			{providers.telegram && providers.telegramBot && (
-				<div className="telegram-slot">
-					{mode === 'link' && linked?.telegram ? (
-						<Button className="oauth-btn telegram" disabled fullWidth>
-							{t('Telegram linked')}
-						</Button>
-					) : (
-						<div ref={tgRef} className="telegram-widget" />
-					)}
-				</div>
+			{providers.telegram && providers.telegramBotId && (
+				<Button className="oauth-btn telegram" onClick={telegramLogin} fullWidth disabled={tgBusy || (mode === 'link' && linked?.telegram)}>
+					<svg width="18" height="18" viewBox="0 0 240 240" aria-hidden="true">
+						<circle cx="120" cy="120" r="120" fill="#2AABEE" />
+						<path
+							fill="#fff"
+							d="M54 118c35-15 58-25 70-30 33-14 40-16 45-16 1 0 3 0 5 2 1 1 1 3 1 4v3c-2 19-10 65-14 86-2 9-5 12-8 12-7 1-12-4-19-9l-27-18c-12-8-4-13 3-20 2-2 33-30 33-33v-1h-1c-1 0-24 15-69 45-7 5-13 7-18 7-6 0-17-3-26-6-10-3-18-5-17-11 0-3 5-6 13-9z"
+						/>
+					</svg>
+					{mode === 'link' ? (linked?.telegram ? t('Telegram linked') : t('Link Telegram')) : t('Continue with Telegram')}
+				</Button>
 			)}
 		</Stack>
 	);

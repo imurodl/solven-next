@@ -17,6 +17,7 @@ import UserAvatar from '../../libs/components/common/UserAvatar';
 import { useCurrency } from '../../libs/context/CurrencyContext';
 import { REACT_APP_API_URL } from '../../libs/config';
 import SEO from '../../libs/components/SEO';
+import { getJwtToken } from '../../libs/auth';
 
 export const getServerSideProps = async ({ locale, req }: any) => ({
 	props: { deviceType: getDeviceType(req), ...(await serverSideTranslations(locale, ['common'])) },
@@ -39,7 +40,7 @@ const OrderTracking: NextPage = () => {
 
 	useEffect(() => {
 		if (!router.isReady) return;
-		if (!user?._id) router.replace({ pathname: '/account/join', query: { referrer: router.asPath } });
+		if (!user?._id && !getJwtToken()) router.replace({ pathname: '/account/join', query: { referrer: router.asPath } });
 	}, [router.isReady, user?._id]);
 
 	// Poll while the deal is in flight (demo auto-progression), plus WS push.

@@ -27,6 +27,7 @@ import { LIKE_TARGET_MEMBER, SUBSCRIBE, UNSUBSCRIBE } from '../../apollo/user/mu
 import { Messages } from '../../libs/config';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import SEO from '../../libs/components/SEO';
+import { getJwtToken } from '../../libs/auth';
 
 export const getServerSideProps = async ({ locale, req }: any) => ({
 	props: {
@@ -48,7 +49,9 @@ const MyPage: NextPage = (props: any) => {
 
 	/** LIFECYCLES **/
 	useEffect(() => {
-		if (!user._id) router.push('/').then();
+		// On a full page load the session is restored by _app after this effect runs,
+		// so only bounce when there is no token at all (or it was cleared as invalid).
+		if (!user._id && !getJwtToken()) router.push('/').then();
 	}, [user]);
 
 	/** HANDLERS **/

@@ -1,5 +1,6 @@
 import Document, { Html, Head, Main, NextScript, DocumentContext } from 'next/document';
 import { organizationJsonLd, websiteJsonLd } from '../libs/seo';
+import { THEME_BOOT_SCRIPT } from '../libs/security/inline-scripts';
 
 class MyDocument extends Document<{ locale: string }> {
 	static async getInitialProps(ctx: DocumentContext) {
@@ -22,12 +23,8 @@ class MyDocument extends Document<{ locale: string }> {
 					/>
 				</Head>
 				<body>
-					{/* Apply the saved/system theme before first paint so there is no light->dark flash */}
-					<script
-						dangerouslySetInnerHTML={{
-							__html: `(function(){try{var t=localStorage.getItem('theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();`,
-						}}
-					/>
+					{/* Apply the saved/system theme before first paint so there is no light->dark flash (hashed in the CSP) */}
+					<script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
 					<Main />
 					<NextScript />
 				</body>
