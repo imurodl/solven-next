@@ -13,6 +13,12 @@ class MyDocument extends Document<{ locale: string }> {
 			<Html lang={this.props.locale}>
 				<Head>
 					<meta name="theme-color" content="#1e40af" />
+					<link rel="preconnect" href="https://fonts.googleapis.com" />
+					<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+					<link
+						rel="stylesheet"
+						href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+					/>
 					<link rel="icon" href="/favicon.ico" sizes="any" />
 					<link rel="icon" type="image/svg+xml" href="/img/logo/favicon.svg" />
 					<link rel="apple-touch-icon" href="/img/logo/solven.png" />
