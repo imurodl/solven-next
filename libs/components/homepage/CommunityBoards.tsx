@@ -67,7 +67,7 @@ const CommunityBoards = () => {
 	});
 
 	// Prepare placeholder arrays for loading state
-	const loadingArray = Array(2).fill({ _id: 'loading' });
+	const loadingArray = Array.from({ length: 2 }, (_, i) => ({ _id: `loading-${i}` }) as BoardArticle);
 
 	if (device === 'mobile') {
 		return (

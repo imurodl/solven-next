@@ -694,7 +694,7 @@ body {
 			position: relative;
 			width: 100%;
 			height: 64px;
-			background: $text-color;
+			background: var(--dark-section);
 			box-shadow: none;
 			z-index: 99;
 

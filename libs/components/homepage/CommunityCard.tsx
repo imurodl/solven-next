@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Box, Skeleton } from '@mui/material';
-import { format } from 'date-fns';
+import { formatDate } from '../../utils/format';
 import { BoardArticle } from '../../types/board-article/board-article';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
@@ -52,7 +52,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 					<div className="card-footer">
 						<div className="meta-info">
 							<span className="date">
-								{article?.createdAt ? format(new Date(article.createdAt), 'MMM dd, yyyy') : ''}
+								{article?.createdAt ? formatDate(article.createdAt, 'MMM dd, yyyy') : ''}
 							</span>
 						</div>
 						<div className="meta-info">
@@ -94,7 +94,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 					<div className="card-footer">
 						<div className="meta-info">
 							<span className="date">
-								{article?.createdAt ? format(new Date(article.createdAt), 'MMM dd, yyyy') : ''}
+								{article?.createdAt ? formatDate(article.createdAt, 'MMM dd, yyyy') : ''}
 							</span>
 						</div>
 						<div className="meta-info">

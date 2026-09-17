@@ -3,7 +3,7 @@ import Image from 'next/image';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Stack, Box, Typography } from '@mui/material';
 import { Comment } from '../../types/comment/comment';
-import { format } from 'date-fns';
+import { formatDate } from '../../utils/format';
 import { REACT_APP_API_URL } from '../../config';
 
 interface ReviewCardProps {
@@ -32,7 +32,7 @@ const ReviewCard = (props: ReviewCardProps) => {
 					<Stack className={'reviewer-info'}>
 						<Typography className={'reviewer-name'}>{comment?.memberData?.memberNick}</Typography>
 						<Typography className={'review-date'}>
-							{comment.createdAt ? format(new Date(comment.createdAt), 'dd MMMM yyyy') : ''}
+							{comment.createdAt ? formatDate(comment.createdAt, 'dd MMMM yyyy') : ''}
 						</Typography>
 					</Stack>
 				</Stack>
@@ -98,7 +98,7 @@ const ReviewCard = (props: ReviewCardProps) => {
 									fontSize: '13px',
 								}}
 							>
-								{comment.createdAt ? format(new Date(comment.createdAt), 'dd MMMM yyyy') : ''}
+								{comment.createdAt ? formatDate(comment.createdAt, 'dd MMMM yyyy') : ''}
 							</Typography>
 						</Stack>
 					</Stack>

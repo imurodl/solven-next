@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Stack, Typography } from '@mui/material';
 import { BoardArticle } from '../../types/board-article/board-article';
-import { format } from 'date-fns';
+import { formatDate } from '../../utils/format';
 import { REACT_APP_API_URL } from '../../config';
 import { a11yClickProps } from '../../utils';
 import { useReactiveVar } from '@apollo/client';
@@ -105,10 +105,10 @@ const CommunityCard = (props: CommunityCardProps) => {
 				</Stack>
 				<Stack className="date-box">
 					<span className="month">
-						{boardArticle?.createdAt ? format(new Date(boardArticle.createdAt), 'MMMM') : ''}
+						{boardArticle?.createdAt ? formatDate(boardArticle.createdAt, 'MMMM') : ''}
 					</span>
 					<Typography className="day">
-						{boardArticle?.createdAt ? format(new Date(boardArticle.createdAt), 'dd') : ''}
+						{boardArticle?.createdAt ? formatDate(boardArticle.createdAt, 'dd') : ''}
 					</Typography>
 				</Stack>
 			</Stack>
@@ -167,10 +167,10 @@ const CommunityCard = (props: CommunityCardProps) => {
 				</Stack>
 				<Stack className="date-box">
 					<span className="month">
-						{boardArticle?.createdAt ? format(new Date(boardArticle.createdAt), 'MMMM') : ''}
+						{boardArticle?.createdAt ? formatDate(boardArticle.createdAt, 'MMMM') : ''}
 					</span>
 					<Typography className="day">
-						{boardArticle?.createdAt ? format(new Date(boardArticle.createdAt), 'dd') : ''}
+						{boardArticle?.createdAt ? formatDate(boardArticle.createdAt, 'dd') : ''}
 					</Typography>
 				</Stack>
 			</Stack>

@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { format } from 'date-fns';
+import { formatDate } from '../../../utils/format';
 import { Button, Stack, Typography, IconButton, Backdrop, Pagination, Box } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
@@ -127,7 +127,7 @@ const CommunityDetailMobile = (props: CommunityDetailMobileProps) => {
 							{article?.memberData?.memberNick}
 						</Typography>
 						<span className={'date'}>
-							{article?.createdAt ? format(new Date(article.createdAt), 'dd.MM.yy HH:mm') : ''}
+							{article?.createdAt ? formatDate(article.createdAt, 'dd.MM.yy HH:mm') : ''}
 						</span>
 					</Stack>
 				</Stack>
@@ -176,7 +176,7 @@ const CommunityDetailMobile = (props: CommunityDetailMobileProps) => {
 												{commentData?.memberData?.memberNick}
 											</Typography>
 											<Typography className="date">
-												{commentData?.createdAt ? format(new Date(commentData.createdAt), 'dd.MM.yy HH:mm') : ''}
+												{commentData?.createdAt ? formatDate(commentData.createdAt, 'dd.MM.yy HH:mm') : ''}
 											</Typography>
 										</Stack>
 									</Stack>

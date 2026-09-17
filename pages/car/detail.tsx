@@ -326,6 +326,24 @@ const CarDetail: NextPage = ({ initialComment, initialCar, ...props }: any) => {
 		);
 	}
 
+	if (!car && (getCarError || (carId && !getCarLoading) || (router.isReady && !router.query.id))) {
+		return (
+			<div id="car-detail-page">
+				<div className="container">
+					<Stack className="car-unavailable">
+						<Typography className="title">{t('This listing is no longer available.')}</Typography>
+						<Typography className="hint">{t('It may have been removed by the seller.')}</Typography>
+						<Link href="/car">
+							<Button variant="contained" className="btn-primary">
+								{t('Browse cars')}
+							</Button>
+						</Link>
+					</Stack>
+				</div>
+			</div>
+		);
+	}
+
 	if (device === 'mobile') {
 		return (
 			<div id="car-detail-page">

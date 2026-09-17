@@ -6,7 +6,7 @@ import type { Car } from '../../types/car/car';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { REACT_APP_API_URL } from '../../config';
-import { a11yClickProps } from '../../utils';
+import { a11yClickProps, formatterStr } from '../../utils';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
@@ -65,7 +65,7 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 						<Tooltip title={'Car Mileage'} placement="top" arrow>
 							<div className={'spec-item'}>
 								<SpeedIcon className={'spec-icon'} />
-								<span>{car?.carMileage?.toLocaleString()}</span>
+								<span>{formatterStr(car?.carMileage)} km</span>
 							</div>
 						</Tooltip>
 						<Tooltip title={'Car Fuel Type'} placement="top" arrow>
@@ -144,7 +144,7 @@ const PopularCarCard = (props: PopularCarCardProps) => {
 						<Tooltip title={'Car Mileage'} placement="top" arrow>
 							<div className={'spec-item'} style={{ cursor: 'pointer' }}>
 								<SpeedIcon className={'spec-icon'} />
-								<span>{car?.carMileage?.toLocaleString()} miles</span>
+								<span>{formatterStr(car?.carMileage)} km</span>
 							</div>
 						</Tooltip>
 						<Tooltip title={'Car Fuel Type'} placement="top" arrow>

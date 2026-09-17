@@ -4,7 +4,7 @@ import { Stack, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Comment } from '../../types/comment/comment';
 import { REACT_APP_API_URL } from '../../config';
-import { format } from 'date-fns';
+import { formatDate } from '../../utils/format';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
@@ -39,7 +39,7 @@ const Review = (props: ReviewProps) => {
 							{comment.memberData?.memberNick}
 						</Typography>
 						<Typography className="review-date">
-							{comment.createdAt ? format(new Date(comment.createdAt), 'dd MMMM, yyyy') : ''}
+							{comment.createdAt ? formatDate(comment.createdAt, 'dd MMMM, yyyy') : ''}
 						</Typography>
 					</Stack>
 				</Stack>
@@ -56,7 +56,7 @@ const Review = (props: ReviewProps) => {
 							{comment.memberData?.memberNick}
 						</Typography>
 						<Typography className="review-date">
-							{comment.createdAt ? format(new Date(comment.createdAt), 'dd MMMM, yyyy') : ''}
+							{comment.createdAt ? formatDate(comment.createdAt, 'dd MMMM, yyyy') : ''}
 						</Typography>
 					</Stack>
 				</Stack>

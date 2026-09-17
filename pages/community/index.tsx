@@ -52,11 +52,14 @@ const Community: NextPage = ({ initialInput, initialArticles, ...props }: T) => 
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const { query } = router;
-	const articleCategory = query?.articleCategory as string;
-	const [searchCommunity, setSearchCommunity] = useState<BoardArticlesInquiry>(initialInput);
+	const articleCategory = (query?.articleCategory as string) || initialInput.search.articleCategory;
+	// Copy the shared defaultProps object: mutating it would leak one visitor's tab into every SSR.
+	const [searchCommunity, setSearchCommunity] = useState<BoardArticlesInquiry>({
+		...initialInput,
+		search: { ...initialInput.search, articleCategory },
+	});
 	const [boardArticles, setBoardArticles] = useState<BoardArticle[]>(initialArticles?.list || []);
 	const [totalCount, setTotalCount] = useState<number>(initialArticles?.metaCounter?.[0]?.total || 0);
-	if (articleCategory) initialInput.search.articleCategory = articleCategory;
 
 	/** APOLLO REQUESTS **/
 

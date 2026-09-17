@@ -2,7 +2,7 @@ import React from 'react';
 import { Stack, Box, Typography } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { format } from 'date-fns';
+import { formatDate } from '../../utils/format';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_NOTICES } from '../../../apollo/user/query';
 import { NoticeCategory, NoticeStatus } from '../../enums/notice.enum';
@@ -66,7 +66,7 @@ const Notice = () => {
 									{notice.noticeTitle}
 								</Typography>
 								<Typography sx={{ color: '#64748B', fontSize: '0.9rem' }}>
-									{format(new Date(notice.createdAt), 'MMM dd, yyyy')}
+									{formatDate(notice.createdAt, 'MMM dd, yyyy')}
 								</Typography>
 							</Box>
 							<Box sx={{ p: 3, borderBottom: index < notices.length - 1 ? '1px solid #E2E8F0' : 'none' }}>
@@ -114,7 +114,7 @@ const Notice = () => {
 									{notice.noticeTitle}
 								</Typography>
 								<Typography sx={{ color: '#64748B', fontSize: '0.9rem' }}>
-									{format(new Date(notice.createdAt), 'MMM dd, yyyy')}
+									{formatDate(notice.createdAt, 'MMM dd, yyyy')}
 								</Typography>
 							</Box>
 							<Box sx={{ p: 3, borderBottom: index < notices.length - 1 ? '1px solid #E2E8F0' : 'none' }}>

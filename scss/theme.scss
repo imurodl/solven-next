@@ -167,6 +167,16 @@ body {
 [data-theme='dark'] .MuiOutlinedInput-notchedOutline {
 	border-color: var(--border);
 }
+[data-theme='dark'] .MuiOutlinedInput-root {
+	background-color: var(--surface);
+}
+[data-theme='dark'] .MuiChip-root {
+	color: var(--text-1);
+	border-color: var(--border);
+}
+[data-theme='dark'] .MuiCheckbox-root.Mui-checked {
+	color: var(--primary);
+}
 [data-theme='dark'] .MuiInputBase-root,
 [data-theme='dark'] .MuiInputBase-input {
 	color: var(--text-1);

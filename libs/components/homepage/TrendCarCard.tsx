@@ -8,7 +8,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import type { Car } from '../../types/car/car';
 import { REACT_APP_API_URL } from '../../config';
-import { a11yClickProps } from '../../utils';
+import { a11yClickProps, formatterStr } from '../../utils';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
@@ -88,7 +88,7 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 						<Box className="feature-item">
 							<SpeedIcon className="feature-icon" />
 							<Typography variant="body2" className="feature-text">
-								{car.carMileage || '50'} Miles
+								{formatterStr(car.carMileage)} km
 							</Typography>
 						</Box>
 
@@ -190,7 +190,7 @@ const TrendCarCard = (props: TrendCarCardProps) => {
 						<Box className="feature-item">
 							<SpeedIcon className="feature-icon" />
 							<Typography variant="body2" className="feature-text">
-								{car.carMileage || '50'} Miles
+								{formatterStr(car.carMileage)} km
 							</Typography>
 						</Box>
 
